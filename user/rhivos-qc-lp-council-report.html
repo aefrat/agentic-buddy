@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RHIVOS QC LP — Multi-Perspective Analysis</title>
+  <style>
+    :root {
+      --blue: #0052cc;
+      --green: #36b37e;
+      --red: #de350b;
+      --orange: #ff8b00;
+      --purple: #6554c0;
+      --gray: #5e6c84;
+      --bg: #f4f5f7;
+      --border: #dfe1e6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fff;
+      color: #172b4d;
+      line-height: 1.65;
+      font-size: 14px;
+    }
+    /* Header */
+    .report-header {
+      background: linear-gradient(135deg, #0747a6 0%, #0052cc 100%);
+      color: #fff;
+      padding: 40px 48px 32px;
+    }
+    .report-header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+    .report-header .subtitle { opacity: 0.85; font-size: 0.95rem; }
+    .report-header .meta { margin-top: 20px; display: flex; gap: 32px; flex-wrap: wrap; }
+    .report-header .meta-item { font-size: 0.82rem; opacity: 0.8; }
+    .report-header .meta-item strong { display: block; opacity: 1; font-size: 0.9rem; margin-bottom: 2px; }
+
+    /* Nav */
+    .nav { background: #0747a6; display: flex; gap: 4px; padding: 0 48px; border-top: 1px solid rgba(255,255,255,0.15); }
+    .nav a { color: rgba(255,255,255,0.75); text-decoration: none; padding: 10px 14px; font-size: 0.82rem; border-bottom: 2px solid transparent; transition: all 0.15s; }
+    .nav a:hover { color: #fff; border-bottom-color: #fff; }
+
+    /* Layout */
+    .container { max-width: 1100px; margin: 0 auto; padding: 40px 48px; }
+
+    /* Executive Summary */
+    .exec-summary {
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 28px 32px;
+      margin-bottom: 40px;
+      border-left: 5px solid var(--blue);
+    }
+    .exec-summary h2 { color: var(--blue); font-size: 1.1rem; margin-bottom: 16px; }
+    .exec-summary p { margin-bottom: 10px; }
+
+    /* Persona sections */
+    .persona-section { margin-bottom: 56px; }
+    .persona-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+    }
+    .persona-badge {
+      width: 48px; height: 48px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; flex-shrink: 0;
+    }
+    .badge-sre { background: #e3f2fd; }
+    .badge-em  { background: #e8f5e9; }
+    .badge-po  { background: #fce4ec; }
+    .persona-title { font-size: 1.25rem; font-weight: 700; }
+    .persona-subtitle { font-size: 0.85rem; color: var(--gray); }
+
+    /* Subsections */
+    .subsection { margin-bottom: 28px; }
+    .subsection h3 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gray);
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Cards */
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px;
+      background: #fff;
+    }
+    .card-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+    .card p, .card li { font-size: 0.88rem; color: #344563; }
+    .card ul { padding-left: 16px; }
+    .card li { margin-bottom: 4px; }
+
+    /* Status colors */
+    .status-ok    { border-left: 4px solid var(--green); }
+    .status-warn  { border-left: 4px solid var(--orange); }
+    .status-risk  { border-left: 4px solid var(--red); }
+    .status-block { border-left: 4px solid var(--purple); }
+    .status-info  { border-left: 4px solid var(--blue); }
+
+    .label-ok    { color: var(--green); }
+    .label-warn  { color: var(--orange); }
+    .label-risk  { color: var(--red); }
+    .label-block { color: var(--purple); }
+    .label-info  { color: var(--blue); }
+
+    /* Gap/Risk numbered list */
+    .numbered-list { list-style: none; padding: 0; }
+    .numbered-list li {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 16px;
+      padding: 14px 16px;
+      background: var(--bg);
+      border-radius: 6px;
+      border-left: 3px solid var(--border);
+    }
+    .numbered-list li.risk  { border-left-color: var(--red); }
+    .numbered-list li.block { border-left-color: var(--purple); }
+    .numbered-list li.gap   { border-left-color: var(--orange); }
+    .numbered-list li.step  { border-left-color: var(--blue); }
+    .numbered-list li.action { border-left-color: var(--green); }
+    .num {
+      font-size: 0.85rem;
+      font-weight: 700;
+      width: 24px;
+      flex-shrink: 0;
+      padding-top: 1px;
+      color: var(--gray);
+    }
+    .numbered-list .content strong { display: block; margin-bottom: 4px; font-size: 0.9rem; }
+    .numbered-list .content p { font-size: 0.86rem; color: #344563; }
+
+    /* Implementation sequence */
+    .impl-layer {
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .impl-layer-header {
+      background: var(--bg);
+      padding: 10px 16px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--gray);
+    }
+    .impl-items { padding: 14px 16px; }
+    .impl-item {
+      display: flex;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.86rem;
+    }
+    .impl-item:last-child { border-bottom: none; }
+    .impl-num {
+      background: var(--blue);
+      color: #fff;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* Timeline */
+    .timeline { border-left: 3px solid var(--blue); padding-left: 24px; margin-left: 8px; }
+    .timeline-item { position: relative; margin-bottom: 20px; }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -31px;
+      top: 5px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--blue);
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 2px var(--blue);
+    }
+    .timeline-item.at-risk::before { background: var(--red); box-shadow: 0 0 0 2px var(--red); }
+    .timeline-date { font-size: 0.78rem; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: 0.05em; }
+    .timeline-content { font-size: 0.88rem; margin-top: 3px; }
+
+    /* Synthesis */
+    .synthesis {
+      background: #fffae6;
+      border: 1px solid #ffe58f;
+      border-radius: 8px;
+      padding: 28px 32px;
+      margin-bottom: 40px;
+    }
+    .synthesis h2 { color: #ad6800; font-size: 1.1rem; margin-bottom: 16px; }
+
+    /* Priority actions */
+    .priority-actions { margin-bottom: 48px; }
+    .action-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+    .action-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px;
+      background: #fff;
+    }
+    .action-card .action-owner {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--blue);
+      margin-bottom: 6px;
+    }
+    .action-card .action-title { font-weight: 700; margin-bottom: 6px; font-size: 0.92rem; }
+    .action-card .action-detail { font-size: 0.84rem; color: #344563; }
+    .action-card.urgent { border-top: 3px solid var(--red); }
+    .action-card.high   { border-top: 3px solid var(--orange); }
+    .action-card.medium { border-top: 3px solid var(--blue); }
+
+    /* Footer */
+    .report-footer {
+      background: var(--bg);
+      padding: 24px 48px;
+      font-size: 0.8rem;
+      color: var(--gray);
+      border-top: 1px solid var(--border);
+    }
+
+    code {
+      background: var(--bg);
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-size: 0.82em;
+      font-family: "SFMono-Regular", Consolas, monospace;
+    }
+
+    @media (max-width: 700px) {
+      .container, .report-header, .report-footer, .nav { padding-left: 20px; padding-right: 20px; }
+      .cards, .action-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="report-header">
+  <h1>RHIVOS Qualcomm Layered Product — Multi-Perspective Analysis</h1>
+  <p class="subtitle">Independent review of AUTOBU-1076, RHEL-for-NVIDIA (Voyager) knowledge base, ATC pipeline docs, and Release Readiness meeting findings</p>
+  <div class="meta">
+    <div class="meta-item"><strong>Prepared</strong>2026-05-21</div>
+    <div class="meta-item"><strong>Ticket</strong>AUTOBU-1076</div>
+    <div class="meta-item"><strong>Perspectives</strong>Software Release Engineer · Engineering Manager · Product Owner</div>
+    <div class="meta-item"><strong>Target dates</strong>User space packaging: Aug 2026 · LP available: Sep 2026</div>
+  </div>
+</div>
+
+<nav class="nav">
+  <a href="#summary">Summary</a>
+  <a href="#sre">Release Engineer</a>
+  <a href="#em">Eng Manager</a>
+  <a href="#po">Product Owner</a>
+  <a href="#synthesis">Synthesis</a>
+  <a href="#actions">Actions</a>
+</nav>
+
+<div class="container">
+
+  <!-- EXECUTIVE SUMMARY -->
+  <div class="exec-summary" id="summary">
+    <h2>Executive Summary</h2>
+    <p>Three independent perspectives analyzed the RHIVOS Qualcomm Layered Product initiative from scratch, reviewing Petr Sabata's AUTOBU-1076 ticket, the RHEL-for-NVIDIA (Voyager) architecture, the ATC build and pipeline codebase, the AIB wiki, and the May 20 Release Readiness meeting findings.</p>
+    <p><strong>The September LP availability date is at risk — not because the engineering is hard, but because the external team dependencies (RHELDST, RHELWF, ENGCMP, RCM) have not been formally engaged.</strong> These teams have multi-week lead times, and the dependency chain has three blocking layers that must resolve in sequence. Work that should already be in flight is not yet started.</p>
+    <p>The prior analysis was largely sound but incomplete. Seven technical gaps were identified that were not previously surfaced: missing compose promotion pipeline, undefined ET configuration, undecomposed gating (resultsdb/waiverdb/greenwave), Test Console dual-product gap, S3 access control, dist-git workflow for QC packages, and pesign build targets for the QC kernel. The SKU/Eng Product decision is structurally forced — the "extensions repo" alternative (Voyager Option b) cannot satisfy the Qualcomm access control requirement and should be formally closed.</p>
+  </div>
+
+  <!-- SOFTWARE RELEASE ENGINEER -->
+  <div class="persona-section" id="sre">
+    <div class="persona-header">
+      <div class="persona-badge badge-sre">⚙️</div>
+      <div>
+        <div class="persona-title">Software Release Engineer</div>
+        <div class="persona-subtitle">Build system · Compose · Gating · ET · CDN · Pipeline</div>
+      </div>
+    </div>
+
+    <!-- Validate / Challenge -->
+    <div class="subsection">
+      <h3>Validate or Challenge — Prior Conclusions</h3>
+      <div class="cards">
+        <div class="card status-ok">
+          <div class="card-label label-ok">✓ Confirmed</div>
+          <p><strong>Two-compose design is not a preference — it's technically forced.</strong> Voyager's docs confirm Pungi cannot handle two builds of the same package name in different compose variants. If QC ships a kernel (<code>kernel-ivos-qualcomm</code> already exists in the pipeline), the two-compose design is mandatory, not optional.</p>
+        </div>
+        <div class="card status-ok">
+          <div class="card-label label-ok">✓ Confirmed</div>
+          <p><strong>Dist-tag isolation is required.</strong> Voyager uses <code>.el10nv</code> to distinguish RPMs from RHEL equivalents. RHIVOS QC LP needs <code>.el10qc</code> or <code>.el10ivos</code> so QC RPMs are distinguishable at the repo and advisory level.</p>
+        </div>
+        <div class="card status-warn">
+          <div class="card-label label-warn">⚠ Oversimplified</div>
+          <p><strong>Build system: pesign targets missing.</strong> The kernel must go through a two-phase build (standard target → pesign target). The Brew tag structure must include pesign-capable targets from day one. The prior analysis did not mention this.</p>
+        </div>
+        <div class="card status-warn">
+          <div class="card-label label-warn">⚠ Oversimplified</div>
+          <p><strong>AIB: not zero manifest changes.</strong> Adding a QC LP repo requires a new <code>@ADD_QCOM_LP_REPO_*@</code> placeholder token, new/modified <code>.sed</code> files per QC target, and updates to <code>create-qa-manifest.sh</code>. It's manifest code change, not zero change.</p>
+        </div>
+        <div class="card status-ok">
+          <div class="card-label label-ok">✓ Strengthened</div>
+          <p><strong>Separate Eng Product is structurally determined.</strong> Voyager's Decision #8 rejected a new Eng Product because no access control was needed. For RHIVOS QC LP, access control IS the central requirement. Voyager Option (b) is not available. This is confirmed, not tentative.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Technical Gaps -->
+    <div class="subsection">
+      <h3>Technical Gaps — What Was Not Previously Identified</h3>
+      <ul class="numbered-list">
+        <li class="gap">
+          <span class="num">G1</span>
+          <div class="content">
+            <strong>ODCS compose registration not owned</strong>
+            <p>Adding a QC LP compose requires an ODCS playbook MR filed with ENGCMP (CTS system). Who writes the QC LP Pungi config, where it lives (new branch in <code>rhivos.git</code>? new repo?), and who registers it with ODCS — completely undefined.</p>
+          </div>
+        </li>
+        <li class="gap">
+          <span class="num">G2</span>
+          <div class="content">
+            <strong>Compose promotion pipeline is entirely missing</strong>
+            <p>Voyager's Minimal compose feeds ET product listings via an automated promotion chain (CTS tag → UMB message → Jenkins job → ET ComposeDB import). RHIVOS's <code>promote-compose</code> uses SSH/Kerberos to an RCM host — a different mechanism. Without an equivalent for the QC LP Minimal compose, ET advisories will be stuck in <code>NEW_FILES</code> state (exactly Voyager's ENGCMP-6387 problem). RHELCMP engagement required.</p>
+          </div>
+        </li>
+        <li class="gap">
+          <span class="num">G3</span>
+          <div class="content">
+            <strong>ET configuration entirely unspecified</strong>
+            <p>Voyager defined: separate ET Product, one Product Version (<code>RHEL-10-Nvidia</code>), one Variant (<code>10Base-RHEL-Nvidia</code>), <code>$releasever</code>-free CDN path. For QC LP: none of this exists. ET Product name? Variant names? RHIVOS versioning or Voyager-style? Who creates it (RHELWF/OSCI)? Blocking for advisory automation.</p>
+          </div>
+        </li>
+        <li class="gap">
+          <span class="num">G4</span>
+          <div class="content">
+            <strong>Gating stack (resultsdb / waiverdb / greenwave / Gator) not decomposed</strong>
+            <p>The current <code>GATOR_CONF</code> is for RHIVOS base packages. QC LP needs: a separate Gator config path; resultsdb associations for QC NVRs; waiverdb waiver subjects; greenwave policies for QC Brew tag content. Petr's ticket flags all of this — but none of it is designed.</p>
+          </div>
+        </li>
+        <li class="gap">
+          <span class="num">G5</span>
+          <div class="content">
+            <strong>Test Console dual-compose submission not designed</strong>
+            <p><code>tc_wait_for_rhivos_test()</code> in <code>functions.yml</code> uses <code>tc-cli rhivos base-image is-complete</code> — <code>rhivos</code> is a hardcoded product identifier. QC platform images built from dual-compose (RHIVOS + QC LP) need TC to accept and track a combined submission. May require new TC pipeline request types or API changes — not a config tweak.</p>
+          </div>
+        </li>
+        <li class="gap">
+          <span class="num">G6</span>
+          <div class="content">
+            <strong>S3 artifact access control for proprietary QC bits undefined</strong>
+            <p>QC LP artifacts contain proprietary Qualcomm content before the CDN push. The existing <code>auto-product-build-downstream</code> bucket may not have the right IAM policies. New bucket vs. policy extension is flagged in the ticket — still unaddressed.</p>
+          </div>
+        </li>
+        <li class="gap">
+          <span class="num">G7</span>
+          <div class="content">
+            <strong>No dist-git workflow for QC package maintainers</strong>
+            <p>RHIVOS currently composes from a Koji tag directly — no traditional dist-git/RoG workflow. QC package maintainers need a defined submission path (dist-git branch naming, Brew build target, RoG or <code>rhpkg build</code> equivalent). Without this, "user space packaging complete by August" does not mean builds are in the right Brew tag for the compose.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Implementation Sequence -->
+    <div class="subsection">
+      <h3>Implementation Sequence — Ordered by Dependency</h3>
+      <div class="impl-layer">
+        <div class="impl-layer-header" style="border-left: 4px solid var(--red);">Layer 1 — Decisions that block everything else (no code until resolved)</div>
+        <div class="impl-items">
+          <div class="impl-item"><div class="impl-num">1</div><div>QC kernel legal clearance (Jeffrey Calfman) — determines pesign infrastructure need and whether two-compose is mandatory vs. optional</div></div>
+          <div class="impl-item"><div class="impl-num">2</div><div>CDN access control model — RHELDST confirms new Eng Product + separate SKU is required (structurally determined; confirm and close)</div></div>
+          <div class="impl-item"><div class="impl-num">3</div><div>CDN path structure agreed with RHELDST — e.g., <code>/content/dist/layered/rhivos/{arch}/qualcomm/os</code></div></div>
+        </div>
+      </div>
+      <div class="impl-layer">
+        <div class="impl-layer-header" style="border-left: 4px solid var(--orange);">Layer 2 — Infrastructure setup (parallelize once Layer 1 done; 4–6 week lead times)</div>
+        <div class="impl-items">
+          <div class="impl-item"><div class="impl-num">4</div><div>File Brew tag set request with RHELBLD: <code>rhivos-qc-2.1-candidate</code>, <code>pending</code>, <code>build</code>, <code>et-compose</code> + pesign targets if kernel confirmed</div></div>
+          <div class="impl-item"><div class="impl-num">5</div><div>Register QC LP ODCS compose config with CTS via ENGCMP — define the Minimal compose Pungi config</div></div>
+          <div class="impl-item"><div class="impl-num">6</div><div>Configure ET Product, Product Version, Variant for QC LP (OSCI/RHELWF engagement) — defines advisory automation scope</div></div>
+          <div class="impl-item"><div class="impl-num">7</div><div>Configure CDN repos in product-service-config-auto (RHELDST)</div></div>
+          <div class="impl-item"><div class="impl-num">8</div><div>Define S3 IAM policy for QC LP artifacts (new bucket or scoped policy on existing)</div></div>
+        </div>
+      </div>
+      <div class="impl-layer">
+        <div class="impl-layer-header" style="border-left: 4px solid var(--blue);">Layer 3 — Pipeline and gating work (requires Layer 2 complete)</div>
+        <div class="impl-items">
+          <div class="impl-item"><div class="impl-num">9</div><div>Add separate Gator config for QC LP; configure resultsdb, waiverdb, greenwave policy for QC LP tag</div></div>
+          <div class="impl-item"><div class="impl-num">10</div><div>Implement compose promotion pipeline for QC LP Minimal compose (ET product listing import) — model on Voyager Jenkins job RHELCMP-15186</div></div>
+          <div class="impl-item"><div class="impl-num">11</div><div>Modify <code>custom-images</code> manifests: add <code>@ADD_QCOM_LP_REPO_*@</code> tokens to <code>qa.aib.yml.in</code>, <code>ps.aib.yml.in</code>; add <code>.sed</code> entries for QC hardware targets</div></div>
+          <div class="impl-item"><div class="impl-num">12</div><div>Add QC LP release config to <code>downstream-pipelines-as-code/release-configs/</code>; handle dual-compose URL injection into AIB build stage</div></div>
+          <div class="impl-item"><div class="impl-num">13</div><div>Resolve TC dual-product smoke test submission (TC team engagement); add/modify QC platform smoke test jobs in <code>extends.yml</code></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Engineering Risks -->
+    <div class="subsection">
+      <h3>Engineering Risks</h3>
+      <ul class="numbered-list">
+        <li class="risk"><span class="num">R1</span><div class="content"><strong>Compose promotion pipeline not RHIVOS-owned</strong><p><code>promote-compose</code> does SSH to RCM host. Voyager's ET listing import is a separate Jenkins job (RHELCMP-15186) owned by RHELCMP. If RHIVOS assumes it can reuse its job, the ET product listing import step will be missed and advisories will fail. RHELCMP engagement is required, not optional.</p></div></li>
+        <li class="risk"><span class="num">R2</span><div class="content"><strong>August/September timeline vs. Layer 2 lead times</strong><p>RHELBLD, RHELWF, and RHELDST infrastructure setup items have 4–6 week lead times based on Voyager precedent (RHELBLD-17745 through -18191 spanned months). Starting Layer 2 engagement now is necessary — waiting until August packaging completes will miss September.</p></div></li>
+        <li class="risk"><span class="num">R3</span><div class="content"><strong>QC LP compose entitlement gating may break the AIB pipeline</strong><p>If the QC LP compose URL requires partner credentials, the existing Kerberos keytab (<code>KEYTAB_ODCS</code>) won't satisfy it. The AIB build stage receives compose URLs directly. Needs explicit RHELDST confirmation that the internal (pre-CDN-push) compose URL is accessible without per-user entitlement.</p></div></li>
+        <li class="risk"><span class="num">R4</span><div class="content"><strong><code>@PLACEHOLDER@</code> substitution gaps in manifests are silently destructive</strong><p>Any QC LP repo token left unreplaced in a <code>default.sed</code> fallback (used by <code>ps.aib.yml.in</code> and <code>fusa-minimal.aib.yml.in</code>) emits a broken manifest that only surfaces as a boot failure on hardware, not a build error.</p></div></li>
+        <li class="risk"><span class="num">R5</span><div class="content"><strong>No dist-git workflow for QC package maintainers</strong><p>RHIVOS composes from a Koji tag directly — no traditional dist-git/RoG. QC vendors need a defined submission path before they start packaging. "User space packaging complete end of August" requires this workflow to exist and be communicated well before August.</p></div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ENGINEERING MANAGER -->
+  <div class="persona-section" id="em">
+    <div class="persona-header">
+      <div class="persona-badge badge-em">👔</div>
+      <div>
+        <div class="persona-title">Engineering Manager</div>
+        <div class="persona-subtitle">Timeline · Stakeholders · Blocking decisions · Team coordination</div>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="subsection">
+      <h3>Timeline Assessment</h3>
+      <p style="margin-bottom:16px; font-size:0.88rem;"><strong>Short answer: August is feasible. September is at risk — not from engineering complexity, but from external team dependencies that have not been activated.</strong></p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">Now — Week of May 26</div>
+          <div class="timeline-content">Confirm full LP vs. extension repo approach (gates all downstream infrastructure work). Schedule ATC focals sync.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">End of June</div>
+          <div class="timeline-content">RHELDST engaged with scope and deliverables. Brew tag structure agreed (filed with RHELBLD). SKU/Eng ID decision made. Pipeline focal assigned with estimate.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">July</div>
+          <div class="timeline-content">Compose config, CDN path, Errata Tool setup, Gator config. Dist-git workflow defined and communicated to QC package maintainers.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">End of August</div>
+          <div class="timeline-content">QC user space packaging complete. Pipeline integration (dual-compose AIB build) ready. Entitlement gating on compose URL confirmed.</div>
+        </div>
+        <div class="timeline-item at-risk">
+          <div class="timeline-date" style="color:var(--red);">End of September ⚠ AT RISK</div>
+          <div class="timeline-content">QC LP available to customers. Requires end-to-end testing, TC smoke tests with combined repos, portal/entitlement live. External teams (RHELDST, RHELWF, portal) must start their portions by June — not September.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stakeholders -->
+    <div class="subsection">
+      <h3>Stakeholder Map</h3>
+      <div class="cards">
+        <div class="card status-ok">
+          <div class="card-label label-ok">Engaged</div>
+          <ul>
+            <li>Petr Sabata — requirements (AUTOBU-1076)</li>
+            <li>Juanje — technical proposal author</li>
+            <li>Ozan — pipeline/compose expertise</li>
+            <li>Whitney — PM (overhead concern, extension repo action)</li>
+            <li>Jeffrey Calfman — legal (QC kernel)</li>
+          </ul>
+        </div>
+        <div class="card status-risk">
+          <div class="card-label label-risk">Missing / Not yet activated</div>
+          <ul>
+            <li><strong>RHELDST</strong> — CDN, LP testing, SKU. Named as contact; no scope or deliverables assigned. Biggest gap.</li>
+            <li><strong>Red Hat subscription/portal team</strong> — SKU creation, entitlement flow, customer portal. Not mentioned anywhere.</li>
+            <li><strong>RHELWF/OSCI</strong> — ET Product setup, advisory automation</li>
+            <li><strong>ENGCMP</strong> — ODCS compose registration</li>
+            <li><strong>RHELCMP</strong> — Compose promotion pipeline (ET listing import)</li>
+            <li><strong>RCM team</strong> — New CDN path for <code>promote-compose</code></li>
+            <li><strong>Test Console team</strong> — Dual-product submission</li>
+            <li><strong>Product security (PSIRT)</strong> — CPE strings, SWID tags</li>
+            <li><strong>Customer documentation</strong> — Completely unassigned</li>
+          </ul>
+        </div>
+        <div class="card status-warn">
+          <div class="card-label label-warn">Action Pending</div>
+          <ul>
+            <li><strong>ATC focals (Build, Distribution, Gating)</strong> — Async sync from May 20 not yet scheduled</li>
+            <li><strong>Release SP team</strong> — Whitney's action item (extension repo consultation) still open</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Blocking Decisions -->
+    <div class="subsection">
+      <h3>Blocking Decisions — Owner and Urgency</h3>
+      <ul class="numbered-list">
+        <li class="block"><span class="num">D1</span><div class="content"><strong>Full LP vs. extension repo (Owner: Whitney → Avi)</strong><p>Gates all infrastructure design. Whitney was tasked with consulting release SP team. Set a deadline — answer needed by end of next week. If delayed, bring in release SP team directly.</p></div></li>
+        <li class="block"><span class="num">D2</span><div class="content"><strong>New Eng Product vs. new Eng ID under RHIVOS (Owner: RHELDST + portal team)</strong><p>Determines CDN path, SKU mapping, portal page. The access control requirement structurally forces a new Eng Product — confirm and close. Nobody has formally asked the portal team this question.</p></div></li>
+        <li class="block"><span class="num">D3</span><div class="content"><strong>QC LP compose URL access — entitlement-gated or open to pipeline runners (Owner: ATC + RHELDST)</strong><p>Must be confirmed before August packaging completes. If gated, pipeline credential work must be designed and operational before LP content is available.</p></div></li>
+        <li class="block"><span class="num">D4</span><div class="content"><strong>QC kernel in or out (Owner: Jeffrey Calfman)</strong><p>Only hard dependency not acceleratable by management. If not resolved by July, scope-lock to user space only for September. Put this in writing.</p></div></li>
+      </ul>
+    </div>
+
+    <!-- Manager Actions -->
+    <div class="subsection">
+      <h3>Recommended Actions for Avi — Next Week</h3>
+      <ul class="numbered-list">
+        <li class="action"><span class="num">A1</span><div class="content"><strong>Chase Whitney's action item — set a deadline</strong><p>The extension repo decision unblocks everything. Get a date by which she has an answer. If not by end of next week, escalate or bring release SP team in directly.</p></div></li>
+        <li class="action"><span class="num">A2</span><div class="content"><strong>Schedule the ATC focals async — this week, not "soon"</strong><p>Three weeks post May-20 and still open. Agenda is clear from AUTOBU-1076: Brew tags, compose config, Gator, pipeline scope. One focused 60-minute meeting unblocks more than three more weeks of drift.</p></div></li>
+        <li class="action"><span class="num">A3</span><div class="content"><strong>Contact RHELDST lead — scoping call within two weeks</strong><p>Largest unactivated external dependency. Come with a concrete ask list: CDN path, ET product setup, SKU decision, advisory automation, timeline. Don't let this become "loop you in later."</p></div></li>
+        <li class="action"><span class="num">A4</span><div class="content"><strong>Assign a pipeline focal and ask for an estimate by end of May</strong><p>Pipeline work (new release config, dual-compose AIB stage, Gator config, possibly new S3 bucket) has zero estimates. This is ATC-controlled territory — move on it now.</p></div></li>
+        <li class="action"><span class="num">A5</span><div class="content"><strong>Scope-lock QC kernel as out-of-scope for September — in writing</strong><p>Put it in writing to Whitney and Petr Sabata. Kernel decision not resolved by July → September LP is user space only. Protects the team from late scope creep and prevents the architecture from being designed around an unconfirmed dependency.</p></div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PRODUCT OWNER -->
+  <div class="persona-section" id="po">
+    <div class="persona-header">
+      <div class="persona-badge badge-po">🎯</div>
+      <div>
+        <div class="persona-title">Product Owner</div>
+        <div class="persona-subtitle">Customer experience · Overhead · SKU strategy · Product definition</div>
+      </div>
+    </div>
+
+    <!-- Approach Assessment -->
+    <div class="subsection">
+      <h3>Full LP vs. Extensions Repo — What's Actually Different?</h3>
+      <div class="cards">
+        <div class="card status-risk">
+          <div class="card-label label-risk">Extensions repo approach (Voyager Option b) — NOT available</div>
+          <p>Whitney's instinct toward the simpler "extensions repo" path references how Voyager (RHEL-for-NVIDIA) avoided overhead: no separate SKU, no separate Eng ID, available to all RHEL subscribers. That worked because NVIDIA hardware is open — no access gating needed. <strong>For RHIVOS QC LP, Qualcomm partner agreements require gated access. The extensions repo approach has no access control mechanism and cannot satisfy this requirement.</strong> The choice is structurally forced, not a preference call.</p>
+        </div>
+        <div class="card status-ok">
+          <div class="card-label label-ok">What the Voyager model DOES contribute</div>
+          <p>CDN layered path structure (<code>/content/dist/layered/...</code>), disabled-by-default repo, two-compose design (Minimal for CDN alignment + ET, Complete for image builds) — all applicable regardless of SKU decision. Juanje's "build internally, separate at CDN" proposal aligns with this. The build and distribution mechanism is reusable; the access model is not.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Customer Experience -->
+    <div class="subsection">
+      <h3>Customer / Partner Experience</h3>
+      <div class="cards">
+        <div class="card status-warn">
+          <div class="card-label label-warn">What customers will need to do (incomplete picture)</div>
+          <p>Obtain a separate QC LP SKU (implies a separate contract or entitlement action), then enable the QC LP repository on top of base RHIVOS. In the automotive AIB context, this likely means a pipeline that has access to the QC LP compose URL, referenced in the manifest <code>content.repos</code>. The subscription-manager mental model from RHEL doesn't fit the AIB declarative build flow.</p>
+        </div>
+        <div class="card status-risk">
+          <div class="card-label label-risk">What's entirely missing</div>
+          <ul>
+            <li>No defined customer-facing product name or concept ("RHIVOS Qualcomm Edition"? "Add-on"? "Separate product"?)</li>
+            <li>No entitlement flow defined for partners/field</li>
+            <li>No support scope defined (SLA for QC user space? CVE handling for proprietary QC code?)</li>
+            <li>No documentation owner assigned</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overhead Analysis -->
+    <div class="subsection">
+      <h3>Overhead Analysis</h3>
+      <div class="cards">
+        <div class="card status-risk">
+          <div class="card-label label-risk">Unavoidable overhead (driven by SKU requirement)</div>
+          <ul>
+            <li>New Eng Product in Red Hat product catalog</li>
+            <li>Separate SKU with entitlement mapping</li>
+            <li>Separate product page on customer portal</li>
+            <li>Separate ET advisory stream with automation to distinguish RHIVOS vs. QC advisories</li>
+            <li>Customer access and deployment documentation</li>
+          </ul>
+        </div>
+        <div class="card status-warn">
+          <div class="card-label label-warn">Potentially reducible overhead</div>
+          <ul>
+            <li>QC LP cadence tied to RHIVOS — no separate Jira releases needed (already decided May 20)</li>
+            <li>Package Request Process update may be an addendum to existing PRP, not a new standalone track</li>
+            <li>RHIVOS vs. RHIVOS Core separate LP configs — unresolved; if both need separate SKUs, overhead doubles</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Undefined Product Decisions -->
+    <div class="subsection">
+      <h3>Undefined Product Decisions — Blocking Before Anyone Can Build Anything</h3>
+      <ul class="numbered-list">
+        <li class="block"><span class="num">P1</span><div class="content"><strong>QC kernel inclusion (legal / Jeffrey Calfman) — HIGH URGENCY</strong><p>Binary: in or out. Changes the LP scope, distribution complexity, and entitlement surface. Kernel decision slipping past July threatens the September date for everything — including user space, because the architecture must accommodate it.</p></div></li>
+        <li class="block"><span class="num">P2</span><div class="content"><strong>CDN access model for QC LP compose URL</strong><p>Entitlement-gated or open to pipeline runners? Determines whether pipeline-level credential handling is needed before August packaging completes.</p></div></li>
+        <li class="block"><span class="num">P3</span><div class="content"><strong>RHIVOS vs. RHIVOS Core LP config scope</strong><p>Unresolved in Petr's ticket. If both variants need separate LP configs, SKU and ET setup work doubles. Decide now — adding it late multiplies work under time pressure.</p></div></li>
+        <li class="block"><span class="num">P4</span><div class="content"><strong>Customer-facing product name and concept</strong><p>Portal, entitlement flow, documentation, and support scope all depend on stable product identity. Deferring until engineering work is done creates rework across multiple teams.</p></div></li>
+        <li class="block"><span class="num">P5</span><div class="content"><strong>Support scope for QC components</strong><p>What SLA applies to QC user space? Who handles CVEs in proprietary QC code? This affects advisory handling and what the customer's support contract covers. Not defined anywhere.</p></div></li>
+        <li class="block"><span class="num">P6</span><div class="content"><strong>Extension repo discussion (Whitney's action item)</strong><p>Still open. Teams are building toward "full LP" without confirming a lighter path is infeasible. Confirm and close — the access control requirement makes the answer clear, but it must be documented.</p></div></li>
+      </ul>
+    </div>
+
+    <!-- Product Recommendations -->
+    <div class="subsection">
+      <h3>Product Recommendations with Tradeoffs</h3>
+      <div class="cards">
+        <div class="card status-info">
+          <div class="card-label label-info">Rec 1 — Confirm separate SKU as unavoidable; stop treating it as optional</div>
+          <p>The overhead concern is valid but continuing to hold "extensions repo" as a live alternative delays architecture decisions. Close it out with the SP release team consultation (Whitney's action item) and communicate clearly so teams can proceed.<br><em>Tradeoff: Higher org overhead, but no alternative satisfies the contractual requirement.</em></p>
+        </div>
+        <div class="card status-info">
+          <div class="card-label label-info">Rec 2 — Scope September LP to user space only; kernel is a follow-on</div>
+          <p>Don't let kernel legal uncertainty delay user space LP. Treat them as sequential components of the same LP. Communicate this explicitly to Qualcomm and customers upfront.<br><em>Tradeoff: Customers get audio/camera/graphics/display first, kernel later — acceptable if stated clearly.</em></p>
+        </div>
+        <div class="card status-info">
+          <div class="card-label label-info">Rec 3 — Align pipeline access model before August packaging completes</div>
+          <p>The QC LP compose URL access question needs an answer from RHELDST before the September date. Not a last-minute task — credential handling design, testing, and operation takes weeks.<br><em>Tradeoff: Forces RHELDST conversation earlier than comfortable, but late is unrecoverable.</em></p>
+        </div>
+        <div class="card status-info">
+          <div class="card-label label-info">Rec 4 — Define product name and customer concept now</div>
+          <p>Portal, documentation, entitlement flow, and support all depend on stable product identity. Deferring to launch creates rework across multiple teams.<br><em>Tradeoff: Early naming may need revision, but late naming is more expensive.</em></p>
+        </div>
+        <div class="card status-info">
+          <div class="card-label label-info">Rec 5 — Explicitly resolve RHIVOS vs. RHIVOS Core LP scope</div>
+          <p>If both variants get the QC LP, design that now — adding it later doubles entitlement and ET setup work. If only one gets it, say so and communicate to partners.<br><em>Tradeoff: Early commitment constrains flexibility but prevents late-stage scope collapse.</em></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SYNTHESIS -->
+  <div class="synthesis" id="synthesis">
+    <h2>Cross-Cutting Synthesis — Where All Three Perspectives Agree</h2>
+    <p style="margin-bottom:14px;">Three independent perspectives converge on five themes:</p>
+    <ul style="padding-left:20px;">
+      <li style="margin-bottom:10px;"><strong>The September date is at risk from external dependencies, not engineering.</strong> The work ATC controls (packaging, pipeline, manifests) is feasible. The blockers are RHELDST, RHELWF, ENGCMP, RHELCMP, and the portal team — none of which have been formally engaged with scope and deliverables.</li>
+      <li style="margin-bottom:10px;"><strong>The separate SKU/Eng Product decision is structurally determined and should be closed immediately.</strong> Continuing to hold the "extensions repo" alternative open delays architecture decisions across all teams without any upside — the access control requirement makes the outcome clear.</li>
+      <li style="margin-bottom:10px;"><strong>The Voyager distribution model is directly applicable; the Voyager build toolchain is not.</strong> CDN layered path, disabled-by-default repo, two-compose design (Minimal + Complete) — all reusable. Image-during-compose, Pungi/ODCS toolchain specifics, independent versioning — none of this applies. The meeting's "Voyager doesn't fit" conclusion was too broad; it's the build layer that doesn't fit, not the distribution model.</li>
+      <li style="margin-bottom:10px;"><strong>Seven technical gaps were not identified in the prior analysis</strong> — the most critical being the missing compose promotion pipeline (required for ET product listings), the undefined gating stack configuration, and the absence of a dist-git workflow for QC package maintainers.</li>
+      <li style="margin-bottom:10px;"><strong>The QC kernel legal decision must not be allowed to hold the user space LP hostage.</strong> Scope-lock September to user space only in writing. Design the architecture to accommodate kernel as an additive scope item, not a redesign trigger.</li>
+    </ul>
+  </div>
+
+  <!-- PRIORITY ACTIONS -->
+  <div class="priority-actions" id="actions">
+    <h2 style="font-size:1.1rem; margin-bottom:20px; color:var(--blue);">Priority Action Board</h2>
+    <div class="action-grid">
+      <div class="action-card urgent">
+        <div class="action-owner">Avi — This Week</div>
+        <div class="action-title">Chase Whitney's extension repo decision — set a deadline</div>
+        <div class="action-detail">This is the single gate blocking all infrastructure decisions. Deadline: end of next week. Escalate or bring release SP team in directly if needed.</div>
+      </div>
+      <div class="action-card urgent">
+        <div class="action-owner">Avi — This Week</div>
+        <div class="action-title">Schedule ATC focals async (Build, Distribution, Gating)</div>
+        <div class="action-detail">Three weeks overdue from May 20. Agenda: Brew tags, compose config, Gator config, pipeline scope. One 60-minute meeting.</div>
+      </div>
+      <div class="action-card urgent">
+        <div class="action-owner">Avi — Within 2 Weeks</div>
+        <div class="action-title">Contact RHELDST lead with scope document</div>
+        <div class="action-detail">Largest unactivated external dependency. Bring concrete ask: CDN path, ET product setup, SKU decision, advisory automation, timeline. Don't leave without named owners and estimates.</div>
+      </div>
+      <div class="action-card high">
+        <div class="action-owner">Avi — End of May</div>
+        <div class="action-title">Assign pipeline focal; get estimate for Layer 3 work</div>
+        <div class="action-detail">New release config, dual-compose AIB build stage, Gator config, S3 policy — all unestimated. This is ATC-controlled. Move now.</div>
+      </div>
+      <div class="action-card high">
+        <div class="action-owner">Avi → Petr + Whitney</div>
+        <div class="action-title">Scope-lock September LP to user space only — in writing</div>
+        <div class="action-detail">QC kernel in or out (Jeffrey Calfman) must not gate the user space LP. Put it in writing. Protects September date and architecture from late scope creep.</div>
+      </div>
+      <div class="action-card high">
+        <div class="action-owner">ATC + RHELDST</div>
+        <div class="action-title">Confirm QC LP compose URL access model</div>
+        <div class="action-detail">Entitlement-gated or open to pipeline runners? Answer needed before August packaging completes. If gated, pipeline credential handling must be designed and operational for September.</div>
+      </div>
+      <div class="action-card medium">
+        <div class="action-owner">Legal / Jeffrey Calfman</div>
+        <div class="action-title">QC kernel legal decision — target July</div>
+        <div class="action-detail">Binary: in or out. If not resolved by July, formally defer to post-September LP release. Architecture must accommodate kernel as an additive scope item.</div>
+      </div>
+      <div class="action-card medium">
+        <div class="action-owner">Product / Whitney</div>
+        <div class="action-title">Define product name, customer concept, and support scope</div>
+        <div class="action-detail">Portal, entitlement, documentation, and CVE handling all need a stable product identity. Start now — late naming costs more than early revision.</div>
+      </div>
+      <div class="action-card medium">
+        <div class="action-owner">ATC Build Focal</div>
+        <div class="action-title">Define dist-git workflow for QC package maintainers</div>
+        <div class="action-detail">QC vendors submitting packages need branch naming, Brew build target, and RoG/rhpkg workflow defined before August packaging begins. Without this, "packaging complete" doesn't mean builds land in the right Brew tag.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<div class="report-footer">
+  Generated 2026-05-21 via LLM council (Software Release Engineer · Engineering Manager · Product Owner) · Source materials: AUTOBU-1076, RHEL-for-NVIDIA knowledge base, ATC codebase docs, AIB wiki, RHIVOS Release Readiness meeting May 20 · <code>agent_brain/projects/rhivos-release-approach.md</code>
+</div>
+
+</body>
+</html>
