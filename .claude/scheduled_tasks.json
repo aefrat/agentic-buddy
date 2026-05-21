@@ -1,0 +1,13 @@
+{
+  "tasks": [
+    {
+      "id": "9f5bff1c",
+      "cron": "0 9 25 5 *",
+      "prompt": "Remind Avi to continue the ATC LLM wiki project. Two open decisions still pending: (1) mkdocs deployment target — GitLab Pages, dedicated domain, or S3 bucket; (2) wiki regeneration cadence. Wiki source is live at https://gitlab.cee.redhat.com/automotive/pipe-x/atc_llm_wiki. Project file: agent_brain/projects/atc-llm-wiki.md",
+      "createdAt": 1779346550553,
+      "createdBySessionId": "bf027be1-6f8f-41f9-9b23-c81ae6c2a563",
+      "createdByPid": 55678,
+      "createdByProcStart": "768998"
+    }
+  ]
+}

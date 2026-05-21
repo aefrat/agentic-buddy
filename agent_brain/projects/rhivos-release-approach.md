@@ -57,9 +57,47 @@ Two distinct concerns surfaced:
 ### Whitney's framing
 Whitney's concern wasn't that layered product is wrong — it's that the full layered product route (new product pages, SKUs, schedules) has high overhead. She was drawn to the extensions-repo approach that RAIL used for NVIDIA as potentially simpler. But the team still needs to understand what that means technically before deciding.
 
-### Open questions (still to investigate)
-- What exactly does the RHEL-for-NVIDIA knowledge base propose technically? What parts are reusable vs RHEL-specific?
-- Can Juanje's "same pipeline + separate at CDN" approach work without adopting any of the RHEL-for-NVIDIA tooling?
+### Deep-dive: RHEL-for-NVIDIA actual architecture (from knowledge base)
+
+Source: `/home/aefrat/rhel-for-nvidia-knowledge/docs/`
+
+### Ozan's claim — VERIFIED TRUE
+> "RHEL-for-NVIDIA builds images during compose time"
+
+Confirmed. Voyager (RHEL-for-NVIDIA) produces ISO and QCOW2 images **as part of the Complete compose** (via Pungi/ODCS). This is architectural, not incidental. RHIVOS uses automotive image builder and builds images *after* the compose. This is a real incompatibility.
+
+### Voyager's actual architecture
+
+**Two compose types (key design):**
+- **Complete compose** — Full RHEL BaseOS + AppStream with Voyager packages (kernel, qemu-kvm, libvirt) overriding equivalents via tag inheritance. Generates DVD ISO and QCOW2 images. Large and resource-heavy, not aligned with CDN layout.
+- **Minimal compose** — Only the Voyager-specific packages (the NVIDIA repo). Aligned with what customers see on CDN. Used for product listings in Errata Tool. Cannot generate full ISOs.
+Both are required because they serve different purposes.
+
+**Build system:** Brew (Koji fork), with versioned tag sets per Voyager release (`nv-26.03-rhel-10`). Package override happens via tag inheritance, not NVR comparison.
+
+**Versioning:** Quarterly, independent of RHEL (26.01, 26.02, 26.03...). Tied to which RHEL minor version it's *based on*, but the version number is completely separate. This is the approach the RHIVOS team explicitly rejected.
+
+**CDN/Distribution:** New repo under existing RHEL Eng Product, under the *layered* CDN path: `/content/dist/layered/rhel10/aarch64/nvidia/os`. Disabled by default. Customers enable manually via subscription-manager. RPMs via Errata Tool, ISOs/QCOW2 via Pub separately.
+
+### What this means for the RHIVOS decision
+
+**What does NOT apply:**
+1. Image-during-compose approach — RHIVOS builds images after compose via automotive image builder; tooling is incompatible
+2. Pungi/ODCS compose tooling — RHIVOS uses its own pipeline
+3. Voyager's independent versioning — explicitly rejected by the team
+4. Brew tag structure specifics — RHIVOS has its own tag structure
+
+**What DOES apply (more than the meeting suggested):**
+1. **The two-compose concept is directly relevant.** A "Minimal compose" (only the QC-specific packages) for CDN alignment + product listings, separate from the full build, maps well to Juanje's proposal of building the QC layered product internally and separating at the CDN level.
+2. **The CDN layered path structure.** The `/content/dist/layered/...` CDN path is what makes it a "layered product" from a distribution standpoint — not the build tooling. Juanje's proposal ("separate at CDN level") is essentially this same principle.
+3. **Disabled-by-default repo.** The approach of a new repo under the same Eng Product, disabled by default, is a clean model for how the QC user space bits would be distributed.
+4. **No new Eng Product needed.** Voyager didn't need a new product — it added a repo under existing RHEL. This reduces overhead (no new product pages, SKUs, etc.) — directly relevant to Whitney's concern about overhead.
+
+### Key insight
+Juanje's proposal and the RHEL-for-NVIDIA approach converge at the *distribution layer*. The difference is only in *how you get there*: Voyager builds images during compose (not applicable to RHIVOS), but the CDN separation mechanism is the same idea. The meeting made it sound like Voyager is a poor fit entirely — the reality is more nuanced: the distribution model is directly applicable; the build/image tooling is not.
+
+## Open questions (still to investigate)
+- How would RHIVOS implement the "Minimal compose" equivalent (QC-specific packages only) for CDN alignment and product listings?
 - Extensions repo approach vs. full layered product — what's the difference in overhead?
 
 ### Action items from the meeting
