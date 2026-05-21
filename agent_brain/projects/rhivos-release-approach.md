@@ -63,7 +63,7 @@ Whitney's concern wasn't that layered product is wrong — it's that the full la
 - Extensions repo approach vs. full layered product — what's the difference in overhead?
 
 ### Action items from the meeting
-- [Avi] Compile list of stakeholders for async layered product discussion
+- [Avi] ~~Compile list of stakeholders for async layered product discussion~~ — DONE (added to meeting doc: https://docs.google.com/document/d/1MjoxfCEsDWiLFy99wHsS4EWOnVzvlg91NqJcMIHBDbI/edit?tab=t.0#bookmark=id.3hhtxwbj9tr8)
 - [Whitney] Consult with release SP team on who should be involved for the extension repo discussion
 - Async discussion to be scheduled with ATC focals (Build, Distribution, Gating)
 
