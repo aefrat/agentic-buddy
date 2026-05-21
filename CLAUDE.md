@@ -65,6 +65,7 @@ Promotion is gradual — files climb through layers of visibility based on susta
 Directories with an `index.md` have a content map — read it first to decide what to open.
 
 - [User workspace](user/) — action items, documents, drafts, lists. The user can also add files here directly for the agent to read and process.
+- [AI Sessions](user/ai-sessions.md) — Claude (and other AI tool) session IDs by working directory and date. Read when the user asks to resume a session or needs a past session ID.
 - [User profile](agent_brain/identity/USER.md) — context, preferences, communication style.
 - [Agent guidelines](agent_brain/identity/SOUL.md) — operating values, limits, interaction style.
 - [Projects](agent_brain/projects/) — project history, context, past decisions.

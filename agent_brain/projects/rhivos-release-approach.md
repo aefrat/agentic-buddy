@@ -41,7 +41,7 @@ Is the RHEL-for-NVIDIA approach a good fit as a new direction for RHIVOS release
 ### What the team aligned on (decisions made)
 - **Versioning:** Tied to RHIVOS releases — NOT separate like RHEL-for-NVIDIA does (timestamp-based)
 - **Cadence:** Same cadence as RHIVOS core releases
-- **Build strategy (Juanje's proposal, appeared accepted):** Build both RHIVOS and the QC layered product internally using the same pipeline infrastructure, just adding another compose. Separate them only at the CDN distribution level. Proprietary Qualcomm bits never leave the Red Hat internal network until CDN push.
+- **Build strategy (Juanje's proposal, appeared accepted):** Build both RHIVOS and the QC layered product internally using the same pipeline infrastructure, just adding another compose [inferred — verify]. Separate them only at the CDN distribution level. Proprietary Qualcomm bits never leave the Red Hat internal network until CDN push.
 - **QC content:** User space (audio, camera, graphics, display) for sure. QC kernel: TBD — pending legal approval (Jeffrey Calfman).
 - **Timeline:** QC user space packaging complete end of August. QC layered product available end of September. Not linked to RHIVOS 2.0 GA.
 
@@ -112,9 +112,12 @@ Petr's ticket breaks the work into 8 areas. Mapped against the Voyager knowledge
 **Petr:** LPs defined in ET for regular and Z-stream releases, targeting CDN locations; separate advisory automation.
 **Voyager:** Separate ET Product, separate advisories, Jenkins job to sync `-pending` Brew tags. CDN layered path (`/content/dist/layered/rhel10/aarch64/nvidia/`) is the infrastructure pattern to follow.
 
-### End user tooling / AIB — Match ✅
+### End user tooling / AIB — Pipeline changes needed, QC LP repo access TBD ⚠️
 **Petr:** AIB might need extending for multiple product subscriptions (possibly transparent via librhsm).
-**Voyager:** Customers enable the Voyager repo manually via `subscription-manager repos --enable`. No AIB changes were needed — it worked transparently via librhsm. This likely answers Petr's open question in the affirmative.
+**Voyager:** Not applicable — Voyager uses RHEL's build toolchain (Brew/Pungi), not AIB. The subscription-manager / librhsm path is a Voyager-specific answer that does not map to RHIVOS.
+**What the ATC pipeline actually does today:** ODCS produces a single RHIVOS compose from the `rhivos-2.1-candidate` Koji tag. AIB then builds images from that compose — the compose URL is passed as a repo source in the AIB manifest (`content.repos`). There is no `subscription-manager` or `librhsm` in this path; repo access is by URL, with Kerberos handling ODCS-level auth upstream.
+**On multiple composes:** AIB's `content.repos` is a list — adding the QC LP compose URL alongside the base RHIVOS compose URL is architecturally supported and already matches the existing pattern for Qualcomm board support repos (`@ADD_QCOM_BOARD_SUPPORT_*@` in `custom-images` manifests). This would not require AIB code changes; it would require manifest changes and a pipeline change to ensure both compose URLs are available before the AIB build stage runs.
+**What remains open:** Whether the QC LP compose URL will be entitlement-gated (accessible only with Qualcomm partner credentials) or openly accessible to pipeline runners. If gated, credential handling in the pipeline would be needed — not an AIB code problem, but a pipeline and CDN access question requiring confirmation with the RHELDST/distribution team.
 
 ### Pipelines and package gating — Concept matches, tooling differs ⚠️
 **Petr:** Pipelines use both RHIVOS and LP repos in tandem; gating configured for LP tag structure.
@@ -138,15 +141,17 @@ Petr's open question is already answered: no separate Jira releases, no independ
 
 > Reviewed the RHEL-for-NVIDIA (Voyager) knowledge base at https://gitlab.cee.redhat.com/tmlcoch/rhel-for-nvidia-knowledge against this ticket's requirements.
 >
-> **What maps well from Voyager (~6 of 8 areas):**
+> **What maps well from Voyager (~5 of 8 areas):**
 > - **Build system:** Voyager's versioned Brew tag structure (`nv-{ver}-rhel-10` with candidate/pending/build/et-compose hierarchy) is a direct reference for our LP tag design.
 > - **Compose configuration:** Voyager uses two composes — a Minimal compose (LP packages only, CDN-aligned, generates product listings for ET) and a Complete compose (base + LP overrides, generates images). The Minimal compose design directly addresses Petr's requirement for LP extension repo composes.
 > - **Distribution / ET:** Voyager's ET setup (separate product, separate advisories, Jenkins sync job for `-pending` tags, CDN layered path `/content/dist/layered/...`) is the pattern to follow.
-> - **End user tooling:** Voyager required no AIB changes — customers enable the repo via `subscription-manager repos --enable` and it works transparently via librhsm. This likely answers the open AIB question.
 > - **Schedule:** The RHIVOS Release Readiness Meeting of May 20 aligned on tying QC LP versioning and cadence to RHIVOS releases (not independent). This answers Petr's open question on separate Jira releases — not needed.
 >
 > **Where Voyager is NOT the right model (1 critical area):**
 > - **SKUs / access control:** Voyager deliberately chose no separate Eng ID and no separate SKU — all RHEL subscribers can access it. Our QC LP requires gated access due to Qualcomm partner/customer agreements. This means we likely need a new Eng Product + separate SKU, which drives the portal/entitlement overhead Whitney flagged in the RHIVOS Release Readiness Meeting of May 20. This is the hardest part and the one that most diverges from the Voyager path.
+>
+> **Requires investigation before closing (1 area):**
+> - **End user tooling / AIB:** Voyager is not applicable here — it uses RHEL's build toolchain (Brew/Pungi), not AIB. The RHIVOS pipeline today runs ODCS to produce a single RHIVOS compose, then AIB builds images from it using explicit `content.repos` URLs — no `subscription-manager` or `librhsm` involved. AIB's `content.repos` is a list, so adding a QC LP compose URL alongside the base RHIVOS compose is architecturally supported without AIB code changes; it would need manifest updates and a pipeline change to make both compose URLs available to the build stage. What is NOT yet confirmed: whether the QC LP compose URL will be entitlement-gated. If it is, pipeline-level credential handling would be needed (not an AIB code change). This needs confirmation with the RHELDST/distribution team.
 >
 > **Architectural note:** The RHIVOS Release Readiness Meeting of May 20 discussion suggested Voyager was a poor fit due to build tooling differences (Voyager builds images during compose; RHIVOS builds images after compose via automotive image builder). This is true for the build layer. However, Voyager's *distribution* model (CDN layered path, disabled-by-default repo, minimal compose for CDN alignment) is directly applicable and essentially what Juanje's proposal ("build internally, separate at CDN") implements. The recommended path is: don't adopt Voyager's build/compose tooling, but use its distribution model as the reference.
 

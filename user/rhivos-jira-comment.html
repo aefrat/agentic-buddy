@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AUTOBU-1076 — Jira Comment Draft</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      max-width: 860px;
+      margin: 48px auto;
+      padding: 0 24px;
+      color: #1d1d1f;
+      line-height: 1.6;
+    }
+    h1 { font-size: 1.4rem; color: #0052cc; margin-bottom: 4px; }
+    .meta { font-size: 0.85rem; color: #666; margin-bottom: 32px; }
+    .meta a { color: #0052cc; text-decoration: none; }
+    .meta a:hover { text-decoration: underline; }
+    h2 { font-size: 1rem; margin-top: 28px; margin-bottom: 8px; color: #333; border-bottom: 1px solid #e0e0e0; padding-bottom: 4px; }
+    ul { padding-left: 20px; }
+    li { margin-bottom: 10px; }
+    strong { color: #111; }
+    .section-good { border-left: 4px solid #36b37e; padding-left: 16px; margin: 16px 0; }
+    .section-bad  { border-left: 4px solid #de350b; padding-left: 16px; margin: 16px 0; }
+    .section-warn { border-left: 4px solid #ff8b00; padding-left: 16px; margin: 16px 0; }
+    .section-note { border-left: 4px solid #0065ff; padding-left: 16px; margin: 16px 0; background: #f4f5f7; padding: 12px 16px; border-radius: 0 4px 4px 0; }
+    code { background: #f4f5f7; padding: 2px 5px; border-radius: 3px; font-size: 0.88em; font-family: "SFMono-Regular", Consolas, monospace; }
+    .inferred { background: #fff7e6; border: 1px solid #ffe58f; border-radius: 3px; padding: 1px 5px; font-size: 0.8em; color: #ad6800; }
+    .actions { margin-top: 40px; padding: 16px; background: #f4f5f7; border-radius: 6px; font-size: 0.9rem; }
+    .actions a { color: #0052cc; }
+  </style>
+</head>
+<body>
+
+  <h1>AUTOBU-1076 — Jira Comment Draft</h1>
+  <p class="meta">
+    Ticket: <a href="https://redhat.atlassian.net/browse/AUTOBU-1076" target="_blank">AUTOBU-1076</a>
+    &nbsp;·&nbsp; Project file: <code>agent_brain/projects/rhivos-release-approach.md</code>
+    &nbsp;·&nbsp; Prepared: 2026-05-21
+  </p>
+
+  <p>
+    Reviewed the RHEL-for-NVIDIA (Voyager) knowledge base at
+    <a href="https://gitlab.cee.redhat.com/tmlcoch/rhel-for-nvidia-knowledge" target="_blank">
+      https://gitlab.cee.redhat.com/tmlcoch/rhel-for-nvidia-knowledge
+    </a>
+    against this ticket's requirements.
+  </p>
+
+  <h2>✅ What maps well from Voyager (~5 of 8 areas)</h2>
+  <div class="section-good">
+    <ul>
+      <li>
+        <strong>Build system:</strong> Voyager's versioned Brew tag structure
+        (<code>nv-{ver}-rhel-10</code> with candidate/pending/build/et-compose hierarchy)
+        is a direct reference for our LP tag design.
+      </li>
+      <li>
+        <strong>Compose configuration:</strong> Voyager uses two composes — a Minimal compose
+        (LP packages only, CDN-aligned, generates product listings for ET) and a Complete compose
+        (base + LP overrides, generates images). The Minimal compose design directly addresses
+        Petr's requirement for LP extension repo composes.
+      </li>
+      <li>
+        <strong>Distribution / ET:</strong> Voyager's ET setup (separate product, separate advisories,
+        Jenkins sync job for <code>-pending</code> tags, CDN layered path
+        <code>/content/dist/layered/...</code>) is the pattern to follow.
+      </li>
+      <li>
+        <strong>Schedule:</strong> The RHIVOS Release Readiness Meeting of May 20 aligned on tying
+        QC LP versioning and cadence to RHIVOS releases (not independent). This answers Petr's open
+        question on separate Jira releases — not needed.
+      </li>
+    </ul>
+  </div>
+
+  <h2>❌ Where Voyager is NOT the right model (1 critical area)</h2>
+  <div class="section-bad">
+    <ul>
+      <li>
+        <strong>SKUs / access control:</strong> Voyager deliberately chose no separate Eng ID and no
+        separate SKU — all RHEL subscribers can access it. Our QC LP requires gated access due to
+        Qualcomm partner/customer agreements. This means we likely need a new Eng Product + separate
+        SKU, which drives the portal/entitlement overhead Whitney flagged in the RHIVOS Release
+        Readiness Meeting of May 20. This is the hardest part and the one that most diverges from
+        the Voyager path.
+      </li>
+    </ul>
+  </div>
+
+  <h2>⚠️ Requires investigation before closing (1 area)</h2>
+  <div class="section-warn">
+    <ul>
+      <li>
+        <strong>End user tooling / AIB:</strong> Voyager is not applicable here — it uses RHEL's
+        build toolchain (Brew/Pungi), not AIB. The RHIVOS pipeline today runs ODCS to produce a
+        single RHIVOS compose, then AIB builds images from it using explicit <code>content.repos</code>
+        URLs — no <code>subscription-manager</code> or <code>librhsm</code> involved.
+        AIB's <code>content.repos</code> is a list, so adding a QC LP compose URL alongside the base
+        RHIVOS compose is architecturally supported without AIB code changes; it would need manifest
+        updates and a pipeline change to make both compose URLs available to the build stage.
+        What is NOT yet confirmed: whether the QC LP compose URL will be entitlement-gated. If it is,
+        pipeline-level credential handling would be needed (not an AIB code change). This needs
+        confirmation with the RHELDST/distribution team.
+      </li>
+    </ul>
+  </div>
+
+  <h2>📝 Architectural note</h2>
+  <div class="section-note">
+    The RHIVOS Release Readiness Meeting of May 20 discussion suggested Voyager was a poor fit due to
+    build tooling differences (Voyager builds images during compose; RHIVOS builds images after compose
+    via automotive image builder). This is true for the build layer. However, Voyager's
+    <em>distribution</em> model (CDN layered path, disabled-by-default repo, minimal compose for CDN
+    alignment) is directly applicable and essentially what Juanje's proposal ("build internally,
+    separate at CDN") implements. The recommended path is: don't adopt Voyager's build/compose
+    tooling, but use its distribution model as the reference.
+  </div>
+
+  <div class="actions">
+    <strong>Next step:</strong> Post this as a comment on
+    <a href="https://redhat.atlassian.net/browse/AUTOBU-1076" target="_blank">AUTOBU-1076</a>
+    once reviewed. Say the word and it'll be posted via the Jira API.
+  </div>
+
+</body>
+</html>
