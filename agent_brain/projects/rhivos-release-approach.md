@@ -116,10 +116,6 @@ Petr's ticket breaks the work into 8 areas. Mapped against the Voyager knowledge
 **Petr:** AIB might need extending for multiple product subscriptions (possibly transparent via librhsm).
 **Voyager:** Customers enable the Voyager repo manually via `subscription-manager repos --enable`. No AIB changes were needed — it worked transparently via librhsm. This likely answers Petr's open question in the affirmative.
 
-### Product security — Applicable ✅
-**Petr:** CPE strings, SWID tags, PSIRT configuration for separate tags/composes.
-**Voyager:** Has its own ET Product with CPE configuration, PSIRT setup. Process is established and can be referenced.
-
 ### Pipelines and package gating — Concept matches, tooling differs ⚠️
 **Petr:** Pipelines use both RHIVOS and LP repos in tandem; gating configured for LP tag structure.
 **Voyager:** Has its own gating, but uses different pipeline tooling (RoG, Brew-native). RHIVOS uses pipelines-as-code. The concept (test with combined repos) is the same; the implementation will be RHIVOS-specific.
@@ -147,12 +143,12 @@ Petr's open question is already answered: no separate Jira releases, no independ
 > - **Compose configuration:** Voyager uses two composes — a Minimal compose (LP packages only, CDN-aligned, generates product listings for ET) and a Complete compose (base + LP overrides, generates images). The Minimal compose design directly addresses Petr's requirement for LP extension repo composes.
 > - **Distribution / ET:** Voyager's ET setup (separate product, separate advisories, Jenkins sync job for `-pending` tags, CDN layered path `/content/dist/layered/...`) is the pattern to follow.
 > - **End user tooling:** Voyager required no AIB changes — customers enable the repo via `subscription-manager repos --enable` and it works transparently via librhsm. This likely answers the open AIB question.
-> - **Schedule:** The May 20 release readiness meeting aligned on tying QC LP versioning and cadence to RHIVOS releases (not independent). This answers Petr's open question on separate Jira releases — not needed.
+> - **Schedule:** The RHIVOS Release Readiness Meeting of May 20 aligned on tying QC LP versioning and cadence to RHIVOS releases (not independent). This answers Petr's open question on separate Jira releases — not needed.
 >
 > **Where Voyager is NOT the right model (1 critical area):**
-> - **SKUs / access control:** Voyager deliberately chose no separate Eng ID and no separate SKU — all RHEL subscribers can access it. Our QC LP requires gated access due to Qualcomm partner/customer agreements. This means we likely need a new Eng Product + separate SKU, which drives the portal/entitlement overhead Whitney flagged. This is the hardest part and the one that most diverges from the Voyager path.
+> - **SKUs / access control:** Voyager deliberately chose no separate Eng ID and no separate SKU — all RHEL subscribers can access it. Our QC LP requires gated access due to Qualcomm partner/customer agreements. This means we likely need a new Eng Product + separate SKU, which drives the portal/entitlement overhead Whitney flagged in the RHIVOS Release Readiness Meeting of May 20. This is the hardest part and the one that most diverges from the Voyager path.
 >
-> **Architectural note:** The meeting discussion suggested Voyager was a poor fit due to build tooling differences (Voyager builds images during compose; RHIVOS builds images after compose via automotive image builder). This is true for the build layer. However, Voyager's *distribution* model (CDN layered path, disabled-by-default repo, minimal compose for CDN alignment) is directly applicable and essentially what Juanje's proposal ("build internally, separate at CDN") implements. The recommended path is: don't adopt Voyager's build/compose tooling, but use its distribution model as the reference.
+> **Architectural note:** The RHIVOS Release Readiness Meeting of May 20 discussion suggested Voyager was a poor fit due to build tooling differences (Voyager builds images during compose; RHIVOS builds images after compose via automotive image builder). This is true for the build layer. However, Voyager's *distribution* model (CDN layered path, disabled-by-default repo, minimal compose for CDN alignment) is directly applicable and essentially what Juanje's proposal ("build internally, separate at CDN") implements. The recommended path is: don't adopt Voyager's build/compose tooling, but use its distribution model as the reference.
 
 ## Open questions (still to investigate)
 - How would RHIVOS implement the "Minimal compose" equivalent (QC-specific packages only) for CDN alignment and product listings?
