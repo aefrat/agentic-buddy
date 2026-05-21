@@ -291,7 +291,7 @@
     <h2>Executive Summary</h2>
     <p>Three independent perspectives analyzed the RHIVOS Qualcomm Layered Product initiative from scratch, reviewing Petr Sabata's AUTOBU-1076 ticket, the RHEL-for-NVIDIA (Voyager) architecture, the ATC build and pipeline codebase, the AIB wiki, and the May 20 Release Readiness meeting findings.</p>
     <p><strong>The September LP availability date is at risk — not because the engineering is hard, but because the external team dependencies (RHELDST, RHELWF, ENGCMP, RCM) have not been formally engaged.</strong> These teams have multi-week lead times, and the dependency chain has three blocking layers that must resolve in sequence. Work that should already be in flight is not yet started.</p>
-    <p>The prior analysis was largely sound but incomplete. Seven technical gaps were identified that were not previously surfaced: missing compose promotion pipeline, undefined ET configuration, undecomposed gating (resultsdb/waiverdb/greenwave), Test Console dual-product gap, S3 access control, dist-git workflow for QC packages, and pesign build targets for the QC kernel. The SKU/Eng Product decision is structurally forced — the "extensions repo" alternative (Voyager Option b) cannot satisfy the Qualcomm access control requirement and should be formally closed.</p>
+    <p>The prior analysis was largely sound but incomplete. Seven technical gaps were identified that were not previously surfaced: missing compose promotion pipeline, undefined ET configuration, undecomposed gating (resultsdb/waiverdb/greenwave), Test Console dual-product gap, S3 access control, dist-git workflow for QC packages, and pesign build targets for the QC kernel. The SKU/Eng Product decision is structurally forced — both lower-overhead alternatives evaluated by the Voyager team are inapplicable to RHIVOS. "Extensions" in Petr's ticket refers to a <em>specific named RHEL content-set</em> (alongside BaseOS and AppStream) — Voyager's Option (a), rejected because it requires unique package names and ties to the RHEL schedule. Voyager's chosen Option (b) — a new repo under the existing RHEL Eng Product — also cannot work for RHIVOS: it has no access control mechanism and is available to all RHEL subscribers. Only Option (c), a new Eng Product with a separate SKU, satisfies the Qualcomm partner access requirement. This should be formally confirmed and closed.</p>
   </div>
 
   <!-- SOFTWARE RELEASE ENGINEER -->
@@ -326,7 +326,7 @@
         </div>
         <div class="card status-ok">
           <div class="card-label label-ok">✓ Strengthened</div>
-          <p><strong>Separate Eng Product is structurally determined.</strong> Voyager's Decision #8 rejected a new Eng Product because no access control was needed. For RHIVOS QC LP, access control IS the central requirement. Voyager Option (b) is not available. This is confirmed, not tentative.</p>
+          <p><strong>Separate Eng Product is structurally determined.</strong> The Voyager team evaluated four delivery options. Option (a) — push into the existing Extensions content-set — was rejected because it requires unique package names and ties to the RHEL schedule. Option (b) — new repo under the existing RHEL Eng Product — is what Voyager chose, but only because all RHEL subscribers can access NVIDIA content; no access control is needed. For RHIVOS QC LP, access control <em>is</em> the central requirement: neither Option (a) nor Option (b) provides per-partner gating. Only Option (c) — new Eng Product with a separate SKU — satisfies it. This is confirmed, not tentative.</p>
         </div>
       </div>
     </div>
@@ -714,15 +714,32 @@
     <!-- Approach Assessment -->
     <div class="subsection">
       <h3>Full LP vs. Extensions Repo — What's Actually Different?</h3>
+      <div class="card status-info" style="margin-bottom: 16px;">
+        <div class="card-label label-info">What "Extensions" actually means — technical definition</div>
+        <p>"Extensions" is a <strong>specific named RHEL content-set</strong> — a concrete repo alongside BaseOS and AppStream in RHEL's standard repo structure (e.g., <code>rhel-10-for-aarch64-extensions-rpms</code>). It is not a generic term for adding content somewhere. Petr's ticket and Whitney's meeting comment both reference this because the Voyager team formally evaluated it as delivery Option (a) and rejected it. Option (b) — what Voyager actually chose — is a <em>different</em> option: a new repo under the existing RHEL Eng Product. Both Options (a) and (b) are inapplicable to RHIVOS QC LP, for different reasons.</p>
+      </div>
       <div class="cards">
         <div class="card status-risk">
-          <div class="card-label label-risk">Extensions repo approach (Voyager Option b) — NOT available</div>
-          <p>Whitney's instinct toward the simpler "extensions repo" path references how Voyager (RHEL-for-NVIDIA) avoided overhead: no separate SKU, no separate Eng ID, available to all RHEL subscribers. That worked because NVIDIA hardware is open — no access gating needed. <strong>For RHIVOS QC LP, Qualcomm partner agreements require gated access. The extensions repo approach has no access control mechanism and cannot satisfy this requirement.</strong> The choice is structurally forced, not a preference call.</p>
+          <div class="card-label label-risk">Option (a) — Push into the Extensions repo — Rejected by Voyager, also fails for RHIVOS</div>
+          <p>Push LP packages directly into the existing RHEL Extensions content-set. No new repos, no new Eng Product, no new SKUs — the theoretically lowest-overhead path.</p>
+          <p style="margin-top:8px;"><strong>Why Voyager rejected it:</strong> (1) Requires unique package names (e.g., <code>kernel-nv</code>) to avoid conflicts with RHEL base packages sharing the same repo. (2) Ties the LP to RHEL's release schedule — no independent cadence possible.</p>
+          <p style="margin-top:8px;"><strong>Why it also fails for RHIVOS:</strong> No access control mechanism exists at this level. Extensions packages are available to all RHEL subscribers — cannot satisfy Qualcomm partner agreements.</p>
+        </div>
+        <div class="card status-risk">
+          <div class="card-label label-risk">Option (b) — New repo under existing RHEL Eng Product — Voyager's choice, also fails for RHIVOS</div>
+          <p>A new dedicated repo (e.g., <code>/content/dist/layered/rhel10/aarch64/nvidia/os</code>) alongside BaseOS/AppStream/Extensions, under the <em>same</em> existing RHEL Eng Product. Disabled by default; enabled with a content-set entitlement. No separate SKU, no separate Eng Product.</p>
+          <p style="margin-top:8px;"><strong>Why Voyager chose it:</strong> No access control was needed (NVIDIA hardware is open to all RHEL subscribers). Independent CDN path, no package naming constraints, independent cadence — all met with minimal overhead.</p>
+          <p style="margin-top:8px;"><strong>Why it fails for RHIVOS:</strong> Available to all RHEL subscribers. There is no per-partner entitlement gating below the Eng Product level. Qualcomm gated access cannot be implemented within Option (b).</p>
+          <p style="margin-top:8px;"><em>When Whitney references "the extensions repo approach" or "the lower overhead path," she is describing Option (b) — not literally the Extensions content-set. The label is imprecise but the concern is real. Option (b) is still not available to RHIVOS.</em></p>
         </div>
         <div class="card status-ok">
-          <div class="card-label label-ok">What the Voyager model DOES contribute</div>
-          <p>CDN layered path structure (<code>/content/dist/layered/...</code>), disabled-by-default repo, two-compose design (Minimal for CDN alignment + ET, Complete for image builds) — all applicable regardless of SKU decision. Juanje's "build internally, separate at CDN" proposal aligns with this. The build and distribution mechanism is reusable; the access model is not.</p>
+          <div class="card-label label-ok">What the Voyager model DOES contribute — distribution layer only</div>
+          <p>CDN layered path structure (<code>/content/dist/layered/...</code>), disabled-by-default repo, two-compose design (Minimal for CDN alignment + ET, Complete for image builds) — all applicable regardless of SKU decision. Juanje's "build internally, separate at CDN" proposal aligns with this. The distribution mechanism is reusable; the access model is not.</p>
         </div>
+      </div>
+      <div class="card status-info" style="margin-top: 16px;">
+        <div class="card-label label-info">Conclusion — Option (c) is structurally determined, not a preference call</div>
+        <p><strong>Only Option (c) — new Eng Product with a separate SKU — can satisfy the Qualcomm access control requirement.</strong> This follows directly from the partner agreement requirement, not from engineering preference. Whitney's overhead concern is valid but irreducible. The right action is to confirm and close this decision with the release SP team (Whitney's action item), then engage the portal team with a concrete scope. Continuing to hold Option (b) as a live alternative delays architecture decisions across all downstream teams.</p>
       </div>
     </div>
 
@@ -818,7 +835,7 @@
     <p style="margin-bottom:14px;">Three independent perspectives converge on five themes:</p>
     <ul style="padding-left:20px;">
       <li style="margin-bottom:10px;"><strong>The September date is at risk from external dependencies, not engineering.</strong> The work ATC controls (packaging, pipeline, manifests) is feasible. The blockers are RHELDST, RHELWF, ENGCMP, RHELCMP, and the portal team — none of which have been formally engaged with scope and deliverables.</li>
-      <li style="margin-bottom:10px;"><strong>The separate SKU/Eng Product decision is structurally determined and should be closed immediately.</strong> Continuing to hold the "extensions repo" alternative open delays architecture decisions across all teams without any upside — the access control requirement makes the outcome clear.</li>
+      <li style="margin-bottom:10px;"><strong>The separate SKU/Eng Product decision is structurally determined and should be closed immediately.</strong> "Extensions" in Petr's ticket is a specific named RHEL content-set — Voyager's Option (a), which Voyager itself rejected due to package naming constraints and schedule coupling. Voyager's Option (b) — a new repo under the existing Eng Product, which is what Whitney's "lower overhead path" refers to — also cannot satisfy RHIVOS requirements because it offers no access control. Neither option is available. Continuing to hold them open delays architecture decisions without upside.</li>
       <li style="margin-bottom:10px;"><strong>The Voyager distribution model is directly applicable; the Voyager build toolchain is not.</strong> CDN layered path, disabled-by-default repo, two-compose design (Minimal + Complete) — all reusable. Image-during-compose, Pungi/ODCS toolchain specifics, independent versioning — none of this applies. The meeting's "Voyager doesn't fit" conclusion was too broad; it's the build layer that doesn't fit, not the distribution model.</li>
       <li style="margin-bottom:10px;"><strong>Seven technical gaps were not identified in the prior analysis</strong> — the most critical being the missing compose promotion pipeline (required for ET product listings), the undefined gating stack configuration, and the absence of a dist-git workflow for QC package maintainers.</li>
       <li style="margin-bottom:10px;"><strong>The QC kernel legal decision must not be allowed to hold the user space LP hostage.</strong> Scope-lock September to user space only in writing. Design the architecture to accommodate kernel as an additive scope item, not a redesign trigger.</li>
