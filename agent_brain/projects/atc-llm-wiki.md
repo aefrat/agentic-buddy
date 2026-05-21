@@ -23,7 +23,7 @@ An LLM wiki generated for the ToolChain (ATC) team from all ATC repos, created ~
 
 ## Open decisions
 
-- Where does the wiki source live? → pipe-x namespace seems like the right call per Juanje
+- ~~Where does the wiki source live?~~ → **DONE:** pushed to https://gitlab.cee.redhat.com/automotive/pipe-x/atc_llm_wiki
 - Where does the mkdocs site get deployed? → GitLab Pages / domain / S3 (not yet decided)
 - How often does the wiki get regenerated from repos? (maintenance cadence not yet defined)
 
