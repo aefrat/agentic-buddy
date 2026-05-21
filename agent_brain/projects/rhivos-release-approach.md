@@ -119,9 +119,31 @@ Petr's ticket breaks the work into 8 areas. Mapped against the Voyager knowledge
 **On multiple composes:** AIB's `content.repos` is a list — adding the QC LP compose URL alongside the base RHIVOS compose URL is architecturally supported and already matches the existing pattern for Qualcomm board support repos (`@ADD_QCOM_BOARD_SUPPORT_*@` in `custom-images` manifests). This would not require AIB code changes; it would require manifest changes and a pipeline change to ensure both compose URLs are available before the AIB build stage runs.
 **What remains open:** Whether the QC LP compose URL will be entitlement-gated (accessible only with Qualcomm partner credentials) or openly accessible to pipeline runners. If gated, credential handling in the pipeline would be needed — not an AIB code problem, but a pipeline and CDN access question requiring confirmation with the RHELDST/distribution team.
 
-### Pipelines and package gating — Concept matches, tooling differs ⚠️
+### Pipelines and package gating — Significant new work required ⚠️
 **Petr:** Pipelines use both RHIVOS and LP repos in tandem; gating configured for LP tag structure.
 **Voyager:** Has its own gating, but uses different pipeline tooling (RoG, Brew-native). RHIVOS uses pipelines-as-code. The concept (test with combined repos) is the same; the implementation will be RHIVOS-specific.
+
+**Note on Juanje's "no pipeline changes" framing:** Juanje's statement at the RHIVOS Release Readiness Meeting of May 20 — that only distribution changes are needed, not build or pipeline changes — is directionally correct at the architectural level (the core build infrastructure doesn't change) but undersells the pipeline work. The following specific changes are required, confirmed by ATC codebase analysis:
+
+**Pipeline changes needed (from `downstream-pipelines-as-code`):**
+- New release config file in `release-configs/` (new `BUILD_BRANCH` entry) with QC LP compose URLs, separate `GATOR_CONF` path, and component pins — same pattern as existing stream configs
+- The `generate-compose` stage must either run a second ODCS request for the QC LP compose, or the QC LP compose URL must be injected into the pipeline so AIB can reference it in the build stage
+- Potentially a new S3 path/bucket for QC LP artifacts (pending IAM policy decision — new bucket vs. scoped policy on existing `auto-product-build-downstream`)
+- A compose promotion pipeline for the QC LP Minimal compose that imports product listings into Errata Tool — this does not currently exist and is separate from the `promote-compose` SSH/RCM job used for RHIVOS
+
+**AIB manifest changes needed (from `custom-images`):**
+- New `@ADD_QCOM_LP_REPO_*@` placeholder token in `qa.aib.yml.in` and `ps.aib.yml.in` templates — following the existing `@ADD_QCOM_BOARD_SUPPORT_*@` pattern
+- New `.sed` substitution entries for each QC hardware target (`ride4_sa8775p_sx_r3.sed`, `ride4_sa8650p_sx_r3.sed`) to inject the QC LP compose URL at manifest render time
+- Updates to `create-qa-manifest.sh` to apply QC LP sed for RHIVOS + QC distro/flag — caution: `--require` flag means missing sed files fail hard; `ps` and `fusa-minimal` use `default.sed` fallback, so a missed substitution there emits a broken manifest silently
+
+**Gating changes needed (resultsdb / waiverdb / greenwave / Gator):**
+- Separate `GATOR_CONF` file in `automotive/fences/gating/gator` for QC LP — configures Test Console test triggers for QC packages AND evaluation/contact-point triggers on gate failure (Petr's ticket explicitly lists both)
+- resultsdb: associations for QC LP package builds (separate NVRs from QC Brew tags, distinct from RHIVOS base NVRs)
+- waiverdb: waiver subjects scoped to QC LP tag content
+- greenwave: new policies covering QC LP Brew tag — what constitutes a passing gate for QC LP packages vs. RHIVOS base packages
+
+**Test Console changes needed:**
+- `tc_wait_for_rhivos_test()` in `functions.yml` uses `tc-cli rhivos base-image is-complete` — `rhivos` is a hardcoded product identifier. QC platform images built from dual-compose (RHIVOS + QC LP) may need a new TC pipeline request type or product identifier. Needs explicit TC team confirmation — may not be a simple config change.
 
 ### CDN / EngIDs / SKUs — Significant mismatch ❌
 **Petr:** Separate SKUs; content only accessible with LP SKUs; gated by three-way partner/customer agreements.

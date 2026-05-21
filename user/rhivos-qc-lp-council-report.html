@@ -277,6 +277,7 @@
 <nav class="nav">
   <a href="#summary">Summary</a>
   <a href="#sre">Release Engineer</a>
+  <a href="#pipeline">Pipeline & Gating</a>
   <a href="#em">Eng Manager</a>
   <a href="#po">Product Owner</a>
   <a href="#synthesis">Synthesis</a>
@@ -429,6 +430,174 @@
         <li class="risk"><span class="num">R4</span><div class="content"><strong><code>@PLACEHOLDER@</code> substitution gaps in manifests are silently destructive</strong><p>Any QC LP repo token left unreplaced in a <code>default.sed</code> fallback (used by <code>ps.aib.yml.in</code> and <code>fusa-minimal.aib.yml.in</code>) emits a broken manifest that only surfaces as a boot failure on hardware, not a build error.</p></div></li>
         <li class="risk"><span class="num">R5</span><div class="content"><strong>No dist-git workflow for QC package maintainers</strong><p>RHIVOS composes from a Koji tag directly — no traditional dist-git/RoG. QC vendors need a defined submission path before they start packaging. "User space packaging complete end of August" requires this workflow to exist and be communicated well before August.</p></div></li>
       </ul>
+    </div>
+  </div>
+
+  <!-- PIPELINE & GATING DEEP DIVE -->
+  <div class="persona-section" id="pipeline">
+    <div class="persona-header">
+      <div class="persona-badge" style="background:#e8eaf6;">🔧</div>
+      <div>
+        <div class="persona-title">Pipeline & Gating — Specific Changes Required</div>
+        <div class="persona-subtitle">Addressing Juanje's "only distribution changes needed" framing from the RHIVOS Release Readiness Meeting of May 20</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>Is Juanje's statement still correct?</h3>
+      <div class="cards">
+        <div class="card status-ok">
+          <div class="card-label label-ok">What's correct</div>
+          <p>The core build infrastructure is unchanged — packages still go through the same Brew/Koji process, the same ODCS compose mechanism, the same AIB image build flow. The heaviest work is at the distribution layer (new Eng Product, SKU, CDN layered path, Errata Tool). The build <em>architecture</em> doesn't need redesign.</p>
+        </div>
+        <div class="card status-warn">
+          <div class="card-label label-warn">What's undersold</div>
+          <p>"No pipeline changes" is not accurate. The council analysis identified ~5 new pipeline components that must be built. These are additions, not redesigns — but they require scoping, ownership, and non-trivial implementation effort. Zero estimates exist today.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>Pipeline Changes — <code>downstream-pipelines-as-code</code></h3>
+      <ul class="numbered-list">
+        <li class="step">
+          <span class="num">1</span>
+          <div class="content">
+            <strong>New release config in <code>release-configs/</code></strong>
+            <p>A new <code>BUILD_BRANCH</code> entry (e.g., <code>latest-RHIVOS-2-QC</code>) with QC LP compose URLs, a separate <code>GATOR_CONF</code> path, and component pins. Same pattern as existing stream configs — but must be written, tested via MR, and operational before the LP is available.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="num">2</span>
+          <div class="content">
+            <strong>Dual-compose injection into the <code>generate-compose</code> / build stage</strong>
+            <p>The pipeline currently runs one ODCS request → one compose URL → AIB build. For QC LP images, both the RHIVOS base compose URL and the QC LP compose URL must be available to the AIB build stage. Either a second ODCS call is added, or the QC LP compose URL is injected via a release config variable.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="num">3</span>
+          <div class="content">
+            <strong>S3 artifact access control for QC LP builds</strong>
+            <p>QC LP artifacts contain proprietary Qualcomm content before the CDN push. Decision needed: new S3 bucket vs. scoped IAM policy on existing <code>auto-product-build-downstream</code>. Pipeline runner permissions must be extended to cover the new path. Petr's ticket flags this explicitly.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="num">4</span>
+          <div class="content">
+            <strong>Compose promotion pipeline for QC LP Minimal compose</strong>
+            <p>The step that imports product listings into Errata Tool (making ET advisories functional) requires an automated promotion chain: CTS tag → ET ComposeDB import. The existing RHIVOS <code>promote-compose</code> job does SSH/Kerberos to the RCM host — a different mechanism than Voyager's Jenkins job (RHELCMP-15186). Without this, QC LP advisories will be stuck in <code>NEW_FILES</code>. RHELCMP engagement required. <strong>This pipeline does not exist and is not trivial.</strong></p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3>AIB Manifest Changes — <code>custom-images</code></h3>
+      <ul class="numbered-list">
+        <li class="step">
+          <span class="num">5</span>
+          <div class="content">
+            <strong>New <code>@ADD_QCOM_LP_REPO_*@</code> placeholder tokens in templates</strong>
+            <p>Add to <code>qa.aib.yml.in</code> and <code>ps.aib.yml.in</code>, following the existing <code>@ADD_QCOM_BOARD_SUPPORT_*@</code> pattern. Every <code>.sed</code> file in the corresponding options directory must provide a substitution — or the raw token appears in the manifest and causes a silent broken build.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="num">6</span>
+          <div class="content">
+            <strong>New <code>.sed</code> entries per QC hardware target</strong>
+            <p>Add QC LP repo URL substitutions to <code>ride4_sa8775p_sx_r3.sed</code>, <code>ride4_sa8650p_sx_r3.sed</code>, and related Qualcomm target files. Non-QC targets need a no-op substitution in their <code>default.sed</code>. Caution: <code>create-qa-manifest.sh</code> uses <code>--require</code>, so missing a QC target sed fails hard; <code>ps</code> and <code>fusa-minimal</code> use <code>default.sed</code> fallback, so a missed substitution there emits a broken manifest silently.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="num">7</span>
+          <div class="content">
+            <strong>Updates to <code>create-qa-manifest.sh</code></strong>
+            <p>Logic to apply the QC LP sed block conditionally — when building for a RHIVOS + QC distro/target combination. Pattern already exists for the CA cert injection (<code>[[ "$DISTRO" =~ rhivos ]]</code>) — same approach applies here.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3>Gating Changes — Gator / resultsdb / waiverdb / greenwave</h3>
+      <ul class="numbered-list">
+        <li class="step">
+          <span class="num">8</span>
+          <div class="content">
+            <strong>Separate <code>GATOR_CONF</code> for QC LP in <code>automotive/fences/gating/gator</code></strong>
+            <p>The current Gator config covers RHIVOS base packages. QC LP needs its own config path with: (a) Test Console test triggers for QC packages, and (b) evaluation/contact-point triggers on gate failure (Petr's ticket explicitly lists both). This is a new Gator config file, not an extension of the existing one.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="num">9</span>
+          <div class="content">
+            <strong>resultsdb — new subject associations for QC LP NVRs</strong>
+            <p>Test results must be submittable and queryable against QC LP package builds, which have distinct NVRs from QC Brew tags. resultsdb must know to associate these with the QC LP product, not the base RHIVOS product.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="num">10</span>
+          <div class="content">
+            <strong>waiverdb — waiver subjects scoped to QC LP tag</strong>
+            <p>Waivers for QC LP packages must be expressible without affecting RHIVOS base package gating. QC LP Brew tag content needs its own waiver subject namespace.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="num">11</span>
+          <div class="content">
+            <strong>greenwave — new policies for QC LP Brew tag</strong>
+            <p>A greenwave policy defines what constitutes a passing gate. RHIVOS base policy must not automatically apply to QC LP packages — they may have different gating criteria (e.g., fewer required test plans for user space vs. kernel). New policy required.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3>Test Console — Dual-Compose Smoke Tests</h3>
+      <ul class="numbered-list">
+        <li class="step">
+          <span class="num">12</span>
+          <div class="content">
+            <strong>TC product identifier for QC platform images</strong>
+            <p><code>tc_wait_for_rhivos_test()</code> in <code>functions.yml</code> calls <code>tc-cli rhivos base-image is-complete</code> — <code>rhivos</code> is hardcoded as the product type. QC platform images built from dual-compose (RHIVOS + QC LP) may need a new TC pipeline request type or a configurable product identifier. Petr's ticket flags this: "TC hardcoding for RHIVOS needs removal." Needs explicit TC team confirmation — may not be a config change.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="num">13</span>
+          <div class="content">
+            <strong>New smoke test jobs in <code>extends.yml</code> for QC platform dual-compose images</strong>
+            <p>Once TC supports dual-compose submission, the existing Qualcomm hardware smoke test jobs (<code>smoke-tests-ride4-sa8775p-sx</code>, <code>smoke-tests-ride4-sa8650p-sx-r3</code>) need to be extended or new jobs added that run against images built with both the RHIVOS base compose and the QC LP compose.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3>Summary — What Actually Changes vs. What Stays the Same</h3>
+      <div class="cards">
+        <div class="card status-ok">
+          <div class="card-label label-ok">Unchanged (Juanje is right)</div>
+          <ul>
+            <li>How packages are built in Brew/Koji</li>
+            <li>The ODCS compose mechanism itself</li>
+            <li>AIB's core image build engine</li>
+            <li>The overall pipeline stage structure (compose → build → test → gate → deploy)</li>
+            <li>RHIVOS base compose and image pipeline — runs as-is</li>
+          </ul>
+        </div>
+        <div class="card status-warn">
+          <div class="card-label label-warn">New work required (pipeline additions)</div>
+          <ul>
+            <li>New release config (BUILD_BRANCH for QC LP)</li>
+            <li>Dual-compose URL injection into build stage</li>
+            <li>S3 IAM policy for QC LP artifacts</li>
+            <li>Compose promotion pipeline for ET product listings</li>
+            <li>AIB manifest placeholder tokens + sed files per QC target</li>
+            <li>Separate Gator config + resultsdb/waiverdb/greenwave policies</li>
+            <li>Test Console dual-product support + new smoke test jobs</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 
