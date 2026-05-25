@@ -89,7 +89,7 @@
     </ul>
   </div>
 
-  <h2>⚠️ Requires investigation before closing (1 area)</h2>
+  <h2>⚠️ Requires investigation / new work (2 areas)</h2>
   <div class="section-warn">
     <ul>
       <li>
@@ -104,6 +104,26 @@
         pipeline-level credential handling would be needed (not an AIB code change). This needs
         confirmation with the RHELDST/distribution team.
       </li>
+      <li>
+        <strong>Package gating (Gator / resultsdb / waiverdb / greenwave):</strong> Voyager is not
+        applicable here — it uses RHEL's standard gating infrastructure. The RHIVOS pipeline uses
+        <code>automotive/fences/gating/gator</code> for Brew package promotion gating, configured
+        via the <code>GATOR_CONF</code> variable in <code>downstream-pipelines-as-code</code>.
+        The current Gator config covers RHIVOS base packages only. QC LP requires net-new
+        configuration across four layers:
+        (1) a separate Gator config for QC LP packages defining test triggers for Test Console
+        and evaluation/contact-point triggers for package maintainers on gate failure
+        (as specified in the ticket);
+        (2) resultsdb subject associations for QC LP NVRs so test results can be submitted
+        and queried against QC Brew tag content;
+        (3) waiverdb waiver subjects scoped to the QC LP Brew tag, so QC LP waivers do not
+        affect RHIVOS base package gating;
+        (4) greenwave policies for the QC LP Brew tag defining what constitutes a passing gate.
+        Additionally, <code>tc_wait_for_rhivos_test()</code> in the pipeline uses a hardcoded
+        <code>rhivos</code> product identifier for Test Console — this needs to be configurable
+        or require a new TC request type to handle QC platform images built from dual-compose
+        (Petr's ticket explicitly flags this). Contact: <strong>Hubert Stefanski</strong> (gating).
+      </li>
     </ul>
   </div>
 
@@ -116,6 +136,24 @@
     alignment) is directly applicable and essentially what Juanje's proposal ("build internally,
     separate at CDN") implements. The recommended path is: don't adopt Voyager's build/compose
     tooling, but use its distribution model as the reference.
+  </div>
+
+  <h2>🔍 Key finding — what the LP work actually is</h2>
+  <div class="section-note">
+    Review of the <code>custom-images</code> AIB manifest repository reveals that Qualcomm-specific
+    packages — including <code>kernel-ivos-qualcomm</code> — do <strong>not</strong> currently come
+    from Brew or the RHIVOS compose. They are fetched directly from <strong>Qualcomm COPR repos</strong>,
+    injected into AIB manifests via <code>@ADD_QCOM_BOARD_SUPPORT_*@</code> placeholder substitution
+    per target board (e.g., <code>ride4_sa8775p_sx_r3.sed</code>). There is currently no Brew tag,
+    no ODCS compose, no Gator gating, and no Errata Tool advisories for this content.
+    <br><br>
+    The QC LP initiative is therefore not about <em>adding another compose alongside an existing one</em>
+    — it is about <strong>replacing COPR with a formal Red Hat distribution channel</strong>:
+    Brew → QC LP compose (ODCS) → CDN behind a QC SKU → AIB manifest.
+    The <code>@ADD_QCOM_BOARD_SUPPORT_*@</code> sed pattern already in <code>custom-images</code>
+    is the exact hook point — the LP work replaces the COPR URLs in those sed files with a CDN URL
+    gated by the QC SKU. This makes the access control requirement concrete: COPR is effectively
+    public today; the LP is the first point at which QC content is formally gated.
   </div>
 
   <div class="actions">
