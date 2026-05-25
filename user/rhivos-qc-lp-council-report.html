@@ -277,6 +277,7 @@
 <nav class="nav">
   <a href="#summary">Summary</a>
   <a href="#sre">Release Engineer</a>
+  <a href="#tagflow">Tag Workflows</a>
   <a href="#pipeline">Pipeline & Gating</a>
   <a href="#em">Eng Manager</a>
   <a href="#po">Product Owner</a>
@@ -454,6 +455,234 @@
         <li class="risk"><span class="num">R4</span><div class="content"><strong><code>@PLACEHOLDER@</code> substitution gaps in manifests are silently destructive</strong><p>Any QC LP repo token left unreplaced in a <code>default.sed</code> fallback (used by <code>ps.aib.yml.in</code> and <code>fusa-minimal.aib.yml.in</code>) emits a broken manifest that only surfaces as a boot failure on hardware, not a build error.</p></div></li>
         <li class="risk"><span class="num">R5</span><div class="content"><strong>No dist-git workflow for QC package maintainers</strong><p>RHIVOS composes from a Koji tag directly — no traditional dist-git/RoG. QC vendors need a defined submission path before they start packaging. "User space packaging complete end of August" requires this workflow to exist and be communicated well before August.</p></div></li>
       </ul>
+    </div>
+  </div>
+
+  <!-- TAG WORKFLOW COMPARISON -->
+  <div class="persona-section" id="tagflow">
+    <div class="persona-header">
+      <div class="persona-badge" style="background:#ede7f6;">🏷️</div>
+      <div>
+        <div class="persona-title">Tag Pipeline Architecture — RHIVOS vs. RHEL-for-NVIDIA</div>
+        <div class="persona-subtitle">Confirmed from gator-run-configs (RHIVOS) and RHEL-for-NVIDIA knowledge base (Voyager) · Sources of truth for LP tag design</div>
+      </div>
+    </div>
+
+    <!-- RHIVOS full flow -->
+    <div class="subsection">
+      <h3>RHIVOS Full Package Tag Workflow — Confirmed from Configs</h3>
+      <div style="background:var(--bg); border-radius:8px; padding:20px 24px; margin-bottom:16px; font-family:'SFMono-Regular',Consolas,monospace; font-size:0.82rem; line-height:1.9; overflow-x:auto;">
+<pre style="margin:0; white-space:pre; background:none;">
+[maintainer] builds kernel-automotive in Brew
+        │
+        ▼
+ rhivos-2.0-gate              ← maintainer tags build here; Gator monitors this tag
+        │
+        │  ── GATING STAGE (gator-run-configs/RHIVOS-2/latest-rhivos2-gating.yaml) ──
+        │  Greenwave policy:   rhivos_gate / product_version: rhivos-2
+        │  Tests:              Test Console → ridesx4 + rcar_s4 + virtual
+        │  kernel-automotive:  ignore_failure: false  ← gate-blocking
+        │  Special path:       if fail → check ReportPortal for BTS triage links
+        │                      if all failures triaged → auto-promote with Slack alert
+        │  On pass:            tag to candidate, untag from gate (untag_source: true)
+        │  CBS sync:           kernel-automotive → autosd9s-packages-main-candidate
+        │  Contacts notified on failure: sbertram, mmenashe, scweaver
+        ▼
+ rhivos-2.0-candidate         ← gating passed; compose also reads from here (*)
+  + rhivos-2.0-jotnar         ← pinned baseline always included in test matrix
+        │
+        │  ── PROMOTE STAGE (gator-run-configs/RHIVOS-2/latest-rhivos2-promote.yaml) ──
+        │  Greenwave policy:   rhivos_gate / product_version: rhivos-2
+        │  Tests:              Test Console → ridesx4 + rcar_s4 + virtual (same scope)
+        │  kernel-automotive:  ignore_failure: false  ← gate-blocking at promote too
+        │  On pass:            tag to pending, stay on candidate (untag_source: false)
+        │  CBS sync:           kernel-automotive → autosd10s-packages-main-candidate
+        ▼
+ rhivos-2.0-pending            ← promotion complete
+        │
+        │  (*) ODCS compose reads pkgset_koji_tag = "rhivos-2.1-candidate"
+        │      Relationship between -pending and compose input tag: not documented
+        │      in available configs — likely a separate promote or tag copy step
+        ▼
+ ODCS compose                  ← Pungi/ODCS, reads rhivos-2.1-candidate, outputs RPM repo
+        │
+        ▼
+ AIB image builds              ← all hardware targets × image types, parallel
+ (custom-images manifests       uses RHIVOS compose URL via content.repos
+  + @ADD_QCOM_BOARD_SUPPORT_*@ ← Qualcomm COPR repos injected here for QC targets)
+        │
+        ▼
+ Test Console smoke tests       ← pipeline-level (image smoke tests, not package gating)
+ (tc_wait_for_rhivos_test()     ridesx4, rcar_s4, virtual; core + fusa test plans)
+        │
+        ▼
+ promote-compose               ← SSH + Kerberos to RCM compose host (allow_failure: true)
+        │
+        ▼
+ create-product-listing        ← updates Red Hat product database
+</pre>
+      </div>
+      <div class="card status-warn" style="margin-top:8px;">
+        <div class="card-label label-warn">⚠ Gap: pending → compose input tag</div>
+        <p>The gating configs confirm packages land in <code>rhivos-2.0-pending</code>, but the ODCS compose reads from <code>rhivos-2.1-candidate</code>. How pending feeds the compose input is not documented in the available configs. This link must be understood before designing the QC LP equivalent.</p>
+      </div>
+    </div>
+
+    <!-- Voyager flow -->
+    <div class="subsection">
+      <h3>RHEL-for-NVIDIA (Voyager) Full Package Tag Workflow — From Knowledge Base</h3>
+      <div class="card status-info" style="margin-bottom:12px;">
+        <div class="card-label label-info">Source note</div>
+        <p>Voyager details are from the RHEL-for-NVIDIA knowledge base docs (<code>delivery.md</code>, <code>composes.md</code>), not from Gator config files. The tooling is RHEL's standard build infrastructure, not Gator.</p>
+      </div>
+      <div style="background:var(--bg); border-radius:8px; padding:20px 24px; margin-bottom:16px; font-family:'SFMono-Regular',Consolas,monospace; font-size:0.82rem; line-height:1.9; overflow-x:auto;">
+<pre style="margin:0; white-space:pre; background:none;">
+[maintainer] builds nvidia package in Brew
+        │
+        ▼
+ nv-{ver}-rhel-10-candidate   ← e.g. nv-26.03-rhel-10-candidate
+        │
+        │  RHEL standard gating process (not Gator)
+        │  Jenkins sync job monitors -pending tags
+        ▼
+ nv-{ver}-rhel-10-pending
+        │
+        ▼
+ nv-{ver}-rhel-10-build       ← stable build tag
+        │
+        ▼
+ nv-{ver}-rhel-10-et-compose  ← feeds compose input
+        │
+        ├──── MINIMAL COMPOSE ──────────────────────────────────────────────────────
+        │     LP packages only (no RHEL base content)
+        │     CDN-aligned; purpose: generate ET product listings
+        │     → ET ComposeDB import via Jenkins job RHELCMP-15186
+        │        (CTS tag → UMB message → Jenkins → ComposeDB → CTS tag)
+        │     → CDN: /content/dist/layered/rhel10/aarch64/nvidia/os
+        │     → Enables Errata advisories (without this: stuck in NEW_FILES state)
+        │
+        └──── COMPLETE COMPOSE ─────────────────────────────────────────────────────
+              RHEL base content + LP package overrides
+              Purpose: generate installable images
+              Technically forced: Pungi cannot handle two builds of same package
+              name in different variants of one compose → two composes mandatory
+              if LP overrides any base package (e.g. a kernel variant)
+              → Image builds (done during/as part of compose, not post-compose)
+              → Distribution via existing RHEL subscription (no separate SKU)
+                 All RHEL subscribers can access; disabled-by-default repo
+</pre>
+      </div>
+    </div>
+
+    <!-- Side-by-side structural comparison -->
+    <div class="subsection">
+      <h3>Structural Comparison</h3>
+      <div style="overflow-x:auto;">
+        <table style="width:100%; border-collapse:collapse; font-size:0.84rem;">
+          <thead>
+            <tr style="background:var(--bg);">
+              <th style="padding:10px 14px; text-align:left; border-bottom:2px solid var(--border); width:28%;">Dimension</th>
+              <th style="padding:10px 14px; text-align:left; border-bottom:2px solid var(--border); width:36%; color:var(--blue);">RHIVOS (confirmed)</th>
+              <th style="padding:10px 14px; text-align:left; border-bottom:2px solid var(--border); width:36%; color:var(--purple);">RHEL-for-NVIDIA / Voyager (knowledge base)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border);">
+              <td style="padding:9px 14px; font-weight:600;">Gating tool</td>
+              <td style="padding:9px 14px;"><strong>Gator</strong> (Python CLI, Greenwave, TestConsole, ResultsDB, WaiverDB)</td>
+              <td style="padding:9px 14px;">RHEL standard process (Jenkins jobs, RHELBLD-owned)</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border); background:#fafafa;">
+              <td style="padding:9px 14px; font-weight:600;">Brew tag stages</td>
+              <td style="padding:9px 14px;"><code>gate</code> → <code>candidate</code> → <code>pending</code> (3 stages)</td>
+              <td style="padding:9px 14px;"><code>candidate</code> → <code>pending</code> → <code>build</code> → <code>et-compose</code> (4 stages)</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);">
+              <td style="padding:9px 14px; font-weight:600;">Pinned baseline tag</td>
+              <td style="padding:9px 14px;"><code>rhivos-2.0-jotnar</code> — always in test matrix</td>
+              <td style="padding:9px 14px;">Not documented in knowledge base</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border); background:#fafafa;">
+              <td style="padding:9px 14px; font-weight:600;">Number of composes</td>
+              <td style="padding:9px 14px;"><strong>One</strong> — single RHIVOS compose (RPM repo only)</td>
+              <td style="padding:9px 14px;"><strong>Two</strong> — Minimal (LP only, ET+CDN) + Complete (base+LP, images). Two-compose is technically forced by Pungi.</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);">
+              <td style="padding:9px 14px; font-weight:600;">Image build timing</td>
+              <td style="padding:9px 14px;"><strong>Post-compose</strong> — AIB runs after compose completes, reads <code>content.repos</code> URLs</td>
+              <td style="padding:9px 14px;"><strong>During compose</strong> — image generation integrated into the compose process</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border); background:#fafafa;">
+              <td style="padding:9px 14px; font-weight:600;">Compose promotion</td>
+              <td style="padding:9px 14px;">SSH + Kerberos to RCM host via <code>pac-jobs-rcm</code> (<code>allow_failure: true</code>)</td>
+              <td style="padding:9px 14px;">CTS tag → UMB message → Jenkins job (RHELCMP-15186) → ET ComposeDB import → CTS tag</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);">
+              <td style="padding:9px 14px; font-weight:600;">ET product setup</td>
+              <td style="padding:9px 14px;">Base RHIVOS ET product; <code>create-product-listing</code> job post-promote</td>
+              <td style="padding:9px 14px;">Separate ET Product (<code>RHEL-10-Nvidia</code>), Product Version, Variant. Separate advisory stream.</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border); background:#fafafa;">
+              <td style="padding:9px 14px; font-weight:600;">CDN access control</td>
+              <td style="padding:9px 14px;">Part of base RHIVOS product (RHIVOS subscribers)</td>
+              <td style="padding:9px 14px;">No separate SKU — all RHEL subscribers; disabled-by-default repo. CDN path: <code>/content/dist/layered/rhel10/aarch64/nvidia/os</code></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);">
+              <td style="padding:9px 14px; font-weight:600;">Versioning</td>
+              <td style="padding:9px 14px;">Tied to RHIVOS release cycle (<code>rhivos-2.0</code>, <code>rhivos-2.1</code>)</td>
+              <td style="padding:9px 14px;">Independent, date-based (<code>nv-26.03-rhel-10</code> = March 2026 quarterly)</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border); background:#fafafa;">
+              <td style="padding:9px 14px; font-weight:600;">Qualcomm/NVIDIA pkgs</td>
+              <td style="padding:9px 14px;"><code>kernel-ivos-qualcomm</code>: <strong>COPR repo</strong>, outside Brew entirely. No gating, no ET, no advisories.</td>
+              <td style="padding:9px 14px;">All NVIDIA packages go through the full Brew tag chain. No COPR equivalent.</td>
+            </tr>
+            <tr>
+              <td style="padding:9px 14px; font-weight:600;">Contcert (container cert)</td>
+              <td style="padding:9px 14px;">Commented out in all gating configs — pending enablement</td>
+              <td style="padding:9px 14px;">Not applicable (different product structure)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- What QC LP needs -->
+    <div class="subsection">
+      <h3>What the QC LP Needs to Add — Derived from the Gap</h3>
+      <div class="cards">
+        <div class="card status-ok">
+          <div class="card-label label-ok">Can reuse from RHIVOS (Gator infrastructure already exists)</div>
+          <ul>
+            <li>Gator tooling (Python CLI, Greenwave, TC, ResultsDB, WaiverDB)</li>
+            <li>Test Console hardware targets — <code>ridesx4</code> already defined</li>
+            <li>Greenwave base infrastructure — new <em>policy</em> needed, not new infrastructure</li>
+            <li>OSCI CI Mediator integration</li>
+            <li>Slack notification pattern</li>
+            <li>Same <code>@ADD_QCOM_BOARD_SUPPORT_*@</code> sed hook point in <code>custom-images</code></li>
+          </ul>
+        </div>
+        <div class="card status-warn">
+          <div class="card-label label-warn">New additions modelled on RHIVOS tag pattern</div>
+          <ul>
+            <li>New Brew tags: <code>rhivos-qc-2.1-gate</code>, <code>rhivos-qc-2.1-candidate</code>, <code>rhivos-qc-2.1-pending</code> (file with RHELBLD)</li>
+            <li>New jotnar-equivalent pinned baseline tag for QC</li>
+            <li>New gator-run-config: <code>RHIVOS-2/rhivos-qc-2.1-gating.yaml</code> and <code>rhivos-qc-2.1-promote.yaml</code></li>
+            <li>New Greenwave policy for <code>product_version: rhivos-qc-2</code></li>
+            <li>New ResultsDB context for QC LP results</li>
+            <li>New <code>@ADD_QCOM_LP_REPO_*@</code> placeholder replacing COPR URLs with CDN URL</li>
+          </ul>
+        </div>
+        <div class="card status-risk">
+          <div class="card-label label-risk">New additions modelled on Voyager (RHIVOS has no equivalent)</div>
+          <ul>
+            <li><strong>Minimal compose</strong> — LP packages only, CDN-aligned, feeds ET product listings. Required if QC kernel is in scope (Pungi two-compose constraint). Not optional if advisories must work.</li>
+            <li><strong>Compose promotion pipeline</strong> — ET ComposeDB import equivalent to Jenkins job RHELCMP-15186. RHIVOS's <code>promote-compose</code> (SSH/Kerberos to RCM) is a different mechanism; this is a new pipeline, not an extension.</li>
+            <li><strong>Separate ET Product + Product Version + Variant</strong> for QC LP — RHIVOS currently uses its base ET product; QC LP advisory stream must be separate.</li>
+            <li><strong>CDN layered path</strong> behind QC SKU — <code>/content/dist/layered/rhivos/{arch}/qualcomm/os</code>, gated (unlike Voyager's open access).</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 
