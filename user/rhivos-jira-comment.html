@@ -104,9 +104,10 @@
         Per Juanje's confirmation, QC LP packages go into the same RHIVOS compose — no separate
         QC LP compose URL. AIB reads the same compose URL as today; no dual-compose injection is
         needed. What does need to happen: (1) the Pungi compose config must be updated to include the
-        QC LP Brew tag as an additional <code>koji_tag</code> input; (2) AIB manifests need new
-        <code>@ADD_QCOM_LP_REPO_*@</code> placeholder tokens replacing COPR URLs with the CDN QC LP
-        path; (3) per-target <code>.sed</code> files updated for QC hardware. The open CDN access
+        QC LP Brew tag as an additional <code>koji_tag</code> input; (2) the <code>qcom_repo_url</code> value in <code>targets.yml</code> Jinja2 templates
+        updated to point to the CDN QC LP path instead of COPR (the old per-target <code>.sed</code>
+        file system has already been replaced by Jinja2 in <code>qa.aib.yml.j2</code> /
+        <code>ps.aib.yml.j2</code>); (3) Jinja2 image manifests verified to pick up the new URL. The open CDN access
         question is whether the QC LP CDN layered path is accessible to internal pipeline runners
         before customer entitlement is set up — this needs confirmation with RHELDST.
       </li>
@@ -167,13 +168,21 @@
     Confirmed packages installed from this repo: <code>stmmac-mac-generator</code> (ethernet MAC
     address generator for the RIDE4 board’s STM32 ethernet controller) and <code>aboot-update</code>
     (Android Boot updater for QC boards). These are narrow board-specific utilities.
-    The “advance features — QC user space for audio, video” scoped at the May 20 meeting are likely
-    additional packages planned for the LP that are <em>not yet</em> in the COPR or any Brew tag.
+    The "advance features — QC user space for audio, video" scoped at the May 20 meeting have been
+    <strong>verified absent from all ATC-controlled infrastructure</strong> — not in this COPR, not in
+    any Brew tag, not in the RHIVOS compose. Note: generic audio/video support
+    (<code>alsa-plugins-pulseaudio</code>, <code>pipewire-*</code>, <code>libcamera-*</code>,
+    <code>gstreamer1-*</code>) is already in the RHIVOS base compose — that is a separate track,
+    not LP scope. The LP is about a QC-<em>specific</em> audio/video stack that does not yet
+    exist as packages anywhere.
     <br><br>
-    The QC LP initiative is therefore about formalizing this board support stack:
-    Brew → existing RHIVOS ODCS compose (QC LP tag as additional <code>koji_tag</code> input) →
-    CDN layered path behind a QC SKU → replace the COPR URL in Jinja2 templates with the LP CDN URL.
-    COPR is public today; the LP is the first formal gate for this content.
+    The QC LP initiative therefore has two phases: (1) <strong>Packaging prerequisite</strong>
+    — create the QC-specific audio/video user space packages and get them into Brew under a
+    QC LP Brew tag; this work does not currently exist anywhere. (2) <strong>Distribution</strong>
+    — once packages exist: QC LP Brew tag as additional <code>koji_tag</code> in Pungi →
+    RHIVOS ODCS compose → CDN layered path behind QC SKU → replace the COPR URL in
+    Jinja2 templates with the LP CDN URL.
+    COPR is public today; the LP is the first formal gate — but the content must be created first.
   </div>
 
   <div class="actions">
