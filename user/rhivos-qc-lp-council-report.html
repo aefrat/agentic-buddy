@@ -310,10 +310,10 @@
     <div class="subsection">
       <h3>Validate or Challenge — Prior Conclusions</h3>
       <div class="cards">
-        <div class="card status-warn">
-          <div class="card-label label-warn">⚠ Revised — constraint does not apply to RHIVOS QC LP</div>
-          <p><strong>Two-compose was technically forced for Voyager — but not for the same reason RHIVOS needs it.</strong> Voyager's two-compose design was forced by a package name collision: NVIDIA ships a kernel with the <em>same name</em> as RHEL's standard kernel, and Pungi cannot handle two builds of the same package name in different variants of one compose. RHIVOS does not have this problem. The Qualcomm kernel is <code>kernel-ivos-qualcomm</code> — a <em>distinct name</em> from <code>kernel-automotive</code>. QC LP packages are additive (unique names, no RHIVOS base package is being replaced), so Pungi sees no naming conflict.</p>
-          <p style="margin-top:8px;">A separate Minimal compose for QC LP is still needed — for CDN alignment (the disabled-by-default LP repo path) and for Errata Tool product listing import. But the reason is <strong>architectural</strong> (CDN/ET requirements), not a Pungi workaround. This distinction matters for scoping: RHIVOS could in principle build QC LP images from a single compose; the split is driven by distribution requirements, not build tooling constraints.</p>
+        <div class="card status-ok">
+          <div class="card-label label-ok">✓ Confirmed — one compose is sufficient (Juanje + Whitney)</div>
+          <p><strong>RHIVOS QC LP does not need a separate compose.</strong> Voyager's two-compose design was forced by a package name collision (NVIDIA and RHEL both ship a package named <code>kernel</code>; Pungi cannot handle two builds of the same name in one compose). That constraint does not apply here: <code>kernel-ivos-qualcomm</code> ≠ <code>kernel-automotive</code>. QC LP packages are additive with distinct names — no Pungi conflict.</p>
+          <p style="margin-top:8px;">Juanje confirmed: build and compose stay the same; only distribution bits (ET, CDN) change. Whitney's confirmation that QC LP releases are synchronous with RHIVOS releases closes the last remaining reason a separate compose might have been needed (independent cadence would have complicated a single compose). The model: QC LP packages go through their own Brew tag chain → land in the same compose input tag as RHIVOS base packages → one ODCS compose → distribution layer separates them at CDN + ET. Scope impact: <strong>G1 (ODCS compose registration) is eliminated</strong>; G2 (ET product listing) reduces to extending the existing promote-compose step; AIB dual-compose injection is eliminated.</p>
         </div>
         <div class="card status-ok">
           <div class="card-label label-ok">✓ Confirmed</div>
@@ -350,15 +350,15 @@
         <li class="gap">
           <span class="num">G1</span>
           <div class="content">
-            <strong>ODCS compose registration not owned</strong>
-            <p>Adding a QC LP compose requires an ODCS playbook MR filed with ENGCMP (CTS system). Who writes the QC LP Pungi config, where it lives (new branch in <code>rhivos.git</code>? new repo?), and who registers it with ODCS — completely undefined.</p>
+            <strong>~~ODCS compose registration~~ — ELIMINATED (Juanje / one-compose model)</strong>
+            <p>A separate QC LP ODCS compose is not needed. QC LP packages flow through their own Brew tag chain into the same compose input as RHIVOS base packages. The existing ODCS/Pungi compose config may need updating to accept a second Brew tag input (Pungi supports multiple <code>koji_tag</code> entries), but this is a small config change — not a new compose registration. ENGCMP scope reduces significantly.</p>
           </div>
         </li>
         <li class="gap">
           <span class="num">G2</span>
           <div class="content">
-            <strong>Compose promotion pipeline is entirely missing</strong>
-            <p>Voyager's Minimal compose feeds ET product listings via an automated promotion chain (CTS tag → UMB message → Jenkins job → ET ComposeDB import). RHIVOS's <code>promote-compose</code> uses SSH/Kerberos to an RCM host — a different mechanism. Without an equivalent for the QC LP Minimal compose, ET advisories will be stuck in <code>NEW_FILES</code> state (exactly Voyager's ENGCMP-6387 problem). RHELCMP engagement required.</p>
+            <strong>ET product listing registration for QC LP — still required, scope reduced</strong>
+            <p>With one compose, the existing <code>promote-compose</code> + <code>create-product-listing</code> pipeline handles the compose promotion step. What is still needed: configuring a separate ET Product, Product Version, and Variant for QC LP so that product listings for QC NVRs can be registered under the correct advisory stream. This is ET configuration work (OSCI/RHELWF), not a new pipeline. RHELCMP engagement is still required to confirm <code>promote-compose</code> can handle QC LP NVRs from the combined compose — but this is extension, not new build.</p>
           </div>
         </li>
         <li class="gap">
@@ -378,8 +378,8 @@
         <li class="gap">
           <span class="num">G5</span>
           <div class="content">
-            <strong>Test Console dual-compose submission not designed</strong>
-            <p><code>tc_wait_for_rhivos_test()</code> in <code>functions.yml</code> uses <code>tc-cli rhivos base-image is-complete</code> — <code>rhivos</code> is a hardcoded product identifier. QC platform images built from dual-compose (RHIVOS + QC LP) need TC to accept and track a combined submission. May require new TC pipeline request types or API changes — not a config tweak.</p>
+            <strong>Test Console product identifier hardcoded for RHIVOS base — QC platform images not covered</strong>
+            <p><code>tc_wait_for_rhivos_test()</code> in <code>functions.yml</code> uses <code>tc-cli rhivos base-image is-complete</code> — <code>rhivos</code> is a hardcoded product type. QC platform images (built from the combined RHIVOS + QC LP compose) are a distinct image type and need a TC product identifier of their own. This is not a dual-compose problem; it exists regardless of compose count. May require a new TC pipeline request type or a configurable product identifier — not a config tweak. Petr's ticket flags this explicitly.</p>
           </div>
         </li>
         <li class="gap">
@@ -419,7 +419,7 @@
       <div class="impl-layer">
         <div class="impl-layer-header" style="border-left: 4px solid var(--red);">Layer 1 — Decisions that block everything else (no code until resolved)</div>
         <div class="impl-items">
-          <div class="impl-item"><div class="impl-num">1</div><div>QC kernel legal clearance (Jeffrey Calfman) — determines pesign infrastructure need and whether two-compose is mandatory vs. optional</div></div>
+          <div class="impl-item"><div class="impl-num">1</div><div>QC kernel legal clearance (Jeffrey Calfman) — determines pesign infrastructure need (two-compose model is no longer in scope; one-compose confirmed)</div></div>
           <div class="impl-item"><div class="impl-num">2</div><div>CDN access control model — RHELDST confirms new Eng Product + separate SKU is required (structurally determined; confirm and close)</div></div>
           <div class="impl-item"><div class="impl-num">3</div><div>CDN path structure agreed with RHELDST — e.g., <code>/content/dist/layered/rhivos/{arch}/qualcomm/os</code></div></div>
         </div>
@@ -428,7 +428,7 @@
         <div class="impl-layer-header" style="border-left: 4px solid var(--orange);">Layer 2 — Infrastructure setup (parallelize once Layer 1 done; 4–6 week lead times)</div>
         <div class="impl-items">
           <div class="impl-item"><div class="impl-num">4</div><div>File Brew tag set request with RHELBLD: <code>rhivos-qc-2.1-candidate</code>, <code>pending</code>, <code>build</code>, <code>et-compose</code> + pesign targets if kernel confirmed</div></div>
-          <div class="impl-item"><div class="impl-num">5</div><div>Register QC LP ODCS compose config with CTS via ENGCMP — define the Minimal compose Pungi config</div></div>
+          <div class="impl-item"><div class="impl-num">5</div><div>Update existing ODCS/Pungi compose config to include QC LP Brew tag as additional package input (small config change; no new compose registration with ENGCMP)</div></div>
           <div class="impl-item"><div class="impl-num">6</div><div>Configure ET Product, Product Version, Variant for QC LP (OSCI/RHELWF engagement) — defines advisory automation scope</div></div>
           <div class="impl-item"><div class="impl-num">7</div><div>Configure CDN repos in product-service-config-auto (RHELDST)</div></div>
           <div class="impl-item"><div class="impl-num">8</div><div>Define S3 IAM policy for QC LP artifacts (new bucket or scoped policy on existing)</div></div>
@@ -438,10 +438,10 @@
         <div class="impl-layer-header" style="border-left: 4px solid var(--blue);">Layer 3 — Pipeline and gating work (requires Layer 2 complete)</div>
         <div class="impl-items">
           <div class="impl-item"><div class="impl-num">9</div><div>Add separate Gator config for QC LP; configure resultsdb, waiverdb, greenwave policy for QC LP tag</div></div>
-          <div class="impl-item"><div class="impl-num">10</div><div>Implement compose promotion pipeline for QC LP Minimal compose (ET product listing import) — model on Voyager Jenkins job RHELCMP-15186</div></div>
+          <div class="impl-item"><div class="impl-num">10</div><div>Extend <code>create-product-listing</code> pipeline step to register QC LP NVRs under the QC LP ET Product/Variant — confirm with RHELCMP that the existing <code>promote-compose</code> mechanism covers QC LP NVRs from the combined compose</div></div>
           <div class="impl-item"><div class="impl-num">11</div><div>Modify <code>custom-images</code> manifests: add <code>@ADD_QCOM_LP_REPO_*@</code> tokens to <code>qa.aib.yml.in</code>, <code>ps.aib.yml.in</code>; add <code>.sed</code> entries for QC hardware targets</div></div>
-          <div class="impl-item"><div class="impl-num">12</div><div>Add QC LP release config to <code>downstream-pipelines-as-code/release-configs/</code>; handle dual-compose URL injection into AIB build stage</div></div>
-          <div class="impl-item"><div class="impl-num">13</div><div>Resolve TC dual-product smoke test submission (TC team engagement); add/modify QC platform smoke test jobs in <code>extends.yml</code></div></div>
+          <div class="impl-item"><div class="impl-num">12</div><div>Add QC LP release config to <code>downstream-pipelines-as-code/release-configs/</code> (new BUILD_BRANCH entry, separate GATOR_CONF path); no dual-compose injection — AIB reads the same combined compose URL as RHIVOS base</div></div>
+          <div class="impl-item"><div class="impl-num">13</div><div>Resolve TC product identifier hardcoding — QC platform images need a distinct product type in TC (not a dual-compose problem); add/modify QC platform smoke test jobs in <code>extends.yml</code></div></div>
         </div>
       </div>
     </div>
@@ -450,9 +450,9 @@
     <div class="subsection">
       <h3>Engineering Risks</h3>
       <ul class="numbered-list">
-        <li class="risk"><span class="num">R1</span><div class="content"><strong>Compose promotion pipeline not RHIVOS-owned</strong><p><code>promote-compose</code> does SSH to RCM host. Voyager's ET listing import is a separate Jenkins job (RHELCMP-15186) owned by RHELCMP. If RHIVOS assumes it can reuse its job, the ET product listing import step will be missed and advisories will fail. RHELCMP engagement is required, not optional.</p></div></li>
+        <li class="risk"><span class="num">R1</span><div class="content"><strong>ET product listing for QC LP NVRs — promote-compose coverage unconfirmed</strong><p>With one compose, the existing <code>promote-compose</code> job runs as today. But it needs to also register QC LP NVRs under the QC LP ET Product/Variant — not just the RHIVOS base product. Whether <code>create-product-listing</code> handles this automatically (because NVRs resolve to the correct product via ET lookup) or requires explicit changes is not confirmed. RHELCMP engagement is required to verify coverage.</p></div></li>
         <li class="risk"><span class="num">R2</span><div class="content"><strong>August/September timeline vs. Layer 2 lead times</strong><p>RHELBLD, RHELWF, and RHELDST infrastructure setup items have 4–6 week lead times based on Voyager precedent (RHELBLD-17745 through -18191 spanned months). Starting Layer 2 engagement now is necessary — waiting until August packaging completes will miss September.</p></div></li>
-        <li class="risk"><span class="num">R3</span><div class="content"><strong>QC LP compose entitlement gating may break the AIB pipeline</strong><p>If the QC LP compose URL requires partner credentials, the existing Kerberos keytab (<code>KEYTAB_ODCS</code>) won't satisfy it. The AIB build stage receives compose URLs directly. Needs explicit RHELDST confirmation that the internal (pre-CDN-push) compose URL is accessible without per-user entitlement.</p></div></li>
+        <li class="risk"><span class="num">R3</span><div class="content"><strong>CDN QC LP path entitlement — AIB pipeline must access it without per-user credentials</strong><p>With one compose, the AIB build pipeline reads the same compose URL as today (pre-CDN, internal Kerberos access). The entitlement question shifts to the CDN layer: customers accessing QC LP packages via the CDN layered path need a QC SKU, but the pipeline's internal compose access is unaffected. Needs explicit RHELDST confirmation that the internal compose URL remains accessible to pipeline runners regardless of the CDN SKU gate.</p></div></li>
         <li class="risk"><span class="num">R4</span><div class="content"><strong><code>@PLACEHOLDER@</code> substitution gaps in manifests are silently destructive</strong><p>Any QC LP repo token left unreplaced in a <code>default.sed</code> fallback (used by <code>ps.aib.yml.in</code> and <code>fusa-minimal.aib.yml.in</code>) emits a broken manifest that only surfaces as a boot failure on hardware, not a build error.</p></div></li>
         <li class="risk"><span class="num">R5</span><div class="content"><strong>No dist-git workflow for QC package maintainers</strong><p>RHIVOS composes from a Koji tag directly — no traditional dist-git/RoG. QC vendors need a defined submission path before they start packaging. "User space packaging complete end of August" requires this workflow to exist and be communicated well before August.</p></div></li>
       </ul>
@@ -616,7 +616,7 @@
             </tr>
             <tr style="border-bottom:1px solid var(--border);">
               <td style="padding:9px 14px; font-weight:600;">Why two composes?</td>
-              <td style="padding:9px 14px;">N/A (one compose). <em>QC LP will add a Minimal compose for CDN/ET alignment — not a Pungi workaround. <code>kernel-ivos-qualcomm</code> ≠ <code>kernel-automotive</code>: no name collision.</em></td>
+              <td style="padding:9px 14px;">N/A — one compose, same as today. QC LP packages go into the same RHIVOS compose via a separate Brew tag input. CDN and ET separate the package streams at distribution time. <em>Confirmed by Juanje; no separate QC LP compose needed.</em></td>
               <td style="padding:9px 14px;">Pungi technically forced: NVIDIA ships a kernel named <code>kernel</code> — same as RHEL's. Pungi cannot handle two builds of the same package name in different compose variants. The Complete compose is the only way to express "use NVIDIA's kernel." Also: Voyager builds images <em>during</em> compose (Pungi-integrated), making the Complete compose the image generation unit.</td>
             </tr>
             <tr style="border-bottom:1px solid var(--border);">
@@ -688,7 +688,7 @@
         <div class="card status-risk">
           <div class="card-label label-risk">New additions modelled on Voyager (RHIVOS has no equivalent)</div>
           <ul>
-            <li><strong>Minimal compose</strong> — LP packages only, CDN-aligned, feeds ET product listings. Required for CDN/ET architectural reasons — not because of a Pungi name-collision constraint. Unlike Voyager (where NVIDIA's kernel shares the same name as RHEL's, forcing the split), <code>kernel-ivos-qualcomm</code> is a distinct name from <code>kernel-automotive</code> and creates no Pungi conflict. The Minimal compose is still needed, but the motivation is the CDN layered path and ET listing import, not a build tooling workaround.</li>
+            <li><strong>CDN layered path + ET product configuration</strong> — QC LP packages are served from a separate CDN layered path (<code>/content/dist/layered/rhivos/{arch}/qualcomm/os</code>) gated behind the QC SKU, and require a separate ET Product/Variant for advisory automation. These are distribution-layer configurations, not a separate compose. A Minimal compose (Voyager-style) is NOT needed — QC LP packages are in the same combined RHIVOS compose, and the CDN/ET split happens at the distribution configuration layer.</li>
             <li><strong>Compose promotion pipeline</strong> — ET ComposeDB import equivalent to Jenkins job RHELCMP-15186. RHIVOS's <code>promote-compose</code> (SSH/Kerberos to RCM) is a different mechanism; this is a new pipeline, not an extension.</li>
             <li><strong>Separate ET Product + Product Version + Variant</strong> for QC LP — RHIVOS currently uses its base ET product; QC LP advisory stream must be separate.</li>
             <li><strong>CDN layered path</strong> behind QC SKU — <code>/content/dist/layered/rhivos/{arch}/qualcomm/os</code>, gated (unlike Voyager's open access).</li>
@@ -729,14 +729,14 @@
           <span class="num">1</span>
           <div class="content">
             <strong>New release config in <code>release-configs/</code></strong>
-            <p>A new <code>BUILD_BRANCH</code> entry (e.g., <code>latest-RHIVOS-2-QC</code>) with QC LP compose URLs, a separate <code>GATOR_CONF</code> path, and component pins. Same pattern as existing stream configs — but must be written, tested via MR, and operational before the LP is available.</p>
+            <p>A new <code>BUILD_BRANCH</code> entry (e.g., <code>latest-RHIVOS-2-QC</code>) with a separate <code>GATOR_CONF</code> path, component pins, and QC hardware target overrides. The compose URL is the same combined RHIVOS+QC compose — no second ODCS URL needed. Same pattern as existing stream configs but must be written, tested via MR, and operational before the LP is available.</p>
           </div>
         </li>
         <li class="step">
           <span class="num">2</span>
           <div class="content">
-            <strong>Dual-compose injection into the <code>generate-compose</code> / build stage</strong>
-            <p>The pipeline currently runs one ODCS request → one compose URL → AIB build. For QC LP images, both the RHIVOS base compose URL and the QC LP compose URL must be available to the AIB build stage. Either a second ODCS call is added, or the QC LP compose URL is injected via a release config variable.</p>
+            <strong>Compose config update — include QC LP Brew tag as additional package input</strong>
+            <p>The existing ODCS/Pungi compose reads one Brew tag (<code>rhivos-2.1-candidate</code>). To include QC LP packages in the same compose, the Pungi config needs a second <code>koji_tag</code> entry pointing at the QC LP candidate tag. One ODCS request, one compose URL — AIB build reads it as today. This is a compose config MR, not a pipeline architecture change.</p>
           </div>
         </li>
         <li class="step">
@@ -749,8 +749,8 @@
         <li class="step">
           <span class="num">4</span>
           <div class="content">
-            <strong>Compose promotion pipeline for QC LP Minimal compose</strong>
-            <p>The step that imports product listings into Errata Tool (making ET advisories functional) requires an automated promotion chain: CTS tag → ET ComposeDB import. The existing RHIVOS <code>promote-compose</code> job does SSH/Kerberos to the RCM host — a different mechanism than Voyager's Jenkins job (RHELCMP-15186). Without this, QC LP advisories will be stuck in <code>NEW_FILES</code>. RHELCMP engagement required. <strong>This pipeline does not exist and is not trivial.</strong></p>
+            <strong>ET product listing registration for QC LP NVRs</strong>
+            <p>The existing <code>create-product-listing</code> step runs after <code>promote-compose</code>. With one combined compose, it needs to register QC LP NVRs under the QC LP ET Product/Variant — not just the RHIVOS base product. Whether this is automatic (ET resolves NVRs to products by lookup) or requires a separate call/config needs RHELCMP confirmation. If a separate step is needed, it extends the existing pipeline — it is not a new pipeline from scratch.</p>
           </div>
         </li>
       </ul>
@@ -824,14 +824,14 @@
           <span class="num">12</span>
           <div class="content">
             <strong>TC product identifier for QC platform images</strong>
-            <p><code>tc_wait_for_rhivos_test()</code> in <code>functions.yml</code> calls <code>tc-cli rhivos base-image is-complete</code> — <code>rhivos</code> is hardcoded as the product type. QC platform images built from dual-compose (RHIVOS + QC LP) may need a new TC pipeline request type or a configurable product identifier. Petr's ticket flags this: "TC hardcoding for RHIVOS needs removal." Needs explicit TC team confirmation — may not be a config change.</p>
+            <p><code>tc_wait_for_rhivos_test()</code> in <code>functions.yml</code> calls <code>tc-cli rhivos base-image is-complete</code> — <code>rhivos</code> is hardcoded as the product type. QC platform images are a distinct image type and need their own TC product identifier regardless of compose count. Petr's ticket flags this: "TC hardcoding for RHIVOS needs removal." Needs explicit TC team confirmation — may not be a config change.</p>
           </div>
         </li>
         <li class="step">
           <span class="num">13</span>
           <div class="content">
-            <strong>New smoke test jobs in <code>extends.yml</code> for QC platform dual-compose images</strong>
-            <p>Once TC supports dual-compose submission, the existing Qualcomm hardware smoke test jobs (<code>smoke-tests-ride4-sa8775p-sx</code>, <code>smoke-tests-ride4-sa8650p-sx-r3</code>) need to be extended or new jobs added that run against images built with both the RHIVOS base compose and the QC LP compose.</p>
+            <strong>New smoke test jobs in <code>extends.yml</code> for QC platform images</strong>
+            <p>Once TC supports a QC platform product type, the existing Qualcomm hardware smoke test jobs (<code>smoke-tests-ride4-sa8775p-sx</code>, <code>smoke-tests-ride4-sa8650p-sx-r3</code>) need to be extended or new jobs added that run against QC platform images (built from the combined RHIVOS+QC compose). One compose means no dual-compose submission complexity at the TC API level.</p>
           </div>
         </li>
       </ul>
@@ -853,13 +853,13 @@
         <div class="card status-warn">
           <div class="card-label label-warn">New work required (pipeline additions)</div>
           <ul>
-            <li>New release config (BUILD_BRANCH for QC LP)</li>
-            <li>Dual-compose URL injection into build stage</li>
+            <li>New release config (BUILD_BRANCH for QC LP, separate GATOR_CONF path)</li>
+            <li>Pungi compose config update — add QC LP Brew tag as second <code>koji_tag</code> input (one compose, no dual-URL injection)</li>
             <li>S3 IAM policy for QC LP artifacts</li>
-            <li>Compose promotion pipeline for ET product listings</li>
+            <li>ET product listing extension — register QC LP NVRs from combined compose under QC LP ET Product/Variant</li>
             <li>AIB manifest placeholder tokens + sed files per QC target</li>
             <li>Separate Gator config + resultsdb/waiverdb/greenwave policies</li>
-            <li>Test Console dual-product support + new smoke test jobs</li>
+            <li>Test Console product identifier — QC platform images need distinct TC product type + new smoke test jobs</li>
           </ul>
         </div>
       </div>
@@ -895,7 +895,7 @@
         </div>
         <div class="timeline-item">
           <div class="timeline-date">End of August</div>
-          <div class="timeline-content">QC user space packaging complete. Pipeline integration (dual-compose AIB build) ready. Entitlement gating on compose URL confirmed.</div>
+          <div class="timeline-content">QC user space packaging complete. Pipeline integration ready (compose config updated, Gator config in place, AIB manifest changes merged). CDN access model for QC LP packages confirmed with RHELDST.</div>
         </div>
         <div class="timeline-item at-risk">
           <div class="timeline-date" style="color:var(--red);">End of September ⚠ AT RISK</div>
@@ -931,10 +931,10 @@
             <li><strong>Miles Dunn</strong> — RHEL LP testing coordinator (reports to Jiri Pallich). Key contact for LP test infrastructure.</li>
             <li><strong>Red Hat subscription/portal team</strong> — SKU creation, entitlement flow, customer portal. Not contacted.</li>
             <li><strong>RHELWF/OSCI</strong> — ET Product setup, advisory automation</li>
-            <li><strong>ENGCMP</strong> — ODCS compose registration</li>
-            <li><strong>RHELCMP</strong> — Compose promotion pipeline (ET listing import)</li>
-            <li><strong>RCM team</strong> — New CDN path for <code>promote-compose</code></li>
-            <li><strong>Test Console team</strong> — Dual-product submission</li>
+            <li><strong>ENGCMP</strong> — Pungi compose config update to include QC LP Brew tag input (scope reduced; no new compose registration)</li>
+            <li><strong>RHELCMP</strong> — Confirm <code>create-product-listing</code> coverage for QC LP NVRs from combined compose</li>
+            <li><strong>RCM team</strong> — New CDN layered path for QC LP packages</li>
+            <li><strong>Test Console team</strong> — QC platform product type (hardcoded <code>rhivos</code> identifier needs to be configurable)</li>
             <li><strong>Charles Timko (Product Security / PSIRT)</strong> — CPE strings, SWID tags, PSIRT config for QC LP tags</li>
             <li><strong>Dana Walker (Documentation)</strong> — Customer access and deployment docs; unconfirmed</li>
             <li><strong>Alexander Larsson</strong> — End user tooling (AIB). Named in Petr's doc.</li>
@@ -968,7 +968,7 @@
       <ul class="numbered-list">
         <li class="block"><span class="num">D1</span><div class="content"><strong>Full LP vs. extension repo (Owner: Whitney → Avi)</strong><p>Gates all infrastructure design. Whitney was tasked with consulting release SP team. Set a deadline — answer needed by end of next week. If delayed, bring in release SP team directly.</p></div></li>
         <li class="block"><span class="num">D2</span><div class="content"><strong>New Eng Product vs. new Eng ID under RHIVOS (Owner: RHELDST + portal team)</strong><p>Determines CDN path, SKU mapping, portal page. The access control requirement structurally forces a new Eng Product — confirm and close. Nobody has formally asked the portal team this question.</p></div></li>
-        <li class="block"><span class="num">D3</span><div class="content"><strong>QC LP compose URL access — entitlement-gated or open to pipeline runners (Owner: ATC + RHELDST)</strong><p>Must be confirmed before August packaging completes. If gated, pipeline credential work must be designed and operational before LP content is available.</p></div></li>
+        <li class="block"><span class="num">D3</span><div class="content"><strong>CDN QC LP path access model — entitlement-gated or open to internal pipeline runners (Owner: ATC + RHELDST)</strong><p>With one compose, the pipeline reads the pre-CDN compose URL as today (no new credential issue). The question is whether the CDN QC LP layered path is accessible to the pipeline runners for testing builds before public release. Must be confirmed before August packaging completes.</p></div></li>
         <li class="block"><span class="num">D4</span><div class="content"><strong>QC kernel in or out (Owner: Jeffrey Calfman)</strong><p>Only hard dependency not acceleratable by management. If not resolved by July, scope-lock to user space only for September. Put this in writing.</p></div></li>
       </ul>
     </div>
@@ -980,7 +980,7 @@
         <li class="action"><span class="num">A1</span><div class="content"><strong>Chase Whitney's action item — set a deadline</strong><p>The extension repo decision unblocks everything. Get a date by which she has an answer. If not by end of next week, escalate or bring release SP team in directly.</p></div></li>
         <li class="action"><span class="num">A2</span><div class="content"><strong>Schedule the ATC focals async — this week, not "soon"</strong><p>Three weeks post May-20 and still open. Agenda is clear from AUTOBU-1076: Brew tags, compose config, Gator, pipeline scope. One focused 60-minute meeting unblocks more than three more weeks of drift.</p></div></li>
         <li class="action"><span class="num">A3</span><div class="content"><strong>Contact RHELDST lead — scoping call within two weeks</strong><p>Largest unactivated external dependency. Come with a concrete ask list: CDN path, ET product setup, SKU decision, advisory automation, timeline. Don't let this become "loop you in later."</p></div></li>
-        <li class="action"><span class="num">A4</span><div class="content"><strong>Assign a pipeline focal and ask for an estimate by end of May</strong><p>Pipeline work (new release config, dual-compose AIB stage, Gator config, possibly new S3 bucket) has zero estimates. This is ATC-controlled territory — move on it now.</p></div></li>
+        <li class="action"><span class="num">A4</span><div class="content"><strong>Assign a pipeline focal and ask for an estimate by end of May</strong><p>Pipeline work (new release config, Pungi compose config update for QC LP tag input, Gator config, AIB manifest changes, possibly new S3 bucket) has zero estimates. Scope is smaller than initially thought — no dual-compose injection needed — but must be estimated and owned. This is ATC-controlled territory — move on it now.</p></div></li>
         <li class="action"><span class="num">A5</span><div class="content"><strong>Scope-lock QC kernel as out-of-scope for September — in writing</strong><p>Put it in writing to Whitney and Petr Sabata. Kernel decision not resolved by July → September LP is user space only. Protects the team from late scope creep and prevents the architecture from being designed around an unconfirmed dependency.</p></div></li>
       </ul>
     </div>
@@ -1019,7 +1019,7 @@
         </div>
         <div class="card status-ok">
           <div class="card-label label-ok">What the Voyager model DOES contribute — distribution layer only</div>
-          <p>CDN layered path structure (<code>/content/dist/layered/...</code>), disabled-by-default repo, two-compose design (Minimal for CDN alignment + ET, Complete for image builds) — all applicable regardless of SKU decision. Juanje's "build internally, separate at CDN" proposal aligns with this. The distribution mechanism is reusable; the access model is not.</p>
+          <p>CDN layered path structure (<code>/content/dist/layered/...</code>), disabled-by-default repo, separate ET Product + Variant for the LP advisory stream — all applicable regardless of SKU decision. Juanje's "build internally, separate at CDN" proposal aligns exactly with this. The distribution mechanism is reusable; the two-compose design is not (it was specific to Voyager's same-name kernel conflict, which doesn't apply here). The access model (no separate SKU in Voyager) is also not reusable.</p>
         </div>
       </div>
       <div class="card status-info" style="margin-top: 16px;">
@@ -1034,7 +1034,7 @@
       <div class="cards">
         <div class="card status-warn">
           <div class="card-label label-warn">What customers will need to do (incomplete picture)</div>
-          <p>Obtain a separate QC LP SKU (implies a separate contract or entitlement action), then enable the QC LP repository on top of base RHIVOS. In the automotive AIB context, this likely means a pipeline that has access to the QC LP compose URL, referenced in the manifest <code>content.repos</code>. The subscription-manager mental model from RHEL doesn't fit the AIB declarative build flow.</p>
+          <p>Obtain a separate QC LP SKU (implies a separate contract or entitlement action), then access QC LP packages via the CDN layered path gated behind that SKU. In the automotive AIB context, this means an AIB manifest that references the QC LP CDN repo URL in <code>content.repos</code>. The internal pipeline reads the pre-CDN compose directly (no SKU gate); the SKU gate applies at the CDN layer for external partners. The subscription-manager mental model from RHEL doesn't fit the AIB declarative build flow.</p>
         </div>
         <div class="card status-risk">
           <div class="card-label label-risk">What's entirely missing</div>
@@ -1078,7 +1078,7 @@
       <h3>Undefined Product Decisions — Blocking Before Anyone Can Build Anything</h3>
       <ul class="numbered-list">
         <li class="block"><span class="num">P1</span><div class="content"><strong>QC kernel inclusion (legal / Jeffrey Calfman) — HIGH URGENCY</strong><p>Binary: in or out. Changes the LP scope, distribution complexity, and entitlement surface. Kernel decision slipping past July threatens the September date for everything — including user space, because the architecture must accommodate it.</p></div></li>
-        <li class="block"><span class="num">P2</span><div class="content"><strong>CDN access model for QC LP compose URL</strong><p>Entitlement-gated or open to pipeline runners? Determines whether pipeline-level credential handling is needed before August packaging completes.</p></div></li>
+        <li class="block"><span class="num">P2</span><div class="content"><strong>CDN access model for QC LP layered path</strong><p>The pipeline reads the pre-CDN compose URL directly (same as RHIVOS today — no new credential issue). The open question is whether the CDN QC LP path is accessible to internal pipeline runners before customer entitlement is set up. Determines whether any pipeline-level access configuration is needed for testing builds against the CDN path pre-release.</p></div></li>
         <li class="block"><span class="num">P3</span><div class="content"><strong>RHIVOS vs. RHIVOS Core LP config scope</strong><p>Unresolved in Petr's ticket. If both variants need separate LP configs, SKU and ET setup work doubles. Decide now — adding it late multiplies work under time pressure.</p></div></li>
         <li class="block"><span class="num">P4</span><div class="content"><strong>Customer-facing product name and concept</strong><p>Portal, entitlement flow, documentation, and support scope all depend on stable product identity. Deferring until engineering work is done creates rework across multiple teams.</p></div></li>
         <li class="block"><span class="num">P5</span><div class="content"><strong>Support scope for QC components</strong><p>What SLA applies to QC user space? Who handles CVEs in proprietary QC code? This affects advisory handling and what the customer's support contract covers. Not defined anywhere.</p></div></li>
@@ -1121,8 +1121,8 @@
     <ul style="padding-left:20px;">
       <li style="margin-bottom:10px;"><strong>The September date is at risk from external dependencies, not engineering.</strong> The work ATC controls (packaging, pipeline, manifests) is feasible. The blockers are RHELDST, RHELWF, ENGCMP, RHELCMP, and the portal team — none of which have been formally engaged with scope and deliverables.</li>
       <li style="margin-bottom:10px;"><strong>The separate SKU/Eng Product decision is structurally determined and should be closed immediately.</strong> "Extensions" in Petr's ticket is a specific named RHEL content-set — Voyager's Option (a), which Voyager itself rejected due to package naming constraints and schedule coupling. Voyager's Option (b) — a new repo under the existing Eng Product, which is what Whitney's "lower overhead path" refers to — also cannot satisfy RHIVOS requirements because it offers no access control. Neither option is available. Continuing to hold them open delays architecture decisions without upside.</li>
-      <li style="margin-bottom:10px;"><strong>The Voyager distribution model is directly applicable; the Voyager build toolchain is not.</strong> CDN layered path, disabled-by-default repo, two-compose design (Minimal + Complete) — all reusable. Image-during-compose, Pungi/ODCS toolchain specifics, independent versioning — none of this applies. The meeting's "Voyager doesn't fit" conclusion was too broad; it's the build layer that doesn't fit, not the distribution model.</li>
-      <li style="margin-bottom:10px;"><strong>Seven technical gaps were not identified in the prior analysis</strong> — the most critical being the missing compose promotion pipeline (required for ET product listings), the undefined gating stack configuration, and the absence of a dist-git workflow for QC package maintainers.</li>
+      <li style="margin-bottom:10px;"><strong>The Voyager distribution model is directly applicable; the Voyager build toolchain and two-compose design are not.</strong> CDN layered path, disabled-by-default repo, separate ET Product + Variant for the LP advisory stream — all reusable patterns. Image-during-compose, Pungi two-compose workaround (forced by NVIDIA's same-name kernel conflict — does not apply to RHIVOS), independent versioning — none of this applies. Juanje confirmed the one-compose model: QC LP packages go into the same RHIVOS compose; the split happens at the CDN and ET distribution layer. The meeting's "Voyager doesn't fit" conclusion was too broad; it's the build layer that doesn't fit, not the distribution model.</li>
+      <li style="margin-bottom:10px;"><strong>Seven technical gaps were not identified in the prior analysis</strong> — the most critical being undefined ET product listing registration for QC LP NVRs, the undefined gating stack configuration, and the absence of a dist-git workflow for QC package maintainers. G1 (ODCS compose registration) is now eliminated by the one-compose model.</li>
       <li style="margin-bottom:10px;"><strong>The LP work is replacing COPR with a formal distribution channel — not adding a compose.</strong> Qualcomm packages including <code>kernel-ivos-qualcomm</code> currently come from COPR repos injected via AIB manifest <code>.sed</code> substitution — no Brew tag, no gating, no advisories. The LP initiative is the first time this content enters a formal channel. The <code>@ADD_QCOM_BOARD_SUPPORT_*@</code> placeholder pattern in <code>custom-images</code> is the exact hook point; the LP replaces COPR URLs with a CDN URL behind a QC SKU. This reframes the scope and makes the access control requirement concrete rather than theoretical.</li>
       <li style="margin-bottom:10px;"><strong>The QC kernel legal decision must not be allowed to hold the user space LP hostage.</strong> Scope-lock September to user space only in writing. Design the architecture to accommodate kernel as an additive scope item, not a redesign trigger.</li>
     </ul>
@@ -1150,7 +1150,7 @@
       <div class="action-card high">
         <div class="action-owner">Avi — End of May</div>
         <div class="action-title">Assign pipeline focal; get estimate for Layer 3 work</div>
-        <div class="action-detail">New release config, dual-compose AIB build stage, Gator config, S3 policy — all unestimated. This is ATC-controlled. Move now.</div>
+        <div class="action-detail">New release config, Pungi compose config update for QC LP tag input, Gator config, AIB manifest changes, S3 policy — all unestimated. Scope is smaller than initially assumed (no dual-compose injection). This is ATC-controlled. Move now.</div>
       </div>
       <div class="action-card high">
         <div class="action-owner">Avi → Petr + Whitney</div>
@@ -1159,8 +1159,8 @@
       </div>
       <div class="action-card high">
         <div class="action-owner">ATC + RHELDST</div>
-        <div class="action-title">Confirm QC LP compose URL access model</div>
-        <div class="action-detail">Entitlement-gated or open to pipeline runners? Answer needed before August packaging completes. If gated, pipeline credential handling must be designed and operational for September.</div>
+        <div class="action-title">Confirm CDN QC LP path access for internal pipeline runners</div>
+        <div class="action-detail">Pipeline reads the pre-CDN compose as today — no new credential issue there. Open question: can pipeline runners access the QC LP CDN layered path for pre-release testing? Needed before August packaging completes.</div>
       </div>
       <div class="action-card medium">
         <div class="action-owner">Legal / Jeffrey Calfman</div>
