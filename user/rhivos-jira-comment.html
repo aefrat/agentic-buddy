@@ -150,23 +150,30 @@
   <h2>🔍 Key finding — what the LP work actually is</h2>
   <div class="section-note">
     Review of the <code>custom-images</code> AIB manifest repository reveals that AIB image builds
-    for QC targets add a supplemental COPR repo layer via <code>@ADD_QCOM_BOARD_SUPPORT_*@</code>
-    placeholder substitution per target board (e.g., <code>ride4_sa8775p_sx_r3.sed</code>).
+    for Qualcomm RIDE4 targets add a supplemental COPR repo via <code>targets.yml</code> Jinja2
+    templates (the old <code>@ADD_QCOM_BOARD_SUPPORT_*@</code> sed-file system was replaced by this).
     <br><br>
     <strong>Correction to prior analysis:</strong> <code>kernel-ivos-qualcomm</code>,
     <code>downstream-dtbs</code>, and <code>qcom-scmi</code> are <strong>already in Brew</strong>
     under the <code>rhivos-2.0</code> tag, already Gator-gated (VROOM-37670, completed Q1 2026),
     and already Errata-onboarded (VROOM-36833, completed Q1 2026), using the
     <code>rhivos-2-newest-test-pesign</code> build target. The kernel is not a COPR-only package.
+    Whether it also goes behind the QC LP SKU is explicitly TBD (May 20 meeting: “QC kernel (?) — TBD”).
     <br><br>
-    What the <code>@ADD_QCOM_BOARD_SUPPORT_*@</code> mechanism supplies is a <strong>supplemental
-    QC user space stack</strong> — audio/video platform packages, board support daemons, additional
-    firmware or modules — that is separate from the kernel and not yet in Brew or the RHIVOS compose.
-    The QC LP initiative is therefore about formalizing <em>that</em> user space stack:
-    Brew → existing RHIVOS ODCS compose (QC LP tag as additional input) → CDN layered path
-    behind a QC SKU → replace COPR URLs in the sed files with the LP CDN URL.
-    The <code>@ADD_QCOM_BOARD_SUPPORT_*@</code> pattern is the exact hook point.
-    COPR is public today; the LP is the first formal gate for the user space stack.
+    What the Jinja2 templates supply for RIDE4 targets is a <strong>supplemental COPR repo</strong>
+    owned by the <strong>CentOS Automotive SIG</strong> (<code>@centos-automotive-sig/qcom-board-support</code>),
+    not by Qualcomm directly.
+    COPR URL: <code>https://download.copr.fedorainfracloud.org/results/@centos-automotive-sig/qcom-board-support/centos-stream-10-$arch/</code>.<br>
+    Confirmed packages installed from this repo: <code>stmmac-mac-generator</code> (ethernet MAC
+    address generator for the RIDE4 board’s STM32 ethernet controller) and <code>aboot-update</code>
+    (Android Boot updater for QC boards). These are narrow board-specific utilities.
+    The “advance features — QC user space for audio, video” scoped at the May 20 meeting are likely
+    additional packages planned for the LP that are <em>not yet</em> in the COPR or any Brew tag.
+    <br><br>
+    The QC LP initiative is therefore about formalizing this board support stack:
+    Brew → existing RHIVOS ODCS compose (QC LP tag as additional <code>koji_tag</code> input) →
+    CDN layered path behind a QC SKU → replace the COPR URL in Jinja2 templates with the LP CDN URL.
+    COPR is public today; the LP is the first formal gate for this content.
   </div>
 
   <div class="actions">
