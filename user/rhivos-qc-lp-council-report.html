@@ -563,14 +563,20 @@
         │     → Enables Errata advisories (without this: stuck in NEW_FILES state)
         │
         └──── COMPLETE COMPOSE ─────────────────────────────────────────────────────
-              RHEL base content + LP package overrides
-              Purpose: generate installable images
-              Technically forced: Pungi cannot handle two builds of same package
-              name in different variants of one compose → two composes mandatory
-              if LP overrides any base package (e.g. a kernel variant)
-              → Image builds (done during/as part of compose, not post-compose)
+              RHEL base content + NVIDIA LP overrides
+              WHY FORCED: NVIDIA ships a kernel named "kernel" — same as RHEL's
+              standard kernel. Pungi cannot include two builds of the same package
+              name in different compose variants. The Complete compose is the only
+              way to express "use the NVIDIA kernel instead of RHEL's."
+              → Image builds done DURING/AS PART OF compose (Pungi-integrated)
               → Distribution via existing RHEL subscription (no separate SKU)
                  All RHEL subscribers can access; disabled-by-default repo
+              ─────────────────────────────────────────────────────────────────────
+              NOTE: This design is VOYAGER-SPECIFIC and does not apply to RHIVOS.
+              RHIVOS builds images POST-compose via AIB (explicit content.repos
+              URLs). And kernel-ivos-qualcomm ≠ kernel-automotive: no same-name
+              conflict exists. QC LP needs only a Minimal compose (CDN/ET),
+              not a Complete compose.
 </pre>
       </div>
     </div>
@@ -606,7 +612,12 @@
             <tr style="border-bottom:1px solid var(--border); background:#fafafa;">
               <td style="padding:9px 14px; font-weight:600;">Number of composes</td>
               <td style="padding:9px 14px;"><strong>One</strong> — single RHIVOS compose (RPM repo only)</td>
-              <td style="padding:9px 14px;"><strong>Two</strong> — Minimal (LP only, ET+CDN) + Complete (base+LP, images). Forced by Pungi: NVIDIA's kernel has the <em>same name</em> as RHEL's, creating a build conflict. <em>Note: this constraint does not apply to RHIVOS QC LP — <code>kernel-ivos-qualcomm</code> ≠ <code>kernel-automotive</code>; QC LP will need a Minimal compose for CDN/ET reasons, not as a Pungi workaround.</em></td>
+              <td style="padding:9px 14px;"><strong>Two</strong> — Minimal (LP packages only, for ET+CDN) + Complete (RHEL base + LP overrides, for images)</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);">
+              <td style="padding:9px 14px; font-weight:600;">Why two composes?</td>
+              <td style="padding:9px 14px;">N/A (one compose). <em>QC LP will add a Minimal compose for CDN/ET alignment — not a Pungi workaround. <code>kernel-ivos-qualcomm</code> ≠ <code>kernel-automotive</code>: no name collision.</em></td>
+              <td style="padding:9px 14px;">Pungi technically forced: NVIDIA ships a kernel named <code>kernel</code> — same as RHEL's. Pungi cannot handle two builds of the same package name in different compose variants. The Complete compose is the only way to express "use NVIDIA's kernel." Also: Voyager builds images <em>during</em> compose (Pungi-integrated), making the Complete compose the image generation unit.</td>
             </tr>
             <tr style="border-bottom:1px solid var(--border);">
               <td style="padding:9px 14px; font-weight:600;">Image build timing</td>
