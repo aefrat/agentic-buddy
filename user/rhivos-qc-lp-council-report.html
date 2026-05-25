@@ -324,6 +324,10 @@
           <div class="card-label label-warn">⚠ Oversimplified</div>
           <p><strong>AIB: not zero manifest changes.</strong> Adding a QC LP repo requires a new <code>@ADD_QCOM_LP_REPO_*@</code> placeholder token, new/modified <code>.sed</code> files per QC target, and updates to <code>create-qa-manifest.sh</code>. It's manifest code change, not zero change.</p>
         </div>
+        <div class="card status-warn">
+          <div class="card-label label-warn">⚠ Corrected — Source doc has wrong AIB assumption</div>
+          <p>Petr's brainstorming doc states: <em>"AIB might need to be extended to support multiple product subscriptions, although this might work transparently via librhsm."</em> This is incorrect. AIB does not use <code>subscription-manager</code> or <code>librhsm</code> in the build path at all — it uses explicit <code>content.repos</code> baseurl lists in YAML manifests. The question is not about subscription support; it's about whether the QC LP compose URL is entitlement-gated (requiring pipeline credential handling) and about adding new <code>@PLACEHOLDER@</code> tokens to the manifest templates. Contact: <strong>Alexander Larsson</strong> (named in Petr's doc).</p>
+        </div>
         <div class="card status-ok">
           <div class="card-label label-ok">✓ Strengthened</div>
           <p><strong>Separate Eng Product is structurally determined.</strong> The Voyager team evaluated four delivery options. Option (a) — push into the existing Extensions content-set — was rejected because it requires unique package names and ties to the RHEL schedule. Option (b) — new repo under the existing RHEL Eng Product — is what Voyager chose, but only because all RHEL subscribers can access NVIDIA content; no access control is needed. For RHIVOS QC LP, access control <em>is</em> the central requirement: neither Option (a) nor Option (b) provides per-partner gating. Only Option (c) — new Eng Product with a separate SKU — satisfies it. This is confirmed, not tentative.</p>
@@ -382,6 +386,20 @@
           <div class="content">
             <strong>No dist-git workflow for QC package maintainers</strong>
             <p>RHIVOS currently composes from a Koji tag directly — no traditional dist-git/RoG workflow. QC package maintainers need a defined submission path (dist-git branch naming, Brew build target, RoG or <code>rhpkg build</code> equivalent). Without this, "user space packaging complete by August" does not mean builds are in the right Brew tag for the compose.</p>
+          </div>
+        </li>
+        <li class="gap">
+          <span class="num">G8</span>
+          <div class="content">
+            <strong>Product security configuration entirely absent — CPE strings, SWID tags, PSIRT</strong>
+            <p>Not mentioned in the prior analysis at all. Petr's brainstorming doc identifies three distinct items: (1) CPE strings must be defined and configured in Errata Tool for the QC LP product — without this, CVE tracking against QC LP packages is impossible; (2) SWID tag delivery mechanism must be investigated — do they ship in an RPM? separate path?; (3) PSIRT configuration for the separate QC LP tags and composes must be set up. Contact: <strong>Charles Timko</strong>. This work belongs to Layer 2 but has not been scoped or assigned.</p>
+          </div>
+        </li>
+        <li class="gap">
+          <span class="num">G9</span>
+          <div class="content">
+            <strong>Customer documentation entirely unassigned</strong>
+            <p>Petr's doc names Dana Walker (?) as a potential contact but marks it as unconfirmed. No documentation owner, no scope, no draft. Customers need guidance on: how to access QC LP content, how to enable the LP repo, and how to build images from RHIVOS + QC LP in the AIB context (pipeline manifest changes, content.repos). This is not a late-stage concern — access instructions must exist before LP goes live. Contact: <strong>Dana Walker (unconfirmed)</strong>.</p>
           </div>
         </li>
       </ul>
@@ -647,25 +665,45 @@
           <div class="card-label label-ok">Engaged</div>
           <ul>
             <li>Petr Sabata — requirements (AUTOBU-1076)</li>
-            <li>Juanje — technical proposal author</li>
-            <li>Ozan — pipeline/compose expertise</li>
+            <li>Juanje Ojeda — technical proposal author (Build, Compose, Pipeline)</li>
+            <li>Ozan Unsal — pipeline/compose expertise (Build, Compose, Pipeline)</li>
             <li>Whitney — PM (overhead concern, extension repo action)</li>
             <li>Jeffrey Calfman — legal (QC kernel)</li>
+            <li>Hubert Stefanski — Infrastructure &amp; Package Gating</li>
+            <li>Eitan Raviv — Infrastructure (S3, IAM)</li>
+            <li>Roni Eliezer, Luigi Pellecchia — Testing</li>
           </ul>
         </div>
         <div class="card status-risk">
           <div class="card-label label-risk">Missing / Not yet activated</div>
           <ul>
-            <li><strong>RHELDST</strong> — CDN, LP testing, SKU. Named as contact; no scope or deliverables assigned. Biggest gap.</li>
-            <li><strong>Red Hat subscription/portal team</strong> — SKU creation, entitlement flow, customer portal. Not mentioned anywhere.</li>
+            <li><strong>Kanitha Chim</strong> — CDN, EngIDs, Distribution. Named in Petr's doc; no scope assigned.</li>
+            <li><strong>Gadi Glogowski</strong> — SKUs. Named in Petr's doc; not contacted.</li>
+            <li><strong>Archana Katarki (RHELDST)</strong> — reports to Christine Freitas. RHEL LP focal for CDN/distribution side.</li>
+            <li><strong>Christine Freitas</strong> — RHEL SP overall manager. Escalation path for RHELDST engagement.</li>
+            <li><strong>Miles Dunn</strong> — RHEL LP testing coordinator (reports to Jiri Pallich). Key contact for LP test infrastructure.</li>
+            <li><strong>Red Hat subscription/portal team</strong> — SKU creation, entitlement flow, customer portal. Not contacted.</li>
             <li><strong>RHELWF/OSCI</strong> — ET Product setup, advisory automation</li>
             <li><strong>ENGCMP</strong> — ODCS compose registration</li>
             <li><strong>RHELCMP</strong> — Compose promotion pipeline (ET listing import)</li>
             <li><strong>RCM team</strong> — New CDN path for <code>promote-compose</code></li>
             <li><strong>Test Console team</strong> — Dual-product submission</li>
-            <li><strong>Product security (PSIRT)</strong> — CPE strings, SWID tags</li>
-            <li><strong>Customer documentation</strong> — Completely unassigned</li>
+            <li><strong>Charles Timko (Product Security / PSIRT)</strong> — CPE strings, SWID tags, PSIRT config for QC LP tags</li>
+            <li><strong>Dana Walker (Documentation)</strong> — Customer access and deployment docs; unconfirmed</li>
+            <li><strong>Alexander Larsson</strong> — End user tooling (AIB). Named in Petr's doc.</li>
           </ul>
+        </div>
+        <div class="card status-info">
+          <div class="card-label label-info">RHEL SP/LP Focals — LP institutional knowledge</div>
+          <p>Petr's doc names the RHEL-side LP experts who have done this for other layered products and can advise on process, pitfalls, and shortcuts:</p>
+          <ul style="margin-top:8px;">
+            <li><strong>Lisa Smith</strong> — RHEL SP/LP focal</li>
+            <li><strong>Gary Case</strong> — RHEL SP/LP focal</li>
+            <li><strong>Archana Katarki</strong> — RHELDST (CDN/distribution side)</li>
+            <li><strong>Miles Dunn</strong> — LP testing coordinator</li>
+            <li><strong>Christine Freitas</strong> — RHEL SP overall manager</li>
+          </ul>
+          <p style="margin-top:8px;"><em>These people have seen LP launches before. Engaging Lisa Smith or Gary Case early could shortcut the architectural decisions that are currently undefined.</em></p>
         </div>
         <div class="card status-warn">
           <div class="card-label label-warn">Action Pending</div>
@@ -858,8 +896,8 @@
       </div>
       <div class="action-card urgent">
         <div class="action-owner">Avi — Within 2 Weeks</div>
-        <div class="action-title">Contact RHELDST lead with scope document</div>
-        <div class="action-detail">Largest unactivated external dependency. Bring concrete ask: CDN path, ET product setup, SKU decision, advisory automation, timeline. Don't leave without named owners and estimates.</div>
+        <div class="action-title">Contact RHELDST — Archana Katarki (reports to Christine Freitas)</div>
+        <div class="action-detail">Largest unactivated external dependency. Concrete ask: CDN path, ET product setup, SKU decision (Gadi Glogowski for SKUs, Kanitha Chim for CDN/EngIDs), advisory automation, timeline. Also loop in Lisa Smith or Gary Case (RHEL SP/LP focals) — they have LP launch experience and can shortcut decisions.</div>
       </div>
       <div class="action-card high">
         <div class="action-owner">Avi — End of May</div>
@@ -891,13 +929,18 @@
         <div class="action-title">Define dist-git workflow for QC package maintainers</div>
         <div class="action-detail">QC vendors submitting packages need branch naming, Brew build target, and RoG/rhpkg workflow defined before August packaging begins. Without this, "packaging complete" doesn't mean builds land in the right Brew tag.</div>
       </div>
+      <div class="action-card medium">
+        <div class="action-owner">Charles Timko (Product Security)</div>
+        <div class="action-title">Scope product security for QC LP — CPE, SWID, PSIRT</div>
+        <div class="action-detail">Three items entirely absent from prior analysis: CPE strings in Errata Tool (required for CVE tracking), SWID tag delivery mechanism, and PSIRT configuration for QC LP tags/composes. Contact Charles Timko. Must be in scope before LP goes GA — not a post-launch item.</div>
+      </div>
     </div>
   </div>
 
 </div><!-- /container -->
 
 <div class="report-footer">
-  Generated 2026-05-21 via LLM council (Software Release Engineer · Engineering Manager · Product Owner) · Source materials: AUTOBU-1076, RHEL-for-NVIDIA knowledge base, ATC codebase docs, AIB wiki, RHIVOS Release Readiness meeting May 20 · <code>agent_brain/projects/rhivos-release-approach.md</code>
+  Generated 2026-05-21 via LLM council (Software Release Engineer · Engineering Manager · Product Owner) · Updated 2026-05-25 · Source materials: AUTOBU-1076, RHEL-for-NVIDIA knowledge base, ATC codebase docs, AIB wiki, RHIVOS Release Readiness meeting May 20, Petr Sabata's RHIVOS LP brainstorming doc (Google Doc) · <code>agent_brain/projects/rhivos-release-approach.md</code>
 </div>
 
 </body>
