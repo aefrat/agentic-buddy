@@ -126,11 +126,14 @@
         (3) waiverdb waiver subjects scoped to the QC LP Brew tag, so QC LP waivers do not
         affect RHIVOS base package gating;
         (4) greenwave policies for the QC LP Brew tag defining what constitutes a passing gate.
-        Additionally, <code>tc_wait_for_rhivos_test()</code> in the pipeline uses a hardcoded
-        <code>rhivos</code> product identifier for Test Console — this needs to be configurable
-        or require a new TC request type to handle QC platform images (not a dual-compose problem —
-        it exists regardless of compose count; QC images are a distinct image type).
-        Petr's ticket explicitly flags this. Contact: <strong>Hubert Stefanski</strong> (gating).
+        TC is image-driven: the pipeline passes TC an explicit image key and S3 paths via
+        <code>tc-cli rhivos create --hw-target ride4_sa8775p_sx</code> — no product discovery
+        from compose or packages. The <code>rhivos</code> token is a fixed TC routing identifier,
+        not tied to image content; QC LP images submit through the same mechanism. QC hardware
+        targets are already handled in the pipeline today. What IS needed: a QC-specific TMT
+        test plan exercising QC audio/video/platform functionality, and new pipeline jobs
+        that build and submit QC LP images with that plan. No new TC product type needed.
+        Contact: <strong>Hubert Stefanski</strong> (gating).
       </li>
     </ul>
   </div>
