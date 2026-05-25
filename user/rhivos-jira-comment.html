@@ -149,19 +149,24 @@
 
   <h2>🔍 Key finding — what the LP work actually is</h2>
   <div class="section-note">
-    Review of the <code>custom-images</code> AIB manifest repository reveals that Qualcomm-specific
-    packages — including <code>kernel-ivos-qualcomm</code> — do <strong>not</strong> currently come
-    from Brew or the RHIVOS compose. They are fetched directly from <strong>Qualcomm COPR repos</strong>,
-    injected into AIB manifests via <code>@ADD_QCOM_BOARD_SUPPORT_*@</code> placeholder substitution
-    per target board (e.g., <code>ride4_sa8775p_sx_r3.sed</code>). There is currently no Brew tag,
-    no ODCS compose, no Gator gating, and no Errata Tool advisories for this content.
+    Review of the <code>custom-images</code> AIB manifest repository reveals that AIB image builds
+    for QC targets add a supplemental COPR repo layer via <code>@ADD_QCOM_BOARD_SUPPORT_*@</code>
+    placeholder substitution per target board (e.g., <code>ride4_sa8775p_sx_r3.sed</code>).
     <br><br>
-    The QC LP initiative is therefore about <strong>replacing COPR with a formal Red Hat distribution channel</strong>:
-    Brew → QC LP Brew tag → existing RHIVOS ODCS compose (one compose, with QC LP tag added as input) → CDN layered path behind a QC SKU → AIB manifest.
-    The <code>@ADD_QCOM_BOARD_SUPPORT_*@</code> sed pattern already in <code>custom-images</code>
-    is the exact hook point — the LP work replaces the COPR URLs in those sed files with a CDN URL
-    gated by the QC SKU. This makes the access control requirement concrete: COPR is effectively
-    public today; the LP is the first point at which QC content is formally gated.
+    <strong>Correction to prior analysis:</strong> <code>kernel-ivos-qualcomm</code>,
+    <code>downstream-dtbs</code>, and <code>qcom-scmi</code> are <strong>already in Brew</strong>
+    under the <code>rhivos-2.0</code> tag, already Gator-gated (VROOM-37670, completed Q1 2026),
+    and already Errata-onboarded (VROOM-36833, completed Q1 2026), using the
+    <code>rhivos-2-newest-test-pesign</code> build target. The kernel is not a COPR-only package.
+    <br><br>
+    What the <code>@ADD_QCOM_BOARD_SUPPORT_*@</code> mechanism supplies is a <strong>supplemental
+    QC user space stack</strong> — audio/video platform packages, board support daemons, additional
+    firmware or modules — that is separate from the kernel and not yet in Brew or the RHIVOS compose.
+    The QC LP initiative is therefore about formalizing <em>that</em> user space stack:
+    Brew → existing RHIVOS ODCS compose (QC LP tag as additional input) → CDN layered path
+    behind a QC SKU → replace COPR URLs in the sed files with the LP CDN URL.
+    The <code>@ADD_QCOM_BOARD_SUPPORT_*@</code> pattern is the exact hook point.
+    COPR is public today; the LP is the first formal gate for the user space stack.
   </div>
 
   <div class="actions">
