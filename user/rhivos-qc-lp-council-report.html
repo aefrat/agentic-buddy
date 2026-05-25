@@ -310,9 +310,10 @@
     <div class="subsection">
       <h3>Validate or Challenge — Prior Conclusions</h3>
       <div class="cards">
-        <div class="card status-ok">
-          <div class="card-label label-ok">✓ Confirmed</div>
-          <p><strong>Two-compose design is not a preference — it's technically forced.</strong> Voyager's docs confirm Pungi cannot handle two builds of the same package name in different compose variants. If QC ships a kernel (<code>kernel-ivos-qualcomm</code> already exists in the pipeline), the two-compose design is mandatory, not optional.</p>
+        <div class="card status-warn">
+          <div class="card-label label-warn">⚠ Revised — constraint does not apply to RHIVOS QC LP</div>
+          <p><strong>Two-compose was technically forced for Voyager — but not for the same reason RHIVOS needs it.</strong> Voyager's two-compose design was forced by a package name collision: NVIDIA ships a kernel with the <em>same name</em> as RHEL's standard kernel, and Pungi cannot handle two builds of the same package name in different variants of one compose. RHIVOS does not have this problem. The Qualcomm kernel is <code>kernel-ivos-qualcomm</code> — a <em>distinct name</em> from <code>kernel-automotive</code>. QC LP packages are additive (unique names, no RHIVOS base package is being replaced), so Pungi sees no naming conflict.</p>
+          <p style="margin-top:8px;">A separate Minimal compose for QC LP is still needed — for CDN alignment (the disabled-by-default LP repo path) and for Errata Tool product listing import. But the reason is <strong>architectural</strong> (CDN/ET requirements), not a Pungi workaround. This distinction matters for scoping: RHIVOS could in principle build QC LP images from a single compose; the split is driven by distribution requirements, not build tooling constraints.</p>
         </div>
         <div class="card status-ok">
           <div class="card-label label-ok">✓ Confirmed</div>
@@ -605,7 +606,7 @@
             <tr style="border-bottom:1px solid var(--border); background:#fafafa;">
               <td style="padding:9px 14px; font-weight:600;">Number of composes</td>
               <td style="padding:9px 14px;"><strong>One</strong> — single RHIVOS compose (RPM repo only)</td>
-              <td style="padding:9px 14px;"><strong>Two</strong> — Minimal (LP only, ET+CDN) + Complete (base+LP, images). Two-compose is technically forced by Pungi.</td>
+              <td style="padding:9px 14px;"><strong>Two</strong> — Minimal (LP only, ET+CDN) + Complete (base+LP, images). Forced by Pungi: NVIDIA's kernel has the <em>same name</em> as RHEL's, creating a build conflict. <em>Note: this constraint does not apply to RHIVOS QC LP — <code>kernel-ivos-qualcomm</code> ≠ <code>kernel-automotive</code>; QC LP will need a Minimal compose for CDN/ET reasons, not as a Pungi workaround.</em></td>
             </tr>
             <tr style="border-bottom:1px solid var(--border);">
               <td style="padding:9px 14px; font-weight:600;">Image build timing</td>
@@ -676,7 +677,7 @@
         <div class="card status-risk">
           <div class="card-label label-risk">New additions modelled on Voyager (RHIVOS has no equivalent)</div>
           <ul>
-            <li><strong>Minimal compose</strong> — LP packages only, CDN-aligned, feeds ET product listings. Required if QC kernel is in scope (Pungi two-compose constraint). Not optional if advisories must work.</li>
+            <li><strong>Minimal compose</strong> — LP packages only, CDN-aligned, feeds ET product listings. Required for CDN/ET architectural reasons — not because of a Pungi name-collision constraint. Unlike Voyager (where NVIDIA's kernel shares the same name as RHEL's, forcing the split), <code>kernel-ivos-qualcomm</code> is a distinct name from <code>kernel-automotive</code> and creates no Pungi conflict. The Minimal compose is still needed, but the motivation is the CDN layered path and ET listing import, not a build tooling workaround.</li>
             <li><strong>Compose promotion pipeline</strong> — ET ComposeDB import equivalent to Jenkins job RHELCMP-15186. RHIVOS's <code>promote-compose</code> (SSH/Kerberos to RCM) is a different mechanism; this is a new pipeline, not an extension.</li>
             <li><strong>Separate ET Product + Product Version + Variant</strong> for QC LP — RHIVOS currently uses its base ET product; QC LP advisory stream must be separate.</li>
             <li><strong>CDN layered path</strong> behind QC SKU — <code>/content/dist/layered/rhivos/{arch}/qualcomm/os</code>, gated (unlike Voyager's open access).</li>
