@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-05-21
-access_count: 1
+last_accessed: 2026-05-28
+access_count: 2
 created: 2026-05-21
 ---
 
@@ -176,6 +176,41 @@ Petr's open question is already answered: no separate Jira releases, no independ
 > - **End user tooling / AIB:** Voyager is not applicable here — it uses RHEL's build toolchain (Brew/Pungi), not AIB. The RHIVOS pipeline today runs ODCS to produce a single RHIVOS compose, then AIB builds images from it using explicit `content.repos` URLs — no `subscription-manager` or `librhsm` involved. AIB's `content.repos` is a list, so adding a QC LP compose URL alongside the base RHIVOS compose is architecturally supported without AIB code changes; it would need manifest updates and a pipeline change to make both compose URLs available to the build stage. What is NOT yet confirmed: whether the QC LP compose URL will be entitlement-gated. If it is, pipeline-level credential handling would be needed (not an AIB code change). This needs confirmation with the RHELDST/distribution team.
 >
 > **Architectural note:** The RHIVOS Release Readiness Meeting of May 20 discussion suggested Voyager was a poor fit due to build tooling differences (Voyager builds images during compose; RHIVOS builds images after compose via automotive image builder). This is true for the build layer. However, Voyager's *distribution* model (CDN layered path, disabled-by-default repo, minimal compose for CDN alignment) is directly applicable and essentially what Juanje's proposal ("build internally, separate at CDN") implements. The recommended path is: don't adopt Voyager's build/compose tooling, but use its distribution model as the reference.
+
+## Brew tag structure and Stag proposal (2026-05-28)
+
+### RHIVOS current Brew tag pipeline
+
+From gator config (`gator/README.md`, `gator/docs/CODEBASE.md`):
+
+```
+[rhel-9.5.0-pending] ──┐
+                        union → gator evaluate (Greenwave) → rhivos-X.Y.Z-candidate
+[rhivos-X.Y.Z-gate] ───┘                                          ↓
+                                                        ODCS compose
+                                                                   ↓
+                                                        gator promote
+                                                                   ↓
+                                                        rhivos-X.Y.Z-pending
+```
+
+**Build target for maintainers:** uses `rhivos-X.Y.Z-build` as the buildroot (stable, gated content). New builds land in `-gate`, not immediately visible to subsequent builds.
+
+**The lockstep problem:** when a library has an ABI break, dependent packages can't be built against the new version until it completes full gating. No group-level buildroot isolation exists. The only current workaround is Brew admin override (doesn't scale).
+
+### Why RHEL side tags don't apply
+
+RHEL side tags require: centpkg, Distrobaker, RHEL on GitLab (ROG) CI with `side-tag:` MR directive, OSCI, and `build-group` Jenkins job. RHIVOS has none of these.
+
+### Stag proposal (Petr Sabata, doc: 16evZIIeBjijlJZcCbDXtwlRchzkhYOdvkDn-V6Iz9IY)
+
+A per-version `rhivos-X.Y.Z-stag` Brew tag + build target:
+- **Tag** inherits from `rhivos-X.Y.Z-build` → gets full stable buildroot
+- **Target** uses stag as both build tag and destination tag → builds land in stag and are immediately visible to subsequent builds in the group
+- Maintainer builds entire interdependent group into stag, then mass-tags into `-gate` when ready
+- **Gap:** gator has no group-gating concept — packages gate independently once in `-gate`. Acknowledged as future work.
+
+**Connection to LP work (AUTOBU-1076):** stag is the mechanism needed to build QC kernel + QC kernel modules in lockstep, which is a stated requirement for the QC Layered Product.
 
 ## Open questions (still to investigate)
 - How would RHIVOS implement the "Minimal compose" equivalent (QC-specific packages only) for CDN alignment and product listings?
