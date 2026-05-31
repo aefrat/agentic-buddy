@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PitCrew: The Future of Image Mode — 2026-05-27</title>
+  <style>
+    :root {
+      --red: #cc0000;
+      --red-dark: #990000;
+      --red-light: #fff0f0;
+      --gray-bg: #f7f7f7;
+      --gray-border: #ddd;
+      --text: #1a1a1a;
+      --text-muted: #555;
+      --accent-blue: #0066cc;
+      --accent-green: #1a7a1a;
+      --accent-amber: #996600;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text);
+      background: #fff;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* Header */
+    .report-header {
+      border-left: 5px solid var(--red);
+      padding: 20px 24px;
+      background: var(--red-light);
+      margin-bottom: 40px;
+    }
+    .report-header .badge {
+      display: inline-block;
+      background: var(--red);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 3px;
+      margin-bottom: 10px;
+    }
+    .report-header h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--red-dark);
+      margin-bottom: 6px;
+    }
+    .report-header .meta {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .report-header .meta span { margin-right: 20px; }
+
+    /* Section heading */
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--red-dark);
+      border-bottom: 2px solid var(--gray-border);
+      padding-bottom: 6px;
+      margin: 40px 0 16px;
+    }
+    h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 20px 0 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Attendees */
+    .attendees-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+    }
+    .attendee-card {
+      background: var(--gray-bg);
+      border: 1px solid var(--gray-border);
+      border-radius: 6px;
+      padding: 10px 14px;
+    }
+    .attendee-card .name { font-weight: 600; font-size: 14px; }
+    .attendee-card .role { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+    /* Topic cards */
+    .topic-list { display: flex; flex-direction: column; gap: 16px; }
+    .topic-card {
+      border: 1px solid var(--gray-border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .topic-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--gray-bg);
+      border-bottom: 1px solid var(--gray-border);
+    }
+    .topic-num {
+      background: var(--red);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .topic-title { font-weight: 700; font-size: 15px; }
+    .topic-body { padding: 14px 16px; font-size: 14px; line-height: 1.65; }
+    .topic-body p { margin-bottom: 8px; }
+    .topic-body p:last-child { margin-bottom: 0; }
+    .topic-body ul { padding-left: 20px; }
+    .topic-body ul li { margin-bottom: 4px; }
+
+    /* Decisions table */
+    .decisions-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .decisions-table th {
+      background: var(--red-dark);
+      color: #fff;
+      text-align: left;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .decisions-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--gray-border);
+      vertical-align: top;
+    }
+    .decisions-table tr:last-child td { border-bottom: none; }
+    .decisions-table tr:nth-child(even) td { background: var(--gray-bg); }
+    .badge-aligned {
+      display: inline-block;
+      background: #d4edda;
+      color: var(--accent-green);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      border: 1px solid #a8d5b5;
+    }
+
+    /* Next steps */
+    .next-steps-list { display: flex; flex-direction: column; gap: 8px; }
+    .next-step {
+      display: flex;
+      gap: 12px;
+      background: var(--gray-bg);
+      border: 1px solid var(--gray-border);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 14px;
+    }
+    .next-step .owner {
+      font-weight: 700;
+      color: var(--red-dark);
+      white-space: nowrap;
+      min-width: 130px;
+    }
+
+    /* Impact section */
+    .impact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 8px;
+    }
+    @media (max-width: 640px) { .impact-grid { grid-template-columns: 1fr; } }
+
+    .impact-card {
+      border-radius: 8px;
+      border: 1px solid;
+      padding: 14px 16px;
+      font-size: 14px;
+    }
+    .impact-card.high {
+      border-color: #f5c6cb;
+      background: #fff5f5;
+    }
+    .impact-card.medium {
+      border-color: #ffeeba;
+      background: #fffdf0;
+    }
+    .impact-card .impact-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .impact-card.high .impact-label { color: #c0392b; }
+    .impact-card.medium .impact-label { color: #996600; }
+    .impact-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .impact-card p { line-height: 1.5; color: var(--text-muted); }
+
+    /* Footer */
+    .report-footer {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid var(--gray-border);
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+    a { color: var(--accent-blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .callout {
+      background: #fffbe6;
+      border-left: 4px solid #f0c000;
+      padding: 12px 16px;
+      border-radius: 0 6px 6px 0;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="report-header">
+    <div class="badge">PitCrew Meeting</div>
+    <h1>The Future of Image Mode</h1>
+    <div class="meta">
+      <span>📅 2026-05-27</span>
+      <span>⏱ ~63 minutes</span>
+      <span>📝 Report compiled: 2026-05-31</span>
+      <span>Avi status: <strong>Missed — captured from transcript</strong></span>
+    </div>
+  </div>
+
+  <!-- Attendees -->
+  <h2>Attendees</h2>
+  <div class="attendees-grid">
+    <div class="attendee-card">
+      <div class="name">Jeff Ligon</div>
+      <div class="role">PO, automotive developer cluster (host)</div>
+    </div>
+    <div class="attendee-card">
+      <div class="name">Ian McLeod</div>
+      <div class="role">Architect, automotive program</div>
+    </div>
+    <div class="attendee-card">
+      <div class="name">Matt Micene</div>
+      <div class="role">RHEL technical marketing</div>
+    </div>
+    <div class="attendee-card">
+      <div class="name">Micah Abbott</div>
+      <div class="role">Engineering manager, RHEL for Edge</div>
+    </div>
+    <div class="attendee-card">
+      <div class="name">Luke Thompson</div>
+      <div class="role">Edge portfolio product manager</div>
+    </div>
+    <div class="attendee-card">
+      <div class="name">Andy Burka</div>
+      <div class="role">Engineer</div>
+    </div>
+    <div class="attendee-card">
+      <div class="name">Robert Sturla</div>
+      <div class="role">Fedora Atomic / Universal Blue</div>
+    </div>
+    <div class="attendee-card">
+      <div class="name">Sean O'Keeffe</div>
+      <div class="role">PM, Edge Manager</div>
+    </div>
+    <div class="attendee-card">
+      <div class="name">Dusty Mabe</div>
+      <div class="role">Fedora / CoreOS</div>
+    </div>
+  </div>
+
+  <!-- Context -->
+  <h2>Meeting Context</h2>
+  <div class="callout">
+    This was a <strong>discovery session</strong>, not a decision meeting. Jeff Ligon called it after Summit to collect what's broken or missing in image mode before proposing Bootc as the default for RHEL 11. Two entry points: (1) both automotive and edge were asking about Zstandard Chunked at Summit; (2) Jeff wanted to build a concrete work list around the "bootc by default for RHEL 11" RABU item Scott McCarty owns.
+  </div>
+
+  <!-- Topics -->
+  <h2>Topics Discussed</h2>
+  <div class="topic-list">
+
+    <div class="topic-card">
+      <div class="topic-header">
+        <div class="topic-num">1</div>
+        <div class="topic-title">Zstandard Chunked — missing from RHEL</div>
+      </div>
+      <div class="topic-body">
+        <p>Both automotive and edge have been asking for this since Summit — it enables faster container pulls on edge/vehicle hardware. It already exists in Fedora but has not been carried into RHEL. Jeff Ligon is actively working to get it plumbed through before it's put in front of customers.</p>
+        <p><strong>Status:</strong> Open, Jeff driving.</p>
+      </div>
+    </div>
+
+    <div class="topic-card">
+      <div class="topic-header">
+        <div class="topic-num">2</div>
+        <div class="topic-title">Developer experience — the central gap</div>
+      </div>
+      <div class="topic-body">
+        <p>Image mode is a solid <strong>deployment model</strong> (golden image, consistent fleets, OTA updates). It is a poor <strong>development model</strong> — locked down, config goes in unexpected places, no clean story for interactive modification.</p>
+        <p>Ian McLeod (automotive architect) put it plainly: the moment you engage real OEM customers, they need to develop on the system. The current image mode story makes that hard and the automotive/edge teams have been papering over it with "here's a different image for development." That's a muddled story.</p>
+        <p><strong>Jeff's quick fix idea:</strong> Strip the OS tree directory from a Bootc image and you get back to a package-based system. Proposed making this the default RHEL 11 install path — Anaconda installs from a container registry, deletes the OS tree → you're in package mode. Ian: the key requirement is the image must be <em>interactively modifiable and rebuildable</em>, not just a static base.</p>
+        <p><strong>Status:</strong> No committed solution — identified as a primary gap to fix before defaulting to Bootc.</p>
+      </div>
+    </div>
+
+    <div class="topic-card">
+      <div class="topic-header">
+        <div class="topic-num">3</div>
+        <div class="topic-title">Pre-built images — strong consensus</div>
+      </div>
+      <div class="topic-body">
+        <p>Micah Abbott, Luke Thompson, Ian McLeod all pushed for this. Key data points:</p>
+        <ul>
+          <li>Luke (edge portfolio PM): 6 pre-built images would cover ~80% of edge customer requests — HMI, industrial plant floors, kiosks, retail, deterministic workload profiles.</li>
+          <li>Jeff: automotive has the same ARM board fragmentation problem — each board needs specific tuning; universal images haven't fully landed yet.</li>
+          <li>Reference model: <strong>Universal Blue / Bluefin</strong> — opinionated pre-built image, users kick the tires, then build their own.</li>
+          <li>Andy Burka's counter: pre-built images accelerate <em>time to discovery</em> (get a system up fast without setting up image builder) but don't resolve the developer confusion about how bootc systems work.</li>
+        </ul>
+        <p>Matt Micene's framing: right now we're not meeting the market need — it goes to competitors. Support overhead is the <em>upside</em> problem.</p>
+        <p>Ian's qualifier: the valuable pre-built image must be one a developer can <strong>interactively modify and rebuild</strong> — not a static, single-purpose artifact.</p>
+      </div>
+    </div>
+
+    <div class="topic-card">
+      <div class="topic-header">
+        <div class="topic-num">4</div>
+        <div class="topic-title">Anaconda + Bootc graphical installer</div>
+      </div>
+      <div class="topic-body">
+        <p>Luke Thompson surfaced a filed RFE: install image-mode RHEL via the Anaconda graphical installer — same UX as today but pulling from a container registry instead of an RPM repo. This would make image mode as easy to consume as a standard RHEL install.</p>
+        <p>Jeff's finding: Justin Cheryl (image mode PO) already built a container that enables this. The work exists. The question is why it isn't prioritized.</p>
+        <p><strong>Next step:</strong> Jeff to document the use case and chase the Anaconda team on prioritization.</p>
+      </div>
+    </div>
+
+    <div class="topic-card">
+      <div class="topic-header">
+        <div class="topic-num">5</div>
+        <div class="topic-title">Staged / canary deployments — known gap, no committed solution</div>
+      </div>
+      <div class="topic-body">
+        <p>Robert Sturla (Fedora Atomic / Universal Blue) surfaced this as a persistent pain point. No easy way to roll out to a subset of devices, gather feedback, then widen the rollout. Currently: improvise with Ansible, or just ship and hope.</p>
+        <ul>
+          <li>Historical reference: <strong>Zincotti</strong> (Fedora CoreOS update mechanism) had rollout pools and configurable timing — worth revisiting with the CoreOS team.</li>
+          <li>Matt Micene: also a customer need — canary builds + rollback as first-class managed capabilities. Connected this to the Image Builder / managed update story.</li>
+          <li>Jeff: also needed for the hardware lab — segmenting CI/CD devices from kernel dev devices. RHEL Edge Manager is a candidate solution.</li>
+        </ul>
+        <p><strong>Andy Burka's warning:</strong> Don't build this as a siloed automotive/edge tool. Prior edge management v1 failed because it wasn't co-located with AAP/ACM/Satellite. Integrate, don't fork.</p>
+        <p><strong>Status:</strong> Gap acknowledged; no committed work item from this meeting.</p>
+      </div>
+    </div>
+
+    <div class="topic-card">
+      <div class="topic-header">
+        <div class="topic-num">6</div>
+        <div class="topic-title">Satellite OCI registry — under-communicated capability</div>
+      </div>
+      <div class="topic-body">
+        <p>Sean O'Keeffe clarified: Satellite already runs an OCI registry (via Pulp) and can receive pushed container images. This was news to Jeff and likely many others in the room.</p>
+        <p>Implication: large RHEL customers who already use Satellite to define their RHEL estate (packages, policies, etc.) don't need a separate image registry — the capability is already there. They also don't want to maintain two separate definitions (one for package mode, one for image mode).</p>
+        <p>Sean committed to sharing a management deck on how RHEL + Satellite + Ansible should work together in the image mode era, and offered a follow-up meeting.</p>
+      </div>
+    </div>
+
+    <div class="topic-card">
+      <div class="topic-header">
+        <div class="topic-num">7</div>
+        <div class="topic-title">Image Builder as "front door" — status and problems</div>
+      </div>
+      <div class="topic-body">
+        <p>The stated strategy was: Image Builder is the front door to RHEL for all new customers. Problems encountered:</p>
+        <ul>
+          <li>Hosted vs. non-hosted Image Builder diverged in functionality.</li>
+          <li>Doesn't solve the traditional Anaconda install path (15+ years of muscle memory).</li>
+          <li>Siloed tools that "look like they should work together but don't quite."</li>
+        </ul>
+        <p>Current direction: fix the divergence, unify the experience, push image mode as the default RHEL path. The Image Builder team is actively working on this.</p>
+      </div>
+    </div>
+
+    <div class="topic-card">
+      <div class="topic-header">
+        <div class="topic-num">8</div>
+        <div class="topic-title">Bootc as default for RHEL 11 — direction set, work list TBD</div>
+      </div>
+      <div class="topic-body">
+        <p><strong>Scott McCarty has a RABU item:</strong> "Bootc by default for RHEL 11." He doesn't yet have a concrete work list for what that means. Jeff is building it.</p>
+        <p><strong>Dusty Mabe's recommendation:</strong></p>
+        <ul>
+          <li>Start with Fedora. The community will surface everything that's broken — but only if you <em>actually promote</em> it, not just leave it in an obscure corner.</li>
+          <li>Engage early and publicly: state intention and direction even without a timeline. Let the community provide feedback.</li>
+          <li>Easy switch back: default image mode install must have a simple one-command path back to package mode — or there will be a revolt.</li>
+          <li>Don't repeat the Hummingbird announcement failure (Scott emailed Fedora Devel 2 weeks before Summit to announce it — felt pre-decided, not community-driven).</li>
+        </ul>
+        <p>Matt Micene: right direction, but there are "pretty big pitfalls" in current onboarding — fix those before shipping as a default.</p>
+      </div>
+    </div>
+
+    <div class="topic-card">
+      <div class="topic-header">
+        <div class="topic-num">9</div>
+        <div class="topic-title">CoreOS + Bootc unification — stalled, worth revisiting</div>
+      </div>
+      <div class="topic-body">
+        <p>Dusty mentioned a working group from last year that explored whether CoreOS and Bootc should collaborate or merge. It stalled. He suggested it's worth trying to restart those discussions.</p>
+        <p><strong>Implication:</strong> If CoreOS and Bootc converge, it could significantly shift the foundation both systems build on.</p>
+      </div>
+    </div>
+
+    <div class="topic-card">
+      <div class="topic-header">
+        <div class="topic-num">10</div>
+        <div class="topic-title">ELN build of Bootc</div>
+      </div>
+      <div class="topic-body">
+        <p>Jeff is co-maintaining an ELN (Extra Packages for Enterprise Linux Next) build of Bootc with Steven Gallagher. Primary goal: use Bootc as the delivery mechanism for Anaconda — if it works, Neil (GMPA) is interested in backing it as a first-class Fedora path. This is the upstream groundwork for the Fedora-first strategy.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Decisions -->
+  <h2>Decisions</h2>
+  <table class="decisions-table">
+    <thead>
+      <tr>
+        <th style="width:55%">Decision</th>
+        <th>Status</th>
+        <th>Owner / Follow-up</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Pre-built images as primary strategy to reduce onboarding friction for edge/automotive customers</td>
+        <td><span class="badge-aligned">Aligned</span></td>
+        <td>Matt Micene to unblock template creation for Edge BU</td>
+      </tr>
+      <tr>
+        <td>Validate Bootc in Fedora before making it the default for RHEL 11</td>
+        <td><span class="badge-aligned">Aligned</span></td>
+        <td>Jeff Ligon + ELN build; Dusty Mabe's recommendation, no pushback</td>
+      </tr>
+      <tr>
+        <td>Bootc as default for RHEL 11 is the target direction</td>
+        <td><span class="badge-aligned">Aligned</span></td>
+        <td>Jeff Ligon to compile work list; Scott McCarty owns the RABU item</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Next steps -->
+  <h2>Next Steps</h2>
+  <div class="next-steps-list">
+    <div class="next-step">
+      <div class="owner">Jeff Ligon</div>
+      <div>Document Anaconda BootC installation use case in product requirements / discussion notes.</div>
+    </div>
+    <div class="next-step">
+      <div class="owner">Matt Micene</div>
+      <div>Investigate internal processes to unblock the Edge team's ability to create template Bootc images for customer use without waiting for general RHEL engineering approval.</div>
+    </div>
+    <div class="next-step">
+      <div class="owner">Jeff Ligon</div>
+      <div>Follow up offline with Matt on autonomous update mechanisms for the automotive rail platform.</div>
+    </div>
+    <div class="next-step">
+      <div class="owner">Sean O'Keeffe</div>
+      <div>Share management presentation deck covering RHEL + Satellite + Ansible integration plans and identified gaps.</div>
+    </div>
+    <div class="next-step">
+      <div class="owner">Sean O'Keeffe</div>
+      <div>Schedule follow-up discussion with the group to review product roadmaps and address feature gaps.</div>
+    </div>
+    <div class="next-step">
+      <div class="owner">Jeff Ligon</div>
+      <div>Create a comprehensive task list of everything required to deploy Bootc as the default for RHEL 11.</div>
+    </div>
+  </div>
+
+  <!-- Impact -->
+  <h2>Impact on RHIVOS &amp; RHAS</h2>
+
+  <h3>Direct &amp; Significant</h3>
+  <div class="impact-grid">
+
+    <div class="impact-card high">
+      <div class="impact-label">High impact</div>
+      <h4>Developer story gap — barrier to OEM customers</h4>
+      <p>Ian McLeod (automotive architect) named this explicitly: once real OEM customers engage, they need to develop on the system, not just deploy. RHIVOS is deploy-great, develop-terrible. No solution was committed — it's the primary gap blocking Bootc-by-default.</p>
+    </div>
+
+    <div class="impact-card high">
+      <div class="impact-label">High impact</div>
+      <h4>Canary / staged deployments — automotive stakes</h4>
+      <p>Higher stakes than anywhere else: you can't blindly push an unchecked update to a vehicle fleet. No first-class tooling exists. RHEL Edge Manager is a candidate but nothing is committed. Open gap directly affecting RHIVOS fleet operations.</p>
+    </div>
+
+    <div class="impact-card high">
+      <div class="impact-label">High impact</div>
+      <h4>Zstandard Chunked — automotive explicitly waiting</h4>
+      <p>Jeff flagged this as a priority for automotive (alongside edge). Exists in Fedora, not in RHEL. RHIVOS needs it for faster container pulls on vehicle hardware. Jeff is actively driving.</p>
+    </div>
+
+    <div class="impact-card high">
+      <div class="impact-label">High impact</div>
+      <h4>Bootc as RHEL 11 default — ecosystem effect</h4>
+      <p>RHIVOS is already bootc-based. If RHEL 11 ships a good developer story and pre-built images, it strengthens the ecosystem RHIVOS lives in. If it ships with current gaps as a "default," OEM first impressions will be negative and associated with RHIVOS.</p>
+    </div>
+
+    <div class="impact-card medium">
+      <div class="impact-label">Medium impact</div>
+      <h4>Pre-built RHIVOS board images not yet delivered</h4>
+      <p>Jeff acknowledged each ARM board needs specific tuning. No automotive-specific pre-built images exist yet. Strong consensus that these are needed to reduce OEM onboarding friction. Must be interactively modifiable, not static.</p>
+    </div>
+
+    <div class="impact-card medium">
+      <div class="impact-label">Medium impact</div>
+      <h4>Satellite OCI registry — untapped for RHIVOS fleet</h4>
+      <p>Satellite already supports bootc container push via its OCI registry (Pulp). If RHIVOS fleet management uses Satellite (as large RHEL customers do), this capability is available and avoids building a parallel solution. Sean's management deck will have details.</p>
+    </div>
+
+    <div class="impact-card medium">
+      <div class="impact-label">Medium impact</div>
+      <h4>Tool integration caution (Andy Burka)</h4>
+      <p>Any automotive-specific deployment tooling built for RHIVOS must integrate with Satellite/Ansible/ACM — not stand alone. Prior edge management failure is the cautionary tale. Direct architectural guidance for RHIVOS-related tooling decisions.</p>
+    </div>
+
+  </div>
+
+  <h3 style="margin-top:24px;">Indirect / Monitor</h3>
+  <div class="impact-grid">
+    <div class="impact-card medium">
+      <div class="impact-label">Watch</div>
+      <h4>CoreOS + Bootc unification</h4>
+      <p>Stalled working group. If reconvened and successful, could significantly shift RHIVOS's OS foundation (CoreOS tooling + Bootc capabilities merged).</p>
+    </div>
+    <div class="impact-card medium">
+      <div class="impact-label">Watch</div>
+      <h4>ELN + Anaconda graphical Bootc installer</h4>
+      <p>Upstream work. If it lands, the Anaconda graphical installer for Bootc becomes a supported path — benefits the broader Bootc ecosystem RHIVOS depends on, and improves the "first contact" story for new RHEL-on-Bootc users.</p>
+    </div>
+  </div>
+
+  <!-- References -->
+  <h2>References</h2>
+  <ul style="font-size:14px; padding-left:20px; line-height:2;">
+    <li><a href="https://docs.google.com/document/d/1i55InS-Z8I0vhocqhNgZjWd1ZeBGe-MB6qfbSyTh6as/edit?tab=t.ed1gxebsco09" target="_blank">Meeting Transcript (Google Doc)</a></li>
+    <li><a href="https://docs.google.com/document/d/1i55InS-Z8I0vhocqhNgZjWd1ZeBGe-MB6qfbSyTh6as/edit?tab=t.9xrwukbcevtk" target="_blank">Gemini Meeting Notes (Google Doc)</a></li>
+    <li>Internal capture: <code>agent_brain/projects/pitcrew-image-mode-future-2026-05-27.md</code></li>
+    <li>Related: <code>agent_brain/projects/rhivos-release-approach.md</code> — AUTOBU-1076 layered product work</li>
+  </ul>
+
+  <div class="report-footer">
+    <div>PitCrew: The Future of Image Mode — 2026-05-27</div>
+    <div>Report generated 2026-05-31</div>
+  </div>
+
+</body>
+</html>
