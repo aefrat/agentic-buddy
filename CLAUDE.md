@@ -83,6 +83,7 @@ Read the full skill file ONLY when the trigger matches. Don't read skills preemp
 - [update-upstream](agent_brain/skills/update-upstream.md) — Pulls improvements from the upstream agentic-buddy template. Compares skills, commands, packs, identity templates, and CLAUDE.md sections. Presents update plan before applying. Use on "update from upstream", "sync with upstream", "check for upstream changes", or "pull latest improvements".
 - [Domain packs](.packs/index.md) — Starter kits for specific use cases (work, personal, writing). Read the index and propose a matching pack when the user wants to use the system for a new purpose, adds content for a new domain, or asks how to adapt the system. Triggers: "I want to use this for...", "I'm going to start working on...", "should I change something for...?", or when the user adds files for a domain not yet set up.
 - [engineering-manager-report](agent_brain/skills/engineering-manager-report.md) — Generates and emails the daily or weekly engineering manager report (Jira + GitLab + GitHub + Google Docs + Slack). Use on "run the daily/weekly report", "generate the manager report", "rerun the report", or "resend the daily/weekly".
+- [atc-release-compose](agent_brain/skills/atc-release-compose.md) — Triggers and monitors ODCS release compose builds for the ATC team (RHIVOS). Use on "trigger a compose", "create a release config", "kick off a compose build", "generate-compose is stuck/failed", or "how do I trigger a release build?".
 
 ## Rules
 
