@@ -1,7 +1,7 @@
 ---
-last_accessed: YYYY-MM-DD
-access_count: 1
-created: YYYY-MM-DD
+last_accessed: 2026-06-10
+access_count: 2
+created: 2026-06-01
 ---
 
 # System observations
@@ -15,12 +15,7 @@ Resolved observations are moved to the bottom.
 
 ## Skill candidates
 
-**Format:**
-
-```markdown
-- **YYYY-MM-DD:** Description of the repeatable procedure (seen: 1)
-  - YYYY-MM-DD: seen again in [context] (seen: 2) → ready to create
-```
+- **2026-06-10:** "Build LLM wiki from Confluence page" — fetch Confluence pages via v2 API (parent + children), convert HTML→markdown, scaffold Karpathy-style wiki with CLAUDE.md schema, run INGEST in rounds (concepts → workflows → processes → enrichment → onboarding), LINT, verify. Parameterizable by Confluence page ID and wiki domain. Used for RHIVOS workflows wiki. (seen: 1)
 
 ## Rule candidates
 
@@ -33,12 +28,7 @@ Resolved observations are moved to the bottom.
 
 ## Concept candidates
 
-**Format:**
-
-```markdown
-- **YYYY-MM-DD:** Pattern, lesson, or connection detected (seen: 1)
-  - YYYY-MM-DD: seen again in [context] (seen: 2)
-```
+- **2026-06-10:** Confluence attachment downloads use different auth than API calls. The v2 pages API works with basic auth (.netrc), but `/download/attachments/` returns 401. May need cookie-based session or different token scope. (seen: 1)
 
 ## Structure candidates
 
@@ -50,4 +40,4 @@ Resolved observations are moved to the bottom.
 
 ## Resolved
 
-Observations that were acted on. Cleared during /monthly.
+- **2026-06-10:** Rule — "After plan approval, execute autonomously without confirmation prompts." Explicit user correction (3x in one session). Fast-tracked to memory as `feedback_autonomous-execution.md`.
