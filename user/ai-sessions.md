@@ -8,6 +8,8 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Working directory | Session ID |
 |------|-------------------|------------|
+| 2026-06-10 | agentic-buddy (RHIVOS wiki build) | `ad4fa563-96f4-4daa-bced-498041cd244c` |
+| 2026-06-09 | agentic-buddy (RHIVOS wiki plan) | `f910631c-91af-4d44-b837-9d2f0b0e8877` |
 | 2026-05-25 | agentic-buddy (this system) | `bf027be1-6f8f-41f9-9b23-c81ae6c2a563` |
 
 ### Other recent sessions
