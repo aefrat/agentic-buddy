@@ -188,10 +188,18 @@ duplicate it — increment its count and add the new date:
 
 If there are no observations, skip this section — don't force it.
 
-### 6. Git commit
+### 6. Save session ID
+
+Update `user/ai-sessions.md` with the current session ID (and any other
+session IDs referenced in this conversation, e.g. resumed sessions or
+cross-project sessions). Add to the appropriate project group. If a session
+is already listed, skip it. Include a short description of what the session
+covered (e.g. "RHIVOS wiki build", "weekly report").
+
+### 7. Git commit
 
 ```bash
-git add logs/ agent_brain/observations.md && git commit -m "reflect: YYYY-MM-DD" 2>/dev/null || true
+git add logs/ agent_brain/observations.md user/ai-sessions.md && git commit -m "reflect: YYYY-MM-DD" 2>/dev/null || true
 ```
 
 ## Quality criteria
