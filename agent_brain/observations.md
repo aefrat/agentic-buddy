@@ -16,6 +16,7 @@ Resolved observations are moved to the bottom.
 ## Skill candidates
 
 - **2026-06-10:** "Build LLM wiki from Confluence page" — fetch Confluence pages via v2 API (parent + children), convert HTML→markdown, scaffold Karpathy-style wiki with CLAUDE.md schema, run INGEST in rounds (concepts → workflows → processes → enrichment → onboarding), LINT, verify. Parameterizable by Confluence page ID and wiki domain. Used for RHIVOS workflows wiki. (seen: 1)
+- **2026-06-11:** "Scan Slack channel and generate project update" — source tokens from crontab, fetch via Slack API (conversations.history + conversations.replies + users.info), resolve @mentions, summarize key threads, cross-reference with project repos (ATC_Team_codebase_docs, errata-distribution, rhivos-workflows-wiki), generate actionable project file with resolution plans. Reusable for any team channel. (seen: 1)
 
 ## Rule candidates
 
@@ -25,6 +26,7 @@ Resolved observations are moved to the bottom.
 ## Concept candidates
 
 - **2026-06-10:** Confluence attachment downloads use different auth than API calls. The v2 pages API works with basic auth (.netrc), but `/download/attachments/` returns 401. May need cookie-based session or different token scope. (seen: 1)
+- **2026-06-11:** Cross-referencing Slack discussions against documented processes (wikis/repos) reveals process gaps. The RHIVOS tagging ownership gap was only visible because Slack showed ad-hoc behavior (Francisco/Ozan doing it manually) while the wiki showed automation (Gator handles promotion). Pattern: "compare what people do (Slack) with what's documented (wiki) to find process gaps." (seen: 1)
 
 ## Structure candidates
 

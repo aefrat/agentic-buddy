@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-06-11 | Slack scan #automotive-release-readiness + RC3 project file | `cf79a3d7-917e-4f25-ac4b-351c8390af94` |
 | 2026-06-11 | Daily engineering manager report | `f45479e4-4337-48c8-beca-3006753cdb9e` |
 | 2026-06-10 | RHIVOS wiki build + errata-distribution setup | `ad4fa563-96f4-4daa-bced-498041cd244c` |
 | 2026-06-09 | RHIVOS wiki plan (planned, not executed) | `f910631c-91af-4d44-b837-9d2f0b0e8877` |
