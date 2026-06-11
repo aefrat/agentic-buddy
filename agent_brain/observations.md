@@ -20,7 +20,7 @@ Resolved observations are moved to the bottom.
 
 ## Rule candidates
 
-- **2026-06-11:** Use `jira-cli` (`jira issue view`, `jira issue list`) for Jira queries, not raw `curl` API calls. The CLI is configured with auth and handles formatting. User corrected this explicitly. (seen: 1)
+- **2026-06-11:** Use existing skills/tools for external services (Jira, Slack, Gmail, etc.) instead of raw API calls. User corrected 3x in one day: Jira curl, Slack MCP OAuth, Jira user search curl. (seen: 3) → **fast-tracked to CLAUDE.md Rule 18**
 - **2026-06-11:** Before querying external systems, check if the data is already available in loaded context (files, earlier tool results). Only fetch what's genuinely missing. User stopped a redundant Jira fetch when data was already in the weekly report + prior query. (seen: 1)
 
 ## Concept candidates
