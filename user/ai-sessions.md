@@ -8,7 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
-| 2026-06-11 | RC3 follow-up + RHIVOS release process deep dive (tags, errata, signing) | `14095a1b-347f-4cb0-a90c-6be3958b58e1` |
+| 2026-06-11 | RC3 follow-up + RHIVOS release process deep dive (tags, errata, signing, Gator CI orchestration) | `14095a1b-347f-4cb0-a90c-6be3958b58e1` |
 | 2026-06-11 | RC3 project + PITCREW-290 deep dive + Matt Goldman summary | `cf79a3d7-917e-4f25-ac4b-351c8390af94` |
 | 2026-06-11 | Daily engineering manager report | `f45479e4-4337-48c8-beca-3006753cdb9e` |
 | 2026-06-10 | RHIVOS wiki build + errata-distribution setup | `ad4fa563-96f4-4daa-bced-498041cd244c` |

@@ -1,6 +1,6 @@
 ---
 last_accessed: 2026-06-11
-access_count: 3
+access_count: 4
 created: 2026-06-01
 ---
 
@@ -28,6 +28,7 @@ Resolved observations are moved to the bottom.
 
 - **2026-06-10:** Confluence attachment downloads use different auth than API calls. The v2 pages API works with basic auth (.netrc), but `/download/attachments/` returns 401. May need cookie-based session or different token scope. (seen: 1)
 - **2026-06-11:** Cross-referencing Slack discussions against documented processes (wikis/repos) reveals process gaps. The RHIVOS tagging ownership gap was only visible because Slack showed ad-hoc behavior (Francisco/Ozan doing it manually) while the wiki showed automation (Gator handles promotion). Pattern: "compare what people do (Slack) with what's documented (wiki) to find process gaps." (seen: 1)
+- **2026-06-11:** CI pipeline YAML files (`.gitlab-ci.yml`, stage includes, rules) are often the most authoritative source for understanding system architecture — more so than wikis or DETAILED.md docs. The Gator command orchestration (independent triggers vs sequential pipeline) was fully answered by reading `.gitlab/rules.yml` and the stage YAMLs, while DETAILED.md only showed the DPAC→Gator cross-project trigger. Pattern: "read the CI config to understand how components interact at runtime." (seen: 1)
 
 ## Structure candidates
 
