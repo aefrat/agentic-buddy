@@ -14,7 +14,7 @@ RC3 build pending — blocked on package tagging and kernel-ivos-nxp-extra-modul
 
 RC2 was built and delivered on 2026-06-08 (both RHIVOS-2.0-Core and RHIVOS-2.0). A kernel config-io-uring fix landed in newer kernel builds but was not included in RC2, causing validator failures that impact FuSa. This necessitates an RC3.
 
-Source: #automotive-release-readiness Slack channel (C04RHEEGY30), 2026-06-08 to 2026-06-10.
+Source: #automotive-release-readiness Slack channel (C04RHEEGY30), 2026-06-08 to 2026-06-11.
 
 ## Timeline
 
@@ -26,21 +26,23 @@ Source: #automotive-release-readiness Slack channel (C04RHEEGY30), 2026-06-08 to
 | RC3 decision made | 2026-06-10 | Done |
 | Blocker tickets approved | 2026-06-10 | Done |
 | Package tagging | Pending | Blocked |
-| kernel-ivos-nxp-extra-modules build | Pending | Francisco chasing Enric |
+| kernel-ivos-nxp-extra-modules build | Pending | Enric/Francisco — needs separate advisory + NVR attachment (confirmed by Kanitha) |
+| kernel-ivos-nxp-extra-modules errata | Pending | Enric/Francisco must create advisory and attach NVR (Mattijs confirmed it's independent, not a kernel subpackage) |
 | Gating, signing, waiving | Pending | Stephen Bertram to waive |
-| Errata attachment | Pending | |
+| Errata attachment | Pending | Kanitha: "as soon as all packages in candidate tag, attached to errata and signed, we can trigger RC3" |
 | RC3 build trigger | Target: Friday 2026-06-13 | |
 | RC3 reduced CTC | Target: weekend if build ready Fri, else ~Wed 2026-06-18 | |
 | Release readiness sync meeting | 2026-06-11 | Moved from 2026-06-10 |
 
 ## RC3 Open Items — Resolution Plan
 
-### 1. Build kernel-ivos-nxp-extra-modules
+### 1. Build kernel-ivos-nxp-extra-modules + create its errata
 
 - **Status:** Not built. Was missed from RC2 entirely.
-- **Who:** Francisco da Rocha → Enric (kernel module maintainer)
+- **Who:** Enric Balletbo / Francisco da Rocha (kernel module maintainers), Mattijs Korpershoek (package expert)
 - **How:** Enric needs to trigger a Brew build of kernel-ivos-nxp-extra-modules against the new kernel (`6.12.0-211.20.1`). OOT kernel modules must be rebuilt when the base kernel changes. Once built, tag into `rhivos-2.0-gate` / `rhivos-2.0-core-gate` Brew tags.
-- **Risk:** This is the critical-path blocker — nothing downstream can proceed until the build exists. If Enric is unavailable, Francisco or the kernel team (`rhivos-ft-auto-kernel`) need to own this.
+- **Update 2026-06-11:** Kanitha confirmed this package is **NOT a subpackage of kernel-ivos** — it's built independently via CBS ([CBS](https://cbs.centos.org/koji/packageinfo?packageID=11920) / [Brew](https://brewweb.engineering.redhat.com/brew/packageinfo?packageID=88898)). See [RHICIL-45](https://redhat.atlassian.net/browse/RHICIL-45) for package description. Because it's independent, it **needs its own errata advisory** with the NVR attached. Mattijs confirmed this but doesn't know how to create the advisory — Enric or Francisco need to do it.
+- **Risk:** This is the critical-path blocker — nothing downstream can proceed until the build exists AND its errata is created. If Enric is unavailable, Francisco or the kernel team (`rhivos-ft-auto-kernel`) need to own this.
 
 ### 2. Tag packages into Brew release tags
 
@@ -202,7 +204,8 @@ FDA team (Meital Arki) completing first review of 6 docs by end of week 2026-06-
 | Ozan Unsal | Pipeline trigger and build execution |
 | Kanitha Chim | Build coordination, crosscompiler investigation |
 | Francisco da Rocha | Kernel builds, tagging, blocker tickets |
-| Enric Balletbo i Serra | kernel-ivos-nxp-extra-modules build (critical path) |
+| Enric Balletbo i Serra | kernel-ivos-nxp-extra-modules build + errata (critical path) |
+| Mattijs Korpershoek | kernel-ivos-nxp-extra-modules package expert (confirmed independent build) |
 | Rachel Sibley | QE coordination, CTC scheduling |
 | Jaime Flynn | Release management, blocker tracking |
 | Stephen Bertram | Build waiving (Greenwave/WaiverDB) |

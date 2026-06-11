@@ -17,6 +17,7 @@ Resolved observations are moved to the bottom.
 
 - **2026-06-10:** "Build LLM wiki from Confluence page" — fetch Confluence pages via v2 API (parent + children), convert HTML→markdown, scaffold Karpathy-style wiki with CLAUDE.md schema, run INGEST in rounds (concepts → workflows → processes → enrichment → onboarding), LINT, verify. Parameterizable by Confluence page ID and wiki domain. Used for RHIVOS workflows wiki. (seen: 1)
 - **2026-06-11:** "Scan Slack channel and generate project update" — source tokens from crontab, fetch via Slack API (conversations.history + conversations.replies + users.info), resolve @mentions, summarize key threads, cross-reference with project repos (ATC_Team_codebase_docs, errata-distribution, rhivos-workflows-wiki), generate actionable project file with resolution plans. Reusable for any team channel. (seen: 1)
+  - 2026-06-11: seen again — Avi asked to re-scan same channel for updates. Same method, incremental scan. (seen: 2)
 
 ## Rule candidates
 
