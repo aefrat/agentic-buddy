@@ -1,6 +1,6 @@
 ---
 last_accessed: 2026-06-14
-access_count: 2
+access_count: 3
 created: 2026-06-11
 ---
 
@@ -136,6 +136,20 @@ Source: #automotive-release-readiness Slack channel (C04RHEEGY30), 2026-06-08 to
 - **RC3 impact:** When RC3 compose runs product listing, new overrides should suppress the ppc64le/s390x entries. However, if new builds land (gcc, other cross-compiler packages), the same issue may recur. Kanitha is asking Lukas about a delete-and-reimport approach for a systemic fix.
 - **Non-blocking:** Doesn't block RC3 build, but affects errata correctness before push to CDN.
 
+### Z-stream tagging process conflict (Eric Chanudet, Jun 11-12)
+
+- **Status:** Unresolved. Nightly 2.1 composes breaking as of Jun 12.
+- **Who:** Eric Chanudet (downstream-dtbs, qcom-scmi, nxp-extra-modules maintainer), Sameera Kalgudi (manual tagger), Petr Sabata (release/distribution), Oleksii Baranov (kernel-ivos-qualcomm builds), Martin Perina (raised process concern from RR meeting), Francisco da Rocha (escalation path)
+- **Problem:** Eric must rebuild companion packages (downstream-dtbs, qcom-scmi, kernel-ivos-nxp-extra-modules) every time a new kernel-ivos-qualcomm build lands. He doesn't control which tag the kernel uses — the kernel lands in `rhivos-2.0-z` or `rhivos-2.1` tags, and he must match. But:
+  1. He has no permission to tag directly — must request Sameera daily
+  2. The process is undocumented — no RACI for who tags companion packages
+  3. Inconsistency across kernel maintainers, QE, and distribution
+- **Escalation (Jun 12):** Eric escalated to managers via Francisco. Martin Perina cited RR meeting: "tagging is the builder's responsibility." Eric pushed back: he doesn't build the kernel, he reacts to it.
+- **Petr's guidance:** Clarified 2.0 (blockers only, finalizing by Jun 18) vs 2.0-z (update channel, more visible to customers) vs 2.1 (rolling development). Needs to understand Oleksii's kernel target flow before resolving.
+- **Additional blocker:** `kernel-ivos-nxp-extra-modules` has no dist-git policy exception (unlike downstream-dtbs and qcom-scmi), requiring a VROOM ticket for every commit. Controlled by RHELBLD team (RHELBLD-18043).
+- **RC3 impact:** The kernel CVE fix for RC3 will trigger companion rebuilds. If tagging isn't aligned, companion packages may be missing from RC3 compose or 2.0-z updates. STAG automation (which would fix this) is not in place.
+- **Suggested resolution:** Alignment meeting between Eric, Oleksii, Petr, and Sameera to standardize tagging flow. Get dist-git policy exception for nxp-extra-modules. Prioritize STAG automation.
+
 ### Crosscompiler sysroot — decision captured
 
 - **Status:** Resolved — Carlos decided sysroot packages won't ship. Petr confirmed customers should use `dnf --installroot` from target repos.
@@ -169,6 +183,8 @@ Existing builds (kernel, dtbs, qcom-scmi) ────────────�
 ```
 
 **Single point of failure:** kernel-ivos-nxp-extra-modules build. Everything else is ready or automated.
+
+**Additional risk (2026-06-14):** Z-stream tagging process unresolved. Eric Chanudet's companion packages (downstream-dtbs, qcom-scmi, nxp-extra-modules) require manual tagging with no permissions, no automation (STAG not ready), and no dist-git policy exception for nxp-extra-modules. The RC3 kernel CVE fix will trigger companion rebuilds that depend on this broken process.
 
 ## Process Gaps Identified
 
@@ -223,7 +239,10 @@ Original plan — FDA team (Meital Arki) first review of 6 docs by end of week 2
 | Jaime Flynn | Release management, blocker tracking |
 | Stephen Bertram | Build waiving (Greenwave/WaiverDB) |
 | Luigi Pellecchia | Crosscompiler testing |
-| Petr Sabata | Crosscompiler/sysroot decisions |
+| Petr Sabata | Release/distribution structure, crosscompiler/sysroot decisions |
+| Eric Chanudet | downstream-dtbs, qcom-scmi, nxp-extra-modules — companion package rebuilds |
+| Sameera Kalgudi | Manual Brew tagging (Eric's daily requests) |
+| Oleksii Baranov | Kernel-ivos-qualcomm builds — controls kernel tagging |
 | Whitney Chadwick | Release readiness meeting lead |
 | Dustin Black | CI reboot bug reporter (VROOM-42325) |
 | Meital Arki | Docs review coordination (FDA) |
