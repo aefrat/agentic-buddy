@@ -1,6 +1,6 @@
 ---
 last_accessed: 2026-06-14
-access_count: 6
+access_count: 7
 created: 2026-06-01
 ---
 
@@ -34,11 +34,7 @@ Resolved observations are moved to the bottom.
 
 ## Structure candidates
 
-**Format:**
-
-```markdown
-- **YYYY-MM-DD:** Proposed directory and reasoning (seen: 1)
-```
+- **2026-06-14:** Skill format migration — user has skills in two locations: old format (`agent_brain/skills/*.md`) and new agentskills.io format (`.claude/skills/<name>/SKILL.md`). User explicitly stated all new skills should use agentskills.io format. GitLab collection uses `.agents/skills/`. Consider migrating remaining old-format skills to `.claude/skills/` during a maintenance cycle and archiving the old files. (seen: 1)
 
 ## Resolved
 
