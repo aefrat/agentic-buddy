@@ -188,16 +188,67 @@ Existing builds (kernel, dtbs, qcom-scmi) ────────────�
 
 ## Process Gaps Identified
 
-### No documented owner for initial Brew tagging into `-gate`
+### Tagging documentation audit (2026-06-14)
 
-The rhivos-workflows-wiki documents Gator's automated promotion (`-gate` → `-candidate` → `-pending`) thoroughly, but **who tags builds into `-gate` in the first place is undocumented**. The wiki says "maintainer builds land in `-gate`" and "maintainer mass-tags into `-gate` when ready" — but there's no RACI, no named role, no checklist for RC scenarios where existing builds need manual tagging.
+Audited three repos (ATC_Team_codebase_docs, errata-distribution, rhivos-workflows-wiki) for tagging policy and permission documentation.
 
-In the RC3 Slack thread, this fell on Francisco (kernel maintainer) and Ozan (pipeline engineer) ad-hoc. This is tribal knowledge, not process.
+#### What IS documented
 
-**Recommendation:** Raise in the 2026-06-11 release readiness meeting. Propose:
-- Document the owner for initial `-gate` tagging in the wiki (likely: package maintainer for their component, toolchain team for coordination)
-- Add a pre-RC checklist step: "Confirm all required NVRs are tagged into `-gate`" with named responsible party
-- Consider automating: Gator could accept a "tag these NVRs into `-gate`" command or the RC release config could include a required-NVR list that the pipeline validates before compose
+| Area | Where | Notes |
+|---|---|---|
+| Gator `-gate` → `-candidate` → `-pending` | ATC codebase docs: `gator.md` | Fully automated, Greenwave policies, kernel-automotive ReportPortal path |
+| Release pipeline (git tag → compose → CDN) | Wiki: `release-planning.md` | "Fully automated from tag creation to CDN delivery" |
+| Brew tag structure diagram | Wiki: `rhivos-release-approach.md:182-195` | `-gate` → evaluate → `-candidate` → compose → promote → `-pending` |
+| STAG proposal (lockstep builds) | Wiki: `rhivos-release-approach.md:205-213` | Petr Sabata's proposal — **not implemented**. Would give maintainers a per-version stag tag, mass-tag to `-gate` when ready. Connected to AUTOBU-1076 (QC LP lockstep). |
+| RHEL side-tags don't apply to RHIVOS | Wiki: `rhivos-release-approach.md:201-203` | RHIVOS lacks centpkg, Distrobaker, ROG CI, OSCI, build-group Jenkins |
+
+#### What is NOT documented — 6 gaps
+
+**1. Who tags packages INTO `-gate`.**
+Every doc assumes packages are already in `-gate`. The wiki says "maintainer mass-tags into `-gate` when ready" (`rhivos-release-approach.md:210`) — but no RACI, no named role, no permissions guidance, no command reference. In practice: Eric requests Sameera daily; for RC scenarios, Francisco and Ozan do it ad-hoc.
+
+**2. Brew tagging permissions.**
+No documentation on who has `brew tag-build` permissions for RHIVOS tags, or how to request them. Eric explicitly stated: "we have no permission to tag in the first place." Sameera Kalgudi handles it manually.
+
+**3. Side-tag workflow for companion packages.**
+Eric's daily workflow (rebuild downstream-dtbs/qcom-scmi/nxp-extra-modules against each new kernel-ivos-qualcomm) is completely undocumented. He is the only person who knows it. No automation exists.
+
+**4. dist-git policy exceptions.**
+Policy at `pkgs.devel.redhat.com/rules.html`, controlled by RHELBLD team (RHELBLD-18043). Most RHIVOS repos got exceptions; `kernel-ivos-nxp-extra-modules` didn't. No RHIVOS-side documentation of which repos have exceptions. Every commit to a non-exempted repo requires an approved VROOM ticket in the commit message.
+
+**5. 2.0 vs 2.0-z vs 2.1 tagging guidance.**
+Petr explained the structure in Slack only (Jun 12): 2.0 = initial release (blockers only, finalizing Jun 18), 2.0-z = update channel (more visible to customers), 2.1 = rolling development (rhivos-2-main branch). No written guide for which kernel builds should target which tag.
+
+**6. Companion package rebuild triggers.**
+No documentation that downstream-dtbs, qcom-scmi, and nxp-extra-modules must be rebuilt for every new kernel-ivos-qualcomm build. No automation. The STAG proposal would solve this but isn't implemented.
+
+#### Impact on RC3
+
+The kernel CVE fix for RC3 will trigger companion package rebuilds. These rebuilds depend on gaps 1-4:
+- Eric must rebuild companion packages (gap 3 — undocumented workflow)
+- Someone must tag them into `-gate` (gap 1 — no documented owner)
+- Eric has no tagging permissions (gap 2 — permission gap)
+- nxp-extra-modules has no dist-git policy exception (gap 4 — every commit needs a VROOM ticket)
+
+#### Recommendation
+
+- **Immediate (before Monday go/no-go):** Ensure Sameera or Francisco can handle companion package tagging for RC3 builds. Pre-agree who will do it.
+- **Short-term:** Document the pre-`-gate` tagging owner and permissions in the wiki. Add a pre-RC checklist step: "Confirm all companion NVRs are tagged into `-gate`."
+- **Medium-term:** Implement STAG (Petr's proposal) to solve lockstep builds. Get dist-git policy exception for nxp-extra-modules.
+- **Long-term:** Automate companion rebuilds — when kernel-ivos-qualcomm lands in a tag, trigger downstream-dtbs/qcom-scmi/nxp-extra-modules rebuilds and tagging automatically.
+
+> **Sources audited:**
+> - `ATC_Team_codebase_docs/repo-wiki/repos/gator.md` — Gator automated promotion
+> - `ATC_Team_codebase_docs/repo-wiki/repos/gator-config.md` — tag/promotion config
+> - `ATC_Team_codebase_docs/repo-wiki/repos/release-definitions.md` — release stream identity
+> - `ATC_Team_codebase_docs/repo-wiki/repos/downstream-pipelines-as-code.md` — pipeline stages
+> - `ATC_Team_codebase_docs/repo-wiki/repos/rhivos.md` — Pungi config/compose
+> - `ATC_Team_codebase_docs/.agents/skills/atc-sre-debug/references/failure-taxonomy.md` — stage failures
+> - `errata-distribution/README.md` — batch workflow
+> - `errata-distribution/.cursor/skills/errata-distribution/reference.md` — Brew source/target tags
+> - `rhivos-workflows-wiki/wiki/processes/release-planning.md` — end-to-end pipeline
+> - `rhivos-workflows-wiki/raw/agentic-buddy/rhivos-release-approach.md` — Brew tag structure + STAG proposal
+> - Slack thread #automotive-toolchain (Jun 11-12) — Eric Chanudet's escalation
 
 ## Kernel Change (RC2 → RC3)
 
