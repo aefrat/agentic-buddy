@@ -190,7 +190,7 @@ Existing builds (kernel, dtbs, qcom-scmi) ────────────�
 
 ### Tagging documentation audit (2026-06-14)
 
-Audited three repos (ATC_Team_codebase_docs, errata-distribution, rhivos-workflows-wiki), all 25+ Confluence pages under [Auto Toolchain](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196281018) and [Release Management](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196276699), the [ATC Distribution FA wiki](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/402130012) (Claude-generated pages), and the [developer-guide](https://gitlab.cee.redhat.com/developer-guide/developer-guide) GitLab repo (source for one.redhat.com In-Vehicle + RHEL Development Guides) for tagging policy and permission documentation.
+Audited three repos (ATC_Team_codebase_docs, errata-distribution, rhivos-workflows-wiki), all 25+ Confluence pages under [Auto Toolchain](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196281018) and [Release Management](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196276699), the [ATC Distribution FA wiki](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/402130012) (Claude-generated pages), the [developer-guide](https://gitlab.cee.redhat.com/developer-guide/developer-guide) GitLab repo (source for one.redhat.com In-Vehicle + RHEL Development Guides), and the [RCMDOC Confluence space](https://redhat.atlassian.net/wiki/spaces/RCMDOC/) (RCM team — Brew, tagging, permissions) for tagging policy and permission documentation.
 
 #### What IS documented
 
@@ -211,6 +211,10 @@ Audited three repos (ATC_Team_codebase_docs, errata-distribution, rhivos-workflo
 | RHEL: side-tags workflow | developer-guide: `proc_working-with-side-tags.adoc` | RHEL uses `centpkg request-gated-side-tag` → Distrobaker → `build-group-trigger` Jenkins → lands in `-candidate`. RHIVOS has **none** of this tooling. |
 | RHIVOS maintenance/post-release | developer-guide: `assembly_maintenance-and-post-release-processes.adoc` | **Stub** — literally says "Placeholder waiting for info" for the RHIVOS variant. No RHIVOS-specific procedures documented. |
 | ATC Distribution pipeline (Errata→CDN) | Confluence: [ATC Distribution FA wiki](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/402130012) (10+ pages) | Comprehensive docs on advisory lifecycle, signing, CDN push, automation scripts. Covers everything AFTER builds are in Brew tags — nothing about how they get into `-gate`. |
+| Brew standard tag permissions | RCMDOC: [Unified Brew Tagging Structure](https://redhat.atlassian.net/wiki/spaces/RCMDOC/pages/296845952) | Canonical permission model: main tag = `admin`, `-candidate` = no perms (anyone can tag), `-pending`/`-compose`/`-override` = `trusted`. **No `-gate` tag in the standard structure** — it's a RHEL 9+/RHIVOS gating-era addition not covered by RCM docs. |
+| Brew permission types | EXDSPRHELB: [Permissions in Brew](https://redhat.atlassian.net/wiki/spaces/EXDSPRHELB/pages/175083555) | Authoritative reference. Permissions govern tag access: if a tag has a perm set, users must hold it to tag/untag. `admin` = root-like, `trusted` = rel-eng ops. Custom perms can be created per tag. |
+| RHEL gating bypass | EXDSPRHELB: [Bypassing OSCI gating](https://redhat.atlassian.net/wiki/spaces/EXDSPRHELB/pages/175079794) | For RHEL, builds auto-land in `-gate`; packages that can't pass OSCI use `-gate-bypass` tag. Requires `rhel8-gate-bypass` permission, requested via RHELBLD JIRA ticket with PM as watcher. Whitelist per package. **No RHIVOS equivalent documented.** |
+| Brew whitelisting | RCMDOC: [Add a package to a Brew tag](https://redhat.atlassian.net/wiki/spaces/RCMDOC/pages/296845847) | Whitelisting (adding package to tag's package list) requires `package-list` or `admin` permission. Always whitelist on main tag, not `-candidate`. |
 
 #### What is NOT documented — 6 gaps
 
@@ -218,7 +222,7 @@ Audited three repos (ATC_Team_codebase_docs, errata-distribution, rhivos-workflo
 Every doc assumes packages are already in `-gate`. The wiki says "maintainer mass-tags into `-gate` when ready" (`rhivos-release-approach.md:210`) — but no RACI, no named role, no permissions guidance, no command reference. In practice: Eric requests Sameera daily; for RC scenarios, Francisco and Ozan do it ad-hoc.
 
 **2. Brew tagging permissions.**
-No documentation on who has `brew tag-build` permissions for RHIVOS tags, or how to request them. Eric explicitly stated: "we have no permission to tag in the first place." Sameera Kalgudi handles it manually.
+No documentation on who has `brew tag-build` permissions for RHIVOS tags, or how to request them. Eric explicitly stated: "we have no permission to tag in the first place." Sameera Kalgudi handles it manually. The RCMDOC space defines the standard Brew permission model — but the `-gate` tag isn't in the standard tagging structure (it was added for RHEL 9+ gating). For RHEL, builds auto-land in `-gate` so developers never need manual tagging permission. RHEL has a formal bypass process (`-gate-bypass` tag, `rhel8-gate-bypass` permission via RHELBLD JIRA). **RCMDOC has zero RHIVOS content** — the RHIVOS permission model for `-gate` tags is undocumented in every source searched.
 
 **3. Side-tag workflow for companion packages.**
 Eric's daily workflow (rebuild downstream-dtbs/qcom-scmi/nxp-extra-modules against each new kernel-ivos-qualcomm) is completely undocumented. He is the only person who knows it. No automation exists.
@@ -266,6 +270,11 @@ The kernel CVE fix for RC3 will trigger companion package rebuilds. These rebuil
 > - developer-guide repo: `con_understanding-gating.adoc` — RHEL: build system auto-tags into `-gate`
 > - developer-guide repo: `proc_working-with-side-tags.adoc` — RHEL side-tag workflow (centpkg + Distrobaker)
 > - developer-guide repo: `assembly_maintenance-and-post-release-processes.adoc` — RHIVOS section is a stub
+> - RCMDOC: [Unified Brew Tagging Structure](https://redhat.atlassian.net/wiki/spaces/RCMDOC/pages/296845952) — standard tag permission model (no `-gate`)
+> - RCMDOC: [Add a package to a Brew tag](https://redhat.atlassian.net/wiki/spaces/RCMDOC/pages/296845847) — whitelisting process
+> - EXDSPRHELB: [Permissions in Brew](https://redhat.atlassian.net/wiki/spaces/EXDSPRHELB/pages/175083555) — authoritative Brew permission reference
+> - EXDSPRHELB: [Bypassing OSCI gating](https://redhat.atlassian.net/wiki/spaces/EXDSPRHELB/pages/175079794) — RHEL `-gate-bypass` workflow
+> - RCMDOC: [RCM Services Overview](https://redhat.atlassian.net/wiki/spaces/RCMDOC/pages/296845840) — service catalog (Brew, rhpkg, ET, etc.)
 
 ## Kernel Change (RC2 → RC3)
 
