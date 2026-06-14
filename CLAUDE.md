@@ -13,6 +13,7 @@ All **repository** content (files in `agent_brain/`, `user/`, `logs/`, etc.) mus
    - Lessons, patterns, known errors → `agent_brain/concepts/`
    - User preferences → notify the user, suggest updating `agent_brain/identity/USER.md`
    - Ideas, unformed thoughts → `agent_brain/ideas/_scratchpad.md` (one-liners) or `agent_brain/ideas/YYYY-MM-DD_short-description.md` (with substance)
+   - Reminders ("remind me X") → resolve date, write directly to `agent_brain/deferred.md` if target is today/tomorrow; otherwise capture in `user/` (inbox or relevant file) with date marker for the daily to surface when due.
    - Anything else → create a fitting location in `agent_brain/` or `user/`
 
    Rule of thumb: **"Will the user act on this?"** → `user/`. **"Will the agent learn from this?"** → `agent_brain/`.
