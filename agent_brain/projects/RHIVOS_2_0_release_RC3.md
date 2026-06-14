@@ -128,11 +128,13 @@ Source: #automotive-release-readiness Slack channel (C04RHEEGY30), 2026-06-08 to
 - **Suggested resolution:** Needs root-cause analysis — is this a kernel regression, firmware issue, or Test Console infrastructure problem? If kernel: check if the 211.20.1 kernel fixes it (config-io-uring change may be unrelated). If infra: escalate to Test Console team. Either way, this should not block RC3 — but needs a decision on whether to waive Renesas reboot tests for RC3 CTC or investigate first.
 - **Action:** Dustin to add findings to VROOM-42325. Stephen Bertram to decide on waiver for RC3.
 
-### Crosscompiler errata — ppc64le/s390x debuginfo bundled
+### PLM ghost listings — cross-compiler debuginfo in errata (RHELWF-14266)
 
-- **Who:** Kanitha Chim (investigating) + Petr Sabata (crosscompiler owner)
-- **Suggested resolution:** The gcc/binutils advisories are pulling in debuginfo for architectures not relevant to RHIVOS (ppc64le, s390x). This is likely a Brew build configuration issue — the advisory is including all arches from the RHEL build, not filtering to RHIVOS-relevant arches (aarch64, x86_64). Kanitha should check if the advisory product_version filtering in Gator config is correct, or if the Brew build itself is multi-arch and needs arch-specific advisory splitting.
-- **Non-blocking:** This doesn't block RC3 but needs resolution before GA.
+- **Who:** Kanitha Chim (reporter) + Lukas Holecek (PLM team, assigned)
+- **Root cause (verified 2026-06-14):** PLM auto-generates product listings from Brew build contents, not from compose trees. The `binutils-2.41-63.el10` Brew build produces `cross-binutils-{aarch64,ppc64le,s390x}-debuginfo` sub-packages. PLM lists them for the `RHIVOS-2.0.0-Core` product even though they're not in any RHIVOS compose. This is a known RHEL-wide issue (RHELWF-11979, 8+ prior occurrences). RHIVOS 1.x (`9Base-RHIVOS-1.0.0`) has the same ghost entries — they were never noticed.
+- **Fix applied:** Lukas added PLM overrides for `cross-binutils-ppc64le-debuginfo` and `cross-binutils-s390x-debuginfo` on x86_64 for `RHIVOS-2.0.0-Core`. The `aarch64` cross entry remains.
+- **RC3 impact:** When RC3 compose runs product listing, new overrides should suppress the ppc64le/s390x entries. However, if new builds land (gcc, other cross-compiler packages), the same issue may recur. Kanitha is asking Lukas about a delete-and-reimport approach for a systemic fix.
+- **Non-blocking:** Doesn't block RC3 build, but affects errata correctness before push to CDN.
 
 ### Crosscompiler sysroot — decision captured
 
