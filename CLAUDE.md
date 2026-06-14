@@ -57,6 +57,11 @@ Factual updates to Right now (changed dates, flipped statuses) are allowed mid-s
 
 ### Right now
 
+- **RC3 go/no-go: Monday 2026-06-16.** Depends on RHEL CVE fix + Francisco's blocker tickets + NXP confirmation. Reduced CTC same day (8650/8775/QEMU). ASIL CTC weekend Jun 19.
+- **CAT timeline: RHIVOS 2.0-Core CAT Jun 29-30**, content on CDN/ET ~Jun 26.
+- **Roderick Kieley 1:1** — still unscheduled. 2 weeks into onboarding (started Jun 1).
+- **3 unfiled Slack inbox items:** Confirm Volodymyr Wednesday meeting; ack VROOM-44451 (NXP S32G gating) to Pablo; run chai-bot trial on ATC channel.
+
 ### Files
 
 Promotion is gradual — files climb through layers of visibility based on sustained use, not jumps. Structural context (team, primary project) lives in `USER.md`, not here. Most knowledge is reachable through directory indexes in "Where to find things." Only files that are genuinely hot from current work need to be here.
@@ -86,6 +91,7 @@ Read the full skill file ONLY when the trigger matches. Don't read skills preemp
 - [engineering-manager-report](agent_brain/skills/engineering-manager-report.md) — Generates and emails the daily or weekly engineering manager report (Jira + GitLab + GitHub + Google Docs + Slack). Use on "run the daily/weekly report", "generate the manager report", "rerun the report", or "resend the daily/weekly".
 - [atc-release-compose](agent_brain/skills/atc-release-compose.md) — Triggers and monitors ODCS release compose builds for the ATC team (RHIVOS). Use on "trigger a compose", "create a release config", "kick off a compose build", "generate-compose is stuck/failed", or "how do I trigger a release build?".
 - [pitcrew-weekly-report](agent_brain/skills/pitcrew-weekly-report.md) — Generates the weekly PitCrew/RHAS status report (Jira + strategic docs → HTML, with Slack digest in full mode). Use on "pitcrew weekly", "generate the pitcrew report", "RHAS status report", or "run the pitcrew report".
+- [scan-slack-channel](agent_brain/skills/scan-slack-channel.md) — Scans Slack channels for updates, generates per-channel summaries with action items. Use on "scan Slack", "check the channel", "what happened in #channel", or "Slack update".
 
 ## Rules
 
