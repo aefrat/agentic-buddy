@@ -6,10 +6,11 @@ created: 2026-06-14
 
 # AIIL: Issue-to-Release with Closed-Loop HIL Verification
 
-**Champion:** Michael Kuehl
+**Champion:** Michael Kuehl (Sr. Principal Ecosystem Architect — Automotive, mkuehl@redhat.com, Amsterdam/CEST)
 **Targets:** ELIV (October 2026), CES27 (January 2027)
 **Doc:** [Google Doc](https://docs.google.com/document/d/1G5SsFGhOUAz3pPuHJRLbelJXQp0XC0o4vwC57wr-RQM)
-**Posted:** 2026-06-12 in #team-pitcrew-automotive
+**Posted:** 2026-06-12 in #team-pitcrew-automotive (reply to Paul Wallrabe's telemetry thread)
+**Working group forming:** Paul Wallrabe (coordinator), Roderick Kieley (PITCREW-291 owner, started Jun 11), Miguel Angel Ajo Pelayo (Jumpstarter telemetry), Michael Kuehl (vision/requirements)
 
 ## Concept
 
@@ -62,6 +63,17 @@ OpenShift, Konflux, RHAS, OpenShift Dev Spaces, GitHub (upstream + fork), Jumpst
 
 ## Status
 
-- 2026-06-12: Michael posted concept + full spec doc to #team-pitcrew-automotive
-- 2026-06-12: Roderick engaged with 6 substantive comments on the doc
+- 2026-06-12: Paul Wallrabe raised telemetry gap in #team-pitcrew-automotive thread
+- 2026-06-12: Roderick replied he started PITCREW-291 (End-to-End Trace) "yesterday" (Jun 11)
+- 2026-06-12: Paul asked Michael to specify demo requirements
+- 2026-06-12: Michael posted AIIL concept + full spec doc (4.5h after Paul's ask)
+- 2026-06-12: Roderick engaged with 6 substantive comments on the Google Doc
+- 2026-06-13: Michael confirmed he'll refine further next week, expects changes/clarifications
 - No Jira ticket yet for the demo itself (tracked under PITCREW-290 umbrella)
+
+## People
+
+- **Michael Kuehl** — Sr. Principal Ecosystem Architect, Automotive. Amsterdam/CEST. Low-volume Slack (4 msgs since May 1), high impact. Also in #hyundai-esp-1year-q2-may29 (Hyundai engagement). No email contact with Avi in last 30 days.
+- **Roderick Kieley** — 2 weeks into onboarding (started Jun 1). Already self-assigned PITCREW-291 and engaged deeply with AIIL doc. 1:1 with Avi still unscheduled.
+- **Paul Wallrabe** — Initiated the thread. Coordinating between Michael's vision and team's telemetry readiness.
+- **Miguel Angel Ajo Pelayo** — Jumpstarter lead. Confirmed JEP-0013 not implemented in Jumpstarter, proposed exporter-based approach for device telemetry.
