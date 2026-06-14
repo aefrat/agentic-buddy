@@ -190,7 +190,7 @@ Existing builds (kernel, dtbs, qcom-scmi) ────────────�
 
 ### Tagging documentation audit (2026-06-14)
 
-Audited three repos (ATC_Team_codebase_docs, errata-distribution, rhivos-workflows-wiki) plus all 25+ Confluence pages under [Auto Toolchain](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196281018) and [Release Management](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196276699) for tagging policy and permission documentation.
+Audited three repos (ATC_Team_codebase_docs, errata-distribution, rhivos-workflows-wiki), all 25+ Confluence pages under [Auto Toolchain](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196281018) and [Release Management](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196276699), the [ATC Distribution FA wiki](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/402130012) (Claude-generated pages), and the [developer-guide](https://gitlab.cee.redhat.com/developer-guide/developer-guide) GitLab repo (source for one.redhat.com In-Vehicle + RHEL Development Guides) for tagging policy and permission documentation.
 
 #### What IS documented
 
@@ -206,6 +206,11 @@ Audited three repos (ATC_Team_codebase_docs, errata-distribution, rhivos-workflo
 | Release ROTA + actors | Confluence: [Release Documentation](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196269228) | ATC team rotates release coordinator + assistant. Auto Kernel Team "provides packages" but no tagging RACI. |
 | Gator design principles | Confluence: [Package Gating > Design](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196273404) | Gator evaluates + promotes. Explicitly stateless — relies on Brew, ResultsDB, WaiverDB. |
 | Release configs matrix | Confluence: [Release configs matrix](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196275486) | Maps RHEL/RHIVOS versions ↔ Brew tags ↔ git branches ↔ Gator configs. Reference, no ownership info. |
+| Manual freeze for RHIVOS 2.0 | Confluence comment on [gating process page](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/387157013) (387292638) | "We removed the tag inheritance of rhel-10.2-pending from rhivos-2.0-gate... need to list the builds in release tag and tag the builds in rhivos-2.0-candidate and rhivos-2.0-pending." Describes the freeze but not who does it. |
+| RHEL: build system tags to `-gate` | [developer-guide](https://gitlab.cee.redhat.com/developer-guide/developer-guide): `con_understanding-gating.adoc` | "The build system tags the build to the `rhel-8.x.y-gate` tag in Brew." Automatic for RHEL — no equivalent automation for RHIVOS. |
+| RHEL: side-tags workflow | developer-guide: `proc_working-with-side-tags.adoc` | RHEL uses `centpkg request-gated-side-tag` → Distrobaker → `build-group-trigger` Jenkins → lands in `-candidate`. RHIVOS has **none** of this tooling. |
+| RHIVOS maintenance/post-release | developer-guide: `assembly_maintenance-and-post-release-processes.adoc` | **Stub** — literally says "Placeholder waiting for info" for the RHIVOS variant. No RHIVOS-specific procedures documented. |
+| ATC Distribution pipeline (Errata→CDN) | Confluence: [ATC Distribution FA wiki](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/402130012) (10+ pages) | Comprehensive docs on advisory lifecycle, signing, CDN push, automation scripts. Covers everything AFTER builds are in Brew tags — nothing about how they get into `-gate`. |
 
 #### What is NOT documented — 6 gaps
 
@@ -254,6 +259,13 @@ The kernel CVE fix for RC3 will trigger companion package rebuilds. These rebuil
 > - `rhivos-workflows-wiki/wiki/processes/release-planning.md` — end-to-end pipeline
 > - `rhivos-workflows-wiki/raw/agentic-buddy/rhivos-release-approach.md` — Brew tag structure + STAG proposal
 > - Slack thread #automotive-toolchain (Jun 11-12) — Eric Chanudet's escalation
+> - Confluence: [RHEL & RHIVOS gating process](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/387157013) + comment 387292638 — manual freeze process
+> - Confluence: [Release Checklist Template](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196276995) — Brew tag creation tasks
+> - Confluence: [Release Documentation](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196269228) — ROTA, actors, stakeholders
+> - Confluence: [ATC Distribution FA wiki](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/402130012) (10+ pages) — advisory/signing/CDN pipeline
+> - developer-guide repo: `con_understanding-gating.adoc` — RHEL: build system auto-tags into `-gate`
+> - developer-guide repo: `proc_working-with-side-tags.adoc` — RHEL side-tag workflow (centpkg + Distrobaker)
+> - developer-guide repo: `assembly_maintenance-and-post-release-processes.adoc` — RHIVOS section is a stub
 
 ## Kernel Change (RC2 → RC3)
 
