@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-06-11
-access_count: 1
+last_accessed: 2026-06-14
+access_count: 2
 created: 2026-06-11
 ---
 
@@ -8,7 +8,7 @@ created: 2026-06-11
 
 ## Status
 
-RC3 build pending — blocked on package tagging and kernel-ivos-nxp-extra-modules build.
+RC3 build pending — go/no-go decision on Monday 2026-06-16. Held for new CVE assessment (RHEL fixing, RHIVOS may take into RC3 if fixed within 24h). NXP syncing still pending — Francisco to confirm.
 
 ## Context
 
@@ -30,9 +30,18 @@ Source: #automotive-release-readiness Slack channel (C04RHEEGY30), 2026-06-08 to
 | kernel-ivos-nxp-extra-modules errata | Pending | Enric/Francisco must create advisory and attach NVR (Mattijs confirmed it's independent, not a kernel subpackage) |
 | Gating, signing, waiving | Pending | Stephen Bertram to waive |
 | Errata attachment | Pending | Kanitha: "as soon as all packages in candidate tag, attached to errata and signed, we can trigger RC3" |
-| RC3 build trigger | Target: Friday 2026-06-13 | |
-| RC3 reduced CTC | Target: weekend if build ready Fri, else ~Wed 2026-06-18 | |
-| Release readiness sync meeting | 2026-06-11 | Moved from 2026-06-10 |
+| RC3 build trigger | Target: Monday 2026-06-16 (go/no-go) | Held — waiting on RHEL CVE fix (24h window) |
+| RC3 reduced CTC | ~2 days after build (kernel gating + smoke testing) | |
+| Release readiness sync meeting | 2026-06-11 | Done — see outcomes below |
+
+### Release Readiness Meeting Outcomes (2026-06-11)
+
+- **RC3 data tickets:** [VROOM-44420](https://redhat.atlassian.net/browse/VROOM-44420), [VROOM-44421](https://redhat.atlassian.net/browse/VROOM-44421)
+- **Testing plan:** kernel gating + smoke testing (~2 days)
+- **NXP syncing:** AI on Francisco to confirm what needs to be done
+- **New CVEs:** RHEL is fixing. RHIVOS will take the fix into RC3 if RHEL resolves within 24h. Build is held until RHEL confirms.
+- **Francisco:** to file RHIVOS proposed blocker tickets (Core version, 2.0 version, both kernel version tickets)
+- **Decision:** go/no-go on Monday 2026-06-16
 
 ## RC3 Open Items — Resolution Plan
 

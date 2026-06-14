@@ -1,5 +1,6 @@
 # Manager 1:1 — Roderick Kieley Onboarding
 **Date:** TBD  
+**Start date:** 2026-06-01 (onboarding ongoing)  
 **Participants:** Avihai Efrat, Roderick Kieley
 
 ---
