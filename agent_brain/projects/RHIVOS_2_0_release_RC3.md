@@ -198,7 +198,9 @@ In the RC3 Slack thread, this fell on Francisco (kernel maintainer) and Ozan (pi
 
 ## Documentation Review
 
-FDA team (Meital Arki) completing first review of 6 docs by end of week 2026-06-13:
+FDA team scope reduced (2026-06-11, Martin Perina): review now covers "reviewed + improvements reported" only — removed "approved by QE." Follow-up tickets needed for final QE verification/approval. Dustin moved VROOM-41019 to Verified.
+
+Original plan — FDA team (Meital Arki) first review of 6 docs by end of week 2026-06-13:
 - RHIVOS Core Deployment and Platform Integration (MR214)
 - RHIVOS Core Platform Updates (MR212)
 - RHIVOS Core Getting Started & Core Concepts (MR204)
