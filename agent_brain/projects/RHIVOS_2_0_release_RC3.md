@@ -221,8 +221,20 @@ Audited three repos (ATC_Team_codebase_docs, errata-distribution, rhivos-workflo
 **1. Who tags packages INTO `-gate`.**
 Every doc assumes packages are already in `-gate`. The wiki says "maintainer mass-tags into `-gate` when ready" (`rhivos-release-approach.md:210`) — but no RACI, no named role, no permissions guidance, no command reference. In practice: Eric requests Sameera daily; for RC scenarios, Francisco and Ozan do it ad-hoc.
 
-**2. Brew tagging permissions.**
-No documentation on who has `brew tag-build` permissions for RHIVOS tags, or how to request them. Eric explicitly stated: "we have no permission to tag in the first place." Sameera Kalgudi handles it manually. The RCMDOC space defines the standard Brew permission model — but the `-gate` tag isn't in the standard tagging structure (it was added for RHEL 9+ gating). For RHEL, builds auto-land in `-gate` so developers never need manual tagging permission. RHEL has a formal bypass process (`-gate-bypass` tag, `rhel8-gate-bypass` permission via RHELBLD JIRA). **RCMDOC has zero RHIVOS content** — the RHIVOS permission model for `-gate` tags is undocumented in every source searched.
+**2. Brew tagging permissions — RESOLVED via hub_policy.conf.**
+The actual Brew hub policy ([brew-confs repo](https://gitlab.cee.redhat.com/brew/brew-confs/blob/master/src/conf/hub_policy.conf)) defines three RHIVOS-specific permissions:
+
+| Permission | RHELBLD ticket | What it allows |
+|---|---|---|
+| `rhivos-tagger` | RHELBLD-12926 | Tag builds from RHEL release/candidate tags into any `rhivos-*` tag. Move builds between RHIVOS tags. Move from `rhel-9*` to `rhivos-*`. |
+| `pkglist-rhivos` | RHELBLD-12234 | Whitelist packages in any `rhivos-*` tag (package list management). |
+| `auto-toolchain-service-brew` (service account) | RHELBLD-17225 | Tag/untag Konflux-built packages in any `rhivos-*` tag. |
+
+Additionally, anyone with the general `tagger` permission (RHELBLD-8760) can tag almost anything anywhere.
+
+Eric's "we have no permission to tag" means the kernel team lacks `rhivos-tagger`. To get it: file a RHELBLD JIRA ticket requesting `rhivos-tagger` permission for the relevant Kerberos IDs. Sameera Kalgudi presumably has `rhivos-tagger` or uses the `auto-toolchain-service-brew` account.
+
+The RCMDOC/EXDSPRHELB spaces document the general Brew permission system but have zero RHIVOS-specific content — the RHIVOS permissions are only discoverable by reading the raw hub_policy.conf.
 
 **3. Side-tag workflow for companion packages.**
 Eric's daily workflow (rebuild downstream-dtbs/qcom-scmi/nxp-extra-modules against each new kernel-ivos-qualcomm) is completely undocumented. He is the only person who knows it. No automation exists.
@@ -275,6 +287,7 @@ The kernel CVE fix for RC3 will trigger companion package rebuilds. These rebuil
 > - EXDSPRHELB: [Permissions in Brew](https://redhat.atlassian.net/wiki/spaces/EXDSPRHELB/pages/175083555) — authoritative Brew permission reference
 > - EXDSPRHELB: [Bypassing OSCI gating](https://redhat.atlassian.net/wiki/spaces/EXDSPRHELB/pages/175079794) — RHEL `-gate-bypass` workflow
 > - RCMDOC: [RCM Services Overview](https://redhat.atlassian.net/wiki/spaces/RCMDOC/pages/296845840) — service catalog (Brew, rhpkg, ET, etc.)
+> - [brew-confs hub_policy.conf](https://gitlab.cee.redhat.com/brew/brew-confs/blob/master/src/conf/hub_policy.conf) — **authoritative source** for all Brew tagging permissions, including RHIVOS-specific rules
 
 ## Kernel Change (RC2 → RC3)
 
