@@ -109,13 +109,13 @@ Source: #automotive-release-readiness Slack channel (C04RHEEGY30), 2026-06-08 to
 
 ### 7. RC3 CTC (Confidence Test Cycle)
 
-- **Status:** Blocked on RC3 build (step 6).
-- **Who:** Rachel Sibley (scheduling) + Luigi Pellecchia / Roni Eliezer (execution)
-- **How:** Rachel to schedule reduced-scope CTC against RC3 compose. Based on RC2 plan:
-  - **Reduced scope areas:** smoke core tests, smoke fusa-minimal, aib, fusa-gcc-plugin, auto-boot-check, qm
-  - **Hardware:** 8650 + 8775 boards
-  - **Timeline:** If RC3 ready by Friday → run over weekend. If Monday → results ~Wednesday.
-  - Rachel should also confirm with FuSa team (Pavol Brilla) if FDA tests need to re-run given config-only change.
+- **Status:** Scheduled (Rachel Sibley, confirmed June 12 in #forum-qe-automotive).
+- **Who:** Rachel Sibley (scheduling) + QE team (execution)
+- **Plan (two phases):**
+  - **Monday June 16** (once RC3 build available): Reduced CTC against 2.0 Core RC3 — smoke, kernel gating, systemd, a-b-c. Hardware: 8650 / 8775 / QEMU.
+  - **Friday June 19** (weekend CTC): Full 2.0 ASIL Release CTC + Kernel Debug for 8650 (FuSa evidence).
+- **Additional tests requested:** Stephen Bertram asked to add kselftests + LTP.
+- **RC1/RC2 ticket closure:** Rachel extended deadline to mid next week (was end of this week). 100% pass not required — follow-up JIRAs for unstable tests.
 
 ---
 
