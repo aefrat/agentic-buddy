@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-06-11
-access_count: 5
+last_accessed: 2026-06-14
+access_count: 6
 created: 2026-06-01
 ---
 
@@ -18,6 +18,7 @@ Resolved observations are moved to the bottom.
 - **2026-06-10:** "Build LLM wiki from Confluence page" — fetch Confluence pages via v2 API (parent + children), convert HTML→markdown, scaffold Karpathy-style wiki with CLAUDE.md schema, run INGEST in rounds (concepts → workflows → processes → enrichment → onboarding), LINT, verify. Parameterizable by Confluence page ID and wiki domain. Used for RHIVOS workflows wiki. (seen: 1)
 - **2026-06-11:** "Scan Slack channel and generate project update" — source tokens from crontab, fetch via Slack API (conversations.history + conversations.replies + users.info), resolve @mentions, summarize key threads, cross-reference with project repos (ATC_Team_codebase_docs, errata-distribution, rhivos-workflows-wiki), generate actionable project file with resolution plans. Reusable for any team channel. (seen: 1)
   - 2026-06-11: seen again — Avi asked to re-scan same channel for updates. Same method, incremental scan. (seen: 2)
+  - 2026-06-14: scaled up — scanned 17 channels in parallel batches for full weekly review. Added Slack activity inbox (mentions + DMs) as separate complementary scan. (seen: 3)
 - **2026-06-11:** "Search Confluence for topic research" — use Confluence REST API (`wiki/rest/api/search?cql=...`) with .netrc auth to search across spaces, read full page content, extract and synthesize findings. Used to research OSCI CI Mediator across RHELPLAN, IVOS, and Red Hat Catalog spaces. Reusable for any Confluence research request. (seen: 1)
 
 ## Rule candidates
