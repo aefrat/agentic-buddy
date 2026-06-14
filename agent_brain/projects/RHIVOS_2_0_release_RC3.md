@@ -190,7 +190,7 @@ Existing builds (kernel, dtbs, qcom-scmi) ────────────�
 
 ### Tagging documentation audit (2026-06-14)
 
-Audited three repos (ATC_Team_codebase_docs, errata-distribution, rhivos-workflows-wiki) for tagging policy and permission documentation.
+Audited three repos (ATC_Team_codebase_docs, errata-distribution, rhivos-workflows-wiki) plus all 25+ Confluence pages under [Auto Toolchain](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196281018) and [Release Management](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196276699) for tagging policy and permission documentation.
 
 #### What IS documented
 
@@ -201,6 +201,11 @@ Audited three repos (ATC_Team_codebase_docs, errata-distribution, rhivos-workflo
 | Brew tag structure diagram | Wiki: `rhivos-release-approach.md:182-195` | `-gate` → evaluate → `-candidate` → compose → promote → `-pending` |
 | STAG proposal (lockstep builds) | Wiki: `rhivos-release-approach.md:205-213` | Petr Sabata's proposal — **not implemented**. Would give maintainers a per-version stag tag, mass-tag to `-gate` when ready. Connected to AUTOBU-1076 (QC LP lockstep). |
 | RHEL side-tags don't apply to RHIVOS | Wiki: `rhivos-release-approach.md:201-203` | RHIVOS lacks centpkg, Distrobaker, ROG CI, OSCI, build-group Jenkins |
+| RHEL→RHIVOS tag inheritance | Confluence: [RHEL & RHIVOS gating process](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/387157013) | Dev phase: `-gate` inherits from `rhel-*-pending` automatically. Blocker phase: inheritance frozen, RHEL builds must be "added manually" — **no owner named**. |
+| Brew tag creation for new releases | Confluence: [Release Checklist Template](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196276995) | Task 260: "Create the new tag rhivos-x.y.z in Brew" assigned to `#wg-team-auto-toolchain-release`. This is tag structure setup, not per-package tagging. |
+| Release ROTA + actors | Confluence: [Release Documentation](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196269228) | ATC team rotates release coordinator + assistant. Auto Kernel Team "provides packages" but no tagging RACI. |
+| Gator design principles | Confluence: [Package Gating > Design](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196273404) | Gator evaluates + promotes. Explicitly stateless — relies on Brew, ResultsDB, WaiverDB. |
+| Release configs matrix | Confluence: [Release configs matrix](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196275486) | Maps RHEL/RHIVOS versions ↔ Brew tags ↔ git branches ↔ Gator configs. Reference, no ownership info. |
 
 #### What is NOT documented — 6 gaps
 
