@@ -91,7 +91,7 @@ Read the full skill file ONLY when the trigger matches. Don't read skills preemp
 - [engineering-manager-report](agent_brain/skills/engineering-manager-report.md) — Generates and emails the daily or weekly engineering manager report (Jira + GitLab + GitHub + Google Docs + Slack). Use on "run the daily/weekly report", "generate the manager report", "rerun the report", or "resend the daily/weekly".
 - [atc-release-compose](agent_brain/skills/atc-release-compose.md) — Triggers and monitors ODCS release compose builds for the ATC team (RHIVOS). Use on "trigger a compose", "create a release config", "kick off a compose build", "generate-compose is stuck/failed", or "how do I trigger a release build?".
 - [pitcrew-weekly-report](agent_brain/skills/pitcrew-weekly-report.md) — Generates the weekly PitCrew/RHAS status report (Jira + strategic docs → HTML, with Slack digest in full mode). Use on "pitcrew weekly", "generate the pitcrew report", "RHAS status report", or "run the pitcrew report".
-- [scan-slack-channel](agent_brain/skills/scan-slack-channel.md) — Scans Slack channels for updates, generates per-channel summaries with action items. Use on "scan Slack", "check the channel", "what happened in #channel", or "Slack update".
+- [scan-slack-channels](.claude/skills/scan-slack-channels/SKILL.md) — Scans Slack channels (single, group, or all) and generates activity summaries with key findings and action items. Use on "scan Slack", "check the channel", "what happened in #channel", "Slack update", or "scan all channels".
 
 ## Rules
 
