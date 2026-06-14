@@ -9,13 +9,16 @@ created: YYYY-MM-DD
 ## When to use
 
 Triggered by the `/weekly` command — either by the user manually or by the
-automated cron job (Sundays at 23:55). Also triggered when the user says
-"weekly review", "what did I do this week", "end of week", or for broader
-reviews ("what have I done this quarter", "review for my manager").
+auto-consolidate hook (after 7 completed dailies since last weekly).
+Also triggered when the user says "weekly review", "what did I do this week",
+"end of week", or for broader reviews ("what have I done this quarter",
+"review for my manager").
 
-**Autonomous mode (cron):** All steps run without user interaction. Act with
-judgment; log all decisions and changes made. No approval gates — the
-maintenance cycles and git history provide the correction mechanism.
+**Autonomous mode (hooks):** All steps run without user interaction. Steps
+that ask the user (e.g., "prepare upcoming priorities") are skipped —
+priorities are inferred from workspace state and recent activity. Log all
+decisions and changes made. No approval gates — the maintenance cycles
+and git history provide the correction mechanism.
 
 ## Procedure
 
@@ -34,8 +37,10 @@ Before starting the weekly review:
 
 ### 1. Gather data
 
-- Read `logs/index.md` to see which days had active sessions this week.
-- Read logs from `logs/` for the active days of the current week.
+- Read `logs/index.md` to identify active sessions since the last weekly
+  review (check `user/journal/` for the most recent weekly file to
+  determine the boundary; if none exists, use the last 7 active sessions).
+- Read the corresponding daily logs from `logs/`.
 - Read `user/` to understand current state of the user's workspace.
 
 ### 2. Compile the weekly summary
@@ -44,7 +49,7 @@ Write the following summary to today's log (under a `## Weekly summary`
 section). In interactive mode, also present it to the user. In autonomous
 mode, the log entry is the output.
 
-**Completed this week:**
+**Completed since last weekly:**
 - Items completed or resolved, based on logs and `user/` content.
 
 **Still in progress:**
@@ -58,7 +63,7 @@ mode, the log entry is the output.
 - Lessons learned.
 
 **Unplanned work:**
-- Things that came up during the week that weren't planned.
+- Things that came up during the period since last weekly that weren't planned.
 
 ### 3. Review user workspace
 
@@ -66,20 +71,20 @@ Walk through `user/` content:
 - Any completed items that can be archived or removed?
 - Any stale items that need attention?
 - Is the structure still serving the user well, or does it need adjustment?
-- Any items that should be prioritized for next week?
+- Any items that should be prioritized for the upcoming period?
 
 ### 3b. Review ideas
 
 - Read `agent_brain/ideas/_scratchpad.md` — any items worth promoting to their own file?
 - Scan idea files in `agent_brain/ideas/`:
   - `seed` ideas: still interesting? Promote to `developing` or archive.
-  - `developing` ideas: any progress this week? Anything to add from the week's context?
-  - `ready` ideas: should any be converted this week? (create project, start task, etc.)
+  - `developing` ideas: any progress since last weekly? Anything to add from recent context?
+  - `ready` ideas: should any be converted now? (create project, start task, etc.)
 - Act on what's clear; log decisions made (promotions, status changes, archives).
 
 ### 3c. Link hygiene (weekly pass)
 
-As you scan concepts and projects this week, look for **missed functional
+As you scan concepts and projects since last weekly, look for **missed functional
 links** — places where a reader would genuinely benefit from a pointer to
 another file:
 
@@ -103,7 +108,7 @@ are gradual — one level at a time (see daily-consolidation Step 7 for the
 level table).
 
 1. **Active context (level 4):** for each file, check `access_count` growth
-   this week.
+   since last weekly.
    - Grew across multiple days → **reinforce** (keep, enrich description).
    - Didn't grow → **demote one level**: move to "Where to find things"
      (level 3) if the file still has periodic relevance, or back to its
@@ -111,12 +116,12 @@ level table).
 2. **"Where to find things" (level 3):** check entries that were added
    beyond the base set (user workspace, projects, concepts, ideas, journal,
    observations are base). Any added entry whose underlying files haven't
-   been accessed this week → demote back to directory index (level 1-2).
+   been accessed since last weekly → demote back to directory index (level 1-2).
 3. **Directory indexes (level 1-2):** scan `index.md` files for entries
    whose underlying file hasn't been accessed in >21 days → flag for
    potential demotion within the index. Don't act automatically — flag.
 4. **New promotions:** scan files accessed repeatedly across different days
-   this week. Promote **one level up** from current position, not directly
+   since last weekly. Promote **one level up** from current position, not directly
    to Active context. Only files already at level 3 that continue to be
    accessed in most sessions graduate to level 4.
 5. **Missing indexes:** if a promoted file has no index pathway (standalone,
@@ -129,8 +134,8 @@ Log changes across all levels in today's log (Decisions section):
 "Level 4: kept [X], demoted [Y]. Level 3: added [A], removed [B].
 Level 1-2: enriched [C], flagged [D]." In interactive mode, also present
 this to the user. If any demotion from Active context affects files the
-user actively references, write an `info` entry to
-`agent_brain/deferred.md`.
+user actively references, write to `agent_brain/deferred.md`:
+`- **info** (YYYY-MM-DD, weekly): [description].`
 
 ### 4b. Identity file check
 
@@ -142,7 +147,7 @@ extension should have explicit load conditions at the top:
 `Load when discussing [topic]`. Link from `USER.md` with:
 `[Label](filename.md) — load when [trigger]`.
 
-Also check `USER.md` for new facts from this week's logs that should be
+Also check `USER.md` for new facts from recent logs (since last weekly) that should be
 added (new projects, changes in routine, people mentioned, context shifts).
 
 **Episodic entries:** For time-bounded situations (illness, injury, travel,
@@ -167,12 +172,11 @@ when the topic appears. Three questions:
    maintaining?
 
 If yes to all three, track candidates in `agent_brain/observations.md`
-under "Structure candidates" until they mature. Write a `decision` entry
-to `agent_brain/deferred.md` proposing the split — structural changes to
-identity files require user approval. Don't execute the split
-autonomously. After the user approves (in a future interactive session),
-create the extension file, compress the source entry in USER.md to a
-one-line summary + link. Guideline: ~1 line for people not present in
+under "Structure candidates" until they mature. When a candidate is ready,
+execute the split autonomously: create the extension file, compress the
+source entry in USER.md to a one-line summary + link. Log the decision in
+today's log. Structural splits are internal organization — they don't
+require user approval. Guideline: ~1 line for people not present in
 most conversations, ~3 lines max for frequently present people (partner,
 immediate family). The goal is to minimize session-start token cost while
 preserving navigability.
@@ -180,9 +184,9 @@ preserving navigability.
 ### 5. Calibrate learned skills and rules
 
 Review **learned** skills and rules (created by the agent during `/daily`,
-not core system skills) that were created or modified this week:
+not core system skills) that were created or modified since last weekly:
 
-- **Used and referenced** this week → keep as-is, or adjust if usage revealed
+- **Used and referenced** since last weekly → keep as-is, or adjust if usage revealed
   issues with triggers or procedure.
 - **Not used at all** since creation → flag. The trigger description may be
   too vague, or the skill may have been premature. Don't remove yet — give
@@ -191,7 +195,7 @@ not core system skills) that were created or modified this week:
 
 ### 6. Generalize
 
-Look across the week's specific concepts, skills, and brain files for patterns
+Look across concepts, skills, and brain files since last weekly for patterns
 that can be abstracted into general knowledge.
 
 1. Scan `agent_brain/concepts/` and `agent_brain/projects/` for files that
@@ -222,9 +226,9 @@ that can be abstracted into general knowledge.
    apply, how to decide, what to watch for. A concept that only describes a
    pattern is knowledge; a concept that guides judgment is an attractor.
 
-Don't force generalizations. If nothing connects naturally across the week,
+Don't force generalizations. If nothing connects naturally since last weekly,
 skip this step. Generalization emerges from accumulated data, not from a
-single week.
+single review period.
 
 5. **Structural clustering** (applies to all brain structures, not just
    concepts): scan directories for files sharing a prefix or referencing
@@ -247,7 +251,7 @@ memory. Include:
 
 - What was completed, key decisions, metrics if available
 - Themes and patterns from the week
-- Top 3-5 priorities for next week (based on urgency, dependencies, open
+- Top 3-5 priorities for the upcoming period (based on urgency, dependencies, open
   threads)
 
 ### 9. Git commit

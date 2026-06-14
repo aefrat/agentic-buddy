@@ -7,7 +7,71 @@
       "Bash(mkdir:*)",
       "Bash(gws docs *)",
       "Bash(python3 -c ' *)",
-      "Bash(env)"
+      "Bash(env)",
+      "Bash(git ls-remote *)",
+      "Bash(awk '{if \\($1==\"password\"\\) print $1, \"***\"; else print}')",
+      "Bash(rm -rf /tmp/aib-wiki)",
+      "Bash(git clone *)",
+      "Bash(awk '/redhat.atlassian.net/{found=1} found && /password/{print $2; exit}' ~/.netrc)",
+      "Bash(curl -s -u aefrat@redhat.com:__CMDSUB_OUTPUT__ https://redhat.atlassian.net/rest/api/3/issue/AUTOBU-1076)",
+      "Bash(python3 -m json.tool)",
+      "Bash(curl -s --netrc \"https://redhat.atlassian.net/rest/api/3/issue/AUTOBU-1076\")",
+      "Bash(git config *)",
+      "Bash(brew latest-build *)",
+      "Bash(koji --version)",
+      "Bash(command -v brewkoji)",
+      "Read(//usr/bin/**)",
+      "WebFetch(domain:brewweb.engineering.redhat.com)",
+      "WebFetch(domain:copr.fedorainfracloud.org)",
+      "Bash(python3 *)",
+      "Bash(echo \"Total: $\\(find /tmp/aib-wiki -name \"*.md\" -type f)",
+      "Bash(echo \"Total: $\\(find /home/aefrat/ATC_Team_codebase_docs/wiki -name \"*.md\" -type f)",
+      "Bash(echo \"Total: $\\(find /home/aefrat/ATC_Team_codebase_docs/repo-wiki -name \"*.md\" -type f)",
+      "WebFetch(domain:docs.google.com)",
+      "Bash(gcloud auth *)",
+      "WebFetch(domain:github.com)",
+      "Bash(gws version *)",
+      "Bash(gws auth *)",
+      "Bash(jira issue *)",
+      "Bash(curl *)",
+      "Bash(git -C /home/aefrat/claude log --oneline --since=\"2026-05-20\" -- manager/)",
+      "Bash(git -C /home/aefrat/claude log --oneline --all -- manager/generate_report.py)",
+      "Bash(git -C /home/aefrat/claude log --oneline)",
+      "WebFetch(domain:gitlab.cee.redhat.com)",
+      "Bash(crontab *)",
+      "Bash(claude --version)",
+      "Bash(claude -p)",
+      "Bash(/home/aefrat/.local/bin/claude -p)",
+      "Bash(klist)",
+      "Bash(rpm -q koji brewkoji)",
+      "Bash(pip show *)",
+      "Read(//home/aefrat/**)",
+      "Read(//home/aefrat/.koji/**)",
+      "Read(//etc/**)",
+      "Bash(sudo dnf install -y koji)",
+      "Bash(koji *)",
+      "Bash(grep -v \"^--$\")",
+      "Bash(git *)",
+      "Bash(python3 /home/aefrat/claude/manager-report/generate_report.py --mode daily --output /tmp/daily_report.html)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(xdg-open /tmp/rhivos-sku-research.html)",
+      "Bash(xdg-open /tmp/pitcrew-full-report.html)",
+      "Bash(awk '{print $NF}')",
+      "Bash(grep -v \"^#\\\\|^$\\\\|^SHELL\\\\|^PATH\\\\|^JIRA\\\\|^GITLAB\\\\|^GITHUB\\\\|^SLACK\")",
+      "Read(//tmp/**)",
+      "Bash(gws --help)",
+      "Bash(nlm --help)",
+      "Bash(gws sheets *)",
+      "mcp__notebooklm-mcp__notebook_list",
+      "mcp__notebooklm-mcp__refresh_auth",
+      "WebFetch(domain:gist.github.com)",
+      "Bash(pip install *)",
+      "Bash(rm ~/rhivos-workflows-wiki/raw/confluence/attachments/*.pdf)",
+      "Bash(rmdir ~/rhivos-workflows-wiki/raw/confluence/attachments/)",
+      "Bash(claude-session-id)",
+      "Bash(.venv/bin/pip install *)",
+      "Bash(xargs -I{} basename {} .jsonl)",
+      "Bash(jira-mcp-cli search *)"
     ]
   },
   "hooks": {
@@ -18,6 +82,32 @@
           {
             "type": "command",
             "command": "python3 .cursor/hooks/session-start.py"
+          },
+          {
+            "type": "command",
+            "command": "python3 .cursor/hooks/auto-consolidate.py"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .cursor/hooks/auto-reflect.py"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .cursor/hooks/auto-reflect.py"
           }
         ]
       }

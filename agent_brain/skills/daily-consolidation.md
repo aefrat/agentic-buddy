@@ -9,10 +9,11 @@ created: YYYY-MM-DD
 ## When to use
 
 Triggered by the `/daily` command — either by the user manually or by the
-automated cron job (daily at 23:50). This is the "sleep" cycle — where the
-system consolidates the day's work and learns from it.
+auto-consolidate hook (when ≥24h since last daily and new content exists).
+This is the consolidation cycle — where the system summarizes recent work
+and learns from it.
 
-**Autonomous mode (cron):** All steps run without user interaction. Act with
+**Autonomous mode (hooks):** All steps run without user interaction. Act with
 judgment; log all decisions and changes made. No approval gates — the
 maintenance cycles and git history provide the correction mechanism.
 
@@ -86,7 +87,7 @@ or update it if one already exists:
 - **Key themes:** [2-3 main topics or threads of the day]
 - **Moved forward:** [what progressed]
 - **Learned:** [new knowledge acquired, if any]
-- **Open:** [unresolved threads to pick up tomorrow]
+- **Open:** [unresolved threads to pick up next session]
 ```
 
 Keep it brief — this makes the weekly review's job easier.
@@ -104,9 +105,26 @@ If `user/` has content, do a quick check:
 If `user/` is empty, skip this step.
 
 If anything needs user attention (stale items, items that can't be routed
-without input), write to `agent_brain/deferred.md` with type `decision`.
-If purely informational findings, note them in today's log under
-Decisions. Don't wait for user interaction — act or defer.
+without input), write to `agent_brain/deferred.md`:
+`- **decision** (YYYY-MM-DD, daily): [description].` If purely informational
+findings, note them in today's log under Decisions. Don't wait for user
+interaction — act or defer.
+
+#### 3b. Surface reminders
+
+Scan for deadlines and events the user should see at the next interactive
+session (within 24h):
+
+1. If `user/inbox.md` exists, check for items with a date marker matching
+   **tomorrow** (relative to the subjective date from Step 0).
+2. Read CLAUDE.md **Active context → Right now** for deadlines or events
+   within 24h.
+3. For each match, write to `agent_brain/deferred.md`:
+   `- **reminder** (YYYY-MM-DD, daily): [description].`
+4. Remove date-triggered items from inbox once written to deferred — inbox
+   was storage; deferred is the surfacing mechanism for session start.
+
+If no inbox exists and Active context has no near-term deadlines, skip.
 
 ---
 
@@ -234,7 +252,7 @@ The visibility levels are:
 | Level | Where | Signal to promote |
 |---|---|---|
 | 0 | File in subdirectory, basic one-liner in its `index.md` | default state |
-| 1 | Prominent in its `index.md` (richer description, moved higher) | used this week |
+| 1 | Prominent in its `index.md` (richer description, moved higher) | used recently |
 | 2 | Parent directory's `index.md` highlights the subdir/project | used across weeks |
 | 3 | "Where to find things" gets a specific entry with trigger | sustained high use |
 | 4 | Active context "Files" | hot — needed in most sessions |

@@ -9,11 +9,11 @@ created: YYYY-MM-DD
 ## When to use
 
 Triggered by the `/monthly` command — either by the user manually or by the
-automated cron job (1st of each month at 00:01). This is the deepest
-maintenance cycle — focused on forgetting what's abandoned, deep generalization
-across the full knowledge base, and structural cleanup.
+auto-consolidate hook (after 28 completed dailies since last monthly). This
+is the deepest maintenance cycle — focused on forgetting what's abandoned,
+deep generalization across the full knowledge base, and structural cleanup.
 
-**Autonomous mode (cron):** All phases run without user interaction. Act with
+**Autonomous mode (hooks):** All phases run without user interaction. Act with
 judgment; log all decisions and changes made. No approval gates — the git
 history and observation journal provide the correction mechanism.
 
@@ -78,9 +78,8 @@ the "forgetting" that the weekly cycle only flags.
    - Record the move.
 4. If a file hasn't been accessed in >30 days BUT has >5 accesses:
    - Don't move it. Log it as a review candidate in the monthly
-     maintenance log. Write a `decision` entry to
-     `agent_brain/deferred.md`: the file was important once — the user
-     should decide whether to archive it or keep it active.
+     maintenance log. Write to `agent_brain/deferred.md`:
+     `- **decision** (YYYY-MM-DD, monthly): [file] — stale but high access; archive or keep?`
 
 **Exception:** Never move or prune files in `agent_brain/identity/`,
 `agent_brain/skills/`, or `user/`. Those require human decision.
@@ -113,7 +112,7 @@ they keep it the same way.
 
 1. Review all learned skills in `agent_brain/skills/` (skip core skills).
 2. For each learned skill, check if it was referenced or triggered in the
-   last month's logs.
+   logs since last monthly consolidation.
    - Referenced and used → keep.
    - Not referenced but less than 1 month old → keep (still new).
    - Not referenced and 1-3 months old → **archive**. Move to
@@ -127,9 +126,9 @@ they keep it the same way.
    that seem to conflict with observed behavior or are consistently
    ignored?
    - Log them as candidates for review in the monthly maintenance log.
-     Write a `review` entry to `agent_brain/deferred.md` listing the
-     specific rules and the evidence of conflict or disuse — rule
-     changes require user validation.
+     Write to `agent_brain/deferred.md`:
+     `- **review** (YYYY-MM-DD, monthly): [rules and evidence of conflict or disuse].`
+     Rule changes require user validation.
 4. **Promote mature rules to character.** Review rules in CLAUDE.md that have
    been consistently active for 3+ months. If a rule applies universally, has
    never been questioned, and describes who the agent IS rather than what it
@@ -201,7 +200,7 @@ use, weakening the "Memory first" principle.
 
 1. Scan concept and project files for contradictions: information in one
    file that conflicts with information in another.
-2. Check recent logs (last month) for information that contradicts existing
+2. Check recent logs (since last monthly) for information that contradicts existing
    brain files.
 3. For each contradiction:
    - Clear contradiction + reliable new info → update the old file.
