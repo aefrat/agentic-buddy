@@ -190,7 +190,7 @@ Existing builds (kernel, dtbs, qcom-scmi) ────────────�
 
 ### Tagging documentation audit (2026-06-14)
 
-Audited three repos (ATC_Team_codebase_docs, errata-distribution, rhivos-workflows-wiki), all 25+ Confluence pages under [Auto Toolchain](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196281018) and [Release Management](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196276699), the [ATC Distribution FA wiki](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/402130012) (Claude-generated pages), the [developer-guide](https://gitlab.cee.redhat.com/developer-guide/developer-guide) GitLab repo (source for one.redhat.com In-Vehicle + RHEL Development Guides), and the [RCMDOC Confluence space](https://redhat.atlassian.net/wiki/spaces/RCMDOC/) (RCM team — Brew, tagging, permissions) for tagging policy and permission documentation.
+Audited three repos (ATC_Team_codebase_docs, errata-distribution, rhivos-workflows-wiki), the full [Product Development and Release](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196280075) Confluence tree (9 teams, 80+ pages including [Auto Toolchain](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196281018), [Release Management](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196276699), Kernel/HW Enablement, FDA, BOA QE, Base Enablement, PitCrew, PIT, Product Security), the [ATC Distribution FA wiki](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/402130012), the [developer-guide](https://gitlab.cee.redhat.com/developer-guide/developer-guide) GitLab repo, the [RCMDOC Confluence space](https://redhat.atlassian.net/wiki/spaces/RCMDOC/), and the [brew-confs hub_policy.conf](https://gitlab.cee.redhat.com/brew/brew-confs/blob/master/src/conf/hub_policy.conf) for tagging policy and permission documentation.
 
 #### What IS documented
 
@@ -215,6 +215,8 @@ Audited three repos (ATC_Team_codebase_docs, errata-distribution, rhivos-workflo
 | Brew permission types | EXDSPRHELB: [Permissions in Brew](https://redhat.atlassian.net/wiki/spaces/EXDSPRHELB/pages/175083555) | Authoritative reference. Permissions govern tag access: if a tag has a perm set, users must hold it to tag/untag. `admin` = root-like, `trusted` = rel-eng ops. Custom perms can be created per tag. |
 | RHEL gating bypass | EXDSPRHELB: [Bypassing OSCI gating](https://redhat.atlassian.net/wiki/spaces/EXDSPRHELB/pages/175079794) | For RHEL, builds auto-land in `-gate`; packages that can't pass OSCI use `-gate-bypass` tag. Requires `rhel8-gate-bypass` permission, requested via RHELBLD JIRA ticket with PM as watcher. Whitelist per package. **No RHIVOS equivalent documented.** |
 | Brew whitelisting | RCMDOC: [Add a package to a Brew tag](https://redhat.atlassian.net/wiki/spaces/RCMDOC/pages/296845847) | Whitelisting (adding package to tag's package list) requires `package-list` or `admin` permission. Always whitelist on main tag, not `-candidate`. |
+| RHIVOS package onboarding workflow | Confluence: [Package workflow for AutoSD/RHIVOS-only packages](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196270957) | Step-by-step: VROOM ticket for dist-git repo + VROOM ticket for Brew whitelist → sync git from AutoSD → `rhpkg build --target rhivos-1.0.0-gate` → build lands in `-gate` → Gator picks up → `-candidate`. **Maintainer builds against `-gate` target directly; no manual tagging needed for standard flow.** Notes DistroBaker automation "in the future." |
+| FDA: "no manual tagging" policy | Confluence: [Release Process for FDA packages](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196282794) | Explicit policy: *"At any point you are not supposed to tag builds manually in brew! All tagging is done by the Toolchain automation."* Branch/target table shows 2.x targets as `-candidate` (not `-gate`). Contact ATC team if builds don't get tagged. |
 
 #### What is NOT documented — 6 gaps
 
@@ -288,6 +290,9 @@ The kernel CVE fix for RC3 will trigger companion package rebuilds. These rebuil
 > - EXDSPRHELB: [Bypassing OSCI gating](https://redhat.atlassian.net/wiki/spaces/EXDSPRHELB/pages/175079794) — RHEL `-gate-bypass` workflow
 > - RCMDOC: [RCM Services Overview](https://redhat.atlassian.net/wiki/spaces/RCMDOC/pages/296845840) — service catalog (Brew, rhpkg, ET, etc.)
 > - [brew-confs hub_policy.conf](https://gitlab.cee.redhat.com/brew/brew-confs/blob/master/src/conf/hub_policy.conf) — **authoritative source** for all Brew tagging permissions, including RHIVOS-specific rules
+> - Confluence: [Package workflow for AutoSD/RHIVOS-only packages](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196270957) — step-by-step RHIVOS package onboarding, `rhpkg build --target rhivos-1.0.0-gate`
+> - Confluence: [Release Process for FDA packages](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196282794) — explicit "no manual tagging" policy, branch/target table
+> - Confluence: [Product Development and Release](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196280075) — full tree (80+ pages across 9 teams) scanned for tagging content
 
 ## Kernel Change (RC2 → RC3)
 
