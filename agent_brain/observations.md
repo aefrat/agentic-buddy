@@ -48,6 +48,10 @@ Resolved observations are moved to the bottom.
 
 - **2026-06-14:** Skill format migration — user has skills in two locations: old format (`agent_brain/skills/*.md`) and new agentskills.io format (`.claude/skills/<name>/SKILL.md`). User explicitly stated all new skills should use agentskills.io format. GitLab collection uses `.agents/skills/`. Consider migrating remaining old-format skills to `.claude/skills/` during a maintenance cycle and archiving the old files. (seen: 1)
 
+## Reference candidates
+
+- **2026-06-15:** Rover MCP server (`https://github.com/redhat-community-ai-tools/rover-mcp`) — queries Red Hat internal groups API via client certificate auth. Currently only has `rover_group` tool (no people/profile lookups). Requires `sa-cert.crt` + `privkey.pem` (not present on user's machine). Not viable without certificate provisioning from Red Hat IAM team. Could be extended with a `rover_people` tool for username resolution. (seen: 1)
+
 ## Resolved
 
 - **2026-06-10:** Rule — "After plan approval, execute autonomously without confirmation prompts." Explicit user correction (3x in one session). Fast-tracked to memory as `feedback_autonomous-execution.md`.
