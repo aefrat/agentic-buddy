@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-06-14
-access_count: 7
+last_accessed: 2026-06-16
+access_count: 8
 created: 2026-06-01
 ---
 
@@ -47,6 +47,8 @@ Resolved observations are moved to the bottom.
 ## Structure candidates
 
 - **2026-06-14:** Skill format migration — user has skills in two locations: old format (`agent_brain/skills/*.md`) and new agentskills.io format (`.claude/skills/<name>/SKILL.md`). User explicitly stated all new skills should use agentskills.io format. GitLab collection uses `.agents/skills/`. Consider migrating remaining old-format skills to `.claude/skills/` during a maintenance cycle and archiving the old files. (seen: 1)
+
+- **2026-06-16:** Don't assume gender from names — use neutral pronouns or ask when unsure. User corrected assumption about Sameera Kalgudi (male, not female). (seen: 1)
 
 ## Reference candidates
 
