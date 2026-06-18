@@ -59,7 +59,7 @@ Factual updates to Right now (changed dates, flipped statuses) are allowed mid-s
 
 - **RC3 in progress.** Go/no-go was June 16. Z-stream tagging workflow mismatch being addressed (Petr planning meeting with RHEL KWF + RHIVOS kernel teams). Z-stream becomes the right target starting June 19. Avi filed RHELBLD-18777 / RHELBLD-18778 to extend Brew tag permissions. ASIL CTC scheduled for weekend June 19.
 - **CAT timeline: RHIVOS 2.0-Core CAT Jun 29-30**, content on CDN/ET ~Jun 26.
-- **Roderick Kieley 1:1** — still unscheduled. 17 days into onboarding (started Jun 1).
+- **Roderick Kieley 1:1** — active. Doc "Roddie/Avi 1:1" has meetings on Jun 1 and Jun 11. 18 days into onboarding (started Jun 1).
 - **Manager report cron auth broken** — `claude -p` in cron lacks Vertex AI env vars. AI-generated sections (Summary, Channel Digest) show "Not logged in." Fix reverted June 16; needs resolution.
 
 ### Files
