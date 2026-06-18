@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-06-16
-access_count: 4
+last_accessed: 2026-06-18
+access_count: 5
 created: 2026-06-11
 ---
 
@@ -8,7 +8,7 @@ created: 2026-06-11
 
 ## Status
 
-RC3 build pending — go/no-go decision on Monday 2026-06-16. Held for new CVE assessment (RHEL fixing, RHIVOS may take into RC3 if fixed within 24h). NXP syncing still pending — Francisco to confirm.
+**RC3 composes built and published (2026-06-16).** CTC reduced-scope in progress, ASIL-B CTC weekend Jun 19. Errata push to CDN in progress. Z-stream becomes the right target starting Jun 19.
 
 ## Context
 
@@ -25,13 +25,17 @@ Source: #automotive-release-readiness Slack channel (C04RHEEGY30), 2026-06-08 to
 | RC2 reduced-scope CTC scheduled | 2026-06-08 | Done |
 | RC3 decision made | 2026-06-10 | Done |
 | Blocker tickets approved | 2026-06-10 | Done |
-| Package tagging | Pending | Blocked |
-| kernel-ivos-nxp-extra-modules build | Pending | Enric/Francisco — needs separate advisory + NVR attachment (confirmed by Kanitha) |
-| kernel-ivos-nxp-extra-modules errata | Pending | Enric/Francisco must create advisory and attach NVR (Mattijs confirmed it's independent, not a kernel subpackage) |
-| Gating, signing, waiving | Pending | Stephen Bertram to waive |
-| Errata attachment | Pending | Kanitha: "as soon as all packages in candidate tag, attached to errata and signed, we can trigger RC3" |
-| RC3 build trigger | Target: Monday 2026-06-16 (go/no-go) | Held — waiting on RHEL CVE fix (24h window) |
-| RC3 reduced CTC | ~2 days after build (kernel gating + smoke testing) | |
+| Package tagging | 2026-06-15 | Done — kernel-automotive, qcom-scmi, kernel-nxp, downstream-dtbs tagged to rhivos-2.0-candidate (Kanitha). kernel-ivos-nxp-extra-modules tagged from sidetag (Eric → Sameera) |
+| kernel-ivos-nxp-extra-modules build | 2026-06-15 | Done |
+| kernel-ivos-nxp-extra-modules errata | 2026-06-15 | Done — advisory/167239 created by Francisco |
+| Gating, signing, waiving | 2026-06-15 | Done |
+| Errata attachment | 2026-06-15 | Done — Kanitha updated kernel errata builds from 211.18 to 211.20 |
+| RC3 pipelines triggered | 2026-06-16 | Done — Core (#15973730) and full (#15974617) by Ozan |
+| RC3 composes published | 2026-06-16 | Done — live on rhivos.auto-toolchain.redhat.com |
+| Gator bug fix (version-release matching) | 2026-06-15 | Done — MR #248 merged (Juanje) |
+| RC3 reduced CTC | 2026-06-16 | In progress — VM + 8650 done, 8775 re-triggered after provisioning failures |
+| Errata push to CDN | 2026-06-17 | In progress — Kanitha re-pushing Core batch to CDN-stage → REL_PREP |
+| ASIL-B CTC (weekend) | 2026-06-19 | Scheduled — Rachel Sibley |
 | Release readiness sync meeting | 2026-06-11 | Done — see outcomes below |
 
 ### Release Readiness Meeting Outcomes (2026-06-11)
@@ -116,6 +120,42 @@ Source: #automotive-release-readiness Slack channel (C04RHEEGY30), 2026-06-08 to
   - **Friday June 19** (weekend CTC): Full 2.0 ASIL Release CTC + Kernel Debug for 8650 (FuSa evidence).
 - **Additional tests requested:** Stephen Bertram asked to add kselftests + LTP.
 - **RC1/RC2 ticket closure:** Rachel extended deadline to mid next week (was end of this week). 100% pass not required — follow-up JIRAs for unstable tests.
+
+---
+
+## Slack Updates (2026-06-15 to 2026-06-18)
+
+### Nightly Pipeline Failures
+
+- **ODCS unsigned packages (Jun 16):** Nightly pipeline for latest-RHIVOS-2.0-Core (#15970648) failed at `generate-compose`. Root cause: newly promoted kernel packages (6.12.0-211.20.1.43) missing required signatures. ODCS rejected the config. Packages affected: kernel-ivos-qualcomm, downstream-dtbs. Flagged to Ozan.
+- **Smoke test timeouts (Jun 16-17):** Multiple smoke tests timed out on ride4-sa8775p-sx-r3 (~7200s waiting for Jumpstarter/TF). Root cause: board provisioning failures. Also sa8650p affected on Core.
+- **20+ pipeline failure alerts** in alerts-auto-toolchain since Jun 15 — mostly related to the same provisioning issues.
+
+### Test Console 502 Bad Gateway — RESOLVED
+
+- Ozan reported 502 in RC3 smoke-tests (Jun 16). Roni restarted TC to update it with RC3. Resolved.
+
+### CTC Progress (Jun 16-17)
+
+- Rachel triggered reduced-scope CTC (Jun 16). 8775 provisioning failures resolved, jobs re-triggered.
+- Pato Brilla flagged: smoke tests in RC3 CTC only run against VM, not HW — asked if intentional. Flagged to Roni/nsimsolo.
+- Ben Grech: kself and ltp tests failed to provision on 8775 (retriggered). TC was showing 502.
+
+### aarch64 RPM Signature Issue — NOT A BLOCKER
+
+- Petr Sabata (Jun 17): packages appear to have invalid signatures on aarch64, but reinstalling resolves it. Only affects builds signed after Jan 16. Suspects automotive-image-builder rpmdb handling. No minimal reproducer yet.
+
+### CDN Product ID Push Issue — RESOLVED
+
+- Kanitha (Jun 16, rhivos-sp-qc-layered-product): product IDs not pushing to CDN repo. Created RHELDST-42168. Resolved by Michal.
+
+### RHIVOS-2.0 Label Not Yet Promoted
+
+- Marcin Sobczyk noticed RHIVOS-2.0 still points to a Jun 8 pipeline (not yet promoted from RC3). `latest-RHIVOS-2.0` based on an older pipeline than RC3. Ozan clarified: RHIVOS-2.0 is a copy of the current RC; `latest-*` are nightly builds.
+
+### Security Response — CI Leak for AIB
+
+- Charles Timko asked about security response handling (Jun 16). Juanje pointed to private channel related to a CI leak for automotive-image-builder. Timko was added.
 
 ---
 
