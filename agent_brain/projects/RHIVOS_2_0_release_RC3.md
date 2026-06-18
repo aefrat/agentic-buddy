@@ -146,6 +146,9 @@ Source: #automotive-release-readiness Slack channel (C04RHEEGY30), 2026-06-08 to
   3. Inconsistency across kernel maintainers, QE, and distribution
 - **Escalation (Jun 12):** Eric escalated to managers via Francisco. Martin Perina cited RR meeting: "tagging is the builder's responsibility." Eric pushed back: he doesn't build the kernel, he reacts to it.
 - **Petr's guidance:** Clarified 2.0 (blockers only, finalizing by Jun 18) vs 2.0-z (update channel, more visible to customers) vs 2.1 (rolling development). Needs to understand Oleksii's kernel target flow before resolving.
+- **Root cause (2026-06-18):** RHEL kernel maintainers (Oleksii Baranov and/or Scott Weaver) build packages following a RHEL workflow/rules that are not aligned to RHIVOS. This causes unnecessary packages landing in the wrong RHIVOS release tags, driving the daily manual tagging burden on Eric/Sameera. The cross-product workflow mismatch is the deeper issue behind the tagging permission bottleneck.
+- **Petr Sabata response (2026-06-18):** Confirmed the RHEL/RHIVOS workflow misalignment is likely the situation. Has not yet reached out to RHEL KWF team. Plans a meeting with the RHIVOS kernel team, RHEL KWF team, and himself to come up with a solution. Also noted: starting Thursday (2026-06-19), Z-stream becomes the right target, which will reduce the problem "for a year or so" (until the next major release cycle). Tagging guidance (which tag, when) is **not documented** — confirmed gap.
+- **Avi's mitigation (2026-06-18):** Discussed on ATC weekly — getting broader Brew tag permissions for ATC and auto-kernel teams so others can help when Sameera/Ozan are on PTO. Filed RHELBLD-18777 and RHELBLD-18778.
 - **Additional blocker:** `kernel-ivos-nxp-extra-modules` has no dist-git policy exception (unlike downstream-dtbs and qcom-scmi), requiring a VROOM ticket for every commit. Controlled by RHELBLD team (RHELBLD-18043).
 - **RC3 impact:** The kernel CVE fix for RC3 will trigger companion rebuilds. If tagging isn't aligned, companion packages may be missing from RC3 compose or 2.0-z updates. STAG automation (which would fix this) is not in place.
 - **Suggested resolution:** Alignment meeting between Eric, Oleksii, Petr, and Sameera to standardize tagging flow. Get dist-git policy exception for nxp-extra-modules. Prioritize STAG automation.
@@ -235,6 +238,12 @@ The actual Brew hub policy ([brew-confs repo](https://gitlab.cee.redhat.com/brew
 Additionally, anyone with the general `tagger` permission (RHELBLD-8760) can tag almost anything anywhere.
 
 Eric's "we have no permission to tag" means the kernel team lacks `rhivos-tagger`. To get it: file a RHELBLD JIRA ticket requesting `rhivos-tagger` permission for the relevant Kerberos IDs. Sameera Kalgudi presumably has `rhivos-tagger` or uses the `auto-toolchain-service-brew` account.
+
+**Mitigation (2026-06-18):** Avi opened two RHELBLD tickets to extend tag permissions and unblock the bottleneck (only Sameera and Ozan currently have permissions to tag kernel packages in the release):
+- [RHELBLD-18777](https://redhat.atlassian.net/browse/RHELBLD-18777) — Brew tag permissions for RHIVOS kernel maintainers
+- [RHELBLD-18778](https://redhat.atlassian.net/browse/RHELBLD-18778) — Brew permission request for RHIVOS Auto-Toolchain team
+
+Both tickets aim to extend tag permissions for the ATC and RHIVOS kernel maintainer teams.
 
 The RCMDOC/EXDSPRHELB spaces document the general Brew permission system but have zero RHIVOS-specific content — the RHIVOS permissions are only discoverable by reading the raw hub_policy.conf.
 

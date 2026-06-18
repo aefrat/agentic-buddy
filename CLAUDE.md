@@ -57,10 +57,10 @@ Factual updates to Right now (changed dates, flipped statuses) are allowed mid-s
 
 ### Right now
 
-- **RC3 go/no-go: Monday 2026-06-16.** Depends on RHEL CVE fix + Francisco's blocker tickets + NXP confirmation. Reduced CTC same day (8650/8775/QEMU). ASIL CTC weekend Jun 19.
+- **RC3 in progress.** Go/no-go was June 16. Z-stream tagging workflow mismatch being addressed (Petr planning meeting with RHEL KWF + RHIVOS kernel teams). Z-stream becomes the right target starting June 19. Avi filed RHELBLD-18777 / RHELBLD-18778 to extend Brew tag permissions. ASIL CTC scheduled for weekend June 19.
 - **CAT timeline: RHIVOS 2.0-Core CAT Jun 29-30**, content on CDN/ET ~Jun 26.
-- **Roderick Kieley 1:1** — still unscheduled. 2 weeks into onboarding (started Jun 1).
-- **3 unfiled Slack inbox items:** Confirm Volodymyr Wednesday meeting; ack VROOM-44451 (NXP S32G gating) to Pablo; run chai-bot trial on ATC channel.
+- **Roderick Kieley 1:1** — still unscheduled. 17 days into onboarding (started Jun 1).
+- **Manager report cron auth broken** — `claude -p` in cron lacks Vertex AI env vars. AI-generated sections (Summary, Channel Digest) show "Not logged in." Fix reverted June 16; needs resolution.
 
 ### Files
 
