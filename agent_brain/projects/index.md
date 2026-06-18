@@ -9,6 +9,7 @@ comes up in conversation or needs context for a decision.
 - [PitCrew strategic context](pitcrew-strategic-context.md) — Team mission, Q2 priorities, product direction
 - [AIIL demo — RHAS](aiil-demo-rhas.md) — Michael Kuehl's AI-in-the-Loop demo for ELIV/CES27. Addresses PITCREW-290/293/294/291/396. Read when agentic platform, demo planning, or Roderick's onboarding comes up.
 - [ATC LLM wiki](atc-llm-wiki.md) — Confluence-to-wiki build project
+- **[RHIVOS AI Agents & Agentic SDLC](rhivos-ai-agents-agentic-sdlc.md)** — Landscape of AI agent initiatives across RHIVOS/Automotive: FoA validator workflow (Gadi/Rajesh), stateful process agent (Juanje/AAA), AIIL (Michael Kuehl). Design principles, memory architectures, safety patterns. From June 17 rollup demo.
 
 ## Background
 
