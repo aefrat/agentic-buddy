@@ -92,6 +92,7 @@ Read the full skill file ONLY when the trigger matches. Don't read skills preemp
 - [atc-release-compose](agent_brain/skills/atc-release-compose.md) — Triggers and monitors ODCS release compose builds for the ATC team (RHIVOS). Use on "trigger a compose", "create a release config", "kick off a compose build", "generate-compose is stuck/failed", or "how do I trigger a release build?".
 - [pitcrew-weekly-report](agent_brain/skills/pitcrew-weekly-report.md) — Generates the weekly PitCrew/RHAS status report (Jira + strategic docs → HTML, with Slack digest in full mode). Use on "pitcrew weekly", "generate the pitcrew report", "RHAS status report", or "run the pitcrew report".
 - [scan-slack-channels](.claude/skills/scan-slack-channels/SKILL.md) — Scans Slack channels (single, group, or all) and generates activity summaries with key findings and action items. Use on "scan Slack", "check the channel", "what happened in #channel", "Slack update", or "scan all channels".
+- [process-1on1s](.claude/skills/process-1on1s/SKILL.md) — Processes all 1:1 Google Docs to extract latest meetings, log a digest, capture action items, and add reflections. Use on "process 1:1s", "digest 1:1 meetings", "sync 1:1 notes", "review latest 1:1s", or "what happened in my 1:1s".
 
 ## Rules
 
