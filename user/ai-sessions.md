@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-06-18 | Morning check-in — confirmed June 17 session lost to hard power-off, verified auto-reflect hook requirements | `8f711238-51da-4af2-b0b0-e6c2a4145d05` |
 | 2026-06-16 | RC3 go/no-go day — Brew permissions comparison (Sameera vs Ozan), package tagging workflow visualization, manager report rerun + Channel Digest auth bug diagnosis | `da52ffd1-b7b2-419c-912b-4e53c0a69062` |
 | 2026-06-14 | Sunday weekly review — Slack scan, weekly report, upstream merge, skill creation + GitLab push, PLM/ComposeDB deep dive, AIIL demo analysis + Michael Kuehl research, Eric Chanudet tagging escalation, documentation audit (7 layers: 3 repos + 3 Confluence spaces + developer-guide + brew-confs policy + granted.yaml) — resolved Brew tagging permissions gap, verified with exact line numbers. Rover MCP investigated (not viable, no certs) | `87f8c8dc-d10f-47e3-9240-3e460264dfbc` |
 | 2026-06-11 | RC3 follow-up + RHIVOS release process deep dive (tags, errata, signing, Gator CI orchestration) | `14095a1b-347f-4cb0-a90c-6be3958b58e1` |
