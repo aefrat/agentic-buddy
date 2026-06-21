@@ -94,6 +94,7 @@ Read the full skill file ONLY when the trigger matches. Don't read skills preemp
 - [pitcrew-weekly-report](agent_brain/skills/pitcrew-weekly-report.md) — Generates the weekly PitCrew/RHAS status report (Jira + strategic docs → HTML, with Slack digest in full mode). Use on "pitcrew weekly", "generate the pitcrew report", "RHAS status report", or "run the pitcrew report".
 - [scan-slack-channels](.claude/skills/scan-slack-channels/SKILL.md) — Scans Slack channels (single, group, or all) and generates activity summaries with key findings and action items. Use on "scan Slack", "check the channel", "what happened in #channel", "Slack update", or "scan all channels".
 - [process-1on1s](.claude/skills/process-1on1s/SKILL.md) — Processes all 1:1 Google Docs to extract latest meetings, log a digest, capture action items, and add reflections. Use on "process 1:1s", "digest 1:1 meetings", "sync 1:1 notes", "review latest 1:1s", or "what happened in my 1:1s".
+- [quarterly-connection](agent_brain/skills/quarterly-connection.md) — Generates quarterly evaluation reports (Red Hat Quarterly Connections) for team members using Jira, GitLab, Slack, and 1:1 data. Stateful: accumulates observations and learns writing preferences. Use on "quarterly connection", "QC report", "generate evaluation", "team quarterly", or "quarterly review for [name]".
 
 ## Rules
 

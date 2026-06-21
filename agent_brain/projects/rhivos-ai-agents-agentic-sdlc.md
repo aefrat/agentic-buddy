@@ -120,7 +120,7 @@ Mentioned during rollup demo as live demo (no recording).
 
 Shared via email (Jun 21, 2026). A meta-agent for bootstrapping and analyzing agents. Documents design principles for stateful process-oriented agents. Follows up on Juanje's rollup demo presentation (Initiative #2 above).
 
-**Status:** Repo shared, not yet reviewed in depth.
+**Status:** Reviewed in depth (Jun 21). All 7 principle docs, anti-patterns, decision guide, and glossary captured. Principles distilled to [stateful-process-oriented-agents concept](../concepts/stateful-process-oriented-agents.md). Applied to [Quarterly Connection Agent](quarterly-connection-agent.md) as first practical project.
 
 ## Sources index
 

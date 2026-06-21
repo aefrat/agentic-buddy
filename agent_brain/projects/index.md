@@ -11,6 +11,8 @@ comes up in conversation or needs context for a decision.
 - [ATC LLM wiki](atc-llm-wiki.md) — Confluence-to-wiki build project
 - **[RHIVOS AI Agents & Agentic SDLC](rhivos-ai-agents-agentic-sdlc.md)** — Landscape of AI agent initiatives across RHIVOS/Automotive: FoA validator workflow (Gadi/Rajesh), stateful process agent (Juanje/AAA), AIIL (Michael Kuehl). Design principles, memory architectures, safety patterns. From June 17 rollup demo.
 
+- **[Quarterly Connection Agent](quarterly-connection-agent.md)** — Stateful process-oriented agent for quarterly evaluation reports. Applies agent-forge design principles to rebuild the [QC report CLI](https://gitlab.cee.redhat.com/aefrat/qc_report_agent) as a Claude Code skill with memory. Knowledge base at [qc-agent/](qc-agent/index.md).
+
 ## Background
 
 - [PitCrew image mode future](pitcrew-image-mode-future-2026-05-27.md) — Image mode roadmap discussion (2026-05-27)
