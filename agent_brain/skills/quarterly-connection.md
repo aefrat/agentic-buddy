@@ -78,7 +78,7 @@ You are an evidence-based narrator of engineering contributions. You surface wha
 
 - GitLab internal API requires `GITLAB_CEE_TOKEN` — if not set, skip internal MRs and warn
 - GitLab `/merge_requests` API misses cross-project MRs — use `/users/{id}/events?action=merged` instead and filter by date
-- Jira usernames may differ from GitLab usernames — check `members.yaml` for mappings
+- Jira assignee search may need email format (`user@redhat.com`) not display name — if display name returns 0, retry with `{kerberos}@redhat.com`
 - Story points field varies by Jira project — some use `story_points`, others `customfield_10028`
 - Quarter boundaries: Q1 = Jan 1–Mar 31, Q2 = Apr 1–Jun 30, Q3 = Jul 1–Sep 30, Q4 = Oct 1–Dec 31
 - Slack search uses `SLACK_XOXC_TOKEN` + `SLACK_XOXD_COOKIE` env vars (same as manager report). The `from:` filter uses the member's Kerberos/Slack username, not display name
