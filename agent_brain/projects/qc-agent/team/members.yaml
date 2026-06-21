@@ -88,6 +88,7 @@ teams:
         gitlab_cee_username: "matgoldm"
         gitlab_com_username: "matgoldm"
         github_username: "matthew-goldman"
+        joined: 2026-04-13
 
   - name: "PitCrew — RHAS"
     jira_jql: 'project = PITCREW'
@@ -131,3 +132,4 @@ teams:
         gitlab_cee_username: "rkieley"
         gitlab_com_username: "roddiekieley"
         github_username: "roddiekieley"
+        joined: 2026-06-01
