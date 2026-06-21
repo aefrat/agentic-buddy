@@ -6,7 +6,7 @@ created: 2026-06-21
 
 # Quarterly Connection Report Template
 
-Structure for individual engineer evaluation reports. Three narrative sections + supporting data.
+Structure for individual engineer evaluation reports. Based on the reference format from Q4 2025 (doc: 181zwHE6bq4Gw2WW4jYkFs5dArF8buQz0ubsX7N-nIdA).
 
 ## Report structure
 
@@ -19,35 +19,48 @@ Period: {Quarter} {Year}
 - Jira tickets resolved: N (X Story Points)
 - Internal GitLab MRs merged: N
 - GitLab.com MRs merged: N
+- GitHub PRs: N
+- Slack messages: N across M channels
 
-## Section A — The What
-Accomplishments and impact on team/organization.
-- Narrative form, organized by theme (not ticket-by-ticket)
-- Highlight impact, not just activity
-- Connect work to team/org goals
+## Key Deliveries (by Story Point weight)
+Top 3-5 deliverables organized by story point weight:
+- {Deliverable title} ({N} pts): Brief impact description with ticket keys
+- Highlight the WHAT and WHY, not just the ticket summary
+- Group related tickets under a single deliverable theme
 
-## Section B — The How
-Behavioral assessment against Red Hat Multiplier competencies.
-- Pick 2-3 most demonstrated competencies
-- Cite specific evidence for each
-- Include manager feedback and 1:1 observations
+## Other Notable Contributions
+- Bullet list of remaining work not covered above
+- Include cross-project, upstream, and community contributions
+
+## Feedback from Peers
+### Strengths
+- Specific behavioral strengths with evidence from 1:1s, peer feedback, Slack
+### Opportunities
 - Growth areas framed constructively
+- "Could..." not "Should..." — forward-looking, not corrective
 
-## Section C — Summary
-Concise, publishable summary for the engineer.
-- 3-5 sentences
-- Tone: appreciative, specific, forward-looking
-- Written for the engineer to read, not for HR
+## Summary
+3-5 sentences. Tone: appreciative, specific, forward-looking.
+Written for the engineer to read.
 
 ## Supporting Data
-- Jira tickets table (key, summary, type, story points, resolved date)
-- Internal GitLab MRs (title, project, link)
-- Public GitLab MRs (title, project, link)
+- Jira tickets table (key, summary, type, story points)
+- Internal GitLab MRs (title, project)
+- Public GitLab MRs / GitHub PRs (title, project)
+- Slack channel activity breakdown
 ```
+
+## Aggregated team doc (separate Google Doc)
+
+A companion document with:
+- Team Performance Summary table (Name, Title, Team, Tickets, Story Points, Key Impact one-liner)
+- Q vs previous Q comparison (tickets, SP, delta)
+- Key observations narrative
+- Individual ticket details per member
 
 ## Section generation order
 
-Generate Section A first (establishes the factual foundation), then Section B (builds on A with behavioral lens), then Section C (synthesizes both). Each section receives prior sections as context.
+Generate Key Deliveries first (establishes the factual foundation, ordered by SP weight), then Feedback (builds on deliveries with behavioral lens), then Summary (synthesizes both). Each section receives prior sections as context.
 
 ## Tone guidelines
 
@@ -55,3 +68,4 @@ Generate Section A first (establishes the factual foundation), then Section B (b
 - Growth-oriented: strengths celebrated, development areas framed as opportunities
 - Specific: "led the RHIVOS 2.0 kernel integration" not "contributed to the project"
 - Fair: balanced view, not cheerleading
+- Story points drive the hierarchy — highest-SP work gets the most narrative space
