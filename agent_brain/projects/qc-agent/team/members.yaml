@@ -1,0 +1,86 @@
+# Quarterly Connection Agent — Team Configuration
+# ------------------------------------------------
+# Manager-maintained. Update when team composition changes.
+#
+# Fields:
+#   id                       — unique identifier (used for filenames)
+#   display_name             — full name shown in the report
+#   title                    — job title
+#   team                     — team name
+#   jira_display_name        — name as it appears in Jira assignee field
+#   jira_project_jql         — JQL fragment for the team's Jira project
+#   gitlab_cee_username      — username on gitlab.cee.redhat.com
+#   gitlab_com_username      — username on gitlab.com
+#   github_username          — username on github.com (optional)
+# ------------------------------------------------
+
+teams:
+  - name: "ATC — Auto ToolChain"
+    jira_jql: 'project in ("Automotive Feature Teams") AND "AssignedTeam" in (rhivos-pdr-auto-toolchain)'
+    members:
+      - id: juanje.ojeda
+        display_name: "Juanje Ojeda"
+        title: "Senior Software Engineer"
+        jira_display_name: "Juanje Ojeda"
+        gitlab_cee_username: "jojedacr"
+        gitlab_com_username: "juanjeojeda"
+        github_username: "juanje"
+
+      - id: roni.eliezer
+        display_name: "Roni Eliezer"
+        title: "Senior Software Engineer"
+        jira_display_name: "Roni Eliezer"
+        gitlab_cee_username: "reliezer"
+        gitlab_com_username: "reliezer"
+        github_username: "roniezr"
+
+      - id: kanitha.chim
+        display_name: "Kanitha Chim"
+        title: "Software Engineer"
+        jira_display_name: "Kanitha Chim"
+        gitlab_cee_username: "kchim"
+        gitlab_com_username: "kchim"
+        github_username: "kchim"
+
+      - id: hubert.stefanski
+        display_name: "Hubert Stefański"
+        title: "Software Engineer"
+        jira_display_name: "Hubert Stefanski"
+        gitlab_cee_username: "hstefans"
+        gitlab_com_username: "hstefans"
+        github_username: "hubeadmin"
+
+      - id: eitan.raviv
+        display_name: "Eitan Raviv"
+        title: "Software Engineer"
+        jira_display_name: "Eitan Raviv"
+        gitlab_cee_username: "eraviv"
+        gitlab_com_username: "eraviv"
+        github_username: "erav"
+
+  - name: "PitCrew — RHAS"
+    jira_jql: 'project = PITCREW'
+    members:
+      - id: benny.zlotnik
+        display_name: "Benny Zlotnik"
+        title: "Principal Software Engineer"
+        jira_display_name: "Benny Zlotnik"
+        gitlab_cee_username: "bzlotnik"
+        gitlab_com_username: "bzlotnik"
+        github_username: "bennyz"
+
+      - id: bella.khizgiyaev
+        display_name: "Bella Khizgiyaev"
+        title: "Software Engineer"
+        jira_display_name: "Bella Khizgiyaev"
+        gitlab_cee_username: "bkhizgiy"
+        gitlab_com_username: "bkhizgiy"
+        github_username: "bkhizgiy"
+
+      - id: muhamad.aboras
+        display_name: "Muhamad Abo Ras"
+        title: "Software Engineer"
+        jira_display_name: "Mohamad Abo Ras"
+        gitlab_cee_username: "maboras"
+        gitlab_com_username: "maboras"
+        github_username: "maboras-rh"
