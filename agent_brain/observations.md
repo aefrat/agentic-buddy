@@ -52,7 +52,7 @@ Resolved observations are moved to the bottom.
 
 ## Structure candidates (tools)
 
-- **2026-06-21:** `manager-report/` directory is not a git repo — code changes live only on disk. Risk: changes can be lost. Consider `git init` or moving it under an existing repo. (seen: 1)
+- ~~**2026-06-21:** `manager-report/` directory is not a git repo~~ → **resolved 2026-06-21:** initialized git, pushed to `gitlab.cee.redhat.com:aefrat/manager-report` with .gitignore excluding secrets
 
 ## Reference candidates
 
