@@ -10,6 +10,7 @@ comes up in conversation or needs context for a decision.
 - [AIIL demo — RHAS](aiil-demo-rhas.md) — Michael Kuehl's AI-in-the-Loop demo for ELIV/CES27. Addresses PITCREW-290/293/294/291/396. Read when agentic platform, demo planning, or Roderick's onboarding comes up.
 - [ATC LLM wiki](atc-llm-wiki.md) — Confluence-to-wiki build project
 - **[RHIVOS AI Agents & Agentic SDLC](rhivos-ai-agents-agentic-sdlc.md)** — Landscape of AI agent initiatives across RHIVOS/Automotive: FoA validator workflow (Gadi/Rajesh), stateful process agent (Juanje/AAA), AIIL (Michael Kuehl). Design principles, memory architectures, safety patterns. From June 17 rollup demo.
+- **[Agent Forge Design Principles](agent-forge-design-principles.md)** — Juanje Ojeda's 7 principles for stateful process-oriented agents. Deep study from agent-forge repo + slides. Convergence analysis with agentic-buddy, actionable gaps identified.
 
 - **[Quarterly Connection Agent](quarterly-connection-agent.md)** — Stateful process-oriented agent for quarterly evaluation reports. Applies agent-forge design principles to rebuild the [QC report CLI](https://gitlab.cee.redhat.com/aefrat/qc_report_agent) as a Claude Code skill with memory. Knowledge base at [qc-agent/](qc-agent/index.md).
 
