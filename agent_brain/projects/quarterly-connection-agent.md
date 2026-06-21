@@ -57,11 +57,15 @@ agent_brain/projects/qc-agent/
 | Source | Tool | What it provides |
 |--------|------|------------------|
 | Jira | `jira:jira-mcp-management` | Resolved tickets, story points, epics |
-| Internal GitLab | GitLab API (script) | Merged MRs per author |
-| GitLab.com | GitLab API (script) | Public MRs per author |
-| Slack | `slack:*` | Channel activity, notable contributions mentioned |
+| Internal GitLab | GitLab events API (`curl` + `GITLAB_CEE_TOKEN`) | Merged MRs per author. Uses `/users/{id}/events?action=merged` (not `/merge_requests` which misses cross-project MRs). |
+| GitLab.com | GitLab events API (`curl` + `GITLAB_COM_TOKEN`) | Public MRs per author. Same events approach. |
+| Slack | Search API (`SLACK_XOXC_TOKEN` + `SLACK_XOXD_COOKIE`) | **Search-first:** `from:{kerberos}` discovers ALL channels the member was active in — including cross-team channels not in team config. Per-channel message counts + notable messages for evidence. |
 | Google Docs | `google:gws-docs` | 1:1 notes for behavioral evidence (Section B) |
 | Manager feedback | Manual YAML or inline | Strengths, growth areas, rating |
+
+### Slack search-first approach
+
+Instead of scanning predefined channels, search `from:{member} after:{quarter_start} before:{quarter_end}` — this discovers every channel the member participated in. Cross-team channels are often the best evidence for Multiplier competencies (Connection, Courage). Team config `slack_channels` are kept as a reference but not used as a filter.
 
 ## Report structure
 

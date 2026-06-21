@@ -36,8 +36,15 @@ You are an evidence-based narrator of engineering contributions. You surface wha
    - Fetch MRs with `state=merged`, `author_id`, date range
    - Capture: title, project, URL, merged date
 
-5. **Collect contextual evidence** (optional, when available):
-   - Scan relevant Slack channels for the member's notable contributions or mentions
+5. **Collect Slack activity** (search-first approach):
+   - Search Slack: `from:{member_kerberos} after:{start_date} before:{end_date}` using the Slack search API with `SLACK_XOXC_TOKEN` / `SLACK_XOXD_COOKIE` env vars.
+   - Paginate through all results (100 per page). For each message, extract channel name, channel ID, and message text.
+   - Group by channel → per-channel message count. This discovers ALL channels the member was active in, including cross-team channels not in the team config.
+   - For the top 5-8 channels by message count, extract notable messages (decisions, incident responses, proposals, help given to others).
+   - Exclude DMs and multi-party DMs (channel names starting with `mpdm-` or single user IDs) from the report — mention DM volume as a collaboration signal but don't quote content.
+   - **Section mapping:** Channel activity feeds both Section A (what they worked on, cross-project involvement) and Section B (collaboration patterns, initiative, cross-team connection).
+
+5b. **Collect additional contextual evidence** (optional, when available):
    - Check 1:1 Google Docs for behavioral evidence (Section B material)
    - Read any mid-quarter observations from `agent_brain/projects/qc-agent/active/{quarter}/observations.md`
 
@@ -69,10 +76,14 @@ You are an evidence-based narrator of engineering contributions. You surface wha
 
 ## Gotchas
 
-- GitLab internal API requires `GITLAB_INTERNAL_TOKEN` — if not set, skip internal MRs and warn
+- GitLab internal API requires `GITLAB_CEE_TOKEN` — if not set, skip internal MRs and warn
+- GitLab `/merge_requests` API misses cross-project MRs — use `/users/{id}/events?action=merged` instead and filter by date
 - Jira usernames may differ from GitLab usernames — check `members.yaml` for mappings
 - Story points field varies by Jira project — some use `story_points`, others `customfield_10028`
 - Quarter boundaries: Q1 = Jan 1–Mar 31, Q2 = Apr 1–Jun 30, Q3 = Jul 1–Sep 30, Q4 = Oct 1–Dec 31
+- Slack search uses `SLACK_XOXC_TOKEN` + `SLACK_XOXD_COOKIE` env vars (same as manager report). The `from:` filter uses the member's Kerberos/Slack username, not display name
+- Slack search paginates at 100 msgs/page — loop through all pages to get complete channel breakdown
+- Exclude DMs and `mpdm-` channels from report content but count them as collaboration signal
 
 ## Checklist
 
@@ -80,7 +91,8 @@ You are an evidence-based narrator of engineering contributions. You surface wha
 - [ ] Quarter and date range determined
 - [ ] Jira data collected for each member
 - [ ] GitLab data collected for each member
-- [ ] Contextual evidence gathered (Slack, 1:1s, observations)
+- [ ] Slack activity collected (search-first, all channels discovered)
+- [ ] Additional contextual evidence gathered (1:1s, observations)
 - [ ] Raw data saved to active store
 - [ ] Reference material loaded (template, competencies)
 - [ ] Section A generated (accomplishments)

@@ -9,6 +9,7 @@
 #   team                     — team name
 #   jira_display_name        — name as it appears in Jira assignee field
 #   jira_project_jql         — JQL fragment for the team's Jira project
+#   slack_username           — Slack username (Kerberos) for search queries
 #   gitlab_cee_username      — username on gitlab.cee.redhat.com
 #   gitlab_com_username      — username on gitlab.com
 #   github_username          — username on github.com (optional)
@@ -17,11 +18,28 @@
 teams:
   - name: "ATC — Auto ToolChain"
     jira_jql: 'project in ("Automotive Feature Teams") AND "AssignedTeam" in (rhivos-pdr-auto-toolchain)'
+    slack_channels:
+      - {name: "automotive-release-readiness",      id: "C04RHEEGY30"}
+      - {name: "automotive-toolchain",              id: "C04JDFLHJN6"}
+      - {name: "alerts-auto-toolchain",             id: "C04QLT849KN"}
+      - {name: "automotive-image-builder",          id: "C0801T4TEQP"}
+      - {name: "forum-rhivos-dut",                  id: "C08GBTD1YG2"}
+      - {name: "test-console",                      id: "C08CRGE1LKZ"}
+      - {name: "wg-team-auto-toolchain-infra",      id: "C05BYR06B0V"}
+      - {name: "wg-team-auto-toolchain-pulp",       id: "C06TM9U1FRQ"}
+      - {name: "wg-team-auto-toolchain-tc",         id: "C06Q5BK3C4T"}
+      - {name: "wg-team-auto-toolchain-gating",     id: "C065P1C6XB4"}
+      - {name: "wg-team-auto-toolchain-pipelines",  id: "C0672KC5RDH"}
+      - {name: "wg-team-auto-toolchain-ai",         id: "C0910QFKTSN"}
+      - {name: "wg-team-auto-toolchain-errata",     id: "C064MPL86N6"}
+      - {name: "team-auto-toolchain-qe",            id: "C04NFCZ892B"}
+      - {name: "rhivos-sp-qc-layered-product",      id: "C0B3MNQSYE7"}
     members:
       - id: juanje.ojeda
         display_name: "Juanje Ojeda"
         title: "Senior Software Engineer"
         jira_display_name: "Juanje Ojeda"
+        slack_username: "jojedacr"
         gitlab_cee_username: "jojedacr"
         gitlab_com_username: "juanjeojeda"
         github_username: "juanje"
@@ -30,6 +48,7 @@ teams:
         display_name: "Roni Eliezer"
         title: "Senior Software Engineer"
         jira_display_name: "Roni Eliezer"
+        slack_username: "reliezer"
         gitlab_cee_username: "reliezer"
         gitlab_com_username: "reliezer"
         github_username: "roniezr"
@@ -38,6 +57,7 @@ teams:
         display_name: "Kanitha Chim"
         title: "Software Engineer"
         jira_display_name: "Kanitha Chim"
+        slack_username: "kchim"
         gitlab_cee_username: "kchim"
         gitlab_com_username: "kchim"
         github_username: "kchim"
@@ -46,6 +66,7 @@ teams:
         display_name: "Hubert Stefański"
         title: "Software Engineer"
         jira_display_name: "Hubert Stefanski"
+        slack_username: "hstefans"
         gitlab_cee_username: "hstefans"
         gitlab_com_username: "hstefans"
         github_username: "hubeadmin"
@@ -54,17 +75,23 @@ teams:
         display_name: "Eitan Raviv"
         title: "Software Engineer"
         jira_display_name: "Eitan Raviv"
+        slack_username: "eraviv"
         gitlab_cee_username: "eraviv"
         gitlab_com_username: "eraviv"
         github_username: "erav"
 
   - name: "PitCrew — RHAS"
     jira_jql: 'project = PITCREW'
+    slack_channels:
+      - {name: "team-pitcrew-automotive",  id: "C08SRMMGDK2"}
+      - {name: "forum-jumpstarter",        id: "C064EKCGEF8"}
+      - {name: "forum-rhivos-dut",         id: "C08GBTD1YG2"}
     members:
       - id: benny.zlotnik
         display_name: "Benny Zlotnik"
         title: "Principal Software Engineer"
         jira_display_name: "Benny Zlotnik"
+        slack_username: "bzlotnik"
         gitlab_cee_username: "bzlotnik"
         gitlab_com_username: "bzlotnik"
         github_username: "bennyz"
@@ -73,6 +100,7 @@ teams:
         display_name: "Bella Khizgiyaev"
         title: "Software Engineer"
         jira_display_name: "Bella Khizgiyaev"
+        slack_username: "bkhizgiy"
         gitlab_cee_username: "bkhizgiy"
         gitlab_com_username: "bkhizgiy"
         github_username: "bkhizgiy"
@@ -81,6 +109,7 @@ teams:
         display_name: "Muhamad Abo Ras"
         title: "Software Engineer"
         jira_display_name: "Mohamad Abo Ras"
+        slack_username: "maboras"
         gitlab_cee_username: "maboras"
         gitlab_com_username: "maboras"
         github_username: "maboras-rh"
