@@ -46,7 +46,7 @@ The Red Hat Multiplier is comprised of five behaviors:
 
 ## Proficiency Levels
 
-To assess proficiency of a competency, use these definitions to assess each behavior against the proficiency levels. Look at the aggregate behavior proficiencies to arrive at an overall competency proficiency rating.
+### Definitions
 
 | Level | Impact Scope | Knowledge | Application |
 |-------|-------------|-----------|-------------|
@@ -55,9 +55,38 @@ To assess proficiency of a competency, use these definitions to assess each beha
 | **Advanced** | Multiple teams or department effectiveness | Models and teaches to others | Demonstrates depth and breadth in applying concept |
 | **Expert** | Company effectiveness | Builds through programs, processes, and systems | Recognized as authority or thought leader |
 
+### Expected Proficiency by IC Job Level (Red Hat Multiplier)
+
+| IC Level | Title | Expected Multiplier Proficiency |
+|----------|-------|---------------------------------|
+| Level 1 | Associate Software Engineer | Knowledgeable |
+| Level 2 | Software Engineer | Knowledgeable |
+| Level 3 | Senior Software Engineer | Experienced |
+| Level 4 | Principal Software Engineer / Principal SRE | Experienced |
+| Level 5 | — | Advanced |
+| Level 6 | — | Advanced |
+| Level 7 | — | Expert |
+
+Source: [Competency Proficiency Levels by Job Levels (March 2022)](~/Downloads/Competency%20Proficiency%20Levels%20by%20Job%20Levels-3-31-22.pdf)
+
+### Current Team Mapping
+
+| Member | Title | IC Level | Expected Proficiency |
+|--------|-------|----------|---------------------|
+| Bella Khizgiyaev | Software Engineer | 2 | Knowledgeable |
+| Roni Eliezer | Principal Software Engineer | 4 | Experienced |
+| Hubert Stefański | Senior Software Engineer | 3 | Experienced |
+| Kanitha Chim | Senior Software Engineer | 3 | Experienced |
+| Eitan Raviv | Senior Software Engineer | 3 | Experienced |
+| Muhamad Abo Ras | Senior Software Engineer | 3 | Experienced |
+| Juanje Ojeda | Principal Software Engineer | 4 | Experienced |
+| Benny Zlotnik | Principal Software Engineer | 4 | Experienced |
+| Roderick Kieley | Principal Software Engineer | 4 | Experienced |
+| Matt Goldman | Principal SRE | 4 | Experienced |
+
 ## How to use in reports
 
-For each team member, identify 2-3 behaviors most demonstrated in the quarter. Cite specific evidence (ticket keys, MR links, Slack threads, 1:1 observations). Frame strengths positively and growth areas constructively. Use proficiency levels as a guide for calibration but don't explicitly state levels in the narrative — describe the behavior and impact instead.
+For each team member, identify 2-3 behaviors most demonstrated in the quarter. Cite specific evidence (ticket keys, MR links, Slack threads, 1:1 observations). Frame strengths positively and growth areas constructively. Explicitly state the expected proficiency level for the member's job level, and assess whether observed behavior meets, exceeds, or is developing toward that level.
 
 ## Source
 

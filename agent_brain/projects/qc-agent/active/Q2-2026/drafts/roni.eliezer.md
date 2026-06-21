@@ -1,6 +1,6 @@
 # Individual Engineer Report — Roni Eliezer
 
-**Senior Software Engineer** | Team: ATC — Auto ToolChain
+**Principal Software Engineer** | Team: ATC — Auto ToolChain
 **Period:** Q2 2026 (April 1 – June 30)
 **Generated:** 2026-06-21
 
@@ -36,6 +36,8 @@ Roni delivered the highest ticket count on the team this quarter (32 closed) wit
 ## Section B — The How
 
 *How did the associate accomplish their goals? (Red Hat Multiplier behaviors)*
+
+> **Proficiency expectation:** IC Level 4 (Principal Software Engineer) — Expected proficiency: **Experienced**
 
 **Be Transparent — Openly share information and intentions.** Roni's work pattern this quarter reflects a strong commitment to keeping information visible and accessible. With 497 Slack messages across 17 channels — including 165 in test-console, 73 in the TC working group, and 63 across alert channels — he consistently surfaced the state of the Test Console platform to anyone who needed it. His approach to the Gemini model transitions is a clear example: rather than silently swapping dependencies, each change was an explicit, trackable MR (gemini-2.0-flash to 2.5-flash to 3.5-flash), making the rationale and timing visible in the commit history. He aligned OpenAPI specs with REST handlers (April 16 MR) and updated API docstrings specifically to improve MCP tool integration (VROOM-41913) — both acts of making system behavior transparent to consumers who depend on accurate documentation. The CTC scheduling work for RC1, RC2, and RC3 followed the same pattern: each release configuration was a separate, reviewable MR rather than a configuration change made quietly in production. When Polarion went down for maintenance, he proactively disabled CTC and made it visible (May 29 MR) rather than letting test runs fail silently.
 

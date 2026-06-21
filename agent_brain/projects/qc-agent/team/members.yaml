@@ -53,7 +53,7 @@ teams:
 
       - id: roni.eliezer
         display_name: "Roni Eliezer"
-        title: "Senior Software Engineer"
+        title: "Principal Software Engineer"
         jira_display_name: "Roni Eliezer"
         slack_username: "reliezer"
         gitlab_cee_username: "reliezer"

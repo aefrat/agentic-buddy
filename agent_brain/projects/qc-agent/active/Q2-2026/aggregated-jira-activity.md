@@ -12,7 +12,7 @@
 
 | Name | Title | Tickets Resolved | Story Points | Key Impact |
 |------|-------|:----------------:|:------------:|------------|
-| Roni Eliezer | Senior Software Engineer | 32 | 83 | Test Console platform owner — 43 MRs, RC1-RC3 CTC scheduling, Blocker security fix, AI/Gemini integration |
+| Roni Eliezer | Principal Software Engineer | 32 | 83 | Test Console platform owner — 43 MRs, RC1-RC3 CTC scheduling, Blocker security fix, AI/Gemini integration |
 | Juanje Ojeda | Principal Software Engineer | 28 | 68 | Pipeline reliability pillar — 6 Blockers resolved, pac-jobs modernization, AI agent innovation (agent-forge) |
 | Hubert Stefański | Senior Software Engineer | 17 | 55 | Infrastructure & gating — AWS/S3/webserver, container vulnerability fixes, QC Layered Product gating spike |
 | Kanitha Chim | Senior Software Engineer | 18 | 39+ | Release distribution specialist — errata/advisory workflows, cross-project (VROOM+RHELDST+RHELWF+PSSECAUT), FuSa separation |
