@@ -1,6 +1,6 @@
 # Individual Engineer Report — Juanje Ojeda
 
-**Senior Software Engineer** | Team: ATC — Auto ToolChain
+**Principal Software Engineer** | Team: ATC — Auto ToolChain
 **Period:** Q2 2026 (April 1 – June 30)
 **Generated:** 2026-06-21
 

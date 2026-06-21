@@ -42,7 +42,7 @@ teams:
     members:
       - id: juanje.ojeda
         display_name: "Juanje Ojeda"
-        title: "Senior Software Engineer"
+        title: "Principal Software Engineer"
         jira_display_name: "Juanje Ojeda"
         slack_username: "jojedacr"
         gitlab_cee_username: "jojedacr"
@@ -62,7 +62,7 @@ teams:
 
       - id: kanitha.chim
         display_name: "Kanitha Chim"
-        title: "Software Engineer"
+        title: "Senior Software Engineer"
         jira_display_name: "Kanitha Chim"
         slack_username: "kchim"
         gitlab_cee_username: "kchim"
@@ -71,7 +71,7 @@ teams:
 
       - id: hubert.stefanski
         display_name: "Hubert Stefański"
-        title: "Software Engineer"
+        title: "Senior Software Engineer"
         jira_display_name: "Hubert Stefanski"
         slack_username: "hstefans"
         gitlab_cee_username: "hstefans"
@@ -80,7 +80,7 @@ teams:
 
       - id: eitan.raviv
         display_name: "Eitan Raviv"
-        title: "Software Engineer"
+        title: "Senior Software Engineer"
         jira_display_name: "Eitan Raviv"
         slack_username: "eraviv"
         gitlab_cee_username: "eraviv"
@@ -89,7 +89,7 @@ teams:
 
       - id: matt.goldman
         display_name: "Matt Goldman"
-        title: ""
+        title: "Principal SRE"
         jira_display_name: "Matt Goldman"
         slack_username: "matgoldm"
         gitlab_cee_username: "matgoldm"
@@ -125,7 +125,7 @@ teams:
 
       - id: muhamad.aboras
         display_name: "Muhamad Abo Ras"
-        title: "Software Engineer"
+        title: "Senior Software Engineer"
         jira_display_name: "Mohamad Abo Ras"
         slack_username: "maboras"
         gitlab_cee_username: "maboras"
@@ -134,7 +134,7 @@ teams:
 
       - id: roderick.kieley
         display_name: "Roderick Kieley"
-        title: ""
+        title: "Principal Software Engineer"
         jira_display_name: "Roderick Kieley"
         slack_username: "rkieley"
         gitlab_cee_username: "rkieley"

@@ -1,6 +1,6 @@
 # Individual Engineer Report — Roderick Kieley
 
-**Software Engineer** | Team: PitCrew — RHAS
+**Principal Software Engineer** | Team: PitCrew — RHAS
 **Period:** Q2 2026 (April 1 – June 30)
 **Generated:** 2026-06-21
 

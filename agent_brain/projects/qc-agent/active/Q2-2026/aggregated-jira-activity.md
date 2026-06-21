@@ -13,11 +13,11 @@
 | Name | Title | Tickets Resolved | Story Points | Key Impact |
 |------|-------|:----------------:|:------------:|------------|
 | Roni Eliezer | Senior Software Engineer | 32 | 83 | Test Console platform owner — 43 MRs, RC1-RC3 CTC scheduling, Blocker security fix, AI/Gemini integration |
-| Juanje Ojeda | Senior Software Engineer | 28 | 68 | Pipeline reliability pillar — 6 Blockers resolved, pac-jobs modernization, AI agent innovation (agent-forge) |
-| Hubert Stefański | Software Engineer | 17 | 55 | Infrastructure & gating — AWS/S3/webserver, container vulnerability fixes, QC Layered Product gating spike |
-| Kanitha Chim | Software Engineer | 18 | 39+ | Release distribution specialist — errata/advisory workflows, cross-project (VROOM+RHELDST+RHELWF+PSSECAUT), FuSa separation |
-| Eitan Raviv | Software Engineer | 11 | 35 | Infrastructure ops — s3pi performance, monitoring SLA tiers, container vulnerability remediation, CloudFront |
-| Matt Goldman | Software Engineer | 6 | 7 | Fast onboarding (joined Apr 13) — critical container vuln fix, AIB CI repair, custom-images CI, CloudFront config |
+| Juanje Ojeda | Principal Software Engineer | 28 | 68 | Pipeline reliability pillar — 6 Blockers resolved, pac-jobs modernization, AI agent innovation (agent-forge) |
+| Hubert Stefański | Senior Software Engineer | 17 | 55 | Infrastructure & gating — AWS/S3/webserver, container vulnerability fixes, QC Layered Product gating spike |
+| Kanitha Chim | Senior Software Engineer | 18 | 39+ | Release distribution specialist — errata/advisory workflows, cross-project (VROOM+RHELDST+RHELWF+PSSECAUT), FuSa separation |
+| Eitan Raviv | Senior Software Engineer | 11 | 35 | Infrastructure ops — s3pi performance, monitoring SLA tiers, container vulnerability remediation, CloudFront |
+| Matt Goldman | Principal SRE | 6 | 7 | Fast onboarding (joined Apr 13) — critical container vuln fix, AIB CI repair, custom-images CI, CloudFront config |
 | **ATC Total** | | **112** | **287+** | |
 
 ### PitCrew — RHAS
@@ -26,8 +26,8 @@
 |------|-------|:----------------:|:------------:|------------|
 | Benny Zlotnik | Principal Software Engineer | 42 | 190 | Dual jumpstarter+builder ownership — hardware enablement, cosign security, observability buildout, Ford delivery |
 | Bella Khizgiyaev | Software Engineer | 9 | 39 | CTC + builder platform — OIDC certificates, observability dashboard, metrics, Ford lab support |
-| Muhamad Abo Ras | Software Engineer | 6 | 23 | E2E testing specialist — OIDC auth tests, CI workflow refactoring, CRC migration, ArgoCD recovery |
-| Roderick Kieley | Software Engineer | 0 | 0 | Onboarding (joined Jun 1) — 1 GitHub PR merged within 3 weeks, active team engagement |
+| Muhamad Abo Ras | Senior Software Engineer | 6 | 23 | E2E testing specialist — OIDC auth tests, CI workflow refactoring, CRC migration, ArgoCD recovery |
+| Roderick Kieley | Principal Software Engineer | 0 | 0 | Onboarding (joined Jun 1) — 1 GitHub PR merged within 3 weeks, active team engagement |
 | **PitCrew Total** | | **57** | **252** | |
 
 ### Combined Total

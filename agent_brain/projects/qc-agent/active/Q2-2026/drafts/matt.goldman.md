@@ -1,6 +1,6 @@
 # Individual Engineer Report — Matt Goldman
 
-**Software Engineer** | Team: ATC — Auto ToolChain
+**Principal SRE** | Team: ATC — Auto ToolChain
 **Period:** Q2 2026 (April 1 – June 30)
 **Generated:** 2026-06-21
 
