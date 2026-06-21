@@ -14,6 +14,7 @@ member: Roni Eliezer
 - **GitLab.com MRs merged:** 0
 - **GitHub PRs:** 0
 - **Total MRs:** 43
+- **Slack messages:** 497 across 17 channels
 
 ## Jira Tickets Closed (Q2 2026)
 
@@ -108,3 +109,32 @@ member: Roni Eliezer
 | 2026-06-16 | automotive/services/test-console | Add RHIVOS-2 RC3 to the releases list |
 | 2026-06-17 | automotive/services/test-console | Schedule CTC to run with RHIVOS-2 RC3 at the weekend |
 | 2026-06-17 | automotive/services/test-console | Add CONFLUENCE_EMAIL env-var |
+
+## Slack Activity — 497 messages, 17 channels
+
+| Channel | Messages |
+|---------|----------|
+| test-console | 165 |
+| wg-team-auto-toolchain-tc | 73 |
+| forum-qe-automotive | 43 |
+| team-pitcrew-automotive | 40 |
+| alerts-auto-toolchain | 39 |
+| alerts-package-level-gating | 24 |
+| testing-farm | 16 |
+| wg-team-auto-toolchain-pulp | 13 |
+| team-toolchain-automotive | 9 |
+| forum-dno-datarouter | 8 |
+| wg-team-auto-toolchain-infra | 6 |
+| team-auto-toolchain-qe | 2 |
+| forum-polarion-users | 2 |
+| help-catalog | 2 |
+| help-pvsec | 2 |
+
+### Slack patterns
+
+- **Test Console domain owner** — 165 messages (33% of total), by far the most active in test-console channel
+- **TC working group contributor** — 73 messages in wg-team-auto-toolchain-tc
+- **QE community contributor** — 43 messages in forum-qe-automotive
+- **Cross-team connector** — 40 messages in team-pitcrew-automotive (supporting PitCrew)
+- **Alert responder** — 39+24 = 63 messages across alert channels
+- **External platform engagement** — testing-farm (16), forum-dno-datarouter (8), forum-polarion-users (2)
