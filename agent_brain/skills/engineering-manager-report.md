@@ -76,7 +76,13 @@ When data is missing, you report the gap explicitly. A report with a clearly lab
    ```
    History files are immutable — never overwrite an existing dated file. If re-running same mode on the same day, append a sequence number (e.g., `2026-06-21-daily-2.json`).
 
-8. **Confirm outcome.** Report: what mode was used, whether the report was generated and sent successfully, any warnings (degraded sections, missing data, anomalies flagged).
+8. **Learn from this run (interactive only).** Skip this step in cron-triggered runs. In interactive sessions:
+   - Read `mr-agent/patterns/writing-preferences.md`. If the user provided feedback on a previous report's phrasing during this session, update the file.
+   - Read `mr-agent/computed/week-over-week.json`. Check for member activity levels that have been consistent across 3+ reports — update `mr-agent/patterns/team-activity-patterns.md` baselines.
+   - If a new member appears in the data for the first time, add them to the trajectories section with today's date.
+   - This step is lightweight — only update patterns when the signal is clear. Don't update on every run.
+
+9. **Confirm outcome.** Report: what mode was used, whether the report was generated and sent successfully, any warnings (degraded sections, missing data, anomalies flagged). If patterns were updated (step 8), mention which file changed.
 
 ## Success criteria
 
@@ -105,4 +111,5 @@ When data is missing, you report the gap explicitly. A report with a clearly lab
 - [ ] Previous snapshot compared — anomalies checked (or noted as first run)
 - [ ] Current snapshot saved to active + history
 - [ ] History committed to git
+- [ ] Patterns updated (if interactive and signals present)
 - [ ] Outcome confirmed to user

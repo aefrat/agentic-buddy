@@ -82,11 +82,12 @@ agent_brain/projects/mr-agent/
 - [x] AI identity injected into `_claude_summarize` and `_claude_slack_digest` prompts
 - [x] Skill step 3 added: compute stats before generating report
 
-### Phase 4 — Patterns & Learning
+### Phase 4 — Patterns & Learning (done)
 
-- [ ] Writing preferences from manager corrections
-- [ ] Team activity baselines from accumulated history
-- [ ] `mr-capture` skill for mid-cycle observations
+- [x] `patterns/writing-preferences.md` — seeded with capture structure (style, emphasis, avoid, tone)
+- [x] `patterns/team-activity-patterns.md` — seeded with baselines tables, seasonal/Slack patterns, member trajectories (Roderick, Matt)
+- [x] `mr-capture` skill created — routes observations to correct pattern/reference file
+- [x] Skill step 8 added: learn from this run (interactive mode only, update patterns when signals are clear)
 
 ## Design principles applied
 
