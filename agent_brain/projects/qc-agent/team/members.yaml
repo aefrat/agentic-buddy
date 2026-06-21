@@ -80,6 +80,15 @@ teams:
         gitlab_com_username: "eraviv"
         github_username: "erav"
 
+      - id: matt.goldman
+        display_name: "Matt Goldman"
+        title: ""
+        jira_display_name: "Matt Goldman"
+        slack_username: "matgoldm"
+        gitlab_cee_username: "matgoldm"
+        gitlab_com_username: "matgoldm"
+        github_username: "matthew-goldman"
+
   - name: "PitCrew — RHAS"
     jira_jql: 'project = PITCREW'
     slack_channels:
