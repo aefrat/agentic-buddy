@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-06-18
-access_count: 9
+last_accessed: 2026-06-21
+access_count: 10
 created: 2026-06-01
 ---
 
@@ -49,6 +49,10 @@ Resolved observations are moved to the bottom.
 
 - **2026-06-14:** Skill format migration — user has skills in two locations: old format (`agent_brain/skills/*.md`) and new agentskills.io format (`.claude/skills/<name>/SKILL.md`). User explicitly stated all new skills should use agentskills.io format. GitLab collection uses `.agents/skills/`. Consider migrating remaining old-format skills to `.claude/skills/` during a maintenance cycle and archiving the old files. (seen: 1)
   - 2026-06-18: Second new skill (`process-1on1s`) built in agentskills.io format. Pattern is now established — all new skills go to `.claude/skills/`. (seen: 2)
+
+## Structure candidates (tools)
+
+- **2026-06-21:** `manager-report/` directory is not a git repo — code changes live only on disk. Risk: changes can be lost. Consider `git init` or moving it under an existing repo. (seen: 1)
 
 ## Reference candidates
 
