@@ -1,49 +1,64 @@
 ---
 last_accessed: 2026-06-21
-access_count: 1
+access_count: 2
 created: 2026-06-21
 ---
 
 # Red Hat Multiplier Competencies
 
-Reference framework for Section B ("The How") of quarterly evaluation reports. These competencies describe HOW associates accomplish their work, not WHAT they accomplish.
+Reference framework for Section B ("The How") of quarterly evaluation reports. These behaviors describe HOW associates accomplish their work, not WHAT they accomplish.
 
-## Competency areas
+**RED HAT MULTIPLIER:** Practice open leadership behaviors that create and reinforce our unique culture.
 
-### 1. Connection
+The Red Hat Multiplier is comprised of five behaviors:
 
-Building and maintaining relationships across the organization. Collaboration, empathy, trust-building, cross-functional partnerships.
+## Behaviors
 
-**Evidence signals:** Cross-team MRs, multi-team Jira epics, Slack collaboration, 1:1 feedback on teamwork, mentoring activities.
+### 1. Connect
 
-### 2. Courage
+**Definition:** Contribute and connect others to Red Hat's communities and shared purpose.
 
-Taking initiative, speaking up, challenging the status quo, making difficult decisions, owning mistakes.
+**Evidence signals:** Cross-team engagement, community involvement, mentoring, connecting people across silos, fostering shared purpose, 1:1 relationship-building, onboarding support.
 
-**Evidence signals:** New proposals, RFC/design docs authored, dissenting opinions in reviews, incident ownership, risk-taking in technical decisions.
+### 2. Extend Trust
 
-### 3. Curiosity
+**Definition:** Show confidence in the ability of others to contribute.
 
-Continuous learning, exploring new approaches, seeking to understand deeply, innovation.
+**Evidence signals:** Delegating responsibility, empowering team members to make decisions, giving autonomy on tasks, trusting others' expertise, supporting risk-taking by peers, backing team decisions.
 
-**Evidence signals:** New technology adoption, upstream contributions, conference talks/attendance, exploration of alternative solutions in MRs.
+### 3. Be Transparent
 
-### 4. Drive
+**Definition:** Openly share information and intentions.
 
-Results orientation, persistence, follow-through, ownership, accountability.
+**Evidence signals:** Proactive status updates, sharing context in Slack/meetings, open design discussions, documenting decisions and rationale, surfacing problems early, sharing work-in-progress for feedback.
 
-**Evidence signals:** Ticket velocity, story points, completion rate, blocker resolution, long-running initiative progress.
+### 4. Collaborate
 
-### 5. Accountability
+**Definition:** Invite cooperation and productive dialogue to create better solutions.
 
-Taking ownership, meeting commitments, being transparent about challenges, delivering quality.
+**Evidence signals:** Cross-team MRs, joint design sessions, RFC/design doc reviews, pair programming, constructive code reviews, cooperative problem-solving, upstream contributions.
 
-**Evidence signals:** On-time delivery, test coverage, documentation quality, incident follow-up, process improvements.
+### 5. Promote Inclusive Meritocracy
+
+**Definition:** Empower others to contribute ideas and value solutions based on their merit, regardless of source.
+
+**Evidence signals:** Welcoming contributions from all levels, evaluating ideas on merit not source, creating space for diverse perspectives, encouraging junior contributions, recognizing good ideas regardless of origin.
+
+## Proficiency Levels
+
+To assess proficiency of a competency, use these definitions to assess each behavior against the proficiency levels. Look at the aggregate behavior proficiencies to arrive at an overall competency proficiency rating.
+
+| Level | Impact Scope | Knowledge | Application |
+|-------|-------------|-----------|-------------|
+| **Knowledgeable** | Personal work effectiveness | Demonstrates understanding of the concept | Practices consistently across similar situations |
+| **Experienced** | Team effectiveness | Shares understanding with others | Practices across new or unfamiliar situations |
+| **Advanced** | Multiple teams or department effectiveness | Models and teaches to others | Demonstrates depth and breadth in applying concept |
+| **Expert** | Company effectiveness | Builds through programs, processes, and systems | Recognized as authority or thought leader |
 
 ## How to use in reports
 
-For each team member, identify 2-3 competencies most demonstrated in the quarter. Cite specific evidence (ticket keys, MR links, Slack threads, 1:1 observations). Frame strengths positively and growth areas constructively.
+For each team member, identify 2-3 behaviors most demonstrated in the quarter. Cite specific evidence (ticket keys, MR links, Slack threads, 1:1 observations). Frame strengths positively and growth areas constructively. Use proficiency levels as a guide for calibration but don't explicitly state levels in the narrative — describe the behavior and impact instead.
 
 ## Source
 
-Red Hat internal competency framework. This is a simplified reference — consult the full framework on The Source for official definitions.
+Red Hat internal competency framework — The Source (source.redhat.com/career/competencies). Last updated: March 9, 2026 (Version 5, Alyssa Conley). 57,912 views.
