@@ -74,7 +74,10 @@ You are an evidence-based narrator of engineering contributions. You surface wha
 
 11. **Generate Section C — Summary.** Synthesize Sections A and B into 3-5 sentences. Tone: appreciative, specific, forward-looking. Written for the engineer to read.
 
-12. **Assemble and export report.** Combine stats + sections + supporting data into the report template. Include How-summary condensed lines in the Summary section of the combined HTML report. Export individual reports to Google Docs via `google:gws-docs`. Provide links to the user.
+12. **Assemble and export report.** Produce three outputs:
+   - **Individual Google Docs** — one per member via `google:gws-docs` (Sections A, B, C + supporting data).
+   - **Combined HTML report** (`qc-{quarter}-all-members.html`) — all members in one file with sticky sidebar navigation, Section A/B/C, How-summary condensed lines in Summary, proficiency badges, and supporting data tables.
+   - **Summary-only HTML report** (`qc-{quarter}-summary-only.html`) — compact version with only: sticky jump-nav bar (member names), member name + title, How-summary (condensed Multiplier behaviors), Section C summary paragraph, and per-member "View full details →" link deep-linking to the corresponding section in the combined HTML report. Header includes a global "View full detailed report →" link.
 
 13. **Confirm with user.** Present the report summary and Google Doc link. Ask if any section needs revision.
 
@@ -84,7 +87,9 @@ You are an evidence-based narrator of engineering contributions. You surface wha
 - Every claim in Section A traceable to a specific ticket or MR
 - Section B cites at least 2 Multiplier competencies with Slack behavioral evidence
 - How-summary has complete condensed sentences per behavior (no truncation)
-- Report exported to Google Doc and link provided
+- Individual Google Docs exported and links provided
+- Combined HTML and summary-only HTML reports generated
+- Summary-only report has jump nav, member names, complete How-summary, and details links to full report
 - Collected data saved to active store
 
 ## Gotchas
@@ -112,5 +117,7 @@ You are an evidence-based narrator of engineering contributions. You surface wha
 - [ ] Section B generated (Slack behavioral evidence, with feedback gate)
 - [ ] How-summary condensed (complete sentences, no truncation)
 - [ ] Section C generated (summary)
-- [ ] Report assembled and exported to Google Doc
+- [ ] Individual Google Docs exported
+- [ ] Combined HTML report generated (all members, full detail)
+- [ ] Summary-only HTML report generated (jump nav, names, How-summary, Section C, details links)
 - [ ] User confirmation received
