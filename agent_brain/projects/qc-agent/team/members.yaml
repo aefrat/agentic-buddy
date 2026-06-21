@@ -122,3 +122,12 @@ teams:
         gitlab_cee_username: "maboras"
         gitlab_com_username: "maboras"
         github_username: "maboras-rh"
+
+      - id: roderick.kieley
+        display_name: "Roderick Kieley"
+        title: ""
+        jira_display_name: "Roderick Kieley"
+        slack_username: "rkieley"
+        gitlab_cee_username: "rkieley"
+        gitlab_com_username: "roddiekieley"
+        github_username: "roddiekieley"
