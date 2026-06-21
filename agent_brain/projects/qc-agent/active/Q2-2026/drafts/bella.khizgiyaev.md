@@ -1,6 +1,6 @@
 # Individual Engineer Report — Bella Khizgiyaev
 
-**Software Engineer** | Team: PitCrew — RHAS
+**Senior Software Engineer** | Team: PitCrew — RHAS
 **Period:** Q2 2026 (April 1 – June 30)
 **Generated:** 2026-06-21
 
@@ -35,7 +35,7 @@ Bella delivered a focused and impactful quarter, anchoring two critical areas fo
 
 *How did the associate accomplish their goals? (Red Hat Multiplier behaviors)*
 
-> **Proficiency expectation:** IC Level 2 (Software Engineer) — Expected proficiency: **Knowledgeable**
+> **Proficiency expectation:** IC Level 3 (Senior Software Engineer) — Expected proficiency: **Experienced**
 
 **Collaborate — Invite cooperation and productive dialogue to create better solutions.** Bella's most impactful work this quarter was inherently collaborative, spanning multiple codebases and stakeholder groups. The OIDC CA certificate feature she delivered for the builder (PITCREW-420) was not treated as a standalone task — she extended the same pattern to jumpstarter (PITCREW-419, in review), ensuring architectural consistency across both platforms. This required working across the automotive-dev-operator and jumpstarter repositories with their respective maintainers and design considerations. Her ~18 GitHub PRs (~12 merged) across these two repositories reinforce the pattern: Konflux integration, OIDC authentication, and observability features all touch shared infrastructure where productive dialogue with other contributors is essential. The Ford lab enablement work (PITCREW-353) similarly required cooperation with customer-facing teams to understand the x86_64 QEMU requirements and deliver a solution that fit their integration testing needs.
 

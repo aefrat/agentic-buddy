@@ -116,7 +116,7 @@ teams:
 
       - id: bella.khizgiyaev
         display_name: "Bella Khizgiyaev"
-        title: "Software Engineer"
+        title: "Senior Software Engineer"
         jira_display_name: "Bella Khizgiyaev"
         slack_username: "bkhizgiy"
         gitlab_cee_username: "bkhizgiy"

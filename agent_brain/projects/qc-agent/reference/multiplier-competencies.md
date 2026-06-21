@@ -73,7 +73,7 @@ Source: [Competency Proficiency Levels by Job Levels (March 2022)](~/Downloads/C
 
 | Member | Title | IC Level | Expected Proficiency |
 |--------|-------|----------|---------------------|
-| Bella Khizgiyaev | Software Engineer | 2 | Knowledgeable |
+| Bella Khizgiyaev | Senior Software Engineer | 3 | Experienced |
 | Roni Eliezer | Principal Software Engineer | 4 | Experienced |
 | Hubert Stefański | Senior Software Engineer | 3 | Experienced |
 | Kanitha Chim | Senior Software Engineer | 3 | Experienced |

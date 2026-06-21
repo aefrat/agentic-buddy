@@ -25,7 +25,7 @@
 | Name | Title | Tickets Resolved | Story Points | Key Impact |
 |------|-------|:----------------:|:------------:|------------|
 | Benny Zlotnik | Principal Software Engineer | 42 | 190 | Dual jumpstarter+builder ownership — hardware enablement, cosign security, observability buildout, Ford delivery |
-| Bella Khizgiyaev | Software Engineer | 9 | 39 | CTC + builder platform — OIDC certificates, observability dashboard, metrics, Ford lab support |
+| Bella Khizgiyaev | Senior Software Engineer | 9 | 39 | CTC + builder platform — OIDC certificates, observability dashboard, metrics, Ford lab support |
 | Muhamad Abo Ras | Senior Software Engineer | 6 | 23 | E2E testing specialist — OIDC auth tests, CI workflow refactoring, CRC migration, ArgoCD recovery |
 | Roderick Kieley | Principal Software Engineer | 0 | 0 | Onboarding (joined Jun 1) — 1 GitHub PR merged within 3 weeks, active team engagement |
 | **PitCrew Total** | | **57** | **252** | |
