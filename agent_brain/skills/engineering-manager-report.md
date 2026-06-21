@@ -23,11 +23,12 @@ Full reference (script details, team members, Jira config, API notes):
 
 ```bash
 source ~/.bashrc
-python3 /home/aefrat/claude/manager-report/generate_report.py --mode daily  --output /tmp/daily_report.html
-python3 /home/aefrat/claude/manager-report/generate_report.py --mode weekly --output /tmp/weekly_report.html
+python3 /home/aefrat/claude/manager-report/generate_report.py --mode daily   --output /tmp/daily_report.html
+python3 /home/aefrat/claude/manager-report/generate_report.py --mode weekly  --output /tmp/weekly_report.html
+python3 /home/aefrat/claude/manager-report/generate_report.py --mode weekend --output /tmp/weekend_report.html
 ```
 
-Use `--mode daily` or `--mode weekly` as appropriate. Optional `--days N` overrides the look-back window.
+Use `--mode daily` (1-day lookback), `--mode weekly` (7-day), or `--mode weekend` (4-day, Thu–Sun). Optional `--days N` overrides the look-back window.
 
 The script handles token cache clearing, fetches Jira + GitLab + GitHub + Google Docs + Slack, generates per-team AI summaries inline via `claude -p`, and writes the HTML report.
 
@@ -41,6 +42,10 @@ gws gmail +send --to aefrat@redhat.com \
 gws gmail +send --to aefrat@redhat.com \
   --subject "[Weekly] Team Summary – week of $(date +%Y-%m-%d)" \
   --body "$(cat /tmp/weekly_report.html)" --html
+
+gws gmail +send --to aefrat@redhat.com \
+  --subject "[Weekend] Team Activity – $(date +%Y-%m-%d)" \
+  --body "$(cat /tmp/weekend_report.html)" --html
 ```
 
 ## Scheduled runs
