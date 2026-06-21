@@ -30,14 +30,25 @@ When data is missing, you report the gap explicitly. A report with a clearly lab
 
 2. **Load team configuration.** Read `agent_brain/projects/qc-agent/team/members.yaml` for the team roster, Slack channels, JQL queries, and Google Doc IDs. This is the canonical source of truth — if it conflicts with hardcoded values in the script, flag the discrepancy.
 
-3. **Generate the report.** Run:
+3. **Compute statistics (if history exists).** Check if `agent_brain/projects/mr-agent/history/` has any `.json` files. If yes, run:
+   ```bash
+   python3 /home/aefrat/claude/manager-report/compute_stats.py \
+     --history-dir agent_brain/projects/mr-agent/history/ \
+     --output agent_brain/projects/mr-agent/computed/week-over-week.json \
+     --mode {mode}
+   ```
+   This produces deterministic stats (rolling averages, deltas, anomalies) — never LLM-computed. If no history exists, skip this step.
+
+4. **Generate the report.** Run:
    ```bash
    source ~/.bashrc
-   python3 /home/aefrat/claude/manager-report/generate_report.py --mode {mode} --output /tmp/{mode}_report.html
+   python3 /home/aefrat/claude/manager-report/generate_report.py --mode {mode} \
+     --output /tmp/{mode}_report.html \
+     --stats-file agent_brain/projects/mr-agent/computed/week-over-week.json
    ```
-   The script handles token cache clearing, data fetching across all 5 sources, AI summarization via `claude -p`, and HTML assembly. Do not replicate its logic.
+   Omit `--stats-file` if step 3 was skipped (no history). The script handles token cache clearing, data fetching across all 5 sources, AI summarization via `claude -p` (now grounded with computed stats when available), and HTML assembly. Do not replicate its logic.
 
-4. **Send via email.** Run:
+5. **Send via email.** Run:
    ```bash
    gws gmail +send --to aefrat@redhat.com \
      --subject "[{Label}] Team Activity – $(date +%Y-%m-%d)" \
@@ -45,7 +56,7 @@ When data is missing, you report the gap explicitly. A report with a clearly lab
    ```
    Use the correct label: Daily → `[Daily]`, Weekly → `[Weekly] Team Summary – week of`, Weekend → `[Weekend]`.
 
-5. **Verify against previous (disconfirmation gate).** Read `mr-agent/active/latest-snapshot.json` (the previous run's metrics). Read the current run's sidecar JSON (`/tmp/report_data.json`). Compare `metrics` and `slack` objects. Flag anomalies:
+6. **Verify against previous (disconfirmation gate).** Read `mr-agent/active/latest-snapshot.json` (the previous run's metrics). Read the current run's sidecar JSON (`/tmp/report_data.json`). Compare `metrics` and `slack` objects. Flag anomalies:
    - Any team has zero closed tickets when previous had >3 → possible Jira fetch failure
    - Total Slack messages dropped >80% vs previous → possible Slack auth failure
    - AI summaries contain "unavailable" or "Not logged in" → `claude -p` auth failure
@@ -53,9 +64,9 @@ When data is missing, you report the gap explicitly. A report with a clearly lab
 
    Seek evidence that the report is *wrong*, not confirmation that it's right. If no previous snapshot exists (first run), skip comparison and note "no baseline — first run."
 
-   If anomalies detected: add `[VERIFY]` prefix to the email subject (step 4) and report specific deltas to the user before sending. Let the user decide whether to send anyway.
+   If anomalies detected: add `[VERIFY]` prefix to the email subject (step 5) and report specific deltas to the user before sending. Let the user decide whether to send anyway.
 
-6. **Save snapshot.** After sending (or user confirmation on anomalies):
+7. **Save snapshot.** After sending (or user confirmation on anomalies):
    ```bash
    cp /tmp/{mode}_report.html agent_brain/projects/mr-agent/active/latest-report.html
    cp /tmp/report_data.json agent_brain/projects/mr-agent/active/latest-snapshot.json
@@ -65,7 +76,7 @@ When data is missing, you report the gap explicitly. A report with a clearly lab
    ```
    History files are immutable — never overwrite an existing dated file. If re-running same mode on the same day, append a sequence number (e.g., `2026-06-21-daily-2.json`).
 
-7. **Confirm outcome.** Report: what mode was used, whether the report was generated and sent successfully, any warnings (degraded sections, missing data, anomalies flagged).
+8. **Confirm outcome.** Report: what mode was used, whether the report was generated and sent successfully, any warnings (degraded sections, missing data, anomalies flagged).
 
 ## Success criteria
 
@@ -88,7 +99,8 @@ When data is missing, you report the gap explicitly. A report with a clearly lab
 
 - [ ] Mode determined (daily/weekly/weekend)
 - [ ] Team config loaded
-- [ ] Report generated (`generate_report.py` completed without errors)
+- [ ] Stats computed from history (or skipped — no history yet)
+- [ ] Report generated (with `--stats-file` if stats available)
 - [ ] Email sent
 - [ ] Previous snapshot compared — anomalies checked (or noted as first run)
 - [ ] Current snapshot saved to active + history

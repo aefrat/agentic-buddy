@@ -75,11 +75,12 @@ agent_brain/projects/mr-agent/
 - [x] Skill steps 5-6 activated: verify against previous snapshot, save to active + history
 - [x] Disconfirmation gate: seek evidence report is wrong, flag anomalies with deltas
 
-### Phase 3 — Computed Store
+### Phase 3 — Computed Store (done)
 
-- [ ] `compute_stats.py` — reads history, computes rolling averages and deltas
-- [ ] AI prompts reference computed stats for grounded synthesis
-- [ ] Anomaly detection becomes quantitative (vs rolling average, not just last run)
+- [x] `compute_stats.py` created — reads history snapshots, computes rolling averages, week-over-week deltas, per-member activity, anomaly detection
+- [x] `--stats-file` flag added to `generate_report.py` — AI prompts enriched with computed context
+- [x] AI identity injected into `_claude_summarize` and `_claude_slack_digest` prompts
+- [x] Skill step 3 added: compute stats before generating report
 
 ### Phase 4 — Patterns & Learning
 
