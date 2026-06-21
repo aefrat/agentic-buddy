@@ -70,17 +70,20 @@ You are an evidence-based narrator of engineering contributions. You surface wha
    
    - **Gate:** If no manager feedback available, add `⚠ MANAGER FEEDBACK — TO BE COMPLETED` notice. Ask user if they want to provide feedback now or generate a placeholder.
 
-10. **Generate Section C — Summary.** Synthesize Sections A and B into 3-5 sentences. Tone: appreciative, specific, forward-looking. Written for the engineer to read.
+10. **Generate How-summary (condensed).** For each behavior in Section B, write a single complete sentence (~15-25 words) that synthesizes the full behavioral paragraph — not a truncated first sentence. These condensed summaries appear in the Summary section of the combined HTML report and give readers the behavioral picture at a glance. Store alongside the full Section B for assembly.
 
-11. **Assemble and export report.** Combine stats + sections + supporting data into the report template. Export to Google Doc via `google:gws-docs` (create new doc, write content). Provide the link to the user.
+11. **Generate Section C — Summary.** Synthesize Sections A and B into 3-5 sentences. Tone: appreciative, specific, forward-looking. Written for the engineer to read.
 
-12. **Confirm with user.** Present the report summary and Google Doc link. Ask if any section needs revision.
+12. **Assemble and export report.** Combine stats + sections + supporting data into the report template. Include How-summary condensed lines in the Summary section of the combined HTML report. Export individual reports to Google Docs via `google:gws-docs`. Provide links to the user.
+
+13. **Confirm with user.** Present the report summary and Google Doc link. Ask if any section needs revision.
 
 ## Success criteria
 
 - Report generated with all three sections populated
 - Every claim in Section A traceable to a specific ticket or MR
-- Section B cites at least 2 Multiplier competencies with evidence
+- Section B cites at least 2 Multiplier competencies with Slack behavioral evidence
+- How-summary has complete condensed sentences per behavior (no truncation)
 - Report exported to Google Doc and link provided
 - Collected data saved to active store
 
@@ -106,7 +109,8 @@ You are an evidence-based narrator of engineering contributions. You surface wha
 - [ ] Raw data saved to active store
 - [ ] Reference material loaded (template, competencies)
 - [ ] Section A generated (accomplishments)
-- [ ] Section B generated (behavioral, with feedback gate)
+- [ ] Section B generated (Slack behavioral evidence, with feedback gate)
+- [ ] How-summary condensed (complete sentences, no truncation)
 - [ ] Section C generated (summary)
 - [ ] Report assembled and exported to Google Doc
 - [ ] User confirmation received
