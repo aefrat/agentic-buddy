@@ -43,6 +43,8 @@ teams:
         gitlab_cee_username: "jojedacr"
         gitlab_com_username: "juanjeojeda"
         github_username: "juanje"
+        additional_jira_teams:
+          - "rhivos-aaa"
 
       - id: roni.eliezer
         display_name: "Roni Eliezer"
