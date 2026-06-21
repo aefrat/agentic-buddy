@@ -1,0 +1,75 @@
+---
+collected: 2026-06-21
+quarter: Q2 2026
+period: 2026-04-01 to 2026-06-30
+member: Eitan Raviv
+---
+
+# Collected Data — Eitan Raviv — Q2 2026
+
+## Stats
+
+- **Jira tickets resolved:** 11
+- **Internal GitLab MRs merged:** 28
+- **GitLab.com MRs merged:** 0
+- **GitHub PRs:** 0
+- **Slack messages:** 76 across 14 channels
+
+## Jira Tickets Resolved (Q2 2026)
+
+| Key | Summary | Type | Priority |
+|-----|---------|------|----------|
+| VROOM-41533 | [Due May 19] Fix container vulnerabilities for VHCL-009 - Infrastructure service, images: httpd, foa mcp server, graphana | Task | Major |
+| VROOM-41525 | Open a ticket at issues.redhat.com/projects/CPPX for RHIVOS to show images | Task | Major |
+| VROOM-41485 | Unexpected sprint 126 | Task | Undefined |
+| VROOM-41448 | Resolve Vulnerabilities: rhivos-webserver 10.30.75.235 2026-05 | Task | Undefined |
+| VROOM-41214 | Rhivos Cloudfront - module support for multiple distributions | Task | Undefined |
+| VROOM-41073 | s3pi - create integration tests | Task | Undefined |
+| VROOM-41072 | Jira migration house keeping - connect gitlab.cee; disable email notification from auto-jira-bot | Task | Undefined |
+| VROOM-40690 | Infra house keeping - remove obsolete key pairs from aws, organize key pairs to folders on bitwarden | Task | Undefined |
+| VROOM-40017 | Create AWS EC2 to allow running tests on AWS Graviton 3 CPU aarch64 | Task | Undefined |
+| VROOM-38752 | s3pi - more performance improvements | Task | Undefined |
+| VROOM-38184 | Monitoring - SLA spec - Introduce Criticality Tiers | Task | Undefined |
+
+### Notable patterns
+
+- **Infrastructure and operations focus** — AWS EC2, CloudFront, vulnerability remediation, housekeeping
+- **s3pi development** — integration tests, performance improvements
+- **Security compliance** — container vulnerability fixes (VHCL-009), webserver vulnerabilities
+- **Monitoring maturity** — SLA spec with criticality tiers
+- **2 Major-priority tickets** — security and CPPX integration
+
+## Internal GitLab MRs (gitlab.cee.redhat.com) — 28 merged
+
+Projects:
+- automotive/pipe-x/infrastructure (primary)
+- automotive/services/s3pi (pid:155892)
+- automotive/services/auto-toolchain-monitoring (pid:158766)
+
+(Detailed MR titles not available in this collection — data was collected via events API)
+
+## Slack Activity — 76 messages, 14 channels
+
+| Channel | Messages |
+|---------|----------|
+| team-toolchain-automotive | 23 |
+| wg-team-auto-toolchain-infra | 9 |
+| psca-support | 6 |
+| help-it-cloud-publiccloud | 5 |
+| team-boa-automotive | 5 |
+| test-console | 2 |
+| forum-qe-automotive | 2 |
+| alerts-auto-toolchain | 2 |
+| wg-team-auto-toolchain-tc | 2 |
+| wg-team-auto-toolchain-gating | 1 |
+| talk-to-grc | 1 |
+| forum-customer-portal | 1 |
+| forum-automotive-devel | 1 |
+| automotive-cat-collaboration | 1 |
+
+### Slack patterns
+
+- **Quieter Slack presence** — 76 messages is lowest on ATC team, but concentrated in relevant channels
+- **Infrastructure alignment** — team-toolchain-automotive (23) and infra (9) are top channels
+- **Cross-org reach** — psca-support (6), help-it-cloud-publiccloud (5), talk-to-grc (1)
+- **BOA collaboration** — 5 messages in team-boa-automotive
