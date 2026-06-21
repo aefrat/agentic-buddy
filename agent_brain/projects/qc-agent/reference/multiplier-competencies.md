@@ -86,7 +86,23 @@ Source: [Competency Proficiency Levels by Job Levels (March 2022)](~/Downloads/C
 
 ## How to use in reports
 
-For each team member, identify 2-3 behaviors most demonstrated in the quarter. Cite specific evidence (ticket keys, MR links, Slack threads, 1:1 observations). Frame strengths positively and growth areas constructively. Explicitly state the expected proficiency level for the member's job level, and assess whether observed behavior meets, exceeds, or is developing toward that level.
+**Section B must be grounded in Slack behavioral evidence, not deliverables.** Section A covers WHAT was accomplished (tickets, MRs, code). Section B covers HOW — observable through communication patterns, interaction style, and community engagement on Slack. Citing the same MRs/tickets in both sections makes Section B redundant.
+
+**Evidence sources for Section B (priority order):**
+1. **Slack interactions** — tone, helpfulness, thread participation, proactive sharing, cross-channel engagement, who they help, how they communicate problems, how they respond to others
+2. **1:1 behavioral observations** — from manager notes
+3. **Code review style** — how they give feedback (collaborative vs directive)
+4. **Meeting participation** — from meeting docs (proactive vs reactive)
+
+**Do NOT use as primary Section B evidence:** ticket counts, MR counts, story points, feature deliveries — those belong in Section A.
+
+For each team member, identify 2-3 behaviors most demonstrated in the quarter. Cite specific Slack messages, threads, and interaction patterns. Frame against the expected proficiency level for the member's IC level. Assess whether observed behavior meets, exceeds, or is developing toward that level.
+
+**Proficiency calibration in narrative:**
+- **Knowledgeable** (L1-L2): Uses behaviors to enhance personal work effectiveness. Evidence: understands and practices consistently.
+- **Experienced** (L3-L4): Uses behaviors to contribute to team effectiveness. Evidence: shares understanding with others, practices across new/unfamiliar situations.
+- **Advanced** (L5-L6): Uses behaviors to contribute to multiple teams/department. Evidence: models and teaches, depth and breadth.
+- **Expert** (L7): Uses behaviors to contribute to company effectiveness. Evidence: builds programs/processes/systems, recognized authority.
 
 ## Source
 

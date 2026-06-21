@@ -76,13 +76,27 @@ When data is missing, you report the gap explicitly. A report with a clearly lab
    ```
    History files are immutable — never overwrite an existing dated file. If re-running same mode on the same day, append a sequence number (e.g., `2026-06-21-daily-2.json`).
 
-8. **Learn from this run (interactive only).** Skip this step in cron-triggered runs. In interactive sessions:
+8. **Track Multiplier behavioral signals.** After generating the report, scan the Slack channel digest for behavioral patterns that map to Red Hat Multiplier competencies. For each team member with notable Slack activity in this period, extract:
+   - **Connect:** Cross-team engagement, helping outside their domain, community participation
+   - **Be Transparent:** Proactive status sharing, surfacing problems early, sharing context
+   - **Collaborate:** Cooperative problem-solving, constructive feedback, joint debugging
+   - **Extend Trust:** Empowering others, deferring to expertise, backing team decisions
+   - **Promote Inclusive Meritocracy:** Welcoming contributions, evaluating ideas on merit
+   
+   Append observations to `agent_brain/projects/mr-agent/patterns/multiplier-observations.md` with date, member name, behavior, and brief evidence. This file accumulates over the quarter and feeds into the QC Section B (see `agent_brain/skills/quarterly-connection.md` step 9). Only record genuine signals — a routine status update is not "Be Transparent"; proactively sharing a problem before being asked IS.
+   
+   Format per entry:
+   ```
+   - **YYYY-MM-DD | Member Name | Behavior:** [1-line observation with channel/context]
+   ```
+
+9. **Learn from this run (interactive only).** Skip this step in cron-triggered runs. In interactive sessions:
    - Read `mr-agent/patterns/writing-preferences.md`. If the user provided feedback on a previous report's phrasing during this session, update the file.
    - Read `mr-agent/computed/week-over-week.json`. Check for member activity levels that have been consistent across 3+ reports — update `mr-agent/patterns/team-activity-patterns.md` baselines.
    - If a new member appears in the data for the first time, add them to the trajectories section with today's date.
    - This step is lightweight — only update patterns when the signal is clear. Don't update on every run.
 
-9. **Confirm outcome.** Report: what mode was used, whether the report was generated and sent successfully, any warnings (degraded sections, missing data, anomalies flagged). If patterns were updated (step 8), mention which file changed.
+10. **Confirm outcome.** Report: what mode was used, whether the report was generated and sent successfully, any warnings (degraded sections, missing data, anomalies flagged). If patterns were updated (step 8), mention which file changed.
 
 ## Success criteria
 
@@ -111,5 +125,6 @@ When data is missing, you report the gap explicitly. A report with a clearly lab
 - [ ] Previous snapshot compared — anomalies checked (or noted as first run)
 - [ ] Current snapshot saved to active + history
 - [ ] History committed to git
+- [ ] Multiplier behavioral signals extracted from Slack digest
 - [ ] Patterns updated (if interactive and signals present)
 - [ ] Outcome confirmed to user

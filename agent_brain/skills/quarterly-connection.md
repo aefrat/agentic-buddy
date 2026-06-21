@@ -57,7 +57,17 @@ You are an evidence-based narrator of engineering contributions. You surface wha
 
 8. **Generate Section A — The What.** Using collected data, write a narrative of accomplishments organized by theme. Highlight impact, not just activity. Connect work to team/org goals.
 
-9. **Generate Section B — The How.** Using Section A + Multiplier competencies + 1:1 notes + manager feedback, assess 2-3 most demonstrated competencies with specific evidence. Include growth areas constructively.
+9. **Generate Section B — The How.** Section B is grounded in **Slack behavioral evidence**, NOT deliverables. Do NOT rehash Section A content (tickets, MRs, features). Instead, analyze:
+   - **Slack interaction patterns:** tone, helpfulness, thread participation, proactive sharing, cross-channel engagement
+   - **Who they help:** answering questions, unblocking others, sharing context unprompted
+   - **Communication style:** direct, mentoring, patient, collaborative
+   - **Community engagement:** cross-team channels, forums, helping outside their domain
+   - **1:1 behavioral observations:** from manager notes and mid-quarter observations
+   
+   Select 2-3 Multiplier behaviors most evidenced by Slack interactions. For each, cite specific channels, thread dynamics, interaction examples. Assess against the expected proficiency level for the member's IC level (see `multiplier-competencies.md` → Current Team Mapping).
+   
+   If daily/weekly manager report observations exist in `agent_brain/projects/mr-agent/patterns/multiplier-observations.md`, incorporate those accumulated behavioral signals as evidence.
+   
    - **Gate:** If no manager feedback available, add `⚠ MANAGER FEEDBACK — TO BE COMPLETED` notice. Ask user if they want to provide feedback now or generate a placeholder.
 
 10. **Generate Section C — Summary.** Synthesize Sections A and B into 3-5 sentences. Tone: appreciative, specific, forward-looking. Written for the engineer to read.
