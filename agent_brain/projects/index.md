@@ -13,6 +13,7 @@ comes up in conversation or needs context for a decision.
 - **[Agent Forge Design Principles](agent-forge-design-principles.md)** — Juanje Ojeda's 7 principles for stateful process-oriented agents. Deep study from agent-forge repo + slides. Convergence analysis with agentic-buddy, actionable gaps identified.
 
 - **[Quarterly Connection Agent](quarterly-connection-agent.md)** — Stateful process-oriented agent for quarterly evaluation reports. Applies agent-forge design principles to rebuild the [QC report CLI](https://gitlab.cee.redhat.com/aefrat/qc_report_agent) as a Claude Code skill with memory. Knowledge base at [qc-agent/](qc-agent/index.md).
+- **[Manager Report Agent](manager-report-agent.md)** — Stateful agent wrapping the daily/weekly/weekend engineering status report script. Adds identity, memory, verification, and learning to the existing Python execution engine. Knowledge base at [mr-agent/](mr-agent/index.md).
 
 ## Background
 

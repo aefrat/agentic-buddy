@@ -18,6 +18,11 @@
 teams:
   - name: "ATC — Auto ToolChain"
     jira_jql: 'project in ("Automotive Feature Teams") AND "AssignedTeam" in (rhivos-pdr-auto-toolchain)'
+    accent_color: "#1a1a2e"
+    google_docs:
+      - {name: "ATC Continuous Planning 2026", id: "1gcaIDtjdmaqaAqddqUhvby5PPUnrLj73GqFlf_BzRag"}
+      - {name: "ToolChain Open Sync", id: "1TegJmbETVM627zvw5hj8F5NtiQvvJ40OSbgkGlz-pWw"}
+      - {name: "ATC Team Meeting Weekly 2026", id: "190K1nFRRitw5BNak4wkrrpfKbQf1M67NfdQQ-I_SDwE"}
     slack_channels:
       - {name: "automotive-release-readiness",      id: "C04RHEEGY30"}
       - {name: "automotive-toolchain",              id: "C04JDFLHJN6"}
@@ -94,6 +99,7 @@ teams:
 
   - name: "PitCrew — RHAS"
     jira_jql: 'project = PITCREW'
+    accent_color: "#1a7a3e"
     slack_channels:
       - {name: "team-pitcrew-automotive",  id: "C08SRMMGDK2"}
       - {name: "forum-jumpstarter",        id: "C064EKCGEF8"}
