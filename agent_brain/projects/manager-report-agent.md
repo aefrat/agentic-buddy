@@ -68,12 +68,12 @@ agent_brain/projects/mr-agent/
 - [x] Shared team config extended (accent_color, google_docs)
 - [x] Skill file rewritten with identity, steps, success criteria, checklist
 
-### Phase 2 — Memory & Verification
+### Phase 2 — Memory & Verification (done)
 
-- [ ] Extend sidecar JSON with metric counts
-- [ ] Save HTML + data snapshot to active + history after each run
-- [ ] Add verification step: compare current vs previous, flag anomalies
-- [ ] Disconfirmation gate for silent data fetch failures
+- [x] Extend sidecar JSON with metric counts (generated_at, mode, days, per-team metrics, Slack stats)
+- [x] Add `--sidecar-output` flag to generate_report.py
+- [x] Skill steps 5-6 activated: verify against previous snapshot, save to active + history
+- [x] Disconfirmation gate: seek evidence report is wrong, flag anomalies with deltas
 
 ### Phase 3 — Computed Store
 

@@ -45,15 +45,25 @@ When data is missing, you report the gap explicitly. A report with a clearly lab
    ```
    Use the correct label: Daily → `[Daily]`, Weekly → `[Weekly] Team Summary – week of`, Weekend → `[Weekend]`.
 
-5. **(Phase 2) Verify against previous.** Read `mr-agent/active/latest-snapshot.json`. Compare key metrics against the current run's sidecar JSON (`/tmp/report_data.json`). Flag if:
-   - Any team has zero closed tickets when previous had >3 (possible data fetch failure)
-   - Total Slack messages dropped >80% vs previous (possible auth failure)
-   - Any section is missing entirely
-   - AI summaries contain "unavailable" (claude -p failed)
+5. **Verify against previous (disconfirmation gate).** Read `mr-agent/active/latest-snapshot.json` (the previous run's metrics). Read the current run's sidecar JSON (`/tmp/report_data.json`). Compare `metrics` and `slack` objects. Flag anomalies:
+   - Any team has zero closed tickets when previous had >3 → possible Jira fetch failure
+   - Total Slack messages dropped >80% vs previous → possible Slack auth failure
+   - AI summaries contain "unavailable" or "Not logged in" → `claude -p` auth failure
+   - A `metrics` key is missing entirely → data source failure
 
-   This is a disconfirmation gate: seek evidence that the report is *wrong*, not confirmation that it's right. If anomalies detected, add `[VERIFY]` prefix to the email subject and report specific deltas to the user.
+   Seek evidence that the report is *wrong*, not confirmation that it's right. If no previous snapshot exists (first run), skip comparison and note "no baseline — first run."
 
-6. **(Phase 2) Save snapshot.** Copy `/tmp/{mode}_report.html` to `mr-agent/active/latest-report.html`. Copy `/tmp/report_data.json` to `mr-agent/active/latest-snapshot.json`. Archive both to `mr-agent/history/YYYY-MM-DD-{mode}.html` and `.json`. Commit: `git add agent_brain/projects/mr-agent/ && git commit -m "report: {mode} {date}"`.
+   If anomalies detected: add `[VERIFY]` prefix to the email subject (step 4) and report specific deltas to the user before sending. Let the user decide whether to send anyway.
+
+6. **Save snapshot.** After sending (or user confirmation on anomalies):
+   ```bash
+   cp /tmp/{mode}_report.html agent_brain/projects/mr-agent/active/latest-report.html
+   cp /tmp/report_data.json agent_brain/projects/mr-agent/active/latest-snapshot.json
+   cp /tmp/{mode}_report.html agent_brain/projects/mr-agent/history/YYYY-MM-DD-{mode}.html
+   cp /tmp/report_data.json agent_brain/projects/mr-agent/history/YYYY-MM-DD-{mode}.json
+   git add agent_brain/projects/mr-agent/ && git commit -m "report: {mode} YYYY-MM-DD"
+   ```
+   History files are immutable — never overwrite an existing dated file. If re-running same mode on the same day, append a sequence number (e.g., `2026-06-21-daily-2.json`).
 
 7. **Confirm outcome.** Report: what mode was used, whether the report was generated and sent successfully, any warnings (degraded sections, missing data, anomalies flagged).
 
@@ -61,8 +71,9 @@ When data is missing, you report the gap explicitly. A report with a clearly lab
 
 - HTML report generated without errors (check stderr output from the script)
 - Email sent successfully via `gws gmail +send`
-- (Phase 2) Snapshot saved to active and history stores
-- (Phase 2) No anomalies flagged, or anomalies reported to user with specific deltas
+- Verification passed (no anomalies) or anomalies reported to user with specific deltas
+- Snapshot saved to active and history stores
+- History files committed to git
 
 ## Gotchas
 
@@ -70,7 +81,7 @@ When data is missing, you report the gap explicitly. A report with a clearly lab
 - `gws` token cache at `~/.config/gws/token_cache.json` can go stale. The script clears it at startup, but `gws gmail +send` uses its own cache — if email send fails with 403, clear the cache manually.
 - Jira API token "Avi2" expires Jun 27. If Jira sections are empty, check token expiry first.
 - Slack xoxc/xoxd tokens can expire without warning. If Slack section is degraded, verify tokens are still valid: `crontab -l | grep SLACK_XOXC_TOKEN`.
-- The script writes a sidecar JSON to `/tmp/report_data.json` — this is separate from the HTML output. Both are needed for Phase 2 verification.
+- The script writes a sidecar JSON to `/tmp/report_data.json` (or custom path via `--sidecar-output`). Contains `metrics` (per-team counts), `slack` (channel/message stats), and closed issue details. Both HTML and sidecar are needed for verification and history.
 - Jira search uses v3 POST (v2 was removed with HTTP 410). Changelog is fetched per-issue, not in bulk.
 
 ## Checklist
@@ -79,6 +90,7 @@ When data is missing, you report the gap explicitly. A report with a clearly lab
 - [ ] Team config loaded
 - [ ] Report generated (`generate_report.py` completed without errors)
 - [ ] Email sent
-- [ ] (Phase 2) Previous snapshot compared — anomalies checked
-- [ ] (Phase 2) Current snapshot saved to active + history
+- [ ] Previous snapshot compared — anomalies checked (or noted as first run)
+- [ ] Current snapshot saved to active + history
+- [ ] History committed to git
 - [ ] Outcome confirmed to user
