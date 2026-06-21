@@ -114,6 +114,14 @@ Mentioned during rollup demo as live demo (no recording).
 | Ian McLeod | (moderator/reviewer) | Cross-cutting observations on memory + harness |
 | Tomas Golembiovsky | (participant) | Raised memory instruction question |
 
+### 5. agent-forge — Meta-agent for Agent Bootstrapping (AAA) — Juanje Ojeda
+
+**URL:** https://gitlab.cee.redhat.com/automotive/ai/agents/common/agent-forge
+
+Shared via email (Jun 21, 2026). A meta-agent for bootstrapping and analyzing agents. Documents design principles for stateful process-oriented agents. Follows up on Juanje's rollup demo presentation (Initiative #2 above).
+
+**Status:** Repo shared, not yet reviewed in depth.
+
 ## Sources index
 
 | # | Source | Type | Access |
