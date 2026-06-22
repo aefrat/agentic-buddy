@@ -21,6 +21,7 @@ Resolved observations are moved to the bottom.
 - **2026-06-14:** "Check Slack activity inbox" — pull user's mentions and DMs, identify action items needing response, generate summary table. Complementary to channel scanning — channels show team activity, inbox shows what needs the user's attention. (seen: 1)
 - **2026-06-22:** "Person Slack activity lookup" — search all messages by a specific person across a time range. Steps: search API (`from:<username>`) → extract user ID → scan team channels with `conversations.history` + `oldest=` → check thread replies → check DMs. Distinct from channel scanning and inbox check. (seen: 1)
   - 2026-06-22: seen again — extended with @mention search (`<@USER_ID>`), prior-week baseline comparison, and multi-person batch mode (5 people in one session). Also productionized: added `STAKEHOLDERS` config + `render_stakeholder_slack_section()` to `generate_report.py`. (seen: 2)
+- **2026-06-22:** "Peer feedback question generator" — pull Jira activity + meeting/demo docs (via gws) + Red Hat Multiplier competencies → synthesize into evidence-grounded peer feedback questions for specific reviewers. Steps: identify tickets/epics, export demo docs, map interactions to find best reviewers, read competency framework for expected level, craft questions probing specific behaviors with evidence grounding. Applied for Juanje Ojeda AAA feedback (Ian McLeod as reviewer). (seen: 1)
 
 ## Rule candidates
 
@@ -28,6 +29,7 @@ Resolved observations are moved to the bottom.
 - **2026-06-11:** Before querying external systems, check if the data is already available in loaded context (files, earlier tool results). Only fetch what's genuinely missing. User stopped a redundant Jira fetch when data was already in the weekly report + prior query. (seen: 1)
 
 - **2026-06-16:** Don't assume gender from names — use neutral pronouns or ask when unsure. User corrected assumption about Sameera Kalgudi (male, not female). Explicit user correction. (seen: 1)
+- **2026-06-22:** Use gws CLI first for Google Workspace access (Drive, Docs, Sheets). Explicit user correction — attempted Python google-api-python-client to fetch a Google Doc, user said "Use google gws skill." Fast-tracked to memory (`feedback_gws-cli-first.md`). Covered by Rule 18 but the specific tool priority (gws CLI → raw API fallback) needed explicit capture. (seen: 1, fast-tracked)
 
 ## Concept candidates
 
