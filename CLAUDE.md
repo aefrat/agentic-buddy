@@ -57,10 +57,11 @@ Factual updates to Right now (changed dates, flipped statuses) are allowed mid-s
 
 ### Right now
 
-- **RC3 released.** Pipeline completed (Ozan announced). Errata/tagging work ongoing (Kanitha). ASIL CTC ran weekend Jun 19 — status unconfirmed. Z-stream is now the right target for kernel builds. Brew tag permissions filed (RHELBLD-18777 / RHELBLD-18778).
+- **RC3 released.** Errata/tagging work ongoing (Kanitha). ASIL CTC ran weekend Jun 19 — status unconfirmed. Z-stream is now the right target for kernel builds. Brew tag permissions filed (RHELBLD-18777 / RHELBLD-18778).
 - **CAT timeline: RHIVOS 2.0-Core CAT Jun 29-30**, content on CDN/ET ~Jun 26. One week out.
 - **Atlassian API token "Avi2" expires Jun 27.** Needs rotation this week.
-- **Roderick Kieley 1:1** — active. Doc "Roddie/Avi 1:1" has meetings on Jun 1 and Jun 11. 21 days into onboarding (started Jun 1).
+- **Hubert transition to RHAS/RAZ approved** (Jeff Ligon & Paul Wallrabe, Jun 18). Next: discuss timelines with Hubert, communicate plan to stakeholders.
+- **Roderick Kieley 1:1** — active. 21 days into onboarding (started Jun 1).
 
 ### Files
 
