@@ -67,6 +67,24 @@ Separate epic under same umbrella, owned by **Ian McLeod**. AI-powered defect tr
 
 **Cross-pollination:** Juanje's pipeline debugger patterns (Pi harness, agent-forge) are being adopted for the defect triage agent. The convergence point is agent-forge as the shared bootstrapping framework.
 
+## Slack evidence — agent in production (Jun 8–22)
+
+The pipeline debugger agent is **actively generating structured diagnosis reports** and posting them to **#alerts-auto-toolchain**. Juanje had 66 messages across 8 channels in this period (23 in alerts-auto-toolchain alone).
+
+**Diagnosis posts (agent-generated, posted by Juanje):**
+- **Jun 16 01:42** — ODCS unsigned packages (RHIVOS-2.0-Core nightly). Agent identified missing kernel signatures on 3 packages, linked to recurring pattern from Jun 3 incident, escalated.
+- **Jun 16–17** — Jumpstarter board timeouts (both RHIVOS-2.0 and 2.0-Core). Agent root-caused to recoveryinfo partition slot-trapping on Snapdragon Ride4 boards, recommended `dd` wipe, escalated to PitCrew.
+- **Jun 20** — Jumpstarter lease starvation. Agent traced all 7 exporters occupied to a Python 3.14 TMT cleanup crash leaking leases from Jun 18-19 failures. Recommended lease pool audit.
+
+**Agent cross-references in conversation:**
+- Jun 15 (gating channel): "I analysed with my agent (which has context for the error and the project) and it doesn't seem to be necessary" — used the agent for Gator MR analysis.
+- Jun 18: Follow-up on agent diagnosis — asked team about force-promoting nightlies since smoke tests passed despite pipeline failures.
+
+**Other activity:**
+- Shared agentic-buddy framework updates (DMs, Jun 11 & 15).
+- Shared Ian McLeod's FuSa agent demo recording (Jun 10) — built on Juanje's patterns.
+- RC3 release coordination (Jun 15) and Gator MR contributions (Jun 15–16).
+
 ## Open questions
 
 - VROOM-44415 vs VROOM-44418 appear to be duplicates (both "documentation for Poe-based pipeline debugger").
