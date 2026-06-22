@@ -32,7 +32,9 @@ _What the manager highlights when re-phrasing:_
 
 ## Avoid
 
-_Phrasings or patterns the manager has corrected:_
+- **Do not include AAA team work in ATC summaries.** The only AAA-related work that should appear is Juanje's individual contributions (he is cross-listed). All other AAA team activity must be excluded from the report entirely.
+
+_Other phrasings or patterns the manager has corrected:_
 - _e.g., "Don't use 'the team made progress on' — too vague"_
 - _e.g., "Don't repeat the ticket count — it's already in the metric cards"_
 
