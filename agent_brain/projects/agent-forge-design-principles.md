@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-06-21
-access_count: 1
+last_accessed: 2026-06-22
+access_count: 2
 created: 2026-06-21
 ---
 
@@ -59,5 +59,23 @@ agent-forge/
 │   └── fragments/         # Per-component annotated templates
 └── examples/              # Annotated extracts from production agents
 ```
+
+## Prior art analysis (2026-06-22)
+
+Research traced all 7 principles across academic papers, Anthropic docs, frameworks, and blogs. **Overall: practitioner synthesis with novel terminology.**
+
+| Principle | Origin | Key source |
+|-----------|--------|------------|
+| Identity & Character (80/20) | Anthropic's thesis; ratio is Juanje's | "Claude's Character" (Jun 2024), "Teaching Claude Why" (May 2026) |
+| Instruction Budget (~150-200) | Boris Cherny (Claude Code) | HumanLayer blog; IFScale (NeurIPS 2025) |
+| Progressive Disclosure | Anthropic Agent Skills (Oct 2025) + UX (Nielsen 2006) | agentskills.io, Corpus2Skill (Apr 2026) |
+| Tool Output > Instructions | Known finding, reframed as design principle | JetBrains Koog (2025), arXiv:2606.14476 |
+| Skill Design / Procedures | Agent Skills pattern | agentskills.io, SoK (arXiv:2602.20867) |
+| Memory Architecture (4-store) | Cognitive science + CoALA (TMLR 2024) | Tulving (1972), Park et al. (UIST 2023) |
+| Permissions as Design | Deny-by-default is consensus | OWASP, Claude Code, Microsoft AGT |
+
+**Novel coinages (zero public results):** "disconfirmation gate," "computed store," "skill-permission parity," "channel reliability," "completion checklist" as recency exploit.
+
+**Unsubstantiated claims:** "uniform degradation" (actually U-shaped per Liu et al.), "file nav > RAG up to ~1000 entries" (no source), instruction budget attributed to Boris Cherny not Juanje.
 
 > Related: [RHIVOS AI Agents & Agentic SDLC](rhivos-ai-agents-agentic-sdlc.md) — Landscape of all AI agent initiatives in the automotive org. Agent-forge is Initiative #5.
