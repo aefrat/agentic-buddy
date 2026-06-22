@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-06-22 | Duffy / AIB CI infrastructure research — cross-referenced Slack message with ATC codebase docs, confirmed AIB uses Duffy bare-metal (CentOS CI), mapped upstream vs downstream CI boundary | `9e4a9e7f-de42-4002-a4eb-68ba89e3f5af` |
 | 2026-06-22 | Weekly task review, auto-kernel gating action item closed (Petr Sabata) | `85ed1fc2-a3ab-4c31-8783-324386e194b3` |
 | 2026-06-22 | AUTOBU-1085 deep-dive — infra reliability automation project, Juanje Slack activity, AI policy compliance for Pi harness, pipeline debugger local setup | `54b8e328-ea56-4b99-8ddf-462b597756b5` |
 | 2026-06-22 | Stakeholder Slack reports (Jaime/Shawn/Jeff/Paul/Petr), added stakeholder section to manager report, generated weekend report | `e1d884ac-9f25-48ea-9890-aa223b3cde03` |
