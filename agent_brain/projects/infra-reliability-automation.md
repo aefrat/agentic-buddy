@@ -90,3 +90,15 @@ The pipeline debugger agent is **actively generating structured diagnosis report
 - VROOM-44415 vs VROOM-44418 appear to be duplicates (both "documentation for Poe-based pipeline debugger").
 - Which PoC version gets deployed for defect triage auto-commenting? (discussed Jun 16, decision pending — Ian McLeod leading selection)
 - Juanje mentioned a QE agent PoC — is that a new ticket or covered under existing defect triage work?
+
+## AI policy compliance (Jun 22 analysis)
+
+**Pi harness:** MIT-licensed, runs locally — qualifies under Red Hat's **Open Source AI Technologies** blanket approval (no separate AI Assessment needed). Not explicitly listed on the Approved AI Tools page, but covered by the general clause.
+
+**Model provider:** Gemini API — separately approved for code assistant use cases. Anthropic/Claude also approved (Claude Code).
+
+**Conditions from the policy (both must be met):**
+1. *"No personal, confidential, customer/partner, or third-party proprietary data"* — **Needs verification.** The pipeline debugger ingests internal CI/CD pipeline logs (gitlab.cee), GitLab artifacts, Testing Farm results, and Slack messages from internal channels. Whether internal CI pipeline logs and infra data qualify as "confidential" under this policy is ambiguous. **Action: confirm with Velocity AI team** (via Red Hat Hub or #help-rh-code-assist) that internal pipeline/CI data is acceptable input for open source AI tools.
+2. *"Review, validate, and test all output"* — **Met.** Agent runs in human-assisted mode. Juanje reviews every diagnosis before posting to #alerts-auto-toolchain. No autonomous posting yet (Tier 3 roadmap).
+
+**Risk if the team moves to Tier 3 (autonomous mode):** Condition (2) would no longer be met if the agent posts diagnoses without human review. That would likely require an AI Assessment (AIA) submission.
