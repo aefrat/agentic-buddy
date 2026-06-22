@@ -73,6 +73,7 @@ Directories with an `index.md` have a content map — read it first to decide wh
 
 - [User workspace](user/) — action items, documents, drafts, lists. The user can also add files here directly for the agent to read and process.
 - [AI Sessions](user/ai-sessions.md) — Claude (and other AI tool) session IDs by working directory and date. Read when the user asks to resume a session or needs a past session ID.
+- [Local agents](user/local-agents.md) — AI agents available on this workstation with repo paths, setup notes, and how to run. Read when the user asks about available agents, wants to run an agent, or adds a new one.
 - [User profile](agent_brain/identity/USER.md) — context, preferences, communication style.
 - [Agent guidelines](agent_brain/identity/SOUL.md) — operating values, limits, interaction style.
 - [Projects](agent_brain/projects/) — project history, context, past decisions.
