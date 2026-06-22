@@ -19,6 +19,7 @@ Resolved observations are moved to the bottom.
 - ~~**2026-06-11:** "Scan Slack channel and generate project update"~~ → **resolved 2026-06-14:** created skill `agent_brain/skills/scan-slack-channel.md` (seen 3x, adapted to use Slack MCP tools per Rule 18)
 - **2026-06-11:** "Search Confluence for topic research" — use Confluence REST API (`wiki/rest/api/search?cql=...`) with .netrc auth to search across spaces, read full page content, extract and synthesize findings. Used to research OSCI CI Mediator across RHELPLAN, IVOS, and Red Hat Catalog spaces. Reusable for any Confluence research request. (seen: 1)
 - **2026-06-14:** "Check Slack activity inbox" — pull user's mentions and DMs, identify action items needing response, generate summary table. Complementary to channel scanning — channels show team activity, inbox shows what needs the user's attention. (seen: 1)
+- **2026-06-22:** "Person Slack activity lookup" — search all messages by a specific person across a time range. Steps: search API (`from:<username>`) → extract user ID → scan team channels with `conversations.history` + `oldest=` → check thread replies → check DMs. Distinct from channel scanning and inbox check. (seen: 1)
 
 ## Rule candidates
 
@@ -49,6 +50,7 @@ Resolved observations are moved to the bottom.
 - **2026-06-21:** Google Docs `replaceAllText` uses substring matching — "Software Engineer" matches inside "Senior Software Engineer". When doing targeted text replacements, qualify with surrounding context (e.g., `"Name | Title"`) to prevent double-prefixing. Tested: no garbling occurred in this batch because title strings appeared only once per doc in non-overlapping positions. (seen: 1)
 - **2026-06-21:** "Behavioral evidence vs deliverable evidence" — when evaluating how someone works (behaviors), Slack interaction patterns (tone, helpfulness, thread participation, cross-team engagement) are better evidence than ticket/MR metrics. Deliverable-based behavioral claims are unfalsifiable and interchangeable between people. Applied: QC Section B methodology rewrite from deliverable-based to Slack-behavioral. (seen: 1)
 - **2026-06-21:** "Accumulation mechanism for periodic reports" — daily/weekly reports should extract and accumulate signals into a dedicated file for quarterly consumption. Applied: manager report → `multiplier-observations.md` → quarterly QC Section B. Pattern: "frequent captures → accumulation file → periodic synthesis." (seen: 1)
+- **2026-06-22:** Slack search API `after:YYYY-MM-DD` date filter returns 0 results with xoxc tokens even when messages exist. Workaround: omit date filter, post-filter by timestamp in code. The `conversations.history` API `oldest=` unix timestamp works correctly. (seen: 1)
 
 ## Structure candidates
 

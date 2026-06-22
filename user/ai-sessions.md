@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-06-22 | Kanitha Chim Slack activity lookup (Jun 18–22), Slack API date filter quirk discovered | `9abed11c-455d-458d-9907-ebd78633b382` |
 | 2026-06-22 | Brew tag permissions status check (RHELBLD-18777/18778 Jira review), Slack channel scan | `9ec02c50-3aac-4ed7-acce-1e2da1e39a55` |
 | 2026-06-22 | Monday check-in — task list review, manager report cron confirmed working (not Vertex), ran daily report, Hubert RHAS transition captured (Jun 18 meeting), mabanas backfill update (Aman Vishwakarma) | `71ea8d9a-62f3-4264-ad17-3a210c0727b4` |
 | 2026-06-21 | QC Q2 — full cycle + refinement: data, drafts, Google Docs, HTML, titles, proficiency, Slack-behavioral Section B, How-summary, summary-only HTML with jump nav + details links, skill persisted (3 outputs) | `9cd1a1cd-32ec-4a62-be9a-4472dcb69776` |
