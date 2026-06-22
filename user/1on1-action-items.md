@@ -7,7 +7,7 @@ Last processed: 2026-06-18
 - [ ] **Kanitha:** Check with Hubert if he can proceed with CAIB integration from the RHAS side
 - [ ] **Kanitha:** Grab team members for distribution work — cross-training is the only way they learn
 - [ ] **Hubert:** Pass over Konflux contacts to the team (Juanje/Ozan, Bella can assist)
-- [ ] **Avi:** Follow up on mabanas backfill — intern converting to full time July 18 (from Christine Freitas)
+- [x] **Avi:** Follow up on mabanas backfill — **done.** Aman Vishwakarma (ASE, based in Pune, India) converting from intern to full-time, joining ATC mid-to-end July (~Jul 18, not finalized). Manager: Christine Freitas. Onboarding doc: https://docs.google.com/document/d/1v5kV4Yfgjdzov0NXdezdcGKswzhEovg02wlJPnP-P8I/edit — Avi provided inputs via ATC onboarding doc: https://docs.google.com/document/d/1_JkwuorVcULjAQVBXKSu7ukfezmoVKtwGKY5LZGclp0/edit
 
 ## Muhamad (meeting: Jun 17, 2026)
 - [ ] **Muhamad:** Fill and submit Quarterly Connection by July 10
@@ -15,7 +15,9 @@ Last processed: 2026-06-18
 ## Jaime (meeting: Jun 16, 2026)
 - [ ] **Avi:** Check Physical AI list (currently part of AAA team) as an option for Hubert
 - [ ] **Avi:** Talk to Alberto Ruiz about auto-kernel package gating
-- [ ] **Avi:** Meeting set up with Jeff Ligon and Paul Wallrabe to discuss Hubert's move options
+- [x] **Avi:** Meeting set up with Jeff Ligon and Paul Wallrabe to discuss Hubert's move options — **done Jun 18.** Transition to RHAS/RAZ approved. Next: discuss timelines with Hubert, communicate plan to stakeholders.
+- [ ] **Avi:** Discuss transition timelines with Hubert (from Jun 18 meeting)
+- [ ] **Avi:** Communicate Hubert's final transition plan and timeline to all stakeholders
 
 ## Bella (meeting: Jun 16, 2026)
 - [ ] **Bella:** Fill and submit Quarterly Connection by July 10
@@ -33,7 +35,7 @@ Last processed: 2026-06-18
 - [ ] **Hubert:** Write transfer of knowledge plan (due next week from Jun 10)
 - [ ] **Hubert:** Move ownerships, credentials of focus areas to Avi, Eitan Raviv, and Ozan Unsal
 - [ ] **Hubert:** Hand off all projects he was involved with
-- [ ] **Avi:** Ask Jaime what options exist for Hubert's hard cut-off move (RHAS team preferred)
+- [x] **Avi:** Ask Jaime what options exist for Hubert's hard cut-off move (RHAS team preferred) — **resolved Jun 18.** Jeff & Paul approved the move.
 
 ## Roni (meeting: Jun 9, 2026)
 - No explicit action items (brief meeting — RC2 TC work)

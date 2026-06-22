@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-06-22 | Monday check-in — task list review, manager report cron confirmed working (not Vertex), ran daily report, Hubert RHAS transition captured (Jun 18 meeting), mabanas backfill update (Aman Vishwakarma) | `71ea8d9a-62f3-4264-ad17-3a210c0727b4` |
 | 2026-06-21 | QC Q2 — full cycle + refinement: data, drafts, Google Docs, HTML, titles, proficiency, Slack-behavioral Section B, How-summary, summary-only HTML with jump nav + details links, skill persisted (3 outputs) | `9cd1a1cd-32ec-4a62-be9a-4472dcb69776` |
 | 2026-06-21 | Weekend sweep — email/Slack scan, all 3 reports generated, `--mode weekend` added, manager-report pushed to GitLab, README, agent-forge deep study + project file, manager report agent transformation (4-phase: harness/identity, memory/verification, computed store, patterns/learning) | `0d22284f-77ce-4ffb-9180-4275e1205ba9` |
 | 2026-06-18 | Built process-1on1s skill (agentskills.io format), ran with 10 parallel subagents, extracted 28 action items from 1:1 docs | `ffbd4cff-3997-4466-a828-808efc69014e` |

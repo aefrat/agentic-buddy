@@ -61,7 +61,6 @@ Factual updates to Right now (changed dates, flipped statuses) are allowed mid-s
 - **CAT timeline: RHIVOS 2.0-Core CAT Jun 29-30**, content on CDN/ET ~Jun 26. One week out.
 - **Atlassian API token "Avi2" expires Jun 27.** Needs rotation this week.
 - **Roderick Kieley 1:1** — active. Doc "Roddie/Avi 1:1" has meetings on Jun 1 and Jun 11. 21 days into onboarding (started Jun 1).
-- **Manager report cron auth broken** — `claude -p` in cron lacks Vertex AI env vars. AI-generated sections (Summary, Channel Digest) show "Not logged in." Fix reverted June 16; needs resolution.
 
 ### Files
 
