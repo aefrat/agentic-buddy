@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-06-22 | Weekly task review, auto-kernel gating action item closed (Petr Sabata) | `85ed1fc2-a3ab-4c31-8783-324386e194b3` |
 | 2026-06-22 | AUTOBU-1085 deep-dive — infra reliability automation project, Juanje Slack activity, AI policy compliance for Pi harness, pipeline debugger local setup | `54b8e328-ea56-4b99-8ddf-462b597756b5` |
 | 2026-06-22 | Stakeholder Slack reports (Jaime/Shawn/Jeff/Paul/Petr), added stakeholder section to manager report, generated weekend report | `e1d884ac-9f25-48ea-9890-aa223b3cde03` |
 | 2026-06-22 | Kanitha Chim Slack activity lookup (Jun 18–22), Slack API date filter quirk discovered | `9abed11c-455d-458d-9907-ebd78633b382` |
