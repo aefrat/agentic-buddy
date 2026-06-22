@@ -44,8 +44,31 @@ AI agents for infrastructure health, pipeline failure monitoring, diagnostics, a
 - **Consolidation tooling:** `bin/find-uncaptured` (triage-based incident cross-referencing) + `bin/validate-ki` (known-issues structural health checks)
 - **Pi permission gate:** https://www.npmjs.com/package/pi-permission-gate
 
+## Related: Defect Triage Agent (VROOM-41482)
+
+Separate epic under same umbrella, owned by **Ian McLeod**. AI-powered defect triage with auto-generated investigation comments on inbound bugs.
+
+**Status:** In Progress. Basic pipeline shell done (VROOM-41483, Verified). MVP comment generation in progress (VROOM-41484, Ian McLeod).
+
+**Children (9 tasks):**
+| Key | Summary | Status | Assignee |
+|-----|---------|--------|----------|
+| VROOM-41483 | Basic defect triage agent pipeline shell | **Verified** (Done) | Ian McLeod |
+| VROOM-41484 | MVP comment functionality | **In Progress** | Ian McLeod |
+| VROOM-44412 | Integrate defect triage agent with CI/CD pipeline | New | — |
+| VROOM-44413 | Support multiple test frameworks | New | — |
+| VROOM-44414 | Optimize token usage in bootstrapping sessions | New | — |
+| VROOM-44417 | Support for analyzing flaky tests | New | — |
+| VROOM-44419 | Complete remaining bootstrapping sessions for full codebase coverage | New | — |
+| VROOM-44489 | Review/validate generated KB from bootstrapped defect triage data | New | Ian McLeod |
+| VROOM-44490 | Strict write protection for operational vs consolidation modes | New | — |
+
+**Jun 16 consolidation:** 5 duplicate tickets (40958, 4112, 41113, 41114, 41115) closed in favor of 41482. Team needs to select finalized PoC for deployment. Juanje plans a QE agent PoC using same patterns.
+
+**Cross-pollination:** Juanje's pipeline debugger patterns (Pi harness, agent-forge) are being adopted for the defect triage agent. The convergence point is agent-forge as the shared bootstrapping framework.
+
 ## Open questions
 
 - VROOM-44415 vs VROOM-44418 appear to be duplicates (both "documentation for Poe-based pipeline debugger").
-- Defect triage agent (VROOM-44416) — which PoC version will be selected for deployment? (discussed Jun 16, decision pending)
-- What's the relationship to VROOM-41482 (the consolidated defect triage ticket)?
+- Which PoC version gets deployed for defect triage auto-commenting? (discussed Jun 16, decision pending — Ian McLeod leading selection)
+- Juanje mentioned a QE agent PoC — is that a new ticket or covered under existing defect triage work?
