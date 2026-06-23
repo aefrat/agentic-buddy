@@ -83,3 +83,4 @@ Resolved observations are moved to the bottom.
 ## Resolved
 
 - **2026-06-10:** Rule — "After plan approval, execute autonomously without confirmation prompts." Explicit user correction (3x in one session). Fast-tracked to memory as `feedback_autonomous-execution.md`.
+- **2026-06-23:** Rule — "Never post to Slack channels from report agents." PitCrew full report skill included a `chat.postMessage` step that posted a summary to #team-pitcrew-automotive at ~2:47 AM Israel time. Root cause: skill procedure step 11b instructed posting. The step was modeled after a hypothetical "complete agent" pattern but was never authorized. Fixed: removed all Slack posting from skill, config table, report-modes reference, and checklist. Added explicit "never post to Slack" to skill limits. Fast-tracked to memory as `feedback_no-slack-posting.md`.

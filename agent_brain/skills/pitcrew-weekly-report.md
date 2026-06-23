@@ -20,7 +20,7 @@ You are the operational briefing for PitCrew/RHAS. You compress Jira epics, spri
 
 When data is incomplete, you report the gap. A report that says "Slack data unavailable — token may have expired" is more useful than one that silently drops the Slack Digest section.
 
-**Limits:** Do not modify Jira tickets. Do not send reports to anyone other than `aefrat@redhat.com`. Do not post Slack summaries to channels other than `#team-pitcrew-automotive`. Do not fabricate Jira statuses, sprint metrics, or Slack activity. Do not modify Architecture or Strategic sections in project files — those are human-authored.
+**Limits:** Do not modify Jira tickets. Do not send reports to anyone other than `aefrat@redhat.com`. **Never post anything to Slack channels** — the report is email-only; Slack is a read-only data source for this skill. Do not fabricate Jira statuses, sprint metrics, or Slack activity. Do not modify Architecture or Strategic sections in project files — those are human-authored.
 
 ## Configuration
 
@@ -28,7 +28,6 @@ When data is incomplete, you report the gap. A report that says "Slack data unav
 |-----------|-------|-------|
 | Jira project | `PITCREW` | Board 4323 |
 | Email recipient | `aefrat@redhat.com` | |
-| Slack summary channel | `#team-pitcrew-automotive` | |
 | CSS reference | `user/reports/pitcrew-full-report-2026-06-01.html` lines 7–95 | Full CSS block |
 | Active store | `agent_brain/projects/pitcrew-agent/active/` | Overwritten each run |
 | History store | `agent_brain/projects/pitcrew-agent/history/` | Immutable |
@@ -166,12 +165,9 @@ gws gmail +send --to aefrat@redhat.com \
 ```
 If disconfirmation gate flagged anomalies, prefix subject with `[VERIFY]`.
 
-**b. Post Slack summary:**
-Use bash curl to post to `#team-pitcrew-automotive`. Content: executive summary + sprint health + top risks. Keep under 2000 chars (daily: under 500).
+**b. Save snapshot JSON** to `/tmp/pitcrew-snapshot-YYYY-MM-DD.json` with epic statuses, sprint health, counts, anomalies.
 
-**c. Save snapshot JSON** to `/tmp/pitcrew-snapshot-YYYY-MM-DD.json` with epic statuses, sprint health, counts, anomalies.
-
-**d. Save to stores:**
+**c. Save to stores:**
 ```bash
 REPORT_DATE=$(date +%Y-%m-%d)
 MODE=weekly
@@ -185,9 +181,9 @@ cp /tmp/pitcrew-snapshot-${REPORT_DATE}.json agent_brain/projects/pitcrew-agent/
 cp /tmp/pitcrew-${MODE}-report-${REPORT_DATE}.html user/reports/pitcrew-${MODE}-report-${REPORT_DATE}.html
 ```
 
-**e. Update strategic cache** if refreshed in step 4.
+**d. Update strategic cache** if refreshed in step 4.
 
-**f. Git commit:**
+**e. Git commit:**
 ```bash
 git add agent_brain/projects/pitcrew-agent/ user/reports/pitcrew-*-report-*.html
 git commit -m "pitcrew-report: ${MODE} $(date +%Y-%m-%d)"
@@ -221,7 +217,6 @@ Confirm to the user (or log, in cron mode):
 - [ ] AI synthesis complete (exec summary + alignment + looking ahead per mode)
 - [ ] HTML generated with all mode-appropriate sections
 - [ ] Email sent (attachment mode)
-- [ ] Slack summary posted
 - [ ] Active store updated
 - [ ] History store updated (dated + mode suffix, immutable)
 - [ ] User reports copy saved

@@ -24,8 +24,6 @@ Sprint-focused execution snapshot. Fast to generate, low noise.
 
 **Subject line:** `[PitCrew Daily] RHAS Sprint Status — YYYY-MM-DD`
 
-**Slack post:** Sprint health one-liner + any epic changes. Under 500 chars.
-
 ## Weekly (default)
 
 Full operational report with strategic alignment. Primary cadence.
@@ -47,8 +45,6 @@ Full operational report with strategic alignment. Primary cadence.
 
 **Subject line:** `[PitCrew Weekly] RHAS Status — week of YYYY-MM-DD`
 
-**Slack post:** Exec summary + sprint health + top 3 risks. Under 2000 chars.
-
 ## Full
 
 Weekly + Slack Digest. Bi-weekly or on demand.
@@ -57,8 +53,6 @@ Weekly + Slack Digest. Bi-weekly or on demand.
 - Slack Digest (two-column: #team-pitcrew-automotive + #forum-jumpstarter, 7-day window)
 
 **Subject line:** `[PitCrew Full] RHAS Status — YYYY-MM-DD`
-
-**Slack post:** Same as weekly.
 
 ## Mode selection logic
 
