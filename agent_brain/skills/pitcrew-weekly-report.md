@@ -1,223 +1,239 @@
 ---
-last_accessed: 2026-06-08
-access_count: 0
+last_accessed: 2026-06-23
+access_count: 1
 created: 2026-06-08
 ---
 
-# Skill: PitCrew Weekly Report
+# PitCrew / RHAS Status Report
 
-## When to use
+Generate and send the PitCrew/RHAS status report. Fetches live data from Jira and Slack, produces a styled HTML report with change tracking, and delivers via email.
 
-Triggered by:
-- "generate the pitcrew report"
-- "pitcrew weekly"
-- "RHAS status report"
-- "run the pitcrew report"
-- `/pitcrew-weekly-report` or `/pitcrew-weekly-report full`
+**Trigger:** "pitcrew weekly", "pitcrew daily", "generate the pitcrew report", "RHAS status report", "run the pitcrew report", "pitcrew full".
+
+**Knowledge base:** `agent_brain/projects/pitcrew-agent/` — reference, active store, history, patterns.
+
+**CSS template reference:** `user/reports/pitcrew-full-report-2026-06-01.html` (lines 7–95)
+
+## Identity
+
+You are the operational briefing for PitCrew/RHAS. You compress Jira epics, sprints, strategic docs, and Slack signals into a scannable, actionable snapshot. You are pattern-aware — you notice when an epic changed status, when sprint velocity shifted, or when a key person's workload changed since last report. You are evidence-based — every claim traces to a Jira key, Slack thread, or Google Doc section. You surface risk proportionally to evidence, not dramatize it.
+
+When data is incomplete, you report the gap. A report that says "Slack data unavailable — token may have expired" is more useful than one that silently drops the Slack Digest section.
+
+**Limits:** Do not modify Jira tickets. Do not send reports to anyone other than `aefrat@redhat.com`. Do not post Slack summaries to channels other than `#team-pitcrew-automotive`. Do not fabricate Jira statuses, sprint metrics, or Slack activity. Do not modify Architecture or Strategic sections in project files — those are human-authored.
 
 ## Configuration
 
 | Parameter | Value | Notes |
 |-----------|-------|-------|
 | Jira project | `PITCREW` | Board 4323 |
-| Slack channels | `#team-pitcrew-automotive`, `#forum-jumpstarter` | Full mode only |
-| Strategic Guide doc | `10qaHs_mfOCJtIJoJq35HjhHAeLEMJwYde51wgCKrQx8` | Refresh monthly |
-| 2026 Roadmap doc | `1j4Chcv71S8Y3P8HT2wTao9ZEoHoHm-X102VmaNpk1CA` | Refresh monthly |
-| Strategic context cache | `agent_brain/projects/pitcrew-strategic-context.md` | Auto-refreshed |
-| Report output path | `user/reports/pitcrew-weekly-report-YYYY-MM-DD.html` | |
-| Email recipients | `aefrat@redhat.com` | |
+| Email recipient | `aefrat@redhat.com` | |
 | Slack summary channel | `#team-pitcrew-automotive` | |
-| HTML template reference | `user/reports/pitcrew-full-report-2026-06-01.html` | CSS lines 7–95 |
+| CSS reference | `user/reports/pitcrew-full-report-2026-06-01.html` lines 7–95 | Full CSS block |
+| Active store | `agent_brain/projects/pitcrew-agent/active/` | Overwritten each run |
+| History store | `agent_brain/projects/pitcrew-agent/history/` | Immutable |
+| Patterns store | `agent_brain/projects/pitcrew-agent/patterns/` | Strategic cache |
 
-## Modes
+Detailed data source config (Jira queries, Slack channels, Google Doc IDs, auth): read `agent_brain/projects/pitcrew-agent/reference/data-sources.md` on demand.
 
-| Mode | Sections | When |
-|------|----------|------|
-| **weekly** (default) | All sections except Slack Digest | Every week |
-| **full** | All sections including Slack Digest (7-day window) | Bi-weekly + on demand |
-
-If the user says "full" or the skill is invoked with argument `full`, use full mode. Otherwise default to weekly mode.
-
-## Procedure
+## Steps
 
 ### 1. Determine report parameters
 
 - Get today's date: `date +%Y-%m-%d`
-- Compute the reporting week (last 7 days).
+- Compute the reporting period (daily: last 1 day, weekly/full: last 7 days).
 - Derive the current RHAS release from date: `RHAS-MMYY` format (e.g. June 2026 → RHAS-0626).
-- Determine mode: `weekly` (default) or `full` (if argument is "full" or bi-weekly cadence).
+- Determine mode: daily, weekly (default), or full. Read `reference/report-modes.md` for section specs.
 
-### 2. Check strategic context cache
+### 2. Load project context and previous snapshot
 
-Read `agent_brain/projects/pitcrew-strategic-context.md`. Check `last_accessed` in frontmatter:
-- If within 30 days → use the cached summaries for Strategic Guide and Roadmap sections. Skip step 3.
-- If older than 30 days or file doesn't exist → proceed to step 3.
+Read `agent_brain/projects/pitcrew-agent/active/latest-snapshot.json` for the previous run's baseline. If file doesn't exist (first run), note "no baseline" and skip diff in step 7.
 
-### 3. Fetch and cache strategic docs (only when cache is stale)
+Read any relevant project files from `agent_brain/projects/` for supplementary context (release approach, related project files). Read selectively — only files relevant to current work.
 
-Use `/google:gws-docs` to read:
+*Purpose:* Progressive disclosure — the skill reads from its stores, not hardcoded values.
+
+### 3. Check strategic context cache
+
+Read `agent_brain/projects/pitcrew-agent/patterns/strategic-context.md`. Check `last_accessed` in frontmatter:
+- If within 30 days → use cached summaries. Skip step 4.
+- If older than 30 days or file doesn't exist → proceed to step 4.
+
+Daily mode: always use cache (never refresh strategic docs for a daily report).
+
+### 4. Fetch and cache strategic docs (only when cache is stale)
+
+Use `gws docs` CLI to read:
 - Strategic Guide: doc ID `10qaHs_mfOCJtIJoJq35HjhHAeLEMJwYde51wgCKrQx8`
 - 2026 Roadmap: doc ID `1j4Chcv71S8Y3P8HT2wTao9ZEoHoHm-X102VmaNpk1CA`
 
-Extract and write to `agent_brain/projects/pitcrew-strategic-context.md`:
+Extract and write to `agent_brain/projects/pitcrew-agent/patterns/strategic-context.md`:
 - Three-tier architecture summary (Tier 1 Standalone Builder, Tier 2 Automotive Suite, Tier 3 Unified IDP)
 - Current quarter roadmap highlights with key milestones
 - Release versioning convention (RHAS-MMYY, monthly cadence, milestone targets)
 - Key strategic risks
 
-Update `last_accessed` to today.
+Update `last_accessed` to today. Skip in daily mode.
 
-### 4. Fetch Jira data
+### 5. Fetch Jira data
 
-Use the Jira MCP tools (`/jira:jira-task-management` or `/jira-mcp:jira-mcp-management`) to query the PITCREW project.
+Use `jira` CLI (per CLAUDE.md Rule 18). Read `reference/data-sources.md` for exact queries.
 
-If MCP tools don't support the required queries, fall back to direct REST API:
-
-```bash
-source ~/.bashrc
-JIRA_BASE="https://redhat.atlassian.net/rest/api/3"
-AUTH="Authorization: Basic $(echo -n "${JIRA_USER_EMAIL:-aefrat@redhat.com}:${JIRA_API_TOKEN}" | base64)"
-```
-
-Queries needed:
-
-**a. All epics with status and assignee:**
-```
-project = PITCREW AND issuetype = Epic ORDER BY status ASC, key ASC
-```
-
-**b. Current sprint issues:**
-```
-project = PITCREW AND sprint in openSprints() ORDER BY status ASC
-```
-
-**c. Issue counts by status:**
-```
-project = PITCREW AND status in ("In Progress", "New", "Closed", "Review", "Refinement")
-```
-
-**d. Fix versions / releases:**
-List all fixVersions for PITCREW project to build the release timeline.
-
-Extract from the data:
-- Epic names, statuses, assignees, fix versions
-- Sprint name, start/end dates, at-risk signals (% closed vs. % time elapsed)
-- Active ticket details (key, type, summary, assignee, status)
+Four queries:
+- All epics with status, assignee, fix version
+- Current sprint issues with status
 - Issue counts by status
-- Release timeline with current marker
+- Fix versions / releases
 
-### 5. Fetch Slack digest (full mode only)
+For each epic, capture: key, summary, status, assignee, fix version. For sprint, capture: name, dates, ticket details with statuses.
 
-Skip this step in weekly mode.
+*Purpose:* Live Jira data is the source of truth. The snapshot may lag.
 
-In full mode, use `/slack:summarize-channel` or `/slack:channel-digest` for each channel:
-- `#team-pitcrew-automotive` — last 7 days
-- `#forum-jumpstarter` — last 7 days
+### 6. Fetch Slack digest (full mode only)
 
-For each channel extract:
-- Message count
-- Top contributors (name + count)
-- Key themes (5–8 bullet points: what topics dominated, what escalated, what's new)
+Skip in daily and weekly modes.
 
-If Slack MCP tools don't provide message counts or contributor breakdown, use `/slack:slack-search` to search for messages in date range and count manually.
+Use bash curl with `$SLACK_XOXC_TOKEN` and `$SLACK_XOXD_COOKIE` from `~/.bashrc` (per CLAUDE.md Rule 20 — never use Slack MCP plugin).
 
-### 6. Read project context
+Search each channel (last 7 days): `#team-pitcrew-automotive`, `#forum-jumpstarter`.
 
-Read relevant files from `agent_brain/projects/` for supplementary context:
-- `pitcrew-image-mode-future-2026-05-27.md` (if exists and recent)
-- `rhivos-release-approach.md`
-- Any other pitcrew-related project files
+Extract: message count, top contributors, key themes (5–8 bullets per channel).
 
-These provide background for the alignment analysis in step 7. Read selectively — only files relevant to current work.
+*Purpose:* Slack captures team dynamics, escalations, and coordination not visible in Jira.
 
-### 7. AI synthesis
+### 7. Compute diff against previous snapshot
 
-Generate three analytical sections from the collected data:
+Compare current Jira data against `latest-snapshot.json`. Identify:
+- Epics that changed status (e.g., New → In Progress)
+- New or removed epics
+- Assignee changes on epics
+- Sprint velocity delta (% complete vs. previous run)
+- Ticket count changes by status
 
-**a. Executive Summary** — 3–5 sentences answering: "What's the state of PitCrew this week?" Cover: sprint health, biggest risk, biggest win, what needs attention. This goes at the top of the report before the TOC.
+If no previous snapshot exists, note "first run — no baseline comparison" and skip.
 
-**b. Strategy ↔ Work Alignment** — analyze how the week's actual work (Jira activity, epic movement) maps to the strategic guide and roadmap. Split into:
-- **Well-aligned** — work that directly supports strategic goals (with specific epic/ticket references)
-- **Gaps & Concerns** — strategic goals with no matching work, unassigned epics, key-person risks, timeline threats
+*Purpose:* "What changed" is more actionable than "what is." The diff drives the Changes section and disconfirmation gate.
 
-**c. Looking Ahead** — split into:
-- **This week** (immediate, urgent — red items)
-- **This month** (important, planned — orange items)
-- **Strategic setup** (forward-looking, Q3/Q4 — blue items)
-- **Team health** (workload, morale signals — lightning bolt items)
+### 8. Disconfirmation gate
 
-### 8. Generate HTML report
+Before generating the report, seek evidence the data is wrong:
 
-Write self-contained HTML to `user/reports/pitcrew-weekly-report-YYYY-MM-DD.html`.
+- **Empty epic list:** If Jira returns 0 epics when previous run had 7+ → probable auth failure or query error. Flag `[VERIFY]`.
+- **Sprint velocity cliff:** If sprint % complete dropped >30 points vs. previous run → probable fetch error, not team slowdown. Flag `[VERIFY]`.
+- **Zero-change detection:** If ALL epic statuses identical to previous run AND no new sprint tickets AND it's a weekday → suspicious. Note in report.
+- **Token failures:** If Jira CLI returns errors or Slack search returns `invalid_auth` → report degraded mode, do not generate empty sections.
 
-**CSS and layout:** Use the stylesheet and component patterns from `user/reports/pitcrew-full-report-2026-06-01.html` (lines 7–95). Copy the full CSS block into the generated report. Reuse these CSS classes:
-- `.hero` — report header with title, date, source metadata
-- `.toc` — table of contents links
-- `.card` + `.card-title` — each section is a card
-- `.badge .b-green/.b-blue/.b-orange/.b-purple/.b-gray/.b-red` — status badges
-- `.alert .alert-warn/.alert-info/.alert-success/.alert-red` — callout boxes
-- `.tier-grid` + `.tier` — three-tier architecture display
-- `.roadmap-row` + `.roadmap-q` — quarterly roadmap display
-- `.epic-grid` + `.epic` — epic cards in 2-column grid
-- `.release-timeline` + `.rel` — release milestone badges
-- `.fit-row` + `.fit-icon` — alignment analysis rows
-- `table` — data tables for sprint tickets
+In interactive mode: present anomalies and wait for user decision. In cron mode: still send but prefix subject with `[VERIFY]` and note anomalies in the report header.
 
-**Report sections in order:**
+*Purpose:* Disconfirmation prevents the agent from confidently shipping a broken report.
 
-0. **Hero banner** — title "PitCrew / RHAS — Weekly Status Report", date, source list, board link
-1. **Executive Summary** — card with the AI-synthesized overview (from step 7a)
-2. **Strategic Guide** — condensed 3-sentence summary from cache + "Changed this week: (none)" indicator. Include the 3-tier grid only if the strategic doc was refreshed this run.
-3. **2026 Roadmap** — current quarter highlight only (Q2 or Q3 depending on date) + what moved since last week. Use `.roadmap-q` for the active quarter.
-4. **RHAS Releases** — release timeline with `.rel` badges. Mark current with `.rel-current`. Show the epic targets table for the next 3 upcoming releases.
-5. **Features & Epics** — split into "Changed this week" (status changes, new assignments) and "Unchanged" subsections. Use `.epic-grid`. Flag unassigned epics with ⚠️.
-6. **Current Sprint** — sprint name and dates, at-risk alert if applicable, full ticket table with status badges, issue count summary boxes.
-7. **Slack Digest** (full mode only) — two-column layout (`.cols2`), one per channel. Top contributors with `.person` badges. Key themes as bulleted list.
-8. **Strategy ↔ Work Alignment** — from step 7b. Well-aligned items with ✅ `.fit-icon`, gaps with ⚠️.
-9. **Looking Ahead** — from step 7c. Four subsections with color-coded items.
+### 9. AI synthesis
 
-**Footer** — "Generated [date] · [source list with counts]"
+Generate analytical sections from collected data. Read `reference/ai-prompt-templates.md` for prompt structure.
 
-### 9. Distribute
+**a. Executive Summary** — 3–5 sentences (daily: 2–3). Sprint health, biggest risk, biggest win, what needs attention.
 
-**a. Email:**
+**b. Strategy ↔ Work Alignment** (weekly/full only) — well-aligned work (✅) and gaps/concerns (⚠️), each with Jira references.
+
+**c. Looking Ahead** (weekly/full only) — this week (red), this month (orange), strategic setup (blue), team health (⚡).
+
+All statistics in synthesis must come from the computed diff or raw Jira data — never generate numbers from inference.
+
+### 10. Generate HTML report
+
+Write self-contained HTML to `/tmp/pitcrew-{mode}-report-YYYY-MM-DD.html`.
+
+**CSS:** Copy the full CSS block from `user/reports/pitcrew-full-report-2026-06-01.html` (lines 7–95). This is the design system. Use these classes exactly.
+
+**Sections:** Follow mode-specific section list from `reference/report-modes.md`.
+
+**Key classes:** `.hero`, `.toc`, `.card` + `.card-title`, `.badge .b-*`, `.alert .alert-*`, `.tier-grid` + `.tier`, `.roadmap-row` + `.roadmap-q`, `.epic-grid` + `.epic`, `.release-timeline` + `.rel`, `.fit-row` + `.fit-icon`, `.cols2`, `table`.
+
+**Changes section (new):** Use `.alert` styled highlight showing what moved since previous run. `.alert-success` for positive changes (epic completed, sprint velocity up), `.alert-warn` for negative (epic stalled, velocity down). Skip if first run.
+
+Email-safe constraints: all CSS inline or in `<style>` block, no JavaScript, no external images, tables use explicit widths for Outlook compatibility.
+
+### 11. Send and save
+
+**a. Send email (attachment mode):**
 ```bash
 REPORT_DATE=$(date +%Y-%m-%d)
+MODE=weekly  # or daily/full
 gws gmail +send --to aefrat@redhat.com \
-  --subject "[PitCrew Weekly] RHAS Status — week of ${REPORT_DATE}" \
-  --body "$(cat user/reports/pitcrew-weekly-report-${REPORT_DATE}.html)" --html
+  --subject "[PitCrew ${MODE^}] RHAS Status — ${REPORT_DATE}" \
+  --body "PitCrew/RHAS ${MODE} status report for ${REPORT_DATE}. See attached HTML." \
+  -a user/reports/pitcrew-${MODE}-report-${REPORT_DATE}.html
 ```
+If disconfirmation gate flagged anomalies, prefix subject with `[VERIFY]`.
 
-**b. Slack summary:**
-Use `/slack:slack-messaging` to post a condensed text message to `#team-pitcrew-automotive`. Content:
-- Executive summary (from step 7a)
-- Sprint health: X/Y issues closed, at-risk or on-track
-- Top 3 risks/blockers
-- "Full report emailed — check inbox or `user/reports/`"
+**b. Post Slack summary:**
+Use bash curl to post to `#team-pitcrew-automotive`. Content: executive summary + sprint health + top risks. Keep under 2000 chars (daily: under 500).
 
-Keep Slack post under 2000 characters. No HTML — plain text with emoji markers.
+**c. Save snapshot JSON** to `/tmp/pitcrew-snapshot-YYYY-MM-DD.json` with epic statuses, sprint health, counts, anomalies.
 
-### 10. Commit
-
+**d. Save to stores:**
 ```bash
 REPORT_DATE=$(date +%Y-%m-%d)
-git add user/reports/pitcrew-weekly-report-${REPORT_DATE}.html
-git add agent_brain/projects/pitcrew-strategic-context.md
-git commit -m "report: PitCrew weekly ${REPORT_DATE}"
+MODE=weekly
+# Active (overwritten)
+cp /tmp/pitcrew-${MODE}-report-${REPORT_DATE}.html agent_brain/projects/pitcrew-agent/active/latest-report.html
+cp /tmp/pitcrew-snapshot-${REPORT_DATE}.json agent_brain/projects/pitcrew-agent/active/latest-snapshot.json
+# History (immutable)
+cp /tmp/pitcrew-${MODE}-report-${REPORT_DATE}.html agent_brain/projects/pitcrew-agent/history/${REPORT_DATE}-${MODE}.html
+cp /tmp/pitcrew-snapshot-${REPORT_DATE}.json agent_brain/projects/pitcrew-agent/history/${REPORT_DATE}-${MODE}.json
+# User-facing copy
+cp /tmp/pitcrew-${MODE}-report-${REPORT_DATE}.html user/reports/pitcrew-${MODE}-report-${REPORT_DATE}.html
 ```
 
-## Scheduled runs
+**e. Update strategic cache** if refreshed in step 4.
 
-System crontab (`crontab -l`):
-- **Weekly (alternating):** Sundays at 08:00 — alternates between `weekly` and `full` mode (even ISO weeks = full)
-- **On demand:** invoke manually anytime with `/pitcrew-weekly-report` or `/pitcrew-weekly-report full`
+**f. Git commit:**
+```bash
+git add agent_brain/projects/pitcrew-agent/ user/reports/pitcrew-*-report-*.html
+git commit -m "pitcrew-report: ${MODE} $(date +%Y-%m-%d)"
+```
 
-## Troubleshooting
+### 12. Report outcome
 
-| Problem | Likely cause | Fix |
-|---------|-------------|-----|
-| Jira queries return empty | MCP tool doesn't support JQL | Fall back to `curl` with `JIRA_API_TOKEN` |
-| Slack digest missing | Plugin not authenticated | Run `! slack-auth` or check Slack MCP connection |
-| Google Docs read fails | Google auth expired | Run `gws auth status` then `gws auth login` if needed |
-| HTML email truncated | Report too large for `--body` | Check `gws gmail +send` output; consider attachment mode |
-| Strategic cache always stale | File not committed last run | Ensure step 10 commits the cache file |
+Confirm to the user (or log, in cron mode):
+- Report generated and sent (or anomalies flagged)
+- Summary of changes since last run
+- Current overall health assessment
+- Any new risks or anomalies detected
+
+## Success Criteria
+
+- HTML report generated with all mode-appropriate sections populated from live data
+- Email sent successfully as attachment to `aefrat@redhat.com`
+- Snapshot saved to active and history stores
+- Strategic cache updated if refreshed
+- Changes committed to git
+
+## Checklist
+
+- [ ] Mode determined (daily/weekly/full)
+- [ ] Previous snapshot loaded (or noted as first run)
+- [ ] Strategic cache checked (and refreshed if stale + not daily mode)
+- [ ] Jira data queried (epics, sprint, status counts, releases)
+- [ ] Slack searched (full mode only)
+- [ ] Diff computed against previous snapshot
+- [ ] Disconfirmation gate passed (or anomalies flagged)
+- [ ] AI synthesis complete (exec summary + alignment + looking ahead per mode)
+- [ ] HTML generated with all mode-appropriate sections
+- [ ] Email sent (attachment mode)
+- [ ] Slack summary posted
+- [ ] Active store updated
+- [ ] History store updated (dated + mode suffix, immutable)
+- [ ] User reports copy saved
+- [ ] Git committed
+
+## Gotchas
+
+- **Slack tokens expire.** If Slack searches return `invalid_auth`, the `$SLACK_XOXC_TOKEN` in `~/.bashrc` needs refreshing. Flag in report, don't silently skip.
+- **Jira CLI auth.** Uses tokens from `~/.netrc` or config. If it fails, flag. Atlassian API token "Avi2" expires Jun 27, 2026.
+- **History immutability.** Never overwrite a dated file in `history/`. If re-running same day and mode, append sequence number (e.g., `2026-06-23-weekly-2.html`).
+- **Email attachment mode.** HTML sent as attachment (`-a`), not inline body. Previous `--html` mode caused truncation on large reports.
+- **Strategic cache TTL.** 30-day refresh. Daily mode never triggers refresh — only weekly/full do.
+- **Google Docs auth.** Can expire silently. `gws docs` returns empty on 403. Run `gws auth status` first.
+- **Slack URL encoding.** Channel names with hyphens need URL encoding. Use `%23` for `#`.
+- **Sprint gaps.** `sprint in openSprints()` fails if no sprint is active. Fall back to date-range query.
