@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-06-23 | Jun 18 backlog refinement catch-up, ATC Scrum Meetings project, NXP/Polarion deep dive via Slack | `193fa53` |
 | 2026-06-23 | Manager report daily run, Project Pulse agent creation (agent-forge principles) + first run, RHIVOS QC Layered Product project created | `da90067` |
 | 2026-06-23 | Agent-forge email reply to Juanje — drafted adoption evidence (manager report, QC agent, Rule 19), concept explanations (disconfirmation gate, completion checklist, computed store) | `942432aa-e52a-4634-bfbe-efb5fa47651e` |
 | 2026-06-22 | Agent-forge learning path — Modules 1-2 via pipelines-debugger study (identity, skills, tools, disconfirmation gate), learning tracker created | `bb65e2cd-654e-42fa-a370-d642f8626591` |
