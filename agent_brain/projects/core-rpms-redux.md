@@ -35,11 +35,18 @@ From ToolChain Open Sync (Jun 23):
   - Lists need to be versioned by releases
 - **Open question:** Do we expect so many differences when compared to "New Core-rpm list for defect cloning script (RHIVOS 2.0)"?
 
-### Remaining work
+### Remaining work (children of VROOM-31017)
 - **VROOM-40719** — Integrate comparison test into pipeline and gate compose on failure (New, Juanje). Comparison gates on package names only (not versions). Uses canonical list repo maintained by FuSa team. Gating failure blocks compose promotion.
 - **VROOM-40584** — Update FoA Lib abstractions with real data (New, unassigned)
+- **VROOM-31126** — Create new location for data/package lists in compose (New, unassigned)
+- **VROOM-35595** — Create RPM→JIRA component mapping in canonical safety file (New, unassigned)
+- **VROOM-36808** — Execopen running in composes to produce package lists (New, unassigned) — may be functionally done
+- **VROOM-36811** — Create internal repo for execopen code + canonical lists (New, Steve Loranz)
+- **VROOM-36812** — Nightly smoke test updated to check canonical lists (New, unassigned)
+
+### Linked issues (not children)
 - **VROOM-37096** — Update glibc-revdep validators (New, Asaf Rachmani)
-- **VROOM-37575** — Re-enable validators accidentally removed (New, unassigned)
+- **VROOM-37575** — Re-enable validators (New, unassigned)
 - **VROOM-30619** — Refine systemctl validator scope (New, unassigned)
 
 ## Juanje's execopen work chain (Toolchain team)

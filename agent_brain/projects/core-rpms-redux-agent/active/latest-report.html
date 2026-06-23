@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Core RPMs Redux Status — 2026-06-23</title>
+<style>
+:root {
+  --red-hat-red: #EE0000;
+  --green: #3e8635;
+  --amber: #f0ab00;
+  --red: #c9190b;
+  --blue: #0066cc;
+  --light-green: #e7f4e4;
+  --light-amber: #fdf7e7;
+  --light-red: #fce8e6;
+  --light-blue: #e7f1fa;
+  --bg: #f5f5f5;
+  --card: #fff;
+  --border: #d2d2d2;
+  --text: #151515;
+  --muted: #6a6e73;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Red Hat Text', 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; font-size: 14px; }
+.container { max-width: 900px; margin: 0 auto; padding: 0 16px; }
+header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 32px 0 28px; }
+header h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 4px; }
+header .subtitle { font-size: 0.95rem; opacity: 0.85; }
+.meta-badge { display: inline-block; padding: 3px 12px; border-radius: 12px; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-left: 10px; vertical-align: middle; }
+.meta-badge.in-progress { background: var(--blue); color: #fff; }
+.meta-row { display: flex; flex-wrap: wrap; gap: 18px; padding: 14px 16px; background: var(--card); border-radius: 8px; margin-top: 18px; border: 1px solid var(--border); }
+.meta-row .item { font-size: 0.82rem; }
+.meta-row .label { color: var(--muted); font-weight: 600; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.3px; display: block; }
+section { background: var(--card); border-radius: 8px; padding: 20px; margin-bottom: 16px; border: 1px solid var(--border); }
+section h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid var(--red-hat-red); }
+section h3 { font-size: 0.95rem; font-weight: 700; margin: 14px 0 8px; }
+.decision-box { background: var(--light-blue); border-left: 4px solid var(--blue); padding: 14px 16px; border-radius: 0 6px 6px 0; margin-bottom: 14px; font-size: 0.9rem; }
+.list-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 14px 0; }
+.list-card { border-radius: 8px; padding: 14px 16px; border: 1px solid var(--border); background: var(--card); }
+.list-card h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 6px; }
+.list-card .desc { font-size: 0.82rem; color: var(--muted); margin-bottom: 6px; }
+.list-card .gen-status { font-size: 0.75rem; font-weight: 600; }
+.list-card .gen-status.active { color: var(--green); }
+.list-card .gen-status.curated { color: var(--blue); }
+.summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 14px 0; }
+.summary-card { text-align: center; padding: 16px 10px; border-radius: 8px; }
+.summary-card .num { font-size: 1.8rem; font-weight: 800; }
+.summary-card .lbl { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; margin-top: 2px; }
+.summary-green { background: var(--light-green); color: var(--green); }
+.summary-gray { background: #f0f0f0; color: #6a6e73; }
+.summary-total { background: #e8e8e8; color: var(--text); }
+.timeline-bar { display: flex; height: 22px; border-radius: 11px; overflow: hidden; margin: 14px 0; font-size: 0.72rem; font-weight: 700; }
+.timeline-done { background: var(--green); color: #fff; display: flex; align-items: center; justify-content: center; }
+.timeline-remaining { background: #d2d2d2; color: #555; display: flex; align-items: center; justify-content: center; }
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 10px; }
+th { text-align: left; padding: 8px 10px; background: #f0f0f0; font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.3px; border-bottom: 2px solid var(--border); }
+td { padding: 8px 10px; border-bottom: 1px solid #eee; vertical-align: top; }
+tr:nth-child(even) td { background: #fafafa; }
+.jira-link { color: var(--blue); text-decoration: none; font-weight: 600; }
+.jira-link:hover { text-decoration: underline; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
+.badge-done { background: var(--light-green); color: var(--green); }
+.badge-progress { background: var(--light-blue); color: var(--blue); }
+.badge-new { background: #f0f0f0; color: #6a6e73; }
+.pipeline-box { padding: 14px 16px; border-radius: 6px; margin: 10px 0; font-size: 0.88rem; }
+.pipeline-ok { border-left: 4px solid var(--green); background: var(--light-green); }
+.risk-item { padding: 10px 14px; border-radius: 6px; margin: 8px 0; font-size: 0.85rem; display: flex; align-items: flex-start; gap: 10px; }
+.risk-high { background: var(--light-red); border-left: 4px solid var(--red); }
+.risk-med { background: var(--light-amber); border-left: 4px solid var(--amber); }
+.risk-low { background: var(--light-blue); border-left: 4px solid var(--blue); }
+.risk-num { font-weight: 800; font-size: 1rem; min-width: 20px; }
+.first-run-note { background: var(--light-amber); border-left: 4px solid var(--amber); padding: 10px 14px; border-radius: 0 6px 6px 0; font-size: 0.85rem; margin-bottom: 14px; }
+footer { text-align: center; padding: 20px 0; color: var(--muted); font-size: 0.78rem; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<!-- 1. Hero Banner -->
+<header>
+  <div class="container">
+    <h1>Core RPMs Redux <span class="meta-badge in-progress">In Progress</span></h1>
+    <div class="subtitle">VROOM-31017 &mdash; Status Report &mdash; June 23, 2026</div>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- 2. Meta Row -->
+<div class="meta-row">
+  <div class="item">
+    <span class="label">Epic</span>
+    <a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-31017">VROOM-31017</a>
+  </div>
+  <div class="item">
+    <span class="label">Owner</span>
+    Petr Sabata
+  </div>
+  <div class="item">
+    <span class="label">Pipeline Lead</span>
+    Juanje Ojeda
+  </div>
+  <div class="item">
+    <span class="label">Due Date</span>
+    <span style="color: var(--red); font-weight: 600;">Jun 3, 2026 (overdue)</span>
+  </div>
+  <div class="item">
+    <span class="label">Channel</span>
+    #team-toolchain-automotive
+  </div>
+  <div class="item">
+    <span class="label">Children</span>
+    22 tickets
+  </div>
+</div>
+
+<!-- 3. Executive Summary -->
+<section>
+  <h2>Executive Summary</h2>
+  <div class="decision-box">
+    Pipeline integration is <strong>complete</strong> &mdash; Juanje's execopen eBPF tracer now generates all 4 JSON lists (Safety, Runtime, Image, Tools) in both upstream and downstream pipelines. The FuSa milestone "execopen core-rpm workflow is in place" was achieved on Jun 22 per the ToolChain Open Sync notes. <strong>68% of children are closed</strong> (15/22). The remaining gap is downstream consumer work: comparison gating (<a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-40719">VROOM-40719</a>, not started), infrastructure tickets (internal repo, data-lists location), and RPM-to-JIRA component mapping. The FoA team is actively working on validator infrastructure &mdash; <a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-37039">VROOM-37039</a> (Canonical RPM Lists Bootstrapping) is in progress with Amanda Carter, and Michael Ho created the canonical safety list repo (<a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-42400">VROOM-42400</a>, closed). Next steps per ToolChain Open Sync: adjust tests for 4 lists, version lists by release, resolve differences vs. Ian's safety-list analysis.
+  </div>
+</section>
+
+<!-- 4. Four-List Overview -->
+<section>
+  <h2>The 4 Lists</h2>
+  <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 8px;">Replacing the single "core RPMs" list with purpose-specific machine-readable JSON lists.</p>
+  <div class="list-grid">
+    <div class="list-card">
+      <h4>Safety List</h4>
+      <div class="desc">Every package touched by file reads or execution. Monitored for CIA &amp; Defect Triage.</div>
+      <div class="gen-status active">Pipeline-generated (boot trace)</div>
+    </div>
+    <div class="list-card">
+      <h4>Runtime List</h4>
+      <div class="desc">Safety List packages still open/mapped after boot. Used during FuSa Triage.</div>
+      <div class="gen-status active">Pipeline-generated (runtime trace)</div>
+    </div>
+    <div class="list-card">
+      <h4>Image List</h4>
+      <div class="desc">Every package in the ASIL portion of the image. Included in validator monitoring.</div>
+      <div class="gen-status active">Pipeline-generated (rpm -qa)</div>
+    </div>
+    <div class="list-card">
+      <h4>Tools List</h4>
+      <div class="desc">Manually curated safety-critical tool packages. Monitored for CIA &amp; Defect Triage.</div>
+      <div class="gen-status curated">Curated (downstream only)</div>
+    </div>
+  </div>
+  <p style="font-size: 0.82rem; color: var(--muted);">Latest generated lists: <a href="https://rhivos.auto-toolchain.redhat.com/in-vehicle-os/RHIVOS-2/latest-RHIVOS-2/data-lists/" style="color: var(--blue);">latest-RHIVOS-2/data-lists/</a></p>
+</section>
+
+<!-- 5. Workstream Status -->
+<section>
+  <h2>Workstream Status</h2>
+  <p style="font-size: 0.82rem; color: var(--muted); margin-bottom: 10px;">Per the <a style="color: var(--blue);" href="https://docs.google.com/document/d/1uakPWEkSvMksJ9XAfPHlU_h9mMVpcIr9F2uufJw4-Ek">Workstreams doc</a>, the epic is broken into 9 workstreams across 4 teams.</p>
+  <table>
+    <thead>
+      <tr><th>WS</th><th>Scope</th><th>Owner</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>WS1</td><td>Execopen tool (source + spec)</td><td>Kernel/HW Enablement</td><td><span class="badge badge-done">Complete</span></td></tr>
+      <tr><td>WS2</td><td>RPM build in pipeline</td><td>Toolchain (Juanje)</td><td><span class="badge badge-done">Complete</span></td></tr>
+      <tr><td>WS3</td><td>Tracing image build</td><td>Toolchain (Juanje)</td><td><span class="badge badge-done">Complete</span></td></tr>
+      <tr><td>WS4</td><td>Report script (raw &rarr; RPM list)</td><td>FDA</td><td><span class="badge badge-done">Complete</span></td></tr>
+      <tr><td>WS5</td><td>Tracer execution in pipeline</td><td>Toolchain (Juanje)</td><td><span class="badge badge-done">Complete</span></td></tr>
+      <tr><td>WS6</td><td>Canonical lists (define + maintain)</td><td>TBD</td><td><span class="badge badge-progress">In Progress</span></td></tr>
+      <tr><td>WS7</td><td>Comparison test (logic)</td><td>FDA</td><td><span class="badge badge-new">Not Started</span></td></tr>
+      <tr><td>WS8</td><td>Test integration + gating</td><td>Toolchain (Juanje)</td><td><span class="badge badge-new">Not Started</span></td></tr>
+      <tr><td>WS9</td><td>Validator updates</td><td>FoA</td><td><span class="badge badge-new">Not Started</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 6. Summary Cards + Progress Bar -->
+<section>
+  <h2>Ticket Summary</h2>
+  <div class="summary-grid">
+    <div class="summary-card summary-green">
+      <div class="num">15</div>
+      <div class="lbl">Closed</div>
+    </div>
+    <div class="summary-card summary-gray">
+      <div class="num">7</div>
+      <div class="lbl">New / Open</div>
+    </div>
+    <div class="summary-card summary-total">
+      <div class="num">22</div>
+      <div class="lbl">Total</div>
+    </div>
+  </div>
+  <div class="timeline-bar">
+    <div class="timeline-done" style="width: 68.2%;">15 Closed (68%)</div>
+    <div class="timeline-remaining" style="width: 31.8%;">7 New (32%)</div>
+  </div>
+</section>
+
+<!-- 7. Changes Since Last Report -->
+<section>
+  <h2>Changes Since Last Report</h2>
+  <div class="first-run-note">
+    <strong>First run</strong> &mdash; no previous snapshot for comparison. Change tracking will begin from the next report.
+  </div>
+</section>
+
+<!-- 8. Completed Work -->
+<section>
+  <h2>Completed Work (15 tickets)</h2>
+  <h3>Execopen Pipeline &mdash; Juanje Ojeda</h3>
+  <table>
+    <thead><tr><th>Ticket</th><th>Summary</th></tr></thead>
+    <tbody>
+      <tr><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-41395">VROOM-41395</a></td><td>Move execopen repo to Automotive namespace</td></tr>
+      <tr><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-40718">VROOM-40718</a></td><td>Tracing image can run tests in pipeline</td></tr>
+      <tr><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-40716">VROOM-40716</a></td><td>Create tracing image variant for execopen</td></tr>
+      <tr><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-40715">VROOM-40715</a></td><td>Build execopen RPM in pipeline matching compose kernel NVR</td></tr>
+      <tr><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-40717">VROOM-40717</a></td><td>Run execopen tracer in pipeline, produce RPM lists</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Other Closed Tickets</h3>
+  <table>
+    <thead><tr><th>Ticket</th><th>Summary</th><th>Assignee</th></tr></thead>
+    <tbody>
+      <tr><td><a class="jira-link" href="https://redhat.atlassian.net/browse/RHEL-111538">RHEL-111538</a></td><td>glibc: Update reverse dependency config for RHIVOS 1.0 GA</td><td>Florian Weimer</td></tr>
+      <tr><td><a class="jira-link" href="https://redhat.atlassian.net/browse/RHEL-112820">RHEL-112820</a></td><td>glibc: Update revdep.yaml to include binutils</td><td>Florian Weimer</td></tr>
+      <tr><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-30913">VROOM-30913</a></td><td>Create pipeline job to monitor for RHIVOS image changes</td><td>Pavol Brilla</td></tr>
+      <tr><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-30981">VROOM-30981</a></td><td>Finalize list of tools RPMs for Safety scope</td><td>Matthew Storr</td></tr>
+      <tr><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-31010">VROOM-31010</a></td><td>Refine ASIL B packages list</td><td>Ian McLeod</td></tr>
+      <tr><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-31127">VROOM-31127</a></td><td>Add "safety-list" to the RHIVOS pipeline</td><td>Unassigned</td></tr>
+      <tr><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-31128">VROOM-31128</a></td><td>Add "image-list" to the RHIVOS pipeline</td><td>Unassigned</td></tr>
+      <tr><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-31129">VROOM-31129</a></td><td>Add "tools-list" to the RHIVOS pipeline</td><td>Unassigned</td></tr>
+      <tr><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-36813">VROOM-36813</a></td><td>Execopen tool owner is identified</td><td>Steve Loranz</td></tr>
+      <tr><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-42400">VROOM-42400</a></td><td>Create git repo for canonical safety &amp; tools list RPMs</td><td>Michael Ho</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 9. Open / Remaining Work -->
+<section>
+  <h2>Open / Remaining Work (7 tickets)</h2>
+  <table>
+    <thead><tr><th>Ticket</th><th>Summary</th><th>Status</th><th>Assignee</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-40719">VROOM-40719</a></td>
+        <td>Integrate comparison test + gate compose on failure</td>
+        <td><span class="badge badge-new">New</span></td>
+        <td>Juanje Ojeda</td>
+      </tr>
+      <tr>
+        <td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-40584">VROOM-40584</a></td>
+        <td>Update FoA Lib abstractions with real data</td>
+        <td><span class="badge badge-new">New</span></td>
+        <td style="color: var(--red); font-weight: 600;">Unassigned</td>
+      </tr>
+      <tr>
+        <td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-31126">VROOM-31126</a></td>
+        <td>Create new location for data/package lists in compose</td>
+        <td><span class="badge badge-new">New</span></td>
+        <td style="color: var(--red); font-weight: 600;">Unassigned</td>
+      </tr>
+      <tr>
+        <td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-35595">VROOM-35595</a></td>
+        <td>Create RPM &rarr; JIRA component mapping in canonical safety file</td>
+        <td><span class="badge badge-new">New</span></td>
+        <td style="color: var(--red); font-weight: 600;">Unassigned</td>
+      </tr>
+      <tr>
+        <td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-36808">VROOM-36808</a></td>
+        <td>Execopen running in composes to produce package lists</td>
+        <td><span class="badge badge-new">New</span></td>
+        <td style="color: var(--red); font-weight: 600;">Unassigned</td>
+      </tr>
+      <tr>
+        <td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-36811">VROOM-36811</a></td>
+        <td>Create internal repo for execopen code + canonical lists</td>
+        <td><span class="badge badge-new">New</span></td>
+        <td>Steve Loranz</td>
+      </tr>
+      <tr>
+        <td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-36812">VROOM-36812</a></td>
+        <td>Nightly smoke test updated to check canonical lists</td>
+        <td><span class="badge badge-new">New</span></td>
+        <td style="color: var(--red); font-weight: 600;">Unassigned</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Related Linked Issues</h3>
+  <table>
+    <thead><tr><th>Ticket</th><th>Summary</th><th>Status</th><th>Assignee</th><th>Link</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-37039">VROOM-37039</a></td>
+        <td>RHIVOS 2.0 Canonical RPM Lists Bootstrapping</td>
+        <td><span class="badge badge-progress">In Progress</span></td>
+        <td>Amanda Carter</td>
+        <td>Is Triggering</td>
+      </tr>
+      <tr>
+        <td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-29696">VROOM-29696</a></td>
+        <td>Systematically link VROOM CVEs to RHEL CVEs</td>
+        <td><span class="badge badge-progress">In Progress</span></td>
+        <td>Petr Sabata</td>
+        <td>Blocks</td>
+      </tr>
+      <tr>
+        <td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-30619">VROOM-30619</a></td>
+        <td>Refine systemctl validator scope</td>
+        <td><span class="badge badge-new">New</span></td>
+        <td>Unassigned</td>
+        <td>Is Depended On By</td>
+      </tr>
+      <tr>
+        <td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-37096">VROOM-37096</a></td>
+        <td>Update glibc-revdep validators</td>
+        <td><span class="badge badge-new">New</span></td>
+        <td>Asaf Rachmani</td>
+        <td>Blocks</td>
+      </tr>
+      <tr>
+        <td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-37575">VROOM-37575</a></td>
+        <td>Re-enable glibc-revdep + core-rpm-list-verification validators</td>
+        <td><span class="badge badge-new">New</span></td>
+        <td>Unassigned</td>
+        <td>&mdash;</td>
+      </tr>
+      <tr>
+        <td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-38899">VROOM-38899</a></td>
+        <td>RHIVOS 10.2 core-rpm gating tests failures</td>
+        <td><span class="badge badge-new">New</span></td>
+        <td>Rachel Sibley</td>
+        <td>&mdash;</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 10. Pipeline Health -->
+<section>
+  <h2>Pipeline Health</h2>
+  <div class="pipeline-box pipeline-ok">
+    <strong>Current Status: PASSING</strong> &mdash; Core-rpms lists generating successfully. Execopen integrated in both upstream and downstream pipelines.
+  </div>
+  <h3>Last 7 Days (from #alerts-auto-toolchain)</h3>
+  <p style="font-size: 0.85rem; margin: 8px 0;">78 total alerts (many automated GitLab bot notifications). Key incidents:</p>
+  <table>
+    <thead><tr><th>Issue</th><th>Root Cause</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Pipeline git token expired</td><td>Expired credential &mdash; Juanje updated and retried</td><td><span class="badge badge-done">Resolved</span></td></tr>
+      <tr><td>Pipeline #16057321 smoke-tests</td><td>Jumpstarter board lease starvation (ride4_sa8775p_sx_r3)</td><td><span class="badge badge-done">Diagnosed</span></td></tr>
+      <tr><td>BaseOS CI testing blocked</td><td>TCMS SSL certificate expired (Jun 20 outage)</td><td><span class="badge badge-done">External</span></td></tr>
+      <tr><td>Smoke-tests false failure</td><td>Tests passed but Polarion upload failed &mdash; nightlies promoted</td><td><span class="badge badge-done">Resolved</span></td></tr>
+    </tbody>
+  </table>
+  <p style="font-size: 0.82rem; color: var(--muted); margin-top: 8px;">All infrastructure-related &mdash; no code regressions detected.</p>
+</section>
+
+<!-- 11. FoA / Validator Activity -->
+<section>
+  <h2>FoA / Validator Activity</h2>
+  <p style="font-size: 0.85rem; margin-bottom: 10px;">From #team-auto-follow-on-activities (72 messages this week):</p>
+  <table>
+    <thead><tr><th>Activity</th><th>Who</th><th>Detail</th></tr></thead>
+    <tbody>
+      <tr><td>Validators targeting RC3 compose</td><td>Jaroslav Mracek</td><td>MRs submitted to switch validators to RHIVOS-2.0-RC3 compose. foa-lib change merged.</td></tr>
+      <tr><td>validator-report MR</td><td>Tomas Golembiovsky</td><td>Needs one more approval. foa-lib released and merged.</td></tr>
+      <tr><td>mr-cache-lib MR !94</td><td>Nikhil Saini</td><td>Review requested from Michael Ho &amp; Tomas.</td></tr>
+      <tr><td>Compose indexing for Contcert</td><td>Maciej Sobczyk</td><td>Parsing rpms.json from S3 bucket &mdash; S3 RO credentials being arranged via terraform.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 12. Risks & Blockers -->
+<section>
+  <h2>Risks &amp; Blockers</h2>
+  <div class="risk-item risk-high">
+    <div class="risk-num">1</div>
+    <div><strong>5 of 7 remaining children are unassigned.</strong> Only VROOM-40719 (Juanje) and VROOM-36811 (Steve Loranz) have owners. The other 5 need assignment before work can begin.</div>
+  </div>
+  <div class="risk-item risk-high">
+    <div class="risk-num">2</div>
+    <div><strong>Epic overdue by 20 days.</strong> VROOM-31017 due date was Jun 3, 2026. Pipeline integration (WS1&ndash;WS5) is done, but WS7&ndash;WS9 have not started.</div>
+  </div>
+  <div class="risk-item risk-med">
+    <div class="risk-num">3</div>
+    <div><strong>Comparison gating blocks validators.</strong> WS7 (comparison test) and WS8 (gating) must complete before WS9 (validator updates) can use canonical lists. Sequential dependency increases total lead time.</div>
+  </div>
+  <div class="risk-item risk-med">
+    <div class="risk-num">4</div>
+    <div><strong>List versioning not yet implemented.</strong> Per ToolChain Open Sync (Jun 23), lists need to be versioned by release. "Not for -Core" noted &mdash; may be deferred.</div>
+  </div>
+  <div class="risk-item risk-low">
+    <div class="risk-num">5</div>
+    <div><strong>Semantic overlap between tickets.</strong> VROOM-36808 ("execopen running in composes") appears complete in practice (lists are generating) but the ticket is still New. VROOM-31126 ("create data-lists location") may also be functionally done. Ticket hygiene needed.</div>
+  </div>
+  <div class="risk-item risk-low">
+    <div class="risk-num">6</div>
+    <div><strong>Asaf Rachmani mapping question.</strong> Per Slack, Asaf needs to understand which of the 4 new lists maps to glibc-revdep scope (<a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-37096">VROOM-37096</a>). Ian's safety-list analysis (<a style="color: var(--blue);" href="https://gitlab.com/redhat/centos-stream/rpms/glibc/-/raw/c9s/revdep.yaml?ref_type=heads">revdep.yaml</a>) was raised at the Open Sync as a comparison point.</div>
+  </div>
+</section>
+
+<!-- 13. Slack Activity Summary -->
+<section>
+  <h2>Slack Activity (Last 7 Days)</h2>
+  <table>
+    <thead><tr><th>Channel</th><th>Messages</th><th>Key Signals</th></tr></thead>
+    <tbody>
+      <tr><td>#team-toolchain-automotive</td><td>21</td><td>S3 bucket access for Contcert, Brew tagging, aarch64 image testing, status reporting</td></tr>
+      <tr><td>#alerts-auto-toolchain</td><td>78</td><td>Git token fix, board lease starvation, TCMS SSL outage, Polarion upload failures (all resolved)</td></tr>
+      <tr><td>#team-auto-follow-on-activities</td><td>72</td><td>Validators targeting RC3, foa-lib released, mr-cache-lib MR, compose indexing</td></tr>
+      <tr><td>Cross-channel (core-rpms/execopen)</td><td>0</td><td>No keyword mentions this week</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 14. Key References -->
+<section>
+  <h2>Key References</h2>
+  <table>
+    <thead><tr><th>Resource</th><th>Link</th></tr></thead>
+    <tbody>
+      <tr><td>Jira Epic</td><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-31017">VROOM-31017</a></td></tr>
+      <tr><td>Execopen Repo</td><td><a style="color: var(--blue);" href="https://gitlab.com/redhat/edge/ci-cd/pipe-x/execopen">gitlab.com/redhat/edge/ci-cd/pipe-x/execopen</a></td></tr>
+      <tr><td>Latest Generated Lists</td><td><a style="color: var(--blue);" href="https://rhivos.auto-toolchain.redhat.com/in-vehicle-os/RHIVOS-2/latest-RHIVOS-2/data-lists/">latest-RHIVOS-2/data-lists/</a></td></tr>
+      <tr><td>ToolChain Open Sync</td><td><a style="color: var(--blue);" href="https://docs.google.com/document/d/1TegJmbETVM627zvw5hj8F5NtiQvvJ40OSbgkGlz-pWw/edit">Google Doc</a></td></tr>
+      <tr><td>Workstreams Doc</td><td><a style="color: var(--blue);" href="https://docs.google.com/document/d/1uakPWEkSvMksJ9XAfPHlU_h9mMVpcIr9F2uufJw4-Ek">Google Doc</a></td></tr>
+      <tr><td>Canonical RPM Lists (VROOM-37039)</td><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-37039">VROOM-37039</a> &mdash; Amanda Carter, In Progress</td></tr>
+      <tr><td>glibc revdep.yaml</td><td><a style="color: var(--blue);" href="https://gitlab.com/redhat/centos-stream/rpms/glibc/-/raw/c9s/revdep.yaml?ref_type=heads">CentOS Stream glibc</a></td></tr>
+    </tbody>
+  </table>
+</section>
+
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    Generated 2026-06-23 &bull; Data: Jira (5 queries, 22 children + 6 linked), Slack (4 searches, 171 messages), Google Docs (2 documents) &bull; First run &mdash; no baseline
+  </div>
+</footer>
+
+</body>
+</html>

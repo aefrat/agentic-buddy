@@ -1,0 +1,55 @@
+{
+  "generated_at": "2026-06-23",
+  "overall_status": "In Progress",
+  "epic": {
+    "key": "VROOM-31017",
+    "status": "In Progress",
+    "assignee": "Petr Sabata"
+  },
+  "tickets": [
+    {"key": "VROOM-40719", "summary": "Integrate comparison test + gate compose on failure", "status": "New", "assignee": "Juanje Ojeda", "blockers": [], "category": "remaining"},
+    {"key": "VROOM-40584", "summary": "Update FoA Lib abstractions with real data", "status": "New", "assignee": null, "blockers": [], "category": "foa"},
+    {"key": "VROOM-31126", "summary": "Create new location for data/package lists in compose", "status": "New", "assignee": null, "blockers": [], "category": "remaining"},
+    {"key": "VROOM-35595", "summary": "Create RPM-JIRA component mapping in canonical safety file", "status": "New", "assignee": null, "blockers": [], "category": "remaining"},
+    {"key": "VROOM-36808", "summary": "Execopen running in composes to produce package lists", "status": "New", "assignee": null, "blockers": [], "category": "remaining"},
+    {"key": "VROOM-36811", "summary": "Create internal repo for execopen code + canonical lists", "status": "New", "assignee": "Steve Loranz", "blockers": [], "category": "remaining"},
+    {"key": "VROOM-36812", "summary": "Nightly smoke test updated to check canonical lists", "status": "New", "assignee": null, "blockers": [], "category": "remaining"}
+  ],
+  "completed_tickets": [
+    {"key": "RHEL-111538", "summary": "glibc: Update reverse dependency config for RHIVOS 1.0 GA", "assignee": "Florian Weimer"},
+    {"key": "RHEL-112820", "summary": "glibc: Update revdep.yaml to include binutils", "assignee": "Florian Weimer"},
+    {"key": "VROOM-30913", "summary": "Create pipeline job to monitor for RHIVOS image changes", "assignee": "Pavol Brilla"},
+    {"key": "VROOM-30981", "summary": "Finalize list of tools RPMs for Safety scope", "assignee": "Matthew Storr"},
+    {"key": "VROOM-31010", "summary": "Refine ASIL B packages list", "assignee": "Ian McLeod"},
+    {"key": "VROOM-31127", "summary": "Add safety-list to the RHIVOS pipeline", "assignee": null},
+    {"key": "VROOM-31128", "summary": "Add image-list to the RHIVOS pipeline", "assignee": null},
+    {"key": "VROOM-31129", "summary": "Add tools-list to the RHIVOS pipeline", "assignee": null},
+    {"key": "VROOM-36813", "summary": "Execopen tool owner is identified", "assignee": "Steve Loranz"},
+    {"key": "VROOM-40715", "summary": "Build execopen RPM in pipeline matching compose kernel NVR", "assignee": "Juanje Ojeda"},
+    {"key": "VROOM-40716", "summary": "Create tracing image variant for execopen", "assignee": "Juanje Ojeda"},
+    {"key": "VROOM-40717", "summary": "Run execopen tracer in pipeline, produce RPM lists", "assignee": "Juanje Ojeda"},
+    {"key": "VROOM-40718", "summary": "Tracing image can run tests in pipeline", "assignee": "Juanje Ojeda"},
+    {"key": "VROOM-41395", "summary": "Move execopen repo to Automotive namespace", "assignee": "Juanje Ojeda"},
+    {"key": "VROOM-42400", "summary": "Create git repo for canonical safety and tools list RPMs", "assignee": "Michael Ho"}
+  ],
+  "toolchain_tickets": [],
+  "related_epics": [
+    {"key": "VROOM-37039", "summary": "RHIVOS 2.0 Canonical RPM Lists Bootstrapping", "status": "In Progress", "assignee": "Amanda Carter"},
+    {"key": "VROOM-29696", "summary": "Systematically link VROOM CVEs to RHEL CVEs", "status": "In Progress", "assignee": "Petr Sabata"},
+    {"key": "VROOM-38899", "summary": "RHIVOS 10.2 core-rpm gating tests failures", "status": "New", "assignee": "Rachel Sibley"}
+  ],
+  "counts": {
+    "completed": 15,
+    "in_progress": 0,
+    "not_started": 7,
+    "blocked": 0
+  },
+  "pipeline_health": {
+    "alert_count_7d": 78,
+    "latest_failure": "Git token expired — resolved by Juanje",
+    "status": "passing"
+  },
+  "slack_activity_count": 171,
+  "google_docs_accessed": true,
+  "anomalies": ["VROOM-31421 in data-sources.md is not the toolchain umbrella — it is an unrelated IPC selinux spike. Remove from future queries."]
+}
