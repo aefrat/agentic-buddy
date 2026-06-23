@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-06-22
-access_count: 1
+last_accessed: 2026-06-23
+access_count: 2
 created: 2026-06-22
 ---
 
@@ -30,7 +30,11 @@ AI agents for infrastructure health, pipeline failure monitoring, diagnostics, a
 | VROOM-44416 | Integrate defect triage agent with CI/CD pipeline | **New** | Unassigned | Auto-trigger on test failures instead of manual invocation. |
 | VROOM-44418 | Documentation for using the Poe-based pipeline debugger | **New** | Unassigned | Duplicate of 44415? Both are sprint review items, nearly identical descriptions. |
 
-## Key activity (from comments)
+## Key activity
+
+- **2026-06-23 (GitLab):** Juanje opened MR !119 for `pi-runner` CI container image (VROOM-44857/44858) — enables running the Pi harness in CI, supporting production-ready migration (VROOM-41808).
+
+### From Jira comments
 
 - **Jun 16:** Team agreed to close 5 duplicate tickets, consolidate into one defect triage agent implementation (VROOM-41482). Ian McLeod noted they need to select a finalized PoC version to deploy for auto-commenting on inbound defects.
 - **Jun 10–11:** Juanje bootstrapping/polishing cycle — fresh bootstrapping with improved approach to understand agent behavior better. Migrated to Pi for security + token efficiency.

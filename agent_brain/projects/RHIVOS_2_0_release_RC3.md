@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-06-18
-access_count: 5
+last_accessed: 2026-06-23
+access_count: 6
 created: 2026-06-11
 ---
 
@@ -36,6 +36,8 @@ Source: #automotive-release-readiness Slack channel (C04RHEEGY30), 2026-06-08 to
 | RC3 reduced CTC | 2026-06-16 | In progress — VM + 8650 done, 8775 re-triggered after provisioning failures |
 | Errata push to CDN | 2026-06-17 | In progress — Kanitha re-pushing Core batch to CDN-stage → REL_PREP |
 | ASIL-B CTC (weekend) | 2026-06-19 | Scheduled — Rachel Sibley |
+| RC3 reduced CTC progress | 2026-06-23 | 93% done — 3 tickets remaining, kernel debug testing started |
+| Errata REL_PREP | 2026-06-23 | All RHIVOS-2.0-Core errata reached REL_PREP — compose content available |
 | Release readiness sync meeting | 2026-06-11 | Done — see outcomes below |
 
 ### Release Readiness Meeting Outcomes (2026-06-11)
