@@ -57,11 +57,11 @@ Factual updates to Right now (changed dates, flipped statuses) are allowed mid-s
 
 ### Right now
 
-- **RC3 released.** Errata/tagging work ongoing (Kanitha). ASIL CTC ran weekend Jun 19 — status unconfirmed. Z-stream is now the right target for kernel builds. Brew tag permissions filed (RHELBLD-18777 / RHELBLD-18778).
-- **CAT timeline: RHIVOS 2.0-Core CAT Jun 29-30**, content on CDN/ET ~Jun 26 (3 days). Six days to CAT.
-- **Atlassian API token "Avi2" expires Jun 27.** Needs rotation this week (4 days).
+- **CAT in 6 days.** RHIVOS 2.0-Core CAT Jun 29-30, content on CDN/ET ~Jun 26 (3 days). RC3 reduced CTC at 93% (3 tickets remaining). All errata at REL_PREP.
+- **Atlassian API token "Avi2" expires Jun 27** (4 days). Needs rotation this week.
 - **Hubert transition to RHAS/RAZ approved** (Jeff Ligon & Paul Wallrabe, Jun 18). Next: discuss timelines with Hubert, communicate plan to stakeholders. Knowledge transfer plan overdue (~Jun 17).
-- **Roderick Kieley 1:1** — active. 22 days into onboarding (started Jun 1).
+- **RHIVOS QC Layered Product** — CDN path naming convention (VROOM-42116) awaiting Petr Sabata approval. 4/16 tasks done, 6 distribution tasks unassigned.
+- **Roderick Kieley** — 22 days into onboarding (started Jun 1). 1:1 biweekly, active.
 
 ### Files
 
@@ -79,6 +79,7 @@ Directories with an `index.md` have a content map — read it first to decide wh
 - [Projects](agent_brain/projects/) — project history, context, past decisions.
 - [Concepts](agent_brain/concepts/) — lessons learned, patterns, generalized knowledge.
 - [Agent Forge Design Principles](agent_brain/projects/agent-forge-design-principles.md) — Juanje Ojeda's 7 principles for stateful process-oriented agents, with prior art analysis and convergence with agentic-buddy. Read when building, reviewing, or discussing agent design.
+- [RHIVOS 2.0 RC3](agent_brain/projects/RHIVOS_2_0_release_RC3.md) — RC3 release tracking, CTC status, tagging documentation audit, Brew permissions. Read when RC3, RHIVOS release, CTC testing, or tagging comes up.
 - [Ideas](agent_brain/ideas/) — ideas in various stages. `_scratchpad.md` for one-liners.
 - [Journal](user/journal/) — weekly and monthly activity summaries. Read when the user asks about past activity or needs to prepare reports.
 
