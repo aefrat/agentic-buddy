@@ -175,7 +175,8 @@ In interactive mode: present anomalies and wait for user decision. In cron mode:
 REPORT_DATE=$(date +%Y-%m-%d)
 gws gmail +send --to aefrat@redhat.com \
   --subject "[LP Status] RHIVOS QC — ${REPORT_DATE}" \
-  --body "$(cat /tmp/rhivos-qc-lp-status-${REPORT_DATE}.html)" --html
+  --body "RHIVOS QC Layered Product status report for ${REPORT_DATE}. See attached HTML." \
+  -a user/reports/rhivos-qc-lp-status-${REPORT_DATE}.html
 ```
 If disconfirmation gate flagged anomalies, prefix subject with `[VERIFY]`.
 
@@ -255,5 +256,5 @@ Confirm to the user (or log, in cron mode):
 - **Jira CLI auth.** The `jira` CLI uses tokens from `~/.netrc` or config. If it fails, fall back to `jira-mcp-cli` or flag.
 - **CronCreate 7-day expiry.** Durable cron jobs auto-expire after 7 days. Either re-schedule weekly or set up a system crontab entry for permanent scheduling: `17 8 * * 1-5 cd /home/aefrat/agentic-buddy && claude -p "Run the RHIVOS QC LP status report. Read agent_brain/skills/rhivos-qc-lp-status.md and execute all steps."`.
 - **History immutability.** Never overwrite a dated file in `history/`. If re-running same day, append sequence number (e.g., `2026-06-23-2.html`).
-- **Email body size.** If the HTML is too large for `gws gmail +send --body`, write to a temp file and use `--body "$(cat file)"`. The `$(cat ...)` approach handles this.
+- **Email attachment.** The HTML report is sent as an attachment (`-a`), not inline HTML. The body is plain text summary only.
 - **Slack URL encoding.** Channel names with hyphens need URL encoding in the query parameter. Use `%23` for `#` in channel names.
