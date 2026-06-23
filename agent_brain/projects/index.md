@@ -14,6 +14,7 @@ comes up in conversation or needs context for a decision.
 - **[Agent Forge Design Principles](agent-forge-design-principles.md)** — Juanje Ojeda's 7 principles for stateful process-oriented agents. Deep study from agent-forge repo + slides. Convergence analysis with agentic-buddy, actionable gaps identified.
 - **[Infrastructure Reliability Automation](infra-reliability-automation.md)** — AUTOBU-1085 / VROOM-41550. Juanje Ojeda's pipeline debugger agent: PoC done, production-ready phase in review, generalized into agent-forge. Next: defect triage integration, documentation.
 
+- **[Core RPMs Redux](core-rpms-redux.md)** — VROOM-31017 epic: replacing "core RPMs" list with 4 machine-readable lists (Safety, Runtime, Image, Tools). Juanje's execopen pipeline work, toolchain integration (VROOM-31421). Read when core RPMs, execopen, toolchain packages, or RPM lists come up.
 - **[RHIVOS QC Layered Product](rhivos-qc-layered-product.md)** — Distribution setup for the Qualcomm Layered Product: EngIDs, content sets, CDN paths, errata, product registration. Read when LP distribution, EngIDs, QC content sets, or CDN paths come up.
 - **[RHAS Team](rhas-team.md)** — PitCrew product engineering: bringup agent, Jumpstarter, QC hardware enablement, RHAS releases. Read when RHAS, bringup agent, board bring-up, or PitCrew engineering work comes up.
 
