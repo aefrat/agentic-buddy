@@ -30,7 +30,6 @@ When data is incomplete, you report the gap. A report that says "Slack data unav
 | Execution epic | VROOM-41521 | Kanitha's infra setup tasks |
 | Interim ticket | VROOM-41496 | Stopgap solution (Francisco) |
 | Slack channel | #rhivos-sp-qc-layered-product | Channel ID: C0B3MNQSYE7 |
-| Key person (Slack) | `kchim` | Kanitha Chim — primary executor |
 | Email recipient | `aefrat@redhat.com` | |
 | Subject format | `[LP Status] RHIVOS QC — YYYY-MM-DD` | Prefix with `[VERIFY]` if anomalies |
 | Output path | `user/reports/rhivos-qc-lp-status-YYYY-MM-DD.html` | |
@@ -73,15 +72,7 @@ For each ticket, capture: key, summary, status, assignee. Note any tickets with 
 
 Use bash curl with `$SLACK_XOXC_TOKEN` and `$SLACK_XOXD_COOKIE` from `~/.bashrc` (per CLAUDE.md Rule 20 — never use Slack MCP plugin).
 
-Three searches (last 7 days):
-
-```bash
-source ~/.bashrc
-curl -s "https://redhat.enterprise.slack.com/api/search.messages" \
-  -H "Authorization: Bearer $SLACK_XOXC_TOKEN" \
-  -H "Cookie: d=$SLACK_XOXD_COOKIE" \
-  -d "query=from:kchim&sort=timestamp&sort_dir=desc&count=20"
-```
+Two searches (last 7 days):
 
 ```bash
 source ~/.bashrc
@@ -99,9 +90,9 @@ curl -s "https://redhat.enterprise.slack.com/api/search.messages" \
   -d "query=%22layered+product%22+OR+AUTOBU-1076&sort=timestamp&sort_dir=desc&count=20"
 ```
 
-Extract: timestamp, author, channel, message text. Group by date for the activity log section. Filter to last 7 days.
+Extract: timestamp, author, channel, message text. Filter to last 7 days.
 
-*Purpose:* Slack captures decisions, blockers raised, and coordination that Jira doesn't reflect. The kchim search is essential because Kanitha is the primary executor.
+*Purpose:* Slack captures decisions, blockers raised, and coordination that Jira doesn't reflect.
 
 ### 4. Compute diff against previous run
 
@@ -157,9 +148,7 @@ Write a self-contained HTML file to `/tmp/rhivos-qc-lp-status-YYYY-MM-DD.html`.
 
 15. **Key people** — table with person, Slack handle, role, current action.
 
-16. **Kanitha Chim activity log** — `.activity-item` entries grouped by `.activity-date`. From Slack search results + existing project file entries.
-
-17. **Footer** — generated date, data sources list.
+16. **Footer** — generated date, data sources list.
 
 Email-safe constraints: all CSS inline or in `<style>` block, no JavaScript, no external images, tables use explicit widths for Outlook compatibility.
 
@@ -219,7 +208,6 @@ cp /tmp/rhivos-qc-lp-status-${REPORT_DATE}.html user/reports/rhivos-qc-lp-status
 
 **d. Update project file:** Update `agent_brain/projects/rhivos-qc-layered-product.md`:
 - Ticket statuses in the Progress section (move tickets between Completed / In Progress / Not Started tables based on current Jira data)
-- Kanitha Chim activity log (append new Slack entries not already captured)
 - Do NOT modify Architecture, Decision, or Related Files sections
 
 **e. Git commit:**
@@ -249,9 +237,9 @@ Confirm to the user (or log, in cron mode):
 - [ ] Project file read for context
 - [ ] Previous snapshot loaded (or noted as first run)
 - [ ] Jira tickets queried (VROOM-41521 children + AUTOBU-1076 + VROOM-41496)
-- [ ] Slack searched (kchim + channel + cross-channel)
+- [ ] Slack searched (channel + cross-channel)
 - [ ] Diff computed against previous run
-- [ ] HTML generated with all 17 sections
+- [ ] HTML generated with all 16 sections
 - [ ] Overall status badge computed correctly
 - [ ] Disconfirmation gate passed (or anomalies flagged)
 - [ ] Email sent
@@ -259,7 +247,6 @@ Confirm to the user (or log, in cron mode):
 - [ ] History store updated (dated, immutable)
 - [ ] User reports copy saved
 - [ ] Project file ticket statuses updated
-- [ ] Kanitha activity log updated (new entries only)
 - [ ] Git committed
 
 ## Gotchas
