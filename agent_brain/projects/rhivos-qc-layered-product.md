@@ -116,7 +116,7 @@ Parallel: Compose/pipeline — needs tickets first
 
 1. **CDN path decision is the active bottleneck.** Everything downstream blocked on Petr Sabata.
 2. **6 distribution tasks are unassigned.** Sequential chain, long lead time.
-3. **Hubert transition.** Owns both gating tasks, moving to RHAS/RAZ. KT plan overdue (~Jun 17).
+3. **Hubert transition.** Owns both gating tasks, moving to RHAS. KT plan overdue (~Jun 17).
 4. **Supplier Solicitation.** Charles Timko flagged (Jun 22) that AUTOBU-1076 needs this process.
 5. **SP RHEL Workflow staffing.** Christine Freitas warned — lost release engineering expertise (China Engineering exit).
 6. **No compose/pipeline tickets.** Approach validated but no implementation work tracked.
@@ -149,7 +149,7 @@ Parallel: Compose/pipeline — needs tickets first
 | Petr Sabata | contyk | Release/distribution, epic assignee | **Needs to approve CDN path** |
 | Claude Pariz | | SKU team | **Next: create QC-specific SKU** |
 | Matt Goldman | | Distribution — EngID/CDN tickets | Assigned to VROOM-42116 |
-| Hubert Stefanski | | Gating (transitioning to RHAS/RAZ) | Owns VROOM-42050, 42184 |
+| Hubert Stefanski | | Gating (transitioning to RHAS) | Owns VROOM-42050, 42184 |
 | Gadi Glogowski | | PM — SKU coordination | Brought Claude Pariz in |
 | Leon Kang | lekang | SP RHEL Distribution consultant | Advised on EngID/content sets |
 | Archana Katarki | | SP RHEL Distribution (mgr) | Consulted on CDN issues |

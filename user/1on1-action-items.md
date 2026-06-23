@@ -15,7 +15,7 @@ Last processed: 2026-06-18
 ## Jaime (meeting: Jun 16, 2026)
 - [ ] **Avi:** Check Physical AI list (currently part of AAA team) as an option for Hubert
 - [x] **Avi:** Talk to Alberto Ruiz about auto-kernel package gating — **done.** Discussed with Petr Sabata instead.
-- [x] **Avi:** Meeting set up with Jeff Ligon and Paul Wallrabe to discuss Hubert's move options — **done Jun 18.** Transition to RHAS/RAZ approved. Next: discuss timelines with Hubert, communicate plan to stakeholders.
+- [x] **Avi:** Meeting set up with Jeff Ligon and Paul Wallrabe to discuss Hubert's move options — **done Jun 18.** Transition to RHAS approved. Next: discuss timelines with Hubert, communicate plan to stakeholders.
 - [ ] **Avi:** Discuss transition timelines with Hubert (from Jun 18 meeting)
 - [ ] **Avi:** Communicate Hubert's final transition plan and timeline to all stakeholders
 
