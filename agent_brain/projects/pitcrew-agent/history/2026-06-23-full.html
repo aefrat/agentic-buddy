@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PitCrew / RHAS — Full Status Report · June 23, 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f6f8fa; color: #24292f; padding: 20px 16px; }
+  .container { max-width: 1060px; margin: 0 auto; }
+  .hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #fff; padding: 22px 28px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,.2); }
+  .hero h1 { font-size: 21px; font-weight: 700; margin-bottom: 6px; }
+  .hero .meta { font-size: 12px; opacity: .7; }
+  .hero .meta span { margin-right: 18px; }
+  .toc { background: #fff; border: 1px solid #d0d7de; border-radius: 8px; padding: 14px 20px; margin-bottom: 20px; font-size: 13px; }
+  .toc h3 { font-size: 12px; font-weight: 700; color: #57606a; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+  .toc a { color: #0550ae; text-decoration: none; margin-right: 20px; }
+  .toc a:hover { text-decoration: underline; }
+  .card { background: #fff; border: 1px solid #d0d7de; border-radius: 10px; padding: 20px 24px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .card-title { font-size: 16px; font-weight: 700; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid; display: flex; align-items: center; gap: 8px; }
+  h3 { font-size: 14px; font-weight: 600; margin: 16px 0 8px 0; color: #1a1a2e; }
+  h4 { font-size: 13px; font-weight: 600; margin: 12px 0 6px 0; color: #444; }
+  p { font-size: 13px; line-height: 1.65; color: #444; margin-bottom: 8px; }
+  .tier-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin: 14px 0; }
+  .tier { border-radius: 8px; padding: 14px 16px; border: 1px solid; }
+  .tier h4 { margin: 0 0 6px 0; font-size: 13px; font-weight: 700; }
+  .tier ul { list-style: none; font-size: 12px; line-height: 1.9; }
+  .tier-1 { background: #f0fff4; border-color: #b7ebc8; } .tier-1 h4 { color: #1a7a3e; }
+  .tier-2 { background: #f0f4ff; border-color: #a8c4f5; } .tier-2 h4 { color: #0550ae; }
+  .tier-3 { background: #f9f0ff; border-color: #d4aef5; } .tier-3 h4 { color: #6e3db5; }
+  .roadmap-row { display: flex; gap: 10px; margin: 14px 0; }
+  .roadmap-q { flex: 1; border-radius: 8px; padding: 12px 14px; font-size: 12px; border: 1px solid; }
+  .roadmap-q h4 { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+  .roadmap-q ul { list-style: none; line-height: 1.9; }
+  .q1 { background: #fffbf0; border-color: #f5d89a; } .q1 h4 { color: #856404; }
+  .q2 { background: #fff0f0; border-color: #f5a9a9; } .q2 h4 { color: #c00; }
+  .q3 { background: #f0fff4; border-color: #b7ebc8; } .q3 h4 { color: #1a7a3e; }
+  .q4 { background: #f0f4ff; border-color: #a8c4f5; } .q4 h4 { color: #0550ae; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 10px 0; }
+  th { background: #f6f8fa; border: 1px solid #d0d7de; padding: 7px 10px; text-align: left; font-weight: 600; color: #57606a; text-transform: uppercase; letter-spacing: .04em; font-size: 11px; }
+  td { border: 1px solid #d0d7de; padding: 7px 10px; vertical-align: top; line-height: 1.5; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .badge { display: inline-block; border-radius: 4px; padding: 2px 7px; font-size: 11px; font-weight: 600; }
+  .b-green  { background: #d4edda; color: #1a7a3e; border: 1px solid #b7ebc8; }
+  .b-blue   { background: #e8f0fe; color: #0550ae; border: 1px solid #a8c4f5; }
+  .b-orange { background: #fff0e6; color: #c44b00; border: 1px solid #f5c89a; }
+  .b-purple { background: #f0ebff; color: #6e3db5; border: 1px solid #c5adf5; }
+  .b-gray   { background: #f0f0f0; color: #57606a; border: 1px solid #d0d7de; }
+  .b-red    { background: #ffeef0; color: #c00;    border: 1px solid #f5a9a9; }
+  .b-yellow { background: #fffbf0; color: #856404; border: 1px solid #f5d89a; }
+  .alert { border-radius: 0 6px 6px 0; padding: 12px 16px; margin: 12px 0; border-left: 4px solid; font-size: 13px; line-height: 1.6; }
+  .alert-warn    { background: #fff8f0; border-color: #e05d00; }
+  .alert-warn strong { color: #c44b00; }
+  .alert-info    { background: #f0f4ff; border-color: #0550ae; }
+  .alert-info strong { color: #0550ae; }
+  .alert-success { background: #f0fff4; border-color: #1a7a3e; }
+  .alert-success strong { color: #1a7a3e; }
+  .alert-red     { background: #fff0f0; border-color: #c00; }
+  .alert-red strong { color: #c00; }
+  .epic-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+  .epic { border: 1px solid #e8e8e8; border-radius: 6px; padding: 10px 14px; font-size: 12px; background: #fafafa; }
+  .epic .key   { font-weight: 700; color: #0550ae; font-size: 11px; }
+  .epic .title { font-size: 13px; font-weight: 600; margin: 2px 0; color: #1a1a2e; }
+  .epic .emeta  { color: #888; font-size: 11px; }
+  .person { display: inline-flex; align-items: center; gap: 5px; background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 600; margin: 2px; }
+  .fit-row { display: flex; gap: 6px; align-items: flex-start; margin: 6px 0; font-size: 13px; line-height: 1.6; }
+  .fit-icon { flex-shrink: 0; width: 22px; }
+  .cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .release-timeline { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0; }
+  .rel { padding: 5px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; border: 1px solid; }
+  .rel-past    { background: #f0f0f0; border-color: #d0d7de; color: #888; }
+  .rel-current { background: #fff8f0; border-color: #e05d00; color: #c44b00; }
+  .rel-near    { background: #f0fff4; border-color: #b7ebc8; color: #1a7a3e; }
+  .rel-tp      { background: #f0ebff; border-color: #c5adf5; color: #6e3db5; }
+  .rel-ga      { background: #e8f0fe; border-color: #a8c4f5; color: #0550ae; }
+  .rel-future  { background: #fafafa; border-color: #e8e8e8; color: #aaa; }
+  code { background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 3px; padding: 1px 5px; font-size: 11px; font-family: monospace; color: #c44b00; }
+  footer { text-align: center; color: #aaa; font-size: 11px; margin-top: 16px; padding: 8px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HERO -->
+<div class="hero">
+  <h1>PitCrew / RHAS &mdash; Full Status Report</h1>
+  <div class="meta">
+    <span>June 23, 2026</span>
+    <span>Mode: Full (with Slack Digest)</span>
+    <span>Release: RHAS-0626</span>
+    <span><a href="https://redhat.atlassian.net/jira/software/c/projects/PITCREW/boards/4323" style="color:#8cc4ff;text-decoration:none;">Board 4323</a></span>
+    <span>45 epics &middot; 28 sprint tickets &middot; ~100 Slack msgs (7d)</span>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <h3>Contents</h3>
+  <a href="#exec">1. Executive Summary</a>
+  <a href="#changes">2. Changes</a>
+  <a href="#strategy">3. Strategic Guide</a>
+  <a href="#roadmap">4. 2026 Roadmap</a>
+  <a href="#releases">5. RHAS Releases</a>
+  <a href="#epics">6. Features &amp; Epics</a>
+  <a href="#sprint">7. Current Sprint</a>
+  <a href="#slack">8. Slack Digest</a>
+  <a href="#alignment">9. Strategy &harr; Work Alignment</a>
+  <a href="#ahead">10. Looking Ahead</a>
+</div>
+
+<!-- 1. EXECUTIVE SUMMARY -->
+<div class="card" id="exec">
+  <div class="card-title" style="border-color:#0550ae;">&#128202; Executive Summary</div>
+  <div class="alert alert-warn">
+    <strong>Overall: At Risk.</strong> Sprint velocity is healthy at 54% closed (15/28), with strong output from Benny Zlotnik (6 closures) and Bella Khizgiyaev (4 closures). However, 5 of 10 in-progress epics have no assignee &mdash; a systemic ownership gap. Hubert Stefanski's transition to RHAS puts PITCREW-161 (AIB prototyping) at risk. The team is shipping well tactically but needs epic-level ownership assignments to maintain Q3 RHAS GA trajectory.
+  </div>
+  <p>Key win: CTC pipeline work (PITCREW-444, 443, 441, 433) and jumpstarter improvements (PITCREW-445, 448, 409) all closed this sprint. Lab recovery (C2 RTO/RPO) continues steady under Jeff Ligon (PITCREW-222, 223). Biggest gap: no epic owners for QE Readiness (PITCREW-337), Konflux Onboarding (PITCREW-335), RH-SDLC Compliance (PITCREW-334), CTC (PITCREW-331), or External Dependency Resilience (PITCREW-329).</p>
+</div>
+
+<!-- 2. CHANGES -->
+<div class="card" id="changes">
+  <div class="card-title" style="border-color:#57606a;">&#128260; Changes Since Last Report</div>
+  <div class="alert alert-info">
+    <strong>First run &mdash; no baseline comparison.</strong> This is the inaugural report from the PitCrew agent. All subsequent reports will track epic status changes, sprint velocity deltas, and assignee movements against this snapshot.
+  </div>
+</div>
+
+<!-- 3. STRATEGIC GUIDE -->
+<div class="card" id="strategy">
+  <div class="card-title" style="border-color:#6e3db5;">&#127919; Strategic Guide</div>
+  <p style="color:#888;font-size:12px;margin-bottom:12px;">Source: RHAS Strategic Guide (cached Jun 8, 2026)</p>
+  <div class="tier-grid">
+    <div class="tier tier-1">
+      <h4>Tier 1 &mdash; Standalone Builder</h4>
+      <ul>
+        <li>RHEL + AIB + Language Containers</li>
+        <li>Target: Systems Admins</li>
+        <li>Max control, portable artifacts</li>
+        <li>Entry point &rarr; value vacuum for OCP</li>
+      </ul>
+    </div>
+    <div class="tier tier-2">
+      <h4>Tier 2 &mdash; Automotive Suite (RHAS)</h4>
+      <ul>
+        <li>OCP + Builder Operator + Jumpstarter</li>
+        <li>Pipelines + GitOps + Keycloak</li>
+        <li>Target: Platform Engineers</li>
+        <li>The core shipped product</li>
+      </ul>
+    </div>
+    <div class="tier tier-3">
+      <h4>Tier 3 &mdash; Unified IDP</h4>
+      <ul>
+        <li>+ Dev Spaces + Developer Hub + Quay</li>
+        <li>Target: CIO/CISO, greenfield</li>
+        <li>Single vendor, centralized governance</li>
+        <li>Long-term north star</li>
+      </ul>
+    </div>
+  </div>
+  <p><strong>Delivery model:</strong> IaC (Ansible playbooks), Kubernetes Operators for lifecycle, persona-driven docs. Dual-track release: OS-aligned majors + continuous delivery for Builder/Jumpstarter via feature gates.</p>
+  <p><strong>Security posture:</strong> Supply chain review (Jumpstarter deps). Least privilege &mdash; privileged containers mitigated with guidance now, removed architecturally long-term.</p>
+</div>
+
+<!-- 4. ROADMAP -->
+<div class="card" id="roadmap">
+  <div class="card-title" style="border-color:#c00;">&#128506; 2026 Roadmap &mdash; "Stabilize and Scale"</div>
+  <div class="roadmap-row">
+    <div class="roadmap-q q2">
+      <h4>Q2 (Current)</h4>
+      <ul>
+        <li>RHIVOS 2.0 GA (ToolChain)</li>
+        <li>OCI/bootc images</li>
+        <li>Safe Rust/C/C++ binaries</li>
+        <li>QC 8979/8255 + NXP S32N79</li>
+        <li>ISO 21434 cert (ToolChain)</li>
+        <li>Tech Preview milestone target</li>
+      </ul>
+    </div>
+    <div class="roadmap-q q3">
+      <h4>Q3 (Target)</h4>
+      <ul>
+        <li><strong>RHAS / ADP General Availability</strong></li>
+        <li>Builder full release (SSO, RPMs)</li>
+        <li>Jumpstarter full release</li>
+        <li>GitLab CI/IDE + GitHub CI/IDE</li>
+        <li>OpenTelemetry + Alerting</li>
+        <li>Security Audit + UI in OCP</li>
+      </ul>
+    </div>
+  </div>
+  <div class="alert alert-warn">
+    <strong>Strategic risks:</strong> exida certification scope (FuSa body) could shift Q3 timeline. Partner driver maturity (NVIDIA, NXP, QC) drives hardware targets. QNX competitive pressure on boot-time and security metrics.
+  </div>
+</div>
+
+<!-- 5. RELEASES -->
+<div class="card" id="releases">
+  <div class="card-title" style="border-color:#1a7a3e;">&#128230; RHAS Releases</div>
+  <div class="release-timeline">
+    <span class="rel rel-past">RHAS-0426 DP</span>
+    <span class="rel rel-past">RHAS-0526</span>
+    <span class="rel rel-current">RHAS-0626 &larr; current</span>
+    <span class="rel rel-near">RHAS-0726</span>
+    <span class="rel rel-near">RHAS-0826</span>
+    <span class="rel rel-tp">RHAS-0926 Tech Preview</span>
+    <span class="rel rel-future">RHAS-1026</span>
+    <span class="rel rel-future">RHAS-1126</span>
+    <span class="rel rel-ga">RHAS-1226 GA / 1.0</span>
+  </div>
+  <h3>Epic Targets by Release</h3>
+  <table>
+    <tr><th>Release</th><th>Epics Targeting</th><th>Status</th></tr>
+    <tr>
+      <td><span class="badge b-orange">RHAS-0626</span></td>
+      <td>QE Readiness (337), Konflux Onboarding (335), RH-SDLC Compliance (334), CTC (331), External Dep Resilience (329), Distribution (336)</td>
+      <td>3 In Progress, 3 New &mdash; <span class="badge b-red">At Risk</span></td>
+    </tr>
+    <tr>
+      <td><span class="badge b-green">RHAS-0926 TP</span></td>
+      <td>End-to-End Trace (291), Android VT Deployment (298), Lab C2 RPO (223), Lab C2 RTO (222)</td>
+      <td>4 In Progress &mdash; <span class="badge b-blue">On Track</span></td>
+    </tr>
+    <tr>
+      <td><span class="badge b-blue">RHAS-1226 GA</span></td>
+      <td>Platform Web Console (398), Demo Cluster (402), Ship with Evidence (343), Product Docs (338)</td>
+      <td>4 New &mdash; <span class="badge b-gray">Not Started</span></td>
+    </tr>
+  </table>
+</div>
+
+<!-- 6. EPICS -->
+<div class="card" id="epics">
+  <div class="card-title" style="border-color:#0550ae;">&#128640; Features &amp; Epics</div>
+
+  <h3>In Progress <span class="badge b-blue">10</span></h3>
+  <div class="epic-grid">
+    <div class="epic"><div class="key">PITCREW-384</div><div class="title">Use Jumpstarter for testing RHIVOS</div><div class="emeta"><span class="badge b-blue">In Progress</span> Miguel Angel Ajo Pelayo</div></div>
+    <div class="epic"><div class="key">PITCREW-337</div><div class="title">QE Readiness</div><div class="emeta"><span class="badge b-blue">In Progress</span> <span class="badge b-red">Unassigned</span></div></div>
+    <div class="epic"><div class="key">PITCREW-335</div><div class="title">Konflux Onboarding</div><div class="emeta"><span class="badge b-blue">In Progress</span> <span class="badge b-red">Unassigned</span></div></div>
+    <div class="epic"><div class="key">PITCREW-334</div><div class="title">RH-SDLC Compliance</div><div class="emeta"><span class="badge b-blue">In Progress</span> <span class="badge b-red">Unassigned</span></div></div>
+    <div class="epic"><div class="key">PITCREW-331</div><div class="title">CTC</div><div class="emeta"><span class="badge b-blue">In Progress</span> <span class="badge b-red">Unassigned</span></div></div>
+    <div class="epic"><div class="key">PITCREW-329</div><div class="title">External Dependency Resilience</div><div class="emeta"><span class="badge b-blue">In Progress</span> <span class="badge b-red">Unassigned</span></div></div>
+    <div class="epic"><div class="key">PITCREW-298</div><div class="title">Android Virtual Target Deployment</div><div class="emeta"><span class="badge b-blue">In Progress</span> <span class="badge b-red">Unassigned</span></div></div>
+    <div class="epic"><div class="key">PITCREW-291</div><div class="title">End-to-End Trace</div><div class="emeta"><span class="badge b-blue">In Progress</span> Roderick Kieley</div></div>
+    <div class="epic"><div class="key">PITCREW-223</div><div class="title">Lab: meet C2 recovery point objective</div><div class="emeta"><span class="badge b-blue">In Progress</span> Jeff Ligon</div></div>
+    <div class="epic"><div class="key">PITCREW-222</div><div class="title">Lab: meet C2 recovery time objective</div><div class="emeta"><span class="badge b-blue">In Progress</span> Jeff Ligon</div></div>
+  </div>
+
+  <h3>New / Planned <span class="badge b-gray">17</span></h3>
+  <div class="epic-grid">
+    <div class="epic"><div class="key">PITCREW-402</div><div class="title">Demo cluster</div><div class="emeta"><span class="badge b-gray">New</span></div></div>
+    <div class="epic"><div class="key">PITCREW-398</div><div class="title">Platform Web Console</div><div class="emeta"><span class="badge b-gray">New</span></div></div>
+    <div class="epic"><div class="key">PITCREW-396</div><div class="title">Pitcrew AI</div><div class="emeta"><span class="badge b-gray">New</span></div></div>
+    <div class="epic"><div class="key">PITCREW-343</div><div class="title">Ship with Evidence</div><div class="emeta"><span class="badge b-gray">New</span></div></div>
+    <div class="epic"><div class="key">PITCREW-339</div><div class="title">Python Distribution</div><div class="emeta"><span class="badge b-gray">New</span></div></div>
+    <div class="epic"><div class="key">PITCREW-338</div><div class="title">Product Documentation</div><div class="emeta"><span class="badge b-gray">New</span></div></div>
+    <div class="epic"><div class="key">PITCREW-336</div><div class="title">Distribution</div><div class="emeta"><span class="badge b-gray">New</span></div></div>
+    <div class="epic"><div class="key">PITCREW-332</div><div class="title">ATC</div><div class="emeta"><span class="badge b-gray">New</span></div></div>
+    <div class="epic"><div class="key">PITCREW-330</div><div class="title">Lab Infrastructure</div><div class="emeta"><span class="badge b-gray">New</span></div></div>
+    <div class="epic"><div class="key">PITCREW-300</div><div class="title">Virtual Interface Simulation</div><div class="emeta"><span class="badge b-gray">New</span></div></div>
+    <div class="epic"><div class="key">PITCREW-299</div><div class="title">Virtual Target Orchestration</div><div class="emeta"><span class="badge b-gray">New</span></div></div>
+    <div class="epic"><div class="key">PITCREW-296</div><div class="title">Cross-Vertical Identity</div><div class="emeta"><span class="badge b-gray">New</span></div></div>
+    <div class="epic"><div class="key">PITCREW-295</div><div class="title">Seconds-per-Iteration</div><div class="emeta"><span class="badge b-gray">New</span></div></div>
+    <div class="epic"><div class="key">PITCREW-294</div><div class="title">Autonomous Platform Reactions</div><div class="emeta"><span class="badge b-gray">New</span></div></div>
+    <div class="epic"><div class="key">PITCREW-293</div><div class="title">Ask the Platform</div><div class="emeta"><span class="badge b-gray">New</span></div></div>
+    <div class="epic"><div class="key">PITCREW-292</div><div class="title">Unified Developer Session</div><div class="emeta"><span class="badge b-gray">New</span></div></div>
+    <div class="epic"><div class="key">PITCREW-161</div><div class="title">ATC/RHAS AIB prototyping</div><div class="emeta"><span class="badge b-gray">New</span> Hubert Stefanski <span class="badge b-yellow">Transitioning</span></div></div>
+  </div>
+
+  <h3>Closed <span class="badge b-green">18</span></h3>
+  <p style="font-size:12px;color:#888;">PITCREW-171, 172, 173, 176, 180, 185, 194, 195, 196, 197, 200, 201, 202, 207, 208, 210, 211, 212</p>
+</div>
+
+<!-- 7. SPRINT -->
+<div class="card" id="sprint">
+  <div class="card-title" style="border-color:#c44b00;">&#9889; Current Sprint</div>
+
+  <div style="display:flex;gap:10px;margin-bottom:16px;">
+    <div style="flex:1;text-align:center;padding:14px;background:#d4edda;border-radius:8px;border:1px solid #b7ebc8;"><div style="font-size:24px;font-weight:800;color:#1a7a3e;">15</div><div style="font-size:11px;color:#1a7a3e;font-weight:600;">CLOSED</div></div>
+    <div style="flex:1;text-align:center;padding:14px;background:#e8f0fe;border-radius:8px;border:1px solid #a8c4f5;"><div style="font-size:24px;font-weight:800;color:#0550ae;">6</div><div style="font-size:11px;color:#0550ae;font-weight:600;">IN PROGRESS</div></div>
+    <div style="flex:1;text-align:center;padding:14px;background:#f0ebff;border-radius:8px;border:1px solid #c5adf5;"><div style="font-size:24px;font-weight:800;color:#6e3db5;">2</div><div style="font-size:11px;color:#6e3db5;font-weight:600;">REVIEW</div></div>
+    <div style="flex:1;text-align:center;padding:14px;background:#f0f0f0;border-radius:8px;border:1px solid #d0d7de;"><div style="font-size:24px;font-weight:800;color:#57606a;">5</div><div style="font-size:11px;color:#57606a;font-weight:600;">NEW</div></div>
+  </div>
+
+  <h3>Active Tickets</h3>
+  <table>
+    <tr><th>Key</th><th>Type</th><th>Summary</th><th>Assignee</th><th>Status</th></tr>
+    <tr><td>PITCREW-435</td><td>Bug</td><td>beforeLease hook with onFailure endLease does not end the lease</td><td>Miguel Angel Ajo Pelayo</td><td><span class="badge b-blue">In Progress</span></td></tr>
+    <tr><td>PITCREW-417</td><td>Task</td><td>Bump Python to [3.12-3.14]</td><td>Jeff Ligon</td><td><span class="badge b-blue">In Progress</span></td></tr>
+    <tr><td>PITCREW-416</td><td>Sub-task</td><td>C2 Recovery: add Automotive Operator to ArgoCD</td><td>Mohamad Abo Ras</td><td><span class="badge b-blue">In Progress</span></td></tr>
+    <tr><td>PITCREW-403</td><td>Bug</td><td>Flaky E2E: "Connection to exporter lost"</td><td>Evgeni Vakhonin</td><td><span class="badge b-blue">In Progress</span></td></tr>
+    <tr><td>PITCREW-393</td><td>Story</td><td>e2e downstream testing: acquire prerequisites from ATC admins</td><td>Evgeni Vakhonin</td><td><span class="badge b-blue">In Progress</span></td></tr>
+    <tr><td>PITCREW-227</td><td>Story</td><td>Runbook for service rebuild from zero</td><td>Miguel Angel Ajo Pelayo</td><td><span class="badge b-blue">In Progress</span></td></tr>
+    <tr><td>PITCREW-407</td><td>Story</td><td>builder: improve E2E coverage &amp; identify e2e tests</td><td>Mohamad Abo Ras</td><td><span class="badge b-purple">Review</span></td></tr>
+    <tr><td>PITCREW-119</td><td>Story</td><td>productization: onboard builder upstream to Konflux</td><td>Bella Khizgiyaev</td><td><span class="badge b-purple">Review</span></td></tr>
+    <tr><td>PITCREW-450</td><td>Task</td><td>[Lab] ti-jacinto-j784s4xevm-06: ukiboot boot failure</td><td>Shawn Doherty</td><td><span class="badge b-gray">New</span></td></tr>
+    <tr><td>PITCREW-440</td><td>Task</td><td>jumpstarter: release 0.9.0</td><td>&mdash;</td><td><span class="badge b-gray">New</span></td></tr>
+    <tr><td>PITCREW-439</td><td>Task</td><td>builder: release 0.2.0</td><td>Benny Zlotnik</td><td><span class="badge b-gray">New</span></td></tr>
+    <tr><td>PITCREW-438</td><td>Task</td><td>Update lab to Jumpstarter 0.9.0 after release</td><td>Miguel Angel Ajo Pelayo</td><td><span class="badge b-gray">New</span></td></tr>
+    <tr><td>PITCREW-437</td><td>Bug</td><td>beforeLease hook failure does not kill the exporter</td><td>&mdash;</td><td><span class="badge b-gray">New</span></td></tr>
+  </table>
+
+  <h3>Closed This Sprint <span class="badge b-green">15</span></h3>
+  <table>
+    <tr><th>Key</th><th>Summary</th><th>Assignee</th></tr>
+    <tr><td>PITCREW-448</td><td>jumpstarter: support in-exporter CA for u-boot boards</td><td>Benny Zlotnik</td></tr>
+    <tr><td>PITCREW-447</td><td>builder: validate shell scripts with shellcheck</td><td>Benny Zlotnik</td></tr>
+    <tr><td>PITCREW-446</td><td>builder: manifest validation</td><td>Benny Zlotnik</td></tr>
+    <tr><td>PITCREW-445</td><td>jumpstarter: support for description in ExporterAccessPolicy</td><td>Benny Zlotnik</td></tr>
+    <tr><td>PITCREW-444</td><td>ctc: support NXP in the TC pipelines</td><td>Benny Zlotnik</td></tr>
+    <tr><td>PITCREW-443</td><td>ctc: autobump tmt to match testing-farm</td><td>Benny Zlotnik</td></tr>
+    <tr><td>PITCREW-441</td><td>CTC: Fix report generation for multiple plans run</td><td>Bella Khizgiyaev</td></tr>
+    <tr><td>PITCREW-436</td><td>Restarting exporter with hooks kills active lease</td><td>Miguel Angel Ajo Pelayo</td></tr>
+    <tr><td>PITCREW-433</td><td>CTC: fix results-junit.xml generation on pipeline failure</td><td>Bella Khizgiyaev</td></tr>
+    <tr><td>PITCREW-430</td><td>builder: caib login add --token option</td><td>Bella Khizgiyaev</td></tr>
+    <tr><td>PITCREW-426</td><td>Reorganize gitops repositories</td><td>Miguel Angel Ajo Pelayo</td></tr>
+    <tr><td>PITCREW-425</td><td>C2: Migrate existing cluster to new ArgoCD structure</td><td>Miguel Angel Ajo Pelayo</td></tr>
+    <tr><td>PITCREW-420</td><td>builder: OIDC CA certificates from Secrets/ConfigMaps</td><td>Bella Khizgiyaev</td></tr>
+    <tr><td>PITCREW-419</td><td>jumpstarter: OIDC CA certificates from Secrets/ConfigMaps</td><td>Bella Khizgiyaev</td></tr>
+    <tr><td>PITCREW-409</td><td>jumpstarter JEP: virtual scalable exporters</td><td>Miguel Angel Ajo Pelayo</td></tr>
+  </table>
+</div>
+
+<!-- 8. SLACK DIGEST -->
+<div class="card" id="slack">
+  <div class="card-title" style="border-color:#e05d00;">&#128172; Slack Digest (7 days)</div>
+  <div class="cols2">
+    <div>
+      <h3>#team-pitcrew-automotive</h3>
+      <p style="font-size:12px;color:#888;">~50 messages &middot; Jun 16&ndash;23</p>
+      <h4>Top Contributors</h4>
+      <div>
+        <span class="person">majopela (33)</span>
+        <span class="person">ywada (6)</span>
+        <span class="person">bzlotnik (4)</span>
+        <span class="person">jumpstarter-lab-alerts (2)</span>
+        <span class="person">mkuehl (2)</span>
+        <span class="person">bbenson (1)</span>
+        <span class="person">aefrat (1)</span>
+        <span class="person">rkieley (1)</span>
+      </div>
+      <h4>Key Themes</h4>
+      <ul style="font-size:12px;line-height:1.9;padding-left:16px;">
+        <li><strong>Lab maintenance:</strong> ti-jacinto-j784s4xevm-06 boot failure (ukiboot unable to find active A/B slot). SA8775p ES21 firmware reflash successful. 55 PASS, 4 FAIL, 6 XFAIL in lab smoke.</li>
+        <li><strong>OCP cluster upgrade:</strong> bzlotnik flagged need to upgrade cluster to 4.20+ for new features. majopela: bring to toolchain sync for service slot.</li>
+        <li><strong>AI bringup agent:</strong> bbenson pushed bringup agent with caib + jmp functionality to GitLab (automotive/ai/agents/hardware).</li>
+        <li><strong>Japan AWS infra:</strong> ywada coordinating load balancer config for Yamaha endpoint, insecure TLS workaround pending response.</li>
+        <li><strong>Post-2.0 planning:</strong> aefrat and majopela discussed timing for post-RHIVOS 2.0 activities, targeting start of July. Need stakeholder input.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>#forum-jumpstarter</h3>
+      <p style="font-size:12px;color:#888;">~50 messages &middot; Jun 16&ndash;23</p>
+      <h4>Top Contributors</h4>
+      <div>
+        <span class="person">majopela (19)</span>
+        <span class="person">chai-bot (9)</span>
+        <span class="person">sgromeni (6)</span>
+        <span class="person">sdoherty (6)</span>
+        <span class="person">bzlotnik (5)</span>
+        <span class="person">delfassy (2)</span>
+        <span class="person">mkorpers (2)</span>
+        <span class="person">jligon (1)</span>
+      </div>
+      <h4>Key Themes</h4>
+      <ul style="font-size:12px;line-height:1.9;padding-left:16px;">
+        <li><strong>Board firmware recovery:</strong> sgromeni recovered QC board firmware with majopela's guidance (uv qcom-firmware). Process documented in lab-management repo.</li>
+        <li><strong>Exporter hook bugs:</strong> Active work on beforeLease hook failure handling (PITCREW-435, 437). Hook failures not properly killing exporters or ending leases.</li>
+        <li><strong>CI activity:</strong> chai-bot (9 messages) indicating healthy CI/CD pipeline activity for jumpstarter builds.</li>
+        <li><strong>Jumpstarter 0.9.0 prep:</strong> Release tickets created (PITCREW-440), lab update planned (PITCREW-438) after release.</li>
+        <li><strong>Builder 0.2.0 prep:</strong> Benny Zlotnik assigned for builder release (PITCREW-439), shellcheck and manifest validation already closed.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 9. ALIGNMENT -->
+<div class="card" id="alignment">
+  <div class="card-title" style="border-color:#1a7a3e;">&#9878;&#65039; Strategy &harr; Work Alignment</div>
+  <h3>Well-Aligned</h3>
+  <div class="fit-row"><div class="fit-icon">&#9989;</div><div><strong>CTC pipeline maturity</strong> &mdash; NXP support (PITCREW-444), tmt autobump (443), report generation fix (441, 433) directly support Tier 2 testing infrastructure.</div></div>
+  <div class="fit-row"><div class="fit-icon">&#9989;</div><div><strong>Jumpstarter reliability</strong> &mdash; Hook fixes (PITCREW-436, 435), OIDC CA support (419), virtual scalable exporters JEP (409) advance the Tier 2 HiL testing story.</div></div>
+  <div class="fit-row"><div class="fit-icon">&#9989;</div><div><strong>Builder productization</strong> &mdash; Konflux onboarding (PITCREW-119 in Review), shellcheck validation (447), manifest validation (446), OIDC CA (420) align with Tier 1 standalone builder maturity.</div></div>
+  <div class="fit-row"><div class="fit-icon">&#9989;</div><div><strong>Lab C2 recovery</strong> &mdash; ArgoCD migration (425, 426), automotive operator in ArgoCD (416), runbook (227) strengthen operational resilience under Jeff Ligon's leadership.</div></div>
+  <div class="fit-row"><div class="fit-icon">&#9989;</div><div><strong>End-to-End Trace</strong> &mdash; Roderick Kieley ramping up (PITCREW-291), aligns with Q3 OpenTelemetry + Monitoring roadmap goal.</div></div>
+  <div class="fit-row"><div class="fit-icon">&#9989;</div><div><strong>AI for automotive</strong> &mdash; bbenson's bringup agent with caib+jmp extends platform intelligence (PITCREW-396 adjacent).</div></div>
+
+  <h3>Gaps &amp; Concerns</h3>
+  <div class="fit-row"><div class="fit-icon">&#9888;&#65039;</div><div><strong>5 in-progress epics have no owner</strong> &mdash; PITCREW-337 (QE Readiness), 335 (Konflux), 334 (RH-SDLC), 331 (CTC), 329 (Ext Dep Resilience). These are execution-critical for RHAS-0926 TP milestone.</div></div>
+  <div class="fit-row"><div class="fit-icon">&#9888;&#65039;</div><div><strong>Hubert Stefanski transition risk</strong> &mdash; Owns PITCREW-161 (AIB prototyping). Approved for RHAS transition; knowledge transfer plan overdue. No replacement assigned.</div></div>
+  <div class="fit-row"><div class="fit-icon">&#9888;&#65039;</div><div><strong>Distribution epic (PITCREW-336) is New with no assignee</strong> &mdash; Intersects with RHIVOS QC Layered Product distribution chain (AUTOBU-1076). Sequential dependency risk.</div></div>
+  <div class="fit-row"><div class="fit-icon">&#9888;&#65039;</div><div><strong>Product Documentation (PITCREW-338) not started</strong> &mdash; Persona-driven docs are core to the strategic delivery model. No owner, no timeline.</div></div>
+  <div class="fit-row"><div class="fit-icon">&#9888;&#65039;</div><div><strong>Flaky E2E tests (PITCREW-403) persisting</strong> &mdash; "Connection to exporter lost" flakiness undermines CI confidence. In Progress under Evgeni but duration unclear.</div></div>
+</div>
+
+<!-- 10. LOOKING AHEAD -->
+<div class="card" id="ahead">
+  <div class="card-title" style="border-color:#444;">&#128301; Looking Ahead</div>
+  <div class="cols2">
+    <div>
+      <h4 style="color:#c00;">&#128308; This Week (Immediate)</h4>
+      <ul style="font-size:12px;line-height:2;padding-left:16px;">
+        <li>Resolve ti-jacinto boot failure (PITCREW-450, Shawn Doherty)</li>
+        <li>Jumpstarter 0.9.0 release cut (PITCREW-440) + lab update (438)</li>
+        <li>Builder 0.2.0 release (PITCREW-439, Benny Zlotnik)</li>
+        <li>Land beforeLease hook fix (PITCREW-435)</li>
+      </ul>
+      <h4 style="color:#c44b00;">&#128992; This Month (June)</h4>
+      <ul style="font-size:12px;line-height:2;padding-left:16px;">
+        <li>Builder Konflux onboarding review completion (PITCREW-119)</li>
+        <li>E2E downstream testing prerequisites (PITCREW-393)</li>
+        <li>Builder E2E coverage review (PITCREW-407)</li>
+        <li>Python 3.12-3.14 bump (PITCREW-417)</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#0550ae;">&#128309; Strategic Setup (Q3)</h4>
+      <ul style="font-size:12px;line-height:2;padding-left:16px;">
+        <li>Assign owners to 5 unowned in-progress epics before sprint planning</li>
+        <li>OCP cluster upgrade to 4.20+ (needs service slot in toolchain sync)</li>
+        <li>Begin E2E Trace rollout (PITCREW-291, Roderick Kieley)</li>
+        <li>Post-RHIVOS 2.0 planning kickoff (target: start of July)</li>
+      </ul>
+      <h4 style="color:#856404;">&#9889; Team Health</h4>
+      <ul style="font-size:12px;line-height:2;padding-left:16px;">
+        <li>Benny Zlotnik: high output (6 closures) &mdash; monitor for burnout risk</li>
+        <li>majopela: dominant Slack presence (52 msgs across channels) &mdash; healthy engagement, knowledge hub</li>
+        <li>Hubert transition: plan handoff for PITCREW-161 before departure</li>
+        <li>Roderick Kieley: 22 days into onboarding, active on E2E Trace</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  Generated: June 23, 2026 &middot; Sources: Jira PITCREW (45 epics, 28 sprint tickets) &middot; Slack #team-pitcrew-automotive (~50 msgs) &middot; Slack #forum-jumpstarter (~50 msgs) &middot; Strategic Guide (cached Jun 8) &middot; Mode: full
+</footer>
+
+</div>
+</body>
+</html>
