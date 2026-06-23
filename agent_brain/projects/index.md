@@ -15,6 +15,7 @@ comes up in conversation or needs context for a decision.
 
 - **[Quarterly Connection Agent](quarterly-connection-agent.md)** — Stateful process-oriented agent for quarterly evaluation reports. Applies agent-forge design principles to rebuild the [QC report CLI](https://gitlab.cee.redhat.com/aefrat/qc_report_agent) as a Claude Code skill with memory. Knowledge base at [qc-agent/](qc-agent/index.md).
 - **[Manager Report Agent](manager-report-agent.md)** — Stateful agent wrapping the daily/weekly/weekend engineering status report script. Adds identity, memory, verification, and learning to the existing Python execution engine. Knowledge base at [mr-agent/](mr-agent/index.md).
+- **[Project Pulse Agent](project-pulse-agent.md)** — Post-report intelligence layer. Cross-references manager report Slack data against active project files, proposes sourced updates. Runs after each manager report (interactive) or on demand.
 
 ## Background
 

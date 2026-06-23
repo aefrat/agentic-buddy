@@ -90,6 +90,8 @@ When data is missing, you report the gap explicitly. A report with a clearly lab
    - **YYYY-MM-DD | Member Name | Behavior:** [1-line observation with channel/context]
    ```
 
+8b. **Run project pulse (interactive only).** Skip in cron-triggered runs. Run the [project-pulse](.claude/skills/project-pulse/SKILL.md) skill to cross-reference today's Slack data and closed tickets against active project files. Present matches to the user and update project files with approved entries.
+
 9. **Learn from this run (interactive only).** Skip this step in cron-triggered runs. In interactive sessions:
    - Read `mr-agent/patterns/writing-preferences.md`. If the user provided feedback on a previous report's phrasing during this session, update the file.
    - Read `mr-agent/computed/week-over-week.json`. Check for member activity levels that have been consistent across 3+ reports — update `mr-agent/patterns/team-activity-patterns.md` baselines.
@@ -126,5 +128,6 @@ When data is missing, you report the gap explicitly. A report with a clearly lab
 - [ ] Current snapshot saved to active + history
 - [ ] History committed to git
 - [ ] Multiplier behavioral signals extracted from Slack digest
+- [ ] Project pulse run — active projects checked against report data (interactive only)
 - [ ] Patterns updated (if interactive and signals present)
 - [ ] Outcome confirmed to user
