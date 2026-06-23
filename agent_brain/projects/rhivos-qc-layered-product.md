@@ -190,3 +190,4 @@ Parallel: Compose/pipeline — needs tickets first
 - [SKU/ProductID Research](rhivos-sku-productid-research.md) — full SKU→CDN chain analysis, Voyager comparison
 - [RHIVOS 2.0 RC3](RHIVOS_2_0_release_RC3.md) — RC3 release (CDN product ID push issue is related)
 - [RHIVOS Release Approach](rhivos-release-approach.md) — Brew tag structure, STAG proposal
+- [Getting Engineering ID (EngID)](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196253131/Getting+Engineering+ID+EngID) — Confluence doc by Kanitha Chim documenting the full EngID creation process, key repos (product-service-config-auto, cdn-utils, psc-lib), and PSCA team contact
