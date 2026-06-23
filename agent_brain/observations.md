@@ -1,6 +1,6 @@
 ---
 last_accessed: 2026-06-23
-access_count: 13
+access_count: 14
 created: 2026-06-01
 ---
 
@@ -57,6 +57,8 @@ Resolved observations are moved to the bottom.
 - **2026-06-22:** "AI policy compliance checklist for internal agent tools" — when evaluating whether an AI tool/harness is compliant, check: (1) license (Red Hat Approved Open Source?), (2) execution environment (local/approved infra?), (3) model provider (approved?), (4) data classification (personal/confidential/customer?), (5) human review of output (required by policy). Applied to Pi harness analysis for pipeline debugger. Generalizable to any team building with open-source AI tools. (seen: 1)
 - **2026-06-22:** "Production use evidence from Slack" — structured diagnosis posts in team channels are strong evidence that an AI agent has moved beyond PoC to genuine operational use. The diagnosis format (summary → failed jobs → root cause → resolution → context → recommendations) and cross-incident reasoning (e.g., tracing lease starvation to a cleanup crash 2 days earlier) demonstrate production-grade quality beyond what metrics like "148 tests, 84% coverage" show. (seen: 1)
 - **2026-06-22:** "Practitioner synthesis as contribution type" — when someone builds real systems, extracts heuristics, and coins precise terms for unnamed patterns, the value is in the packaging, not the underlying insights. Agent-forge's 7 principles all have prior art (Anthropic, CoALA, OWASP, agentskills.io) but the novel coinages ("disconfirmation gate," "computed store," "skill-permission parity") fill genuine naming gaps in the field. Pattern: naming unnamed practices is a legitimate contribution even when the underlying insights aren't novel — it makes tacit knowledge transferable. (seen: 1)
+- **2026-06-23:** "Post-report intelligence layer" — running an analysis agent immediately after a data-gathering report to cross-reference findings against persistent knowledge (project files). The report gathers raw signals; the pulse agent interprets them against known context. Generalizable beyond project updates — could detect emerging initiatives, stale projects, or cross-project dependencies. Applied: Project Pulse agent as step 8b of manager report. (seen: 1)
+- **2026-06-23:** "Agent chaining by hook" — embedding one agent's trigger inside another agent's procedure (Project Pulse as step 8b of manager report). The triggering agent doesn't know about the chained agent's internals — it just invokes. Keeps agents composable and independently testable. Different from monolithic multi-phase agents where all logic lives in one skill. (seen: 1)
 - **2026-06-22:** "Upstream vs downstream CI boundary" — ATC codebase docs correctly stop at external dependency boundaries. AIB's CI infrastructure (Duffy/CentOS CI) is invisible from ATC's docs because ATC consumes AIB as a pre-built tool via Testing Farm. Questions about upstream CI require going directly to the upstream source (AIB `.gitlab-ci.yml`). Pattern: documentation covers what you own and consume, but the CI of your dependencies is their concern. Relevant for onboarding (where does ATC's responsibility end vs CentOS Automotive SIG's?). (seen: 1)
 
 ## Structure candidates
