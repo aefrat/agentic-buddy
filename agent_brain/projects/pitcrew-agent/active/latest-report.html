@@ -112,17 +112,24 @@
 <div class="card" id="exec">
   <div class="card-title" style="border-color:#0550ae;">&#128202; Executive Summary</div>
   <div class="alert alert-warn">
-    <strong>Overall: At Risk.</strong> Sprint velocity is healthy at 54% closed (15/28), with strong output from Benny Zlotnik (6 closures) and Bella Khizgiyaev (4 closures). However, 5 of 10 in-progress epics have no assignee &mdash; a systemic ownership gap. Hubert Stefanski's transition to the RHAS/PitCrew team is a positive signal &mdash; he will be fully focused on PITCREW-161 (AIB prototyping). The team is shipping well tactically but needs epic-level ownership assignments to maintain Q3 RHAS GA trajectory.
+    <strong>Overall: At Risk.</strong> Sprint velocity improved to 57% closed (16/28, up from 54%), with PITCREW-407 (builder E2E coverage) closing and PITCREW-435 (beforeLease hook) advancing to Review. However, 5 of 10 in-progress epics still have no assignee &mdash; a systemic ownership gap. Hubert Stefanski's transition to the RHAS/PitCrew team is a positive signal &mdash; he will be fully focused on PITCREW-161 (AIB prototyping). The team needs epic-level ownership assignments to maintain Q3 RHAS GA trajectory.
   </div>
-  <p>Key win: CTC pipeline work (PITCREW-444, 443, 441, 433) and jumpstarter improvements (PITCREW-445, 448, 409) all closed this sprint. Lab recovery (C2 RTO/RPO) continues steady under Jeff Ligon (PITCREW-222, 223). Biggest gap: no epic owners for QE Readiness (PITCREW-337), Konflux Onboarding (PITCREW-335), RH-SDLC Compliance (PITCREW-334), CTC (PITCREW-331), or External Dependency Resilience (PITCREW-329).</p>
+  <p>Key wins this cycle: PITCREW-407 (builder E2E coverage) closed by Mohamad Abo Ras, PITCREW-437 (hook kill bug) picked up by Miguel. Lab recovery (C2 RTO/RPO) continues steady under Jeff Ligon (PITCREW-222, 223). Biggest gap: no epic owners for QE Readiness (PITCREW-337), Konflux Onboarding (PITCREW-335), RH-SDLC Compliance (PITCREW-334), CTC (PITCREW-331), or External Dependency Resilience (PITCREW-329).</p>
 </div>
 
 <!-- 2. CHANGES -->
 <div class="card" id="changes">
   <div class="card-title" style="border-color:#57606a;">&#128260; Changes Since Last Report</div>
-  <div class="alert alert-info">
-    <strong>First run &mdash; no baseline comparison.</strong> This is the inaugural report from the PitCrew agent. All subsequent reports will track epic status changes, sprint velocity deltas, and assignee movements against this snapshot.
+  <div class="alert alert-success">
+    <strong>PITCREW-407</strong> (builder: improve E2E coverage) &mdash; Review &rarr; <span class="badge b-green">Closed</span> (Mohamad Abo Ras)
   </div>
+  <div class="alert alert-success">
+    <strong>PITCREW-435</strong> (beforeLease hook endLease bug) &mdash; In Progress &rarr; <span class="badge b-purple">Review</span> (Miguel Angel Ajo Pelayo)
+  </div>
+  <div class="alert alert-info">
+    <strong>PITCREW-437</strong> (beforeLease hook failure does not kill exporter) &mdash; New &rarr; <span class="badge b-blue">In Progress</span> (Miguel Angel Ajo Pelayo)
+  </div>
+  <p style="font-size:12px;color:#888;margin-top:8px;">Sprint velocity: 54% &rarr; 57% (+3pp). Closed: 15 &rarr; 16. In Progress: 6 &rarr; 5. No epic status changes.</p>
 </div>
 
 <!-- 3. STRATEGIC GUIDE -->
@@ -277,8 +284,8 @@
   <div class="card-title" style="border-color:#c44b00;">&#9889; Current Sprint</div>
 
   <div style="display:flex;gap:10px;margin-bottom:16px;">
-    <div style="flex:1;text-align:center;padding:14px;background:#d4edda;border-radius:8px;border:1px solid #b7ebc8;"><div style="font-size:24px;font-weight:800;color:#1a7a3e;">15</div><div style="font-size:11px;color:#1a7a3e;font-weight:600;">CLOSED</div></div>
-    <div style="flex:1;text-align:center;padding:14px;background:#e8f0fe;border-radius:8px;border:1px solid #a8c4f5;"><div style="font-size:24px;font-weight:800;color:#0550ae;">6</div><div style="font-size:11px;color:#0550ae;font-weight:600;">IN PROGRESS</div></div>
+    <div style="flex:1;text-align:center;padding:14px;background:#d4edda;border-radius:8px;border:1px solid #b7ebc8;"><div style="font-size:24px;font-weight:800;color:#1a7a3e;">16</div><div style="font-size:11px;color:#1a7a3e;font-weight:600;">CLOSED</div></div>
+    <div style="flex:1;text-align:center;padding:14px;background:#e8f0fe;border-radius:8px;border:1px solid #a8c4f5;"><div style="font-size:24px;font-weight:800;color:#0550ae;">5</div><div style="font-size:11px;color:#0550ae;font-weight:600;">IN PROGRESS</div></div>
     <div style="flex:1;text-align:center;padding:14px;background:#f0ebff;border-radius:8px;border:1px solid #c5adf5;"><div style="font-size:24px;font-weight:800;color:#6e3db5;">2</div><div style="font-size:11px;color:#6e3db5;font-weight:600;">REVIEW</div></div>
     <div style="flex:1;text-align:center;padding:14px;background:#f0f0f0;border-radius:8px;border:1px solid #d0d7de;"><div style="font-size:24px;font-weight:800;color:#57606a;">5</div><div style="font-size:11px;color:#57606a;font-weight:600;">NEW</div></div>
   </div>
@@ -286,22 +293,21 @@
   <h3>Active Tickets</h3>
   <table>
     <tr><th>Key</th><th>Type</th><th>Summary</th><th>Assignee</th><th>Status</th></tr>
-    <tr><td>PITCREW-435</td><td>Bug</td><td>beforeLease hook with onFailure endLease does not end the lease</td><td>Miguel Angel Ajo Pelayo</td><td><span class="badge b-blue">In Progress</span></td></tr>
+    <tr><td>PITCREW-437</td><td>Bug</td><td>beforeLease hook failure does not kill the exporter</td><td>Miguel Angel Ajo Pelayo</td><td><span class="badge b-blue">In Progress</span></td></tr>
     <tr><td>PITCREW-417</td><td>Task</td><td>Bump Python to [3.12-3.14]</td><td>Jeff Ligon</td><td><span class="badge b-blue">In Progress</span></td></tr>
     <tr><td>PITCREW-416</td><td>Sub-task</td><td>C2 Recovery: add Automotive Operator to ArgoCD</td><td>Mohamad Abo Ras</td><td><span class="badge b-blue">In Progress</span></td></tr>
     <tr><td>PITCREW-403</td><td>Bug</td><td>Flaky E2E: "Connection to exporter lost"</td><td>Evgeni Vakhonin</td><td><span class="badge b-blue">In Progress</span></td></tr>
     <tr><td>PITCREW-393</td><td>Story</td><td>e2e downstream testing: acquire prerequisites from ATC admins</td><td>Evgeni Vakhonin</td><td><span class="badge b-blue">In Progress</span></td></tr>
     <tr><td>PITCREW-227</td><td>Story</td><td>Runbook for service rebuild from zero</td><td>Miguel Angel Ajo Pelayo</td><td><span class="badge b-blue">In Progress</span></td></tr>
-    <tr><td>PITCREW-407</td><td>Story</td><td>builder: improve E2E coverage &amp; identify e2e tests</td><td>Mohamad Abo Ras</td><td><span class="badge b-purple">Review</span></td></tr>
+    <tr><td>PITCREW-435</td><td>Bug</td><td>beforeLease hook with onFailure endLease does not end the lease</td><td>Miguel Angel Ajo Pelayo</td><td><span class="badge b-purple">Review</span></td></tr>
     <tr><td>PITCREW-119</td><td>Story</td><td>productization: onboard builder upstream to Konflux</td><td>Bella Khizgiyaev</td><td><span class="badge b-purple">Review</span></td></tr>
     <tr><td>PITCREW-450</td><td>Task</td><td>[Lab] ti-jacinto-j784s4xevm-06: ukiboot boot failure</td><td>Shawn Doherty</td><td><span class="badge b-gray">New</span></td></tr>
     <tr><td>PITCREW-440</td><td>Task</td><td>jumpstarter: release 0.9.0</td><td>&mdash;</td><td><span class="badge b-gray">New</span></td></tr>
     <tr><td>PITCREW-439</td><td>Task</td><td>builder: release 0.2.0</td><td>Benny Zlotnik</td><td><span class="badge b-gray">New</span></td></tr>
     <tr><td>PITCREW-438</td><td>Task</td><td>Update lab to Jumpstarter 0.9.0 after release</td><td>Miguel Angel Ajo Pelayo</td><td><span class="badge b-gray">New</span></td></tr>
-    <tr><td>PITCREW-437</td><td>Bug</td><td>beforeLease hook failure does not kill the exporter</td><td>&mdash;</td><td><span class="badge b-gray">New</span></td></tr>
   </table>
 
-  <h3>Closed This Sprint <span class="badge b-green">15</span></h3>
+  <h3>Closed This Sprint <span class="badge b-green">16</span></h3>
   <table>
     <tr><th>Key</th><th>Summary</th><th>Assignee</th></tr>
     <tr><td>PITCREW-448</td><td>jumpstarter: support in-exporter CA for u-boot boards</td><td>Benny Zlotnik</td></tr>
@@ -319,6 +325,7 @@
     <tr><td>PITCREW-420</td><td>builder: OIDC CA certificates from Secrets/ConfigMaps</td><td>Bella Khizgiyaev</td></tr>
     <tr><td>PITCREW-419</td><td>jumpstarter: OIDC CA certificates from Secrets/ConfigMaps</td><td>Bella Khizgiyaev</td></tr>
     <tr><td>PITCREW-409</td><td>jumpstarter JEP: virtual scalable exporters</td><td>Miguel Angel Ajo Pelayo</td></tr>
+    <tr><td>PITCREW-407</td><td>builder: improve E2E coverage &amp; identify e2e tests</td><td>Mohamad Abo Ras</td></tr>
   </table>
 </div>
 
@@ -331,14 +338,14 @@
       <p style="font-size:12px;color:#888;">~50 messages &middot; Jun 16&ndash;23</p>
       <h4>Top Contributors</h4>
       <div>
-        <span class="person">majopela (33)</span>
-        <span class="person">ywada (6)</span>
-        <span class="person">bzlotnik (4)</span>
+        <span class="person">majopela (32)</span>
+        <span class="person">bzlotnik (5)</span>
+        <span class="person">ywada (4)</span>
+        <span class="person">aefrat (3)</span>
+        <span class="person">pchibon (2)</span>
         <span class="person">jumpstarter-lab-alerts (2)</span>
-        <span class="person">mkuehl (2)</span>
         <span class="person">bbenson (1)</span>
-        <span class="person">aefrat (1)</span>
-        <span class="person">rkieley (1)</span>
+        <span class="person">fmartine (1)</span>
       </div>
       <h4>Key Themes</h4>
       <ul style="font-size:12px;line-height:1.9;padding-left:16px;">
@@ -380,8 +387,8 @@
   <div class="card-title" style="border-color:#1a7a3e;">&#9878;&#65039; Strategy &harr; Work Alignment</div>
   <h3>Well-Aligned</h3>
   <div class="fit-row"><div class="fit-icon">&#9989;</div><div><strong>CTC pipeline maturity</strong> &mdash; NXP support (PITCREW-444), tmt autobump (443), report generation fix (441, 433) directly support Tier 2 testing infrastructure.</div></div>
-  <div class="fit-row"><div class="fit-icon">&#9989;</div><div><strong>Jumpstarter reliability</strong> &mdash; Hook fixes (PITCREW-436, 435), OIDC CA support (419), virtual scalable exporters JEP (409) advance the Tier 2 HiL testing story.</div></div>
-  <div class="fit-row"><div class="fit-icon">&#9989;</div><div><strong>Builder productization</strong> &mdash; Konflux onboarding (PITCREW-119 in Review), shellcheck validation (447), manifest validation (446), OIDC CA (420) align with Tier 1 standalone builder maturity.</div></div>
+  <div class="fit-row"><div class="fit-icon">&#9989;</div><div><strong>Jumpstarter reliability</strong> &mdash; Hook fixes (PITCREW-436, 435, 437), OIDC CA support (419), virtual scalable exporters JEP (409) advance the Tier 2 HiL testing story.</div></div>
+  <div class="fit-row"><div class="fit-icon">&#9989;</div><div><strong>Builder productization</strong> &mdash; Konflux onboarding (PITCREW-119 in Review), shellcheck validation (447), manifest validation (446), OIDC CA (420), E2E coverage closed (407) align with Tier 1 standalone builder maturity.</div></div>
   <div class="fit-row"><div class="fit-icon">&#9989;</div><div><strong>Lab C2 recovery</strong> &mdash; ArgoCD migration (425, 426), automotive operator in ArgoCD (416), runbook (227) strengthen operational resilience under Jeff Ligon's leadership.</div></div>
   <div class="fit-row"><div class="fit-icon">&#9989;</div><div><strong>End-to-End Trace</strong> &mdash; Roderick Kieley ramping up (PITCREW-291), aligns with Q3 OpenTelemetry + Monitoring roadmap goal.</div></div>
   <div class="fit-row"><div class="fit-icon">&#9989;</div><div><strong>AI for automotive</strong> &mdash; bbenson's bringup agent with caib+jmp extends platform intelligence (PITCREW-396 adjacent).</div></div>
@@ -404,13 +411,12 @@
         <li>Resolve ti-jacinto boot failure (PITCREW-450, Shawn Doherty)</li>
         <li>Jumpstarter 0.9.0 release cut (PITCREW-440) + lab update (438)</li>
         <li>Builder 0.2.0 release (PITCREW-439, Benny Zlotnik)</li>
-        <li>Land beforeLease hook fix (PITCREW-435)</li>
+        <li>Land beforeLease hook fix (PITCREW-435, now in Review)</li>
       </ul>
       <h4 style="color:#c44b00;">&#128992; This Month (June)</h4>
       <ul style="font-size:12px;line-height:2;padding-left:16px;">
         <li>Builder Konflux onboarding review completion (PITCREW-119)</li>
         <li>E2E downstream testing prerequisites (PITCREW-393)</li>
-        <li>Builder E2E coverage review (PITCREW-407)</li>
         <li>Python 3.12-3.14 bump (PITCREW-417)</li>
       </ul>
     </div>
@@ -425,7 +431,7 @@
       <h4 style="color:#856404;">&#9889; Team Health</h4>
       <ul style="font-size:12px;line-height:2;padding-left:16px;">
         <li>Benny Zlotnik: high output (6 closures) &mdash; monitor for burnout risk</li>
-        <li>majopela: dominant Slack presence (52 msgs across channels) &mdash; healthy engagement, knowledge hub</li>
+        <li>majopela: dominant Slack presence (51 msgs across channels) &mdash; healthy engagement, knowledge hub</li>
         <li>Hubert Stefanski: joining PitCrew full-time &mdash; plan onboarding and PITCREW-161 ramp-up</li>
         <li>Roderick Kieley: 22 days into onboarding, active on E2E Trace</li>
       </ul>
