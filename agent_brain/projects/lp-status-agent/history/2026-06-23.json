@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-06-23",
+  "overall_status": "At Risk",
+  "tickets": [
+    {"key": "VROOM-41522", "status": "Closed", "assignee": "Ozan Unsal", "blockers": []},
+    {"key": "VROOM-41523", "status": "Closed", "assignee": "Hubert Stefanski", "blockers": []},
+    {"key": "VROOM-41524", "status": "Closed", "assignee": "Kanitha Chim", "blockers": []},
+    {"key": "VROOM-42115", "status": "Closed", "assignee": "Matt Goldman", "blockers": []},
+    {"key": "VROOM-42116", "status": "In Progress", "assignee": "Matt Goldman", "blockers": ["Petr Sabata CDN path approval"]},
+    {"key": "VROOM-42114", "status": "New", "assignee": null, "blockers": ["VROOM-42116"]},
+    {"key": "VROOM-42113", "status": "New", "assignee": null, "blockers": ["VROOM-42114"]},
+    {"key": "VROOM-42120", "status": "New", "assignee": null, "blockers": ["VROOM-42113"]},
+    {"key": "VROOM-42121", "status": "New", "assignee": null, "blockers": ["VROOM-42120"]},
+    {"key": "VROOM-42119", "status": "New", "assignee": null, "blockers": ["VROOM-42114", "VROOM-42113"]},
+    {"key": "VROOM-42118", "status": "New", "assignee": null, "blockers": ["VROOM-42116"]},
+    {"key": "VROOM-42050", "status": "New", "assignee": "Hubert Stefanski", "blockers": []},
+    {"key": "VROOM-42184", "status": "New", "assignee": "Hubert Stefanski", "blockers": []}
+  ],
+  "counts": {"completed": 4, "in_progress": 1, "not_started": 8, "blocked": 1},
+  "slack_activity_count": 20,
+  "anomalies": []
+}
