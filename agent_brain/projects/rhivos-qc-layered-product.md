@@ -116,11 +116,10 @@ Parallel: Compose/pipeline — needs tickets first
 
 1. **CDN path decision is the active bottleneck.** Everything downstream blocked on Petr Sabata.
 2. **6 distribution tasks are unassigned.** Sequential chain, long lead time.
-3. **Hubert transition.** Owns both gating tasks, moving to RHAS. KT plan overdue (~Jun 17).
-4. **Supplier Solicitation.** Charles Timko flagged (Jun 22) that AUTOBU-1076 needs this process.
-5. **SP RHEL Workflow staffing.** Christine Freitas warned — lost release engineering expertise (China Engineering exit).
-6. **No compose/pipeline tickets.** Approach validated but no implementation work tracked.
-7. **Image distribution.** No process for RHIVOS qcow images via access.redhat.com. Not on Konflux.
+3. **Supplier Solicitation.** Charles Timko flagged (Jun 22) that AUTOBU-1076 needs this process.
+4. **SP RHEL Workflow staffing.** Christine Freitas warned — lost release engineering expertise (China Engineering exit).
+5. **No compose/pipeline tickets.** Approach validated but no implementation work tracked.
+6. **Image distribution.** No process for RHIVOS qcow images via access.redhat.com. Not on Konflux.
 
 ---
 

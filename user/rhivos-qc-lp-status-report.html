@@ -231,8 +231,8 @@
       <table>
         <thead><tr><th>Ticket</th><th>Summary</th><th>Owner</th><th>Risk</th></tr></thead>
         <tbody>
-          <tr><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-42050">VROOM-42050</a></td><td>Generate Gator configs for LP</td><td>Hubert Stefanski</td><td style="color:var(--red);">Hubert transitioning to RHAS</td></tr>
-          <tr><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-42184">VROOM-42184</a></td><td>WaiverDB permission config for LP packages</td><td>Hubert Stefanski</td><td style="color:var(--red);">Same — KT plan overdue</td></tr>
+          <tr><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-42050">VROOM-42050</a></td><td>Generate Gator configs for LP</td><td>Hubert Stefanski</td><td>&mdash;</td></tr>
+          <tr><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-42184">VROOM-42184</a></td><td>WaiverDB permission config for LP packages</td><td>Hubert Stefanski</td><td>&mdash;</td></tr>
         </tbody>
       </table>
     </div>
@@ -292,7 +292,7 @@ WaiverDB perms (VROOM-42184) ─────────────┘
           <tr style="background:var(--light-red);"><td><strong>CDN path decision</strong></td><td><strong>This week</strong></td><td><span class="badge badge-blocked">Blocked</span></td><td style="color:var(--red); font-weight:600;">No response from Petr yet. Gate for everything downstream.</td></tr>
           <tr><td>CDN repos + Errata configs</td><td>~1-2 wks after path</td><td><span class="badge badge-new">Not started</span></td><td>Sequential chain, all unassigned</td></tr>
           <tr><td>SKU creation</td><td>~2-3 weeks</td><td><span class="badge badge-new">Not started</span></td><td style="color:var(--green);">Low — Claude Pariz notified, can start now</td></tr>
-          <tr><td>Gating setup</td><td>Before August</td><td><span class="badge badge-new">Not started</span></td><td style="color:var(--red); font-weight:600;">High — Hubert transitioning to RHAS</td></tr>
+          <tr><td>Gating setup</td><td>Before August</td><td><span class="badge badge-new">Not started</span></td><td>&mdash;</td></tr>
           <tr><td>Compose/pipeline</td><td>Before August</td><td><span class="badge badge-new">Not ticketed</span></td><td>Medium — approach validated, needs tickets</td></tr>
           <tr style="font-weight:700;"><td>LP Infrastructure Ready</td><td>August 2026</td><td><span class="badge badge-blocked">At Risk</span></td><td style="color:var(--red);">~5 weeks. CDN path must unblock this week.</td></tr>
         </tbody>
@@ -307,10 +307,9 @@ WaiverDB perms (VROOM-42184) ─────────────┘
     <div class="section-body">
       <div class="risk-item risk-high"><div class="risk-num">1</div><div><strong>CDN path decision is the active bottleneck.</strong> Kanitha asked Petr Sabata to approve the directory path naming on Jun 22. Everything downstream (CDN repos, Errata configs, product IDs, Gator automation) is blocked until this resolves.</div></div>
       <div class="risk-item risk-high"><div class="risk-num">2</div><div><strong>6 distribution tasks are unassigned.</strong> The critical path is a sequential chain with long lead times — each step depends on the previous. No owners identified.</div></div>
-      <div class="risk-item risk-high"><div class="risk-num">3</div><div><strong>Hubert Stefanski transition.</strong> Owns both gating tasks (VROOM-42050, VROOM-42184) but is moving to RHAS (approved Jun 18). Knowledge transfer plan is overdue (~Jun 17). If gating work doesn't start before he leaves, it's stranded.</div></div>
-      <div class="risk-item risk-med"><div class="risk-num">4</div><div><strong>Supplier Solicitation process.</strong> Charles Timko flagged (Jun 22) that AUTOBU-1076 needs to follow this process. Could introduce additional approval overhead or delay.</div></div>
-      <div class="risk-item risk-med"><div class="risk-num">5</div><div><strong>SP RHEL Workflow team staffing.</strong> Christine Freitas warned the team lost release engineering expertise due to China Engineering exit. They are scrambling — may affect responsiveness on distribution setup tasks.</div></div>
-      <div class="risk-item risk-med"><div class="risk-num">6</div><div><strong>No compose/pipeline tickets.</strong> Technical spike validated the approach (QC variant in Pungi compose, separate Brew tag, nodeps gather) but no implementation tickets exist. Work is untracked.</div></div>
+      <div class="risk-item risk-med"><div class="risk-num">3</div><div><strong>Supplier Solicitation process.</strong> Charles Timko flagged (Jun 22) that AUTOBU-1076 needs to follow this process. Could introduce additional approval overhead or delay.</div></div>
+      <div class="risk-item risk-med"><div class="risk-num">4</div><div><strong>SP RHEL Workflow team staffing.</strong> Christine Freitas warned the team lost release engineering expertise due to China Engineering exit. They are scrambling — may affect responsiveness on distribution setup tasks.</div></div>
+      <div class="risk-item risk-med"><div class="risk-num">5</div><div><strong>No compose/pipeline tickets.</strong> Technical spike validated the approach (QC variant in Pungi compose, separate Brew tag, nodeps gather) but no implementation tickets exist. Work is untracked.</div></div>
       <div class="risk-item risk-med"><div class="risk-num">7</div><div><strong>Image distribution gap.</strong> No established process for distributing RHIVOS qcow images via access.redhat.com. RHIVOS is not on Konflux. Reference: RHELDST-34953.</div></div>
     </div>
   </div>
