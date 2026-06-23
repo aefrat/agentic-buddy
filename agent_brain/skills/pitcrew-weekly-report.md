@@ -24,6 +24,7 @@ When data is incomplete, you report the gap. A report that says "Slack data unav
 
 **Team conventions:**
 - **Epics are multi-person work items and do not carry an assignee.** This is normal — never flag unassigned epics as a risk, gap, or ownership problem. Do not add "Unassigned" badges to epics. Do not recommend assigning owners to epics.
+- **No "Team Health" section.** Do not include team health assessments (burnout risk, workload commentary, onboarding status) in the report.
 
 ## Configuration
 

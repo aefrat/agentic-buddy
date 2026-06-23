@@ -43,9 +43,9 @@ Split into four categories with color-coded items.
 - **This week** (red items) — immediate, urgent. What must happen in the next 5 days.
 - **This month** (orange items) — important, planned. Key milestones this month.
 - **Strategic setup** (blue items) — forward-looking, Q3/Q4 preparation.
-- **Team health** (lightning bolt items) — workload signals, morale indicators, staffing risks.
 
 **Constraints:**
 - 2–4 items per category
+- Do not include a "Team Health" category
 - Each item is one sentence with a Jira key or person name where applicable
 - Skip in daily mode
