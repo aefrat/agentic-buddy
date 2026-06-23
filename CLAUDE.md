@@ -84,6 +84,7 @@ Directories with an `index.md` have a content map — read it first to decide wh
 - [Journal](user/journal/) — weekly and monthly activity summaries. Read when the user asks about past activity or needs to prepare reports.
 - [LP Status Agent](agent_brain/projects/lp-status-agent/index.md) — daily RHIVOS QC LP report agent stores (active snapshot, history). Read when running LP status report or comparing against previous run.
 - [PitCrew Report Agent](agent_brain/projects/pitcrew-agent/index.md) — PitCrew/RHAS status report agent stores (active snapshot, history, strategic context cache). Read when running PitCrew report or comparing against previous run.
+- [Core RPMs Redux Report Agent](agent_brain/projects/core-rpms-redux-agent/index.md) — Core RPMs Redux (VROOM-31017) report agent stores (active snapshot, history, data sources). Read when running Core RPMs Redux status report or comparing against previous run.
 
 New directories inside `agent_brain/` or `user/` are created as needed. Add them to this list. Format: **what the directory contains** (content description) + **when to read it** (trigger). Don't describe how it's built or maintained — that belongs in the skill, not here.
 
@@ -104,6 +105,7 @@ Read the full skill file ONLY when the trigger matches. Don't read skills preemp
 - [quarterly-connection](agent_brain/skills/quarterly-connection.md) — Generates quarterly evaluation reports (Red Hat Quarterly Connections) for team members using Jira, GitLab, Slack, and 1:1 data. Stateful: accumulates observations and learns writing preferences. Use on "quarterly connection", "QC report", "generate evaluation", "team quarterly", or "quarterly review for [name]".
 - [person-slack-lookup](agent_brain/skills/person-slack-lookup.md) — Looks up a specific person's Slack activity across channels (authored messages + @mentions + threads). Use on "what has [person] been doing on Slack", "check [person]'s Slack activity", "[person] Slack messages", or "search Slack for [person]".
 - [rhivos-qc-lp-status](agent_brain/skills/rhivos-qc-lp-status.md) — Daily status report for the RHIVOS QC Layered Product (AUTOBU-1076 / VROOM-41521). Fetches Jira + Slack, generates HTML, emails. Knowledge base at [lp-status-agent/](agent_brain/projects/lp-status-agent/index.md). Use on "LP status report", "QC LP status", "run the LP report", "RHIVOS layered product report".
+- [core-rpms-redux-status](agent_brain/skills/core-rpms-redux-status.md) — Status report for the Core RPMs Redux epic (VROOM-31017). Fetches Jira + Slack + Google Docs, generates HTML with change tracking and disconfirmation gate, emails. Knowledge base at [core-rpms-redux-agent/](agent_brain/projects/core-rpms-redux-agent/index.md). Use on "core rpms report", "core rpms redux status", "VROOM-31017 status", "run the core rpms report", "run redux report".
 
 ## Rules
 
