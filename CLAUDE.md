@@ -58,10 +58,10 @@ Factual updates to Right now (changed dates, flipped statuses) are allowed mid-s
 ### Right now
 
 - **RC3 released.** Errata/tagging work ongoing (Kanitha). ASIL CTC ran weekend Jun 19 — status unconfirmed. Z-stream is now the right target for kernel builds. Brew tag permissions filed (RHELBLD-18777 / RHELBLD-18778).
-- **CAT timeline: RHIVOS 2.0-Core CAT Jun 29-30**, content on CDN/ET ~Jun 26. One week out.
-- **Atlassian API token "Avi2" expires Jun 27.** Needs rotation this week.
-- **Hubert transition to RHAS/RAZ approved** (Jeff Ligon & Paul Wallrabe, Jun 18). Next: discuss timelines with Hubert, communicate plan to stakeholders.
-- **Roderick Kieley 1:1** — active. 21 days into onboarding (started Jun 1).
+- **CAT timeline: RHIVOS 2.0-Core CAT Jun 29-30**, content on CDN/ET ~Jun 26 (3 days). Six days to CAT.
+- **Atlassian API token "Avi2" expires Jun 27.** Needs rotation this week (4 days).
+- **Hubert transition to RHAS/RAZ approved** (Jeff Ligon & Paul Wallrabe, Jun 18). Next: discuss timelines with Hubert, communicate plan to stakeholders. Knowledge transfer plan overdue (~Jun 17).
+- **Roderick Kieley 1:1** — active. 22 days into onboarding (started Jun 1).
 
 ### Files
 
@@ -78,6 +78,7 @@ Directories with an `index.md` have a content map — read it first to decide wh
 - [Agent guidelines](agent_brain/identity/SOUL.md) — operating values, limits, interaction style.
 - [Projects](agent_brain/projects/) — project history, context, past decisions.
 - [Concepts](agent_brain/concepts/) — lessons learned, patterns, generalized knowledge.
+- [Agent Forge Design Principles](agent_brain/projects/agent-forge-design-principles.md) — Juanje Ojeda's 7 principles for stateful process-oriented agents, with prior art analysis and convergence with agentic-buddy. Read when building, reviewing, or discussing agent design.
 - [Ideas](agent_brain/ideas/) — ideas in various stages. `_scratchpad.md` for one-liners.
 - [Journal](user/journal/) — weekly and monthly activity summaries. Read when the user asks about past activity or needs to prepare reports.
 
@@ -97,6 +98,7 @@ Read the full skill file ONLY when the trigger matches. Don't read skills preemp
 - [scan-slack-channels](.claude/skills/scan-slack-channels/SKILL.md) — Scans Slack channels (single, group, or all) and generates activity summaries with key findings and action items. Use on "scan Slack", "check the channel", "what happened in #channel", "Slack update", or "scan all channels".
 - [process-1on1s](.claude/skills/process-1on1s/SKILL.md) — Processes all 1:1 Google Docs to extract latest meetings, log a digest, capture action items, and add reflections. Use on "process 1:1s", "digest 1:1 meetings", "sync 1:1 notes", "review latest 1:1s", or "what happened in my 1:1s".
 - [quarterly-connection](agent_brain/skills/quarterly-connection.md) — Generates quarterly evaluation reports (Red Hat Quarterly Connections) for team members using Jira, GitLab, Slack, and 1:1 data. Stateful: accumulates observations and learns writing preferences. Use on "quarterly connection", "QC report", "generate evaluation", "team quarterly", or "quarterly review for [name]".
+- [person-slack-lookup](agent_brain/skills/person-slack-lookup.md) — Looks up a specific person's Slack activity across channels (authored messages + @mentions + threads). Use on "what has [person] been doing on Slack", "check [person]'s Slack activity", "[person] Slack messages", or "search Slack for [person]".
 
 ## Rules
 

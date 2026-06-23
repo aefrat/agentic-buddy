@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-06-22
-access_count: 12
+last_accessed: 2026-06-23
+access_count: 13
 created: 2026-06-01
 ---
 
@@ -19,8 +19,7 @@ Resolved observations are moved to the bottom.
 - ~~**2026-06-11:** "Scan Slack channel and generate project update"~~ → **resolved 2026-06-14:** created skill `agent_brain/skills/scan-slack-channel.md` (seen 3x, adapted to use Slack MCP tools per Rule 18)
 - **2026-06-11:** "Search Confluence for topic research" — use Confluence REST API (`wiki/rest/api/search?cql=...`) with .netrc auth to search across spaces, read full page content, extract and synthesize findings. Used to research OSCI CI Mediator across RHELPLAN, IVOS, and Red Hat Catalog spaces. Reusable for any Confluence research request. (seen: 1)
 - **2026-06-14:** "Check Slack activity inbox" — pull user's mentions and DMs, identify action items needing response, generate summary table. Complementary to channel scanning — channels show team activity, inbox shows what needs the user's attention. (seen: 1)
-- **2026-06-22:** "Person Slack activity lookup" — search all messages by a specific person across a time range. Steps: search API (`from:<username>`) → extract user ID → scan team channels with `conversations.history` + `oldest=` → check thread replies → check DMs. Distinct from channel scanning and inbox check. (seen: 1)
-  - 2026-06-22: seen again — extended with @mention search (`<@USER_ID>`), prior-week baseline comparison, and multi-person batch mode (5 people in one session). Also productionized: added `STAKEHOLDERS` config + `render_stakeholder_slack_section()` to `generate_report.py`. (seen: 2)
+- ~~**2026-06-22:** "Person Slack activity lookup"~~ → **resolved 2026-06-23:** created skill `agent_brain/skills/person-slack-lookup.md` (seen 2x)
 - **2026-06-22:** "Peer feedback question generator" — pull Jira activity + meeting/demo docs (via gws) + Red Hat Multiplier competencies → synthesize into evidence-grounded peer feedback questions for specific reviewers. Steps: identify tickets/epics, export demo docs, map interactions to find best reviewers, read competency framework for expected level, craft questions probing specific behaviors with evidence grounding. Applied for Juanje Ojeda AAA feedback (Ian McLeod as reviewer). (seen: 1)
 
 ## Rule candidates
@@ -47,8 +46,7 @@ Resolved observations are moved to the bottom.
 - **2026-06-14:** Brew hub_policy.conf (`brew-confs` GitLab repo) is the authoritative source for all Brew tagging permissions — more authoritative than any Confluence wiki page (RCMDOC, EXDSPRHELB). Wikis document the general permission model (permission types, how to set/grant them); the policy file has the actual product-specific rules (RHIVOS: `rhivos-tagger` RHELBLD-12926, `pkglist-rhivos` RHELBLD-12234, `auto-toolchain-service-brew` RHELBLD-17225). The `-gate` tag isn't even in the standard RCM tagging structure — it was added for RHEL 9+ gating. Pattern: "for permission/policy questions about Brew, always check the raw hub_policy.conf first — wikis describe the framework, the policy file has the actual rules." (seen: 1)
 
 - **2026-06-18:** Three complementary AI agent archetypes emerging in RHIVOS org — (1) SDLC automation (Gadi: Jira→MR), (2) process/diagnostic (Juanje: pipeline debugging), (3) outer-loop orchestration (Michael: issue→release→HIL). Each has different model requirements, safety models, and memory needs. Could generalize into a classification framework. (seen: 1)
-- **2026-06-18:** Juanje Ojeda's agent design principles (character over rules, progressive disclosure, 4-store memory architecture, constraints shape behavior) closely mirror agentic-buddy's design (SOUL.md character, progressive disclosure, file-based memory with metadata). Independent convergence on similar patterns — worth tracking as potential org-wide standard. (seen: 1)
-  - 2026-06-22: Prior art research confirms convergence is explained by shared sources — both systems drew from Anthropic's character alignment, CoALA memory taxonomy, and agentskills.io progressive disclosure. Not independent invention but parallel adoption of the same well-established patterns. Novel value in agent-forge is the terminology ("disconfirmation gate," "computed store," "skill-permission parity"), not the underlying architecture. (seen: 2)
+- ~~**2026-06-18:** Juanje Ojeda's agent design principles convergence~~ → **resolved 2026-06-23:** captured in `agent_brain/projects/agent-forge-design-principles.md` (prior art analysis section) and `agent_brain/concepts/stateful-process-oriented-agents.md` (seen 2x)
 - **2026-06-21:** "Agent-as-wrapper" pattern — wrapping an existing stateless script with agent harness (identity, memory, verification, learning) without rewriting the execution engine. The script handles data fetching/formatting; the agent adds context, comparison, and accumulation. Applied to manager report (`generate_report.py` stays, agent wraps with 4-store memory + disconfirmation gates). Generalizable to any existing automation that works but doesn't learn. (seen: 1)
 - **2026-06-21:** "Shared config, additive extension" — when two agents need overlapping team data, extend the existing config file with new fields rather than duplicating. Each agent ignores fields it doesn't use. Prevents config drift. Applied: QC agent's `members.yaml` extended with `accent_color` and `google_docs` for the manager report agent. (seen: 1)
 - **2026-06-21:** Google Docs `replaceAllText` uses substring matching — "Software Engineer" matches inside "Senior Software Engineer". When doing targeted text replacements, qualify with surrounding context (e.g., `"Name | Title"`) to prevent double-prefixing. Tested: no garbling occurred in this batch because title strings appeared only once per doc in non-overlapping positions. (seen: 1)
@@ -65,6 +63,7 @@ Resolved observations are moved to the bottom.
 
 - **2026-06-14:** Skill format migration — user has skills in two locations: old format (`agent_brain/skills/*.md`) and new agentskills.io format (`.claude/skills/<name>/SKILL.md`). User explicitly stated all new skills should use agentskills.io format. GitLab collection uses `.agents/skills/`. Consider migrating remaining old-format skills to `.claude/skills/` during a maintenance cycle and archiving the old files. (seen: 1)
   - 2026-06-18: Second new skill (`process-1on1s`) built in agentskills.io format. Pattern is now established — all new skills go to `.claude/skills/`. (seen: 2)
+  - 2026-06-23 (daily): Deferred — migration requires moving 8+ skills, updating all CLAUDE.md references, and adapting format. Permission constraints also blocked `.claude/skills/` writes from autonomous mode. Needs a dedicated interactive session. New skill `person-slack-lookup` created in `agent_brain/skills/` as fallback.
 
 ## Structure candidates (tools)
 
