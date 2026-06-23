@@ -82,6 +82,7 @@ Directories with an `index.md` have a content map — read it first to decide wh
 - [RHIVOS 2.0 RC3](agent_brain/projects/RHIVOS_2_0_release_RC3.md) — RC3 release tracking, CTC status, tagging documentation audit, Brew permissions. Read when RC3, RHIVOS release, CTC testing, or tagging comes up.
 - [Ideas](agent_brain/ideas/) — ideas in various stages. `_scratchpad.md` for one-liners.
 - [Journal](user/journal/) — weekly and monthly activity summaries. Read when the user asks about past activity or needs to prepare reports.
+- [LP Status Agent](agent_brain/projects/lp-status-agent/index.md) — daily RHIVOS QC LP report agent stores (active snapshot, history). Read when running LP status report or comparing against previous run.
 
 New directories inside `agent_brain/` or `user/` are created as needed. Add them to this list. Format: **what the directory contains** (content description) + **when to read it** (trigger). Don't describe how it's built or maintained — that belongs in the skill, not here.
 
@@ -101,6 +102,7 @@ Read the full skill file ONLY when the trigger matches. Don't read skills preemp
 - [project-pulse](.claude/skills/project-pulse/SKILL.md) — Cross-references manager report Slack data against active project files, proposes and applies updates. Runs automatically after manager report (interactive only) or on demand. Use on "project pulse", "update projects from Slack", "what's new in projects".
 - [quarterly-connection](agent_brain/skills/quarterly-connection.md) — Generates quarterly evaluation reports (Red Hat Quarterly Connections) for team members using Jira, GitLab, Slack, and 1:1 data. Stateful: accumulates observations and learns writing preferences. Use on "quarterly connection", "QC report", "generate evaluation", "team quarterly", or "quarterly review for [name]".
 - [person-slack-lookup](agent_brain/skills/person-slack-lookup.md) — Looks up a specific person's Slack activity across channels (authored messages + @mentions + threads). Use on "what has [person] been doing on Slack", "check [person]'s Slack activity", "[person] Slack messages", or "search Slack for [person]".
+- [rhivos-qc-lp-status](agent_brain/skills/rhivos-qc-lp-status.md) — Daily status report for the RHIVOS QC Layered Product (AUTOBU-1076 / VROOM-41521). Fetches Jira + Slack, generates HTML, emails. Knowledge base at [lp-status-agent/](agent_brain/projects/lp-status-agent/index.md). Use on "LP status report", "QC LP status", "run the LP report", "RHIVOS layered product report".
 
 ## Rules
 

@@ -1,13 +1,14 @@
 {
   "tasks": [
     {
-      "id": "1e0eebee",
-      "cron": "0 9 25 5 *",
-      "prompt": "Good morning Avi — picking up from Friday May 21. Here's what's open:\n\n1. **AUTOBU-1076 Jira comment** — draft is ready in `agent_brain/projects/rhivos-release-approach.md` (\"Summary for Jira comment\"). Review HTML at `user/rhivos-jira-comment.html`. Two things still to add before posting:\n   - Include the gating workflow using **gator** (the `automotive/fences/gating/gator` project used for Brew promotion gating in the RHIVOS pipeline) — add to the Pipelines/gating section\n   - Include/review this Google Doc: https://docs.google.com/document/d/1trd3Ud3l0J-5BkUmB5MYUJTQrRMk1TSVa7KtzPIfD_U/edit?tab=t.0#heading=h.qna43u34if8x\n\n2. **ATC LLM Wiki** — two open decisions: (a) where to deploy the mkdocs site (GitLab Pages / domain / S3), (b) wiki regeneration cadence. Source: https://gitlab.cee.redhat.com/automotive/pipe-x/atc_llm_wiki\n\n3. **Slack integration** — ask how to connect to Slack and gather information from specific channels to track team activity.\n\nResume session: check `user/ai-sessions.md` for the session ID from the May 21 session.",
-      "createdAt": 1779352432910,
-      "createdBySessionId": "bf027be1-6f8f-41f9-9b23-c81ae6c2a563",
-      "createdByPid": 55678,
-      "createdByProcStart": "768998"
+      "id": "2ea68c37",
+      "cron": "17 8 * * 1-5",
+      "prompt": "Run the RHIVOS QC LP status report. Read agent_brain/skills/rhivos-qc-lp-status.md and execute all steps. This is a cron-triggered run — no user interaction, log all decisions.",
+      "createdAt": 1782204470624,
+      "recurring": true,
+      "createdBySessionId": "cb61880f-7430-4fca-b38b-12d7c565ae17",
+      "createdByPid": 71567,
+      "createdByProcStart": "6329995"
     }
   ]
 }
