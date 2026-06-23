@@ -36,50 +36,44 @@
   .meta-row .label { color: var(--muted); font-weight: 600; }
   .meta-row a { color: var(--blue); text-decoration: none; }
   .meta-row a:hover { text-decoration: underline; }
-
   .section { background: var(--card); border-radius: 8px; border: 1px solid var(--border); margin-bottom: 20px; overflow: hidden; }
   .section-header { padding: 14px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
   .section-header h2 { font-size: 1.05rem; font-weight: 700; }
   .section-body { padding: 20px; }
-
   .decision-box { background: var(--light-blue); border-left: 4px solid var(--blue); padding: 16px 20px; border-radius: 0 6px 6px 0; margin-bottom: 16px; font-size: 0.9rem; }
   .decision-box strong { color: var(--blue); }
-
-  .changes-box { background: var(--light-green); border-left: 4px solid var(--green); padding: 16px 20px; border-radius: 0 6px 6px 0; margin-bottom: 16px; font-size: 0.9rem; }
-  .changes-box strong { color: var(--green); }
-
+  .decision-box.change-positive { background: var(--light-green); border-left-color: var(--green); }
+  .decision-box.change-positive strong { color: var(--green); }
+  .decision-box.change-negative { background: var(--light-red); border-left-color: var(--red); }
+  .decision-box.change-negative strong { color: var(--red); }
+  .decision-box.change-neutral { background: var(--light-gray); border-left-color: var(--muted); }
+  .decision-box.change-neutral strong { color: var(--muted); }
   table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
   th { text-align: left; padding: 10px 12px; background: var(--light-gray); border-bottom: 2px solid var(--border); font-weight: 700; color: var(--muted); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; }
   td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
   tr:last-child td { border-bottom: none; }
   tr:hover { background: #fafafa; }
-
   .badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; }
   .badge-done { background: var(--light-green); color: var(--green); }
   .badge-progress { background: var(--light-blue); color: var(--blue); }
   .badge-blocked { background: var(--light-red); color: var(--red); }
   .badge-new { background: var(--light-gray); color: var(--muted); }
   .badge-stalled { background: var(--light-amber); color: #795600; }
-
   .risk-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 0.88rem; }
   .risk-item:last-child { border-bottom: none; }
   .risk-num { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; flex-shrink: 0; }
   .risk-high .risk-num { background: var(--light-red); color: var(--red); }
   .risk-med .risk-num { background: var(--light-amber); color: #795600; }
-
   .critical-path { background: #1a1a1a; color: #e0e0e0; padding: 20px 24px; border-radius: 6px; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.8rem; line-height: 1.8; white-space: pre; overflow-x: auto; }
   .critical-path .blocker { color: var(--red-hat-red); font-weight: 700; }
   .critical-path .done { color: var(--green); }
   .critical-path .parallel { color: var(--amber); }
-
   .timeline-bar { display: flex; margin: 16px 0 8px; border-radius: 6px; overflow: hidden; height: 28px; font-size: 0.7rem; font-weight: 600; }
   .timeline-done { background: var(--green); color: white; display: flex; align-items: center; justify-content: center; }
   .timeline-progress { background: var(--blue); color: white; display: flex; align-items: center; justify-content: center; }
   .timeline-remaining { background: #e0e0e0; color: var(--muted); display: flex; align-items: center; justify-content: center; }
-
   .arch-table td:first-child { font-weight: 600; color: var(--muted); width: 140px; }
   .arch-table .highlight { font-weight: 700; color: var(--text); }
-
   .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px; }
   .summary-card { text-align: center; padding: 16px 12px; border-radius: 8px; border: 1px solid var(--border); }
   .summary-card .num { font-size: 2rem; font-weight: 800; }
@@ -88,10 +82,8 @@
   .summary-blue .num { color: var(--blue); }
   .summary-gray .num { color: var(--muted); }
   .summary-red .num { color: var(--red); }
-
   .jira-link { color: var(--blue); text-decoration: none; font-weight: 600; }
   .jira-link:hover { text-decoration: underline; }
-
   footer { text-align: center; color: var(--muted); font-size: 0.78rem; padding: 24px 0 16px; }
 </style>
 </head>
@@ -101,268 +93,247 @@
   <div class="container">
     <div>
       <h1>RHIVOS QC Layered Product</h1>
-      <div class="subtitle">Distribution Infrastructure Status Report — Jun 23, 2026</div>
+      <div class="subtitle">Daily Status Report &mdash; June 23, 2026</div>
     </div>
-    <div class="meta-badge">At Risk</div>
+    <div class="meta-badge" style="background: var(--amber);">At Risk</div>
   </div>
 </header>
 
 <div class="container">
 
-  <!-- Meta -->
-  <div class="meta-row">
-    <div class="item"><span class="label">Epic:</span> <a href="https://redhat.atlassian.net/browse/AUTOBU-1076">AUTOBU-1076</a></div>
-    <div class="item"><span class="label">Execution:</span> <a href="https://redhat.atlassian.net/browse/VROOM-41521">VROOM-41521</a></div>
-    <div class="item"><span class="label">Owner:</span> Petr Sabata / Kanitha Chim</div>
-    <div class="item"><span class="label">Target:</span> August 2026</div>
-    <div class="item"><span class="label">Slack:</span> #rhivos-sp-qc-layered-product</div>
-  </div>
+<div class="meta-row">
+  <div class="item"><span class="label">Epic:</span> <a href="https://redhat.atlassian.net/browse/AUTOBU-1076">AUTOBU-1076</a></div>
+  <div class="item"><span class="label">Execution:</span> <a href="https://redhat.atlassian.net/browse/VROOM-41521">VROOM-41521</a></div>
+  <div class="item"><span class="label">Owner:</span> Petr Sabata / Kanitha Chim</div>
+  <div class="item"><span class="label">Target:</span> August 2026</div>
+  <div class="item"><span class="label">Slack:</span> #rhivos-sp-qc-layered-product</div>
+</div>
 
-  <!-- Summary Cards -->
-  <div class="summary-grid">
-    <div class="summary-card summary-green"><div class="num">4</div><div class="lbl">Completed</div></div>
-    <div class="summary-card summary-blue"><div class="num">1</div><div class="lbl">In Progress</div></div>
-    <div class="summary-card summary-gray"><div class="num">8</div><div class="lbl">Not Started</div></div>
-    <div class="summary-card summary-red"><div class="num">1</div><div class="lbl">Blocked</div></div>
-  </div>
+<div class="summary-grid">
+  <div class="summary-card summary-green"><div class="num">4</div><div class="lbl">Completed</div></div>
+  <div class="summary-card summary-blue"><div class="num">0</div><div class="lbl">In Progress</div></div>
+  <div class="summary-card summary-gray"><div class="num">8</div><div class="lbl">Not Started</div></div>
+  <div class="summary-card summary-red"><div class="num">1</div><div class="lbl">Blocked</div></div>
+</div>
 
-  <div class="timeline-bar">
-    <div class="timeline-done" style="width:29%">4 Done</div>
-    <div class="timeline-progress" style="width:7%">1</div>
-    <div class="timeline-remaining" style="width:64%">8 Remaining</div>
-  </div>
-  <p style="text-align:center; font-size:0.78rem; color:var(--muted); margin-bottom:20px;">13 tracked tickets across distribution and gating workstreams + untracked pipeline work</p>
+<div class="timeline-bar">
+  <div class="timeline-done" style="width: 30.8%;">4 Done</div>
+  <div class="timeline-progress" style="width: 7.7%;">1</div>
+  <div class="timeline-remaining" style="width: 61.5%;">8 Remaining</div>
+</div>
+<p style="text-align: center; font-size: 0.78rem; color: var(--muted); margin-bottom: 20px;">30.8% complete &mdash; 13 total tickets</p>
 
-  <!-- Changes Since Last Report -->
-  <div class="section">
-    <div class="section-header"><h2>Changes Since Last Report</h2></div>
-    <div class="section-body">
-      <div class="changes-box">
-        <strong>First automated run — no baseline comparison.</strong> Future reports will highlight ticket status changes, new blockers, and assignee updates.
-      </div>
+<div class="section">
+  <div class="section-header"><h2>Changes Since Last Report</h2></div>
+  <div class="section-body">
+    <div class="decision-box change-neutral">
+      <strong>No changes.</strong> Same-day re-run &mdash; all ticket statuses unchanged from earlier today (2026-06-23). CDN path decision (VROOM-42116) still awaiting Petr Sabata response since Jun 22.
     </div>
   </div>
+</div>
 
-  <!-- Decision -->
-  <div class="section">
-    <div class="section-header"><h2>Key Decision</h2></div>
-    <div class="section-body">
-      <div class="decision-box">
-        <strong>Layered Product approach approved (Jun 3)</strong> — Whitney Chadwick: "Please proceed with creating new EngIDs for the QC layered product." The Extension approach (like RHEL-for-NVIDIA/Voyager) was rejected — repo-level disable is not strong enough access control for Qualcomm's requirement that only approved customers with three-way partner agreements get QC bits.
-      </div>
-      <p style="font-size:0.88rem;">This triggers the full distribution chain: new EngIDs &rarr; new SKU &rarr; gated content sets &rarr; CDN repositories &rarr; Errata Tool configuration &rarr; Gator automation.</p>
+<div class="section">
+  <div class="section-header"><h2>Key Decision / New Flag</h2></div>
+  <div class="section-body">
+    <div class="decision-box change-negative">
+      <strong>Supplier Solicitation Required:</strong> Charles Timko commented on AUTOBU-1076 (Jun 22) that the QC layered product needs to follow the <a href="https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196281360/Supplier+Solicitation" class="jira-link">Supplier Solicitation</a> process. This may add process overhead not previously accounted for.
     </div>
   </div>
+</div>
 
-  <!-- Architecture -->
-  <div class="section">
-    <div class="section-header"><h2>Architecture</h2></div>
-    <div class="section-body">
-      <table class="arch-table">
-        <tr><td>EngIDs</td><td>Base: 931 (FuSa), 1031 (Core) &rarr; <span class="highlight">QC LP: 1123 (Core QC), 1124 (FuSa QC)</span></td></tr>
-        <tr><td>SKU</td><td>1 new QC-specific SKU mapping to both EngIDs (1:N relationship confirmed by Claude Pariz)</td></tr>
-        <tr><td>CDN Repos</td><td>Proposed: <code>/content/dist/layered/rhivos2/2.0/</code> and <code>.../2.0-core/</code> &mdash; <span style="color:var(--red);font-weight:600;">path pending approval</span></td></tr>
-        <tr><td>Access Control</td><td>SKU-gated: only customers with QC LP subscription get entitlement certificates covering QC content sets. CDN Authorizer validates both entitlement cert + Product ID cert.</td></tr>
-      </table>
-    </div>
+<div class="section">
+  <div class="section-header"><h2>Architecture</h2></div>
+  <div class="section-body">
+    <table class="arch-table">
+      <tr><td>Element</td><th>RHIVOS Base</th><th>RHIVOS QC LP</th></tr>
+      <tr><td>EngIDs</td><td>931 (FuSa), 1031 (Core)</td><td class="highlight">1123 (Core QC LP), 1124 (FuSa QC LP)</td></tr>
+      <tr><td>SKU</td><td>Existing RHIVOS SKUs</td><td class="highlight">New QC-specific SKU (pending)</td></tr>
+      <tr><td>CDN repos</td><td>/content/dist/rhivos2/2.0/, .../2.0-core/</td><td class="highlight">TBD &mdash; proposed: .../dist/layered/rhivos2/2.0/, .../2.0-core/</td></tr>
+      <tr><td>Access</td><td>All RHIVOS subscribers</td><td class="highlight">Only customers with QC LP SKU</td></tr>
+    </table>
   </div>
+</div>
 
-  <!-- Completed -->
-  <div class="section">
-    <div class="section-header">
-      <h2>Completed</h2>
-      <span class="badge badge-done">4 items</span>
-    </div>
-    <div class="section-body">
-      <table>
-        <thead><tr><th>Step</th><th>Ticket</th><th>Owner</th><th>Notes</th></tr></thead>
-        <tbody>
-          <tr><td>Spike &mdash; compose/pipeline</td><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-41522">VROOM-41522</a></td><td>Ozan Unsal</td><td>QC variant validated alongside RHIVOS in same Pungi compose (separate Brew tag + nodeps gather)</td></tr>
-          <tr><td>Spike &mdash; gating</td><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-41523">VROOM-41523</a></td><td>Hubert Stefanski</td><td>Gator needs only config for LP Brew tags. WaiverDB needs package owner ID. TC needs QC test plans.</td></tr>
-          <tr><td>Spike &mdash; distribution</td><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-41524">VROOM-41524</a></td><td>Kanitha Chim</td><td>Work items identified and broken into child tickets</td></tr>
-          <tr><td>EngIDs created</td><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-42115">VROOM-42115</a></td><td>Matt Goldman / Kanitha</td><td><strong>EngID 1123</strong> (Core QC LP) + <strong>EngID 1124</strong> (FuSa QC LP) &mdash; merged to product-service-config-auto (Jun 22)</td></tr>
-        </tbody>
-      </table>
-    </div>
+<div class="section">
+  <div class="section-header"><h2>Completed</h2> <span class="badge badge-done">4 Done</span></div>
+  <div class="section-body">
+    <table>
+      <tr><th>Step</th><th>Ticket</th><th>Who</th><th>Completed</th></tr>
+      <tr>
+        <td>Spike &mdash; compose/pipeline</td>
+        <td><a href="https://redhat.atlassian.net/browse/VROOM-41522" class="jira-link">VROOM-41522</a></td>
+        <td>Ozan Unsal</td>
+        <td><span class="badge badge-done">Closed</span></td>
+      </tr>
+      <tr>
+        <td>Spike &mdash; gating</td>
+        <td><a href="https://redhat.atlassian.net/browse/VROOM-41523" class="jira-link">VROOM-41523</a></td>
+        <td>Hubert Stefanski</td>
+        <td><span class="badge badge-done">Closed</span></td>
+      </tr>
+      <tr>
+        <td>Spike &mdash; distribution</td>
+        <td><a href="https://redhat.atlassian.net/browse/VROOM-41524" class="jira-link">VROOM-41524</a></td>
+        <td>Kanitha Chim</td>
+        <td><span class="badge badge-done">Closed</span></td>
+      </tr>
+      <tr>
+        <td>Request EngIDs (1123 + 1124)</td>
+        <td><a href="https://redhat.atlassian.net/browse/VROOM-42115" class="jira-link">VROOM-42115</a></td>
+        <td>Matt Goldman</td>
+        <td><span class="badge badge-done">Closed</span> Jun 22</td>
+      </tr>
+    </table>
   </div>
+</div>
 
-  <!-- In Progress / Blocked -->
-  <div class="section">
-    <div class="section-header">
-      <h2>In Progress</h2>
-      <span class="badge badge-blocked">Blocked</span>
-    </div>
-    <div class="section-body">
-      <table>
-        <thead><tr><th>Step</th><th>Ticket</th><th>Owner</th><th>Blocker</th></tr></thead>
-        <tbody>
-          <tr style="background:var(--light-red);">
-            <td><strong>CDN directory path naming</strong></td>
-            <td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-42116">VROOM-42116</a></td>
-            <td>Matt Goldman</td>
-            <td style="color:var(--red); font-weight:600;">Waiting on Petr Sabata to approve path convention (asked Jun 22). All downstream work blocked.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+<div class="section">
+  <div class="section-header"><h2>In Progress / Blocked</h2> <span class="badge badge-blocked">1 Blocked</span></div>
+  <div class="section-body">
+    <table>
+      <tr><th>Step</th><th>Ticket</th><th>Who</th><th>Blocker</th></tr>
+      <tr>
+        <td>CDN directory path naming</td>
+        <td><a href="https://redhat.atlassian.net/browse/VROOM-42116" class="jira-link">VROOM-42116</a></td>
+        <td>Matt Goldman</td>
+        <td><span class="badge badge-blocked">Blocked</span> Waiting on Petr Sabata to approve CDN path (asked Jun 22 &mdash; 1 day)</td>
+      </tr>
+    </table>
   </div>
+</div>
 
-  <!-- Not Started — Distribution -->
-  <div class="section">
-    <div class="section-header">
-      <h2>Not Started &mdash; Distribution Chain</h2>
-      <span class="badge badge-new">6 items &mdash; sequential, all unassigned</span>
-    </div>
-    <div class="section-body">
-      <table>
-        <thead><tr><th>#</th><th>Ticket</th><th>Summary</th><th>Depends On</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-42114">VROOM-42114</a></td><td>Create Pub/CDN Repositories</td><td>CDN path decision</td></tr>
-          <tr><td>2</td><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-42113">VROOM-42113</a></td><td>Create Errata configs</td><td>CDN repos</td></tr>
-          <tr><td>3</td><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-42120">VROOM-42120</a></td><td>Generate product IDs</td><td>Errata configs</td></tr>
-          <tr><td>4</td><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-42121">VROOM-42121</a></td><td>Push Product IDs to CDN Repos</td><td>Product IDs</td></tr>
-          <tr><td>5</td><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-42119">VROOM-42119</a></td><td>Add Gator advisory automation for LP</td><td>CDN repos + Errata</td></tr>
-          <tr><td>6</td><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-42118">VROOM-42118</a></td><td>Request Images Repository</td><td>CDN path decision</td></tr>
-        </tbody>
-      </table>
-    </div>
+<div class="section">
+  <div class="section-header"><h2>Not Started &mdash; Distribution Chain</h2> <span class="badge badge-new">6 Pending</span></div>
+  <div class="section-body">
+    <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 12px;">Sequential chain &mdash; all unassigned. Blocked on VROOM-42116 (CDN path decision).</p>
+    <table>
+      <tr><th>Order</th><th>Ticket</th><th>Summary</th><th>Assignee</th></tr>
+      <tr><td>1</td><td><a href="https://redhat.atlassian.net/browse/VROOM-42114" class="jira-link">VROOM-42114</a></td><td>Create Pub/CDN Repositories</td><td><span class="badge badge-new">Unassigned</span></td></tr>
+      <tr><td>2</td><td><a href="https://redhat.atlassian.net/browse/VROOM-42113" class="jira-link">VROOM-42113</a></td><td>Create Errata configs</td><td><span class="badge badge-new">Unassigned</span></td></tr>
+      <tr><td>3</td><td><a href="https://redhat.atlassian.net/browse/VROOM-42120" class="jira-link">VROOM-42120</a></td><td>Generate product IDs</td><td><span class="badge badge-new">Unassigned</span></td></tr>
+      <tr><td>4</td><td><a href="https://redhat.atlassian.net/browse/VROOM-42121" class="jira-link">VROOM-42121</a></td><td>Push Product IDs to CDN Repos</td><td><span class="badge badge-new">Unassigned</span></td></tr>
+      <tr><td>5</td><td><a href="https://redhat.atlassian.net/browse/VROOM-42119" class="jira-link">VROOM-42119</a></td><td>Add Gator advisory automation for LP</td><td><span class="badge badge-new">Unassigned</span></td></tr>
+      <tr><td>6</td><td><a href="https://redhat.atlassian.net/browse/VROOM-42118" class="jira-link">VROOM-42118</a></td><td>Request Images Repository</td><td><span class="badge badge-new">Unassigned</span></td></tr>
+    </table>
   </div>
+</div>
 
-  <!-- Not Started — Gating -->
-  <div class="section">
-    <div class="section-header">
-      <h2>Not Started &mdash; Gating</h2>
-      <span class="badge badge-new">2 items</span>
-    </div>
-    <div class="section-body">
-      <table>
-        <thead><tr><th>Ticket</th><th>Summary</th><th>Owner</th><th>Risk</th></tr></thead>
-        <tbody>
-          <tr><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-42050">VROOM-42050</a></td><td>Generate Gator configs for LP</td><td>Hubert Stefanski</td><td>&mdash;</td></tr>
-          <tr><td><a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-42184">VROOM-42184</a></td><td>WaiverDB permission config for LP packages</td><td>Hubert Stefanski</td><td>&mdash;</td></tr>
-        </tbody>
-      </table>
-    </div>
+<div class="section">
+  <div class="section-header"><h2>Not Started &mdash; Gating</h2> <span class="badge badge-new">2 Pending</span></div>
+  <div class="section-body">
+    <table>
+      <tr><th>Ticket</th><th>Summary</th><th>Assignee</th></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-42050" class="jira-link">VROOM-42050</a></td><td>Generate Gator configs for LP</td><td>Hubert Stefanski</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-42184" class="jira-link">VROOM-42184</a></td><td>WaiverDB permission config for LP</td><td>Hubert Stefanski</td></tr>
+    </table>
+    <p style="font-size: 0.85rem; color: var(--red); margin-top: 10px; font-weight: 600;">Risk: Hubert Stefanski is transitioning to RHAS. These tasks need reassignment or accelerated completion.</p>
   </div>
+</div>
 
-  <!-- Not Yet Ticketed -->
-  <div class="section">
-    <div class="section-header">
-      <h2>Not Yet Ticketed</h2>
-      <span class="badge badge-stalled">Gaps</span>
-    </div>
-    <div class="section-body" style="font-size:0.88rem;">
-      <ul style="padding-left:20px; display:flex; flex-direction:column; gap:8px;">
-        <li><strong>Compose/pipeline implementation</strong> &mdash; Pungi config changes, pipeline updates, smoke test integration. Spike validated the approach but no follow-up tickets created.</li>
-        <li><strong>Image distribution</strong> &mdash; No process for RHIVOS qcow images via access.redhat.com. Needs <code>-files</code> / <code>-isos</code> repos (ref: RHELDST-34953). Not on Konflux.</li>
-        <li><strong>Interim solution stalled</strong> &mdash; <a class="jira-link" href="https://redhat.atlassian.net/browse/VROOM-41496">VROOM-41496</a> (document how customers get QC packages from Qualcomm directly). 2 of 3 tasks unassigned, no activity since May 18.</li>
-      </ul>
-    </div>
+<div class="section">
+  <div class="section-header"><h2>Not Yet Ticketed</h2></div>
+  <div class="section-body">
+    <ul style="font-size: 0.88rem; padding-left: 20px;">
+      <li><strong>Compose/pipeline implementation</strong> &mdash; Pungi config, pipeline updates, smoke tests. Spike validated approach (VROOM-41522) but no execution tickets created.</li>
+      <li><strong>Image distribution via access.redhat.com</strong> &mdash; needs <code>-files</code>/<code>-isos</code> repos. No existing process for RHIVOS qcow images. Not on Konflux.</li>
+    </ul>
   </div>
+</div>
 
-  <!-- Critical Path -->
-  <div class="section">
-    <div class="section-header"><h2>Critical Path</h2></div>
-    <div class="section-body">
-      <div class="critical-path"><span class="blocker">CDN path decision (Petr Sabata) &larr;&mdash;&mdash; CURRENT BLOCKER</span>
+<div class="section">
+  <div class="section-header"><h2>Critical Path</h2></div>
+  <div class="section-body">
+    <div class="critical-path"><span class="done">&#10003; Spike compose/pipeline (VROOM-41522)</span>
+<span class="done">&#10003; Spike gating (VROOM-41523)</span>
+<span class="done">&#10003; Spike distribution (VROOM-41524)</span>
+<span class="done">&#10003; EngIDs created (VROOM-42115)</span>
         |
         v
-Create CDN repos (VROOM-42114)
+<span class="blocker">&#9679; CDN path decision (VROOM-42116) &lt;-- CURRENT BLOCKER (Petr Sabata)</span>
         |
         v
-Create Errata configs (VROOM-42113)
+  Create CDN repos (VROOM-42114) [unassigned]
         |
         v
-Generate product IDs (VROOM-42120)
+  Create Errata configs (VROOM-42113) [unassigned]
         |
         v
-Push product IDs to CDN (VROOM-42121)
+  Generate product IDs (VROOM-42120) [unassigned]
         |
         v
-Gator advisory automation (VROOM-42119) --+
-Gator configs (VROOM-42050) --------------+-- <span class="done">LP Infra Ready</span>
-WaiverDB perms (VROOM-42184) -------------+
+  Push product IDs to CDN (VROOM-42121) [unassigned]
+        |
+        v
+  Gator advisory automation (VROOM-42119) [unassigned] --+
+  Gator configs (VROOM-42050) [Hubert] -----------------+-- LP infra ready
+  WaiverDB perms (VROOM-42184) [Hubert] ----------------+
 
 <span class="parallel">Parallel: SKU creation (Claude Pariz) -- can proceed now</span>
 <span class="parallel">Parallel: Compose/pipeline -- needs tickets first</span></div>
-    </div>
   </div>
+</div>
 
-  <!-- Timeline -->
-  <div class="section">
-    <div class="section-header"><h2>Timeline Assessment</h2></div>
-    <div class="section-body">
-      <table>
-        <thead><tr><th>Milestone</th><th>Target</th><th>Status</th><th>Risk</th></tr></thead>
-        <tbody>
-          <tr><td>EngIDs registered</td><td>&mdash;</td><td><span class="badge badge-done">Complete</span></td><td>&mdash;</td></tr>
-          <tr style="background:var(--light-red);"><td><strong>CDN path decision</strong></td><td><strong>This week</strong></td><td><span class="badge badge-blocked">Blocked</span></td><td style="color:var(--red); font-weight:600;">No response from Petr yet. Gate for everything downstream.</td></tr>
-          <tr><td>CDN repos + Errata configs</td><td>~1-2 wks after path</td><td><span class="badge badge-new">Not started</span></td><td>Sequential chain, all unassigned</td></tr>
-          <tr><td>SKU creation</td><td>~2-3 weeks</td><td><span class="badge badge-new">Not started</span></td><td style="color:var(--green);">Low &mdash; Claude Pariz notified, can start now</td></tr>
-          <tr><td>Gating setup</td><td>Before August</td><td><span class="badge badge-new">Not started</span></td><td>&mdash;</td></tr>
-          <tr><td>Compose/pipeline</td><td>Before August</td><td><span class="badge badge-new">Not ticketed</span></td><td>Medium &mdash; approach validated, needs tickets</td></tr>
-          <tr style="font-weight:700;"><td>LP Infrastructure Ready</td><td>August 2026</td><td><span class="badge badge-blocked">At Risk</span></td><td style="color:var(--red);">~5 weeks. CDN path must unblock this week.</td></tr>
-        </tbody>
-      </table>
-      <p style="margin-top:12px; font-size:0.85rem; color:var(--muted);">Distribution chain alone could take 3-4 weeks given dependencies on external teams (SP RHEL Distribution, PLM, CDN). With ~5 weeks to August target, any delay on CDN path decision compresses the timeline further.</p>
-    </div>
+<div class="section">
+  <div class="section-header"><h2>Timeline Assessment</h2></div>
+  <div class="section-body">
+    <table>
+      <tr><th>Milestone</th><th>Target</th><th>Risk</th></tr>
+      <tr><td>EngIDs</td><td>Done</td><td><span class="badge badge-done">Complete</span></td></tr>
+      <tr><td>CDN path decision</td><td>This week</td><td><span class="badge badge-blocked">High</span> No response from Petr (1 day)</td></tr>
+      <tr><td>CDN repos + Errata configs</td><td>~1-2 weeks after path decision</td><td><span class="badge badge-stalled">Medium</span> Sequential, unassigned</td></tr>
+      <tr><td>SKU creation</td><td>~2-3 weeks</td><td><span class="badge badge-new">Low</span> Claude Pariz notified, can start</td></tr>
+      <tr><td>Gating setup</td><td>Before August</td><td><span class="badge badge-blocked">High</span> Hubert transitioning to RHAS</td></tr>
+      <tr><td>Compose/pipeline</td><td>Before August</td><td><span class="badge badge-stalled">Medium</span> Not ticketed</td></tr>
+      <tr><td><strong>LP infra ready</strong></td><td><strong>August 2026</strong></td><td><span class="badge badge-blocked">At Risk</span> CDN path + unassigned work</td></tr>
+    </table>
+    <p style="font-size: 0.85rem; color: var(--muted); margin-top: 12px;">~5 weeks to August target. CDN path decision must happen this week to keep timeline viable. Distribution chain alone could take 3-4 weeks given external team dependencies.</p>
   </div>
+</div>
 
-  <!-- Risks -->
-  <div class="section">
-    <div class="section-header"><h2>Risks</h2></div>
-    <div class="section-body">
-      <div class="risk-item risk-high"><div class="risk-num">1</div><div><strong>CDN path decision is the active bottleneck.</strong> Kanitha asked Petr Sabata to approve the directory path naming on Jun 22. Everything downstream (CDN repos, Errata configs, product IDs, Gator automation) is blocked until this resolves.</div></div>
-      <div class="risk-item risk-high"><div class="risk-num">2</div><div><strong>6 distribution tasks are unassigned.</strong> The critical path is a sequential chain with long lead times &mdash; each step depends on the previous. No owners identified.</div></div>
-      <div class="risk-item risk-med"><div class="risk-num">3</div><div><strong>Supplier Solicitation process.</strong> Charles Timko flagged (Jun 22) that AUTOBU-1076 needs to follow this process. Could introduce additional approval overhead or delay.</div></div>
-      <div class="risk-item risk-med"><div class="risk-num">4</div><div><strong>SP RHEL Workflow team staffing.</strong> Christine Freitas warned the team lost release engineering expertise due to China Engineering exit. They are scrambling &mdash; may affect responsiveness on distribution setup tasks.</div></div>
-      <div class="risk-item risk-med"><div class="risk-num">5</div><div><strong>No compose/pipeline tickets.</strong> Technical spike validated the approach (QC variant in Pungi compose, separate Brew tag, nodeps gather) but no implementation tickets exist. Work is untracked.</div></div>
-      <div class="risk-item risk-med"><div class="risk-num">7</div><div><strong>Image distribution gap.</strong> No established process for distributing RHIVOS qcow images via access.redhat.com. RHIVOS is not on Konflux. Reference: RHELDST-34953.</div></div>
-    </div>
+<div class="section">
+  <div class="section-header"><h2>Risks</h2></div>
+  <div class="section-body">
+    <div class="risk-item risk-high"><div class="risk-num">1</div><div><strong>CDN path decision is the active bottleneck.</strong> Everything downstream blocked on Petr Sabata. Asked Jun 22, no response yet. Critical path stalled.</div></div>
+    <div class="risk-item risk-high"><div class="risk-num">2</div><div><strong>6 distribution tasks are unassigned.</strong> Sequential chain with long lead time. Need owners from SP RHEL Distribution team.</div></div>
+    <div class="risk-item risk-high"><div class="risk-num">3</div><div><strong>Supplier Solicitation process.</strong> Charles Timko flagged (Jun 22) that AUTOBU-1076 needs to follow Supplier Solicitation. May add process overhead and timeline impact.</div></div>
+    <div class="risk-item risk-high"><div class="risk-num">4</div><div><strong>Gating work at risk &mdash; Hubert transitioning.</strong> VROOM-42050 and VROOM-42184 assigned to Hubert Stefanski, who is approved for RHAS transition. Knowledge transfer plan overdue.</div></div>
+    <div class="risk-item risk-med"><div class="risk-num">5</div><div><strong>SP RHEL Workflow staffing.</strong> Christine Freitas warned about lost release engineering expertise (China Engineering exit).</div></div>
+    <div class="risk-item risk-med"><div class="risk-num">6</div><div><strong>No compose/pipeline tickets.</strong> Approach validated (spike closed) but no implementation work tracked.</div></div>
+    <div class="risk-item risk-med"><div class="risk-num">7</div><div><strong>Image distribution.</strong> No process for RHIVOS qcow images via access.redhat.com. Not on Konflux.</div></div>
   </div>
+</div>
 
-  <!-- People -->
-  <div class="section">
-    <div class="section-header"><h2>Key People</h2></div>
-    <div class="section-body">
-      <table>
-        <thead><tr><th>Person</th><th>Slack</th><th>Role</th><th>Current Action</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Kanitha Chim</strong></td><td>kchim</td><td>Primary executor</td><td>Waiting on Petr for CDN path; notified Claude Pariz for SKU</td></tr>
-          <tr><td><strong>Whitney Chadwick</strong></td><td></td><td>Program owner</td><td>Set August timeline, gave LP go-ahead</td></tr>
-          <tr style="background:var(--light-red);"><td><strong>Petr Sabata</strong></td><td>contyk</td><td>Release/distribution, epic assignee</td><td style="color:var(--red); font-weight:600;">Needs to approve CDN directory path</td></tr>
-          <tr style="background:var(--light-amber);"><td><strong>Claude Pariz</strong></td><td></td><td>SKU team</td><td style="color:#795600; font-weight:600;">Next: create QC-specific SKU (notified Jun 22)</td></tr>
-          <tr><td>Matt Goldman</td><td></td><td>Distribution &mdash; EngID/CDN tickets</td><td>Assigned to VROOM-42116</td></tr>
-          <tr><td>Hubert Stefanski</td><td></td><td>Gating</td><td>Transitioning to RHAS &mdash; owns VROOM-42050, 42184</td></tr>
-          <tr><td>Gadi Glogowski</td><td></td><td>PM &mdash; SKU coordination</td><td>Brought Claude Pariz in</td></tr>
-          <tr><td>Leon Kang</td><td>lekang</td><td>SP RHEL Distribution</td><td>Consultant &mdash; advised on EngID/content set setup</td></tr>
-          <tr><td>Archana Katarki</td><td></td><td>SP RHEL Distribution (mgr)</td><td>Consulted on CDN issues</td></tr>
-          <tr><td>Francisco da Rocha</td><td></td><td>Interim solution</td><td>VROOM-41496 &mdash; stalled</td></tr>
-          <tr><td>Charles Timko</td><td></td><td>Process compliance</td><td>Flagged Supplier Solicitation (Jun 22)</td></tr>
-        </tbody>
-      </table>
-    </div>
+<div class="section">
+  <div class="section-header"><h2>Key People</h2></div>
+  <div class="section-body">
+    <table>
+      <tr><th>Person</th><th>Slack</th><th>Role</th><th>Current Action</th></tr>
+      <tr><td>Kanitha Chim</td><td>kchim</td><td>Primary executor</td><td>Waiting on Petr for CDN path; notified Claude Pariz for SKU</td></tr>
+      <tr><td>Whitney Chadwick</td><td>&mdash;</td><td>Program owner</td><td>August timeline</td></tr>
+      <tr><td>Petr Sabata</td><td>contyk</td><td>Release/distribution, epic assignee</td><td style="color: var(--red); font-weight: 600;">Needs to approve CDN path</td></tr>
+      <tr><td>Claude Pariz</td><td>&mdash;</td><td>SKU team</td><td>Next: create QC-specific SKU</td></tr>
+      <tr><td>Matt Goldman</td><td>&mdash;</td><td>Distribution &mdash; EngID/CDN tickets</td><td>Assigned to VROOM-42116</td></tr>
+      <tr><td>Hubert Stefanski</td><td>&mdash;</td><td>Gating (transitioning to RHAS)</td><td>Owns VROOM-42050, 42184</td></tr>
+      <tr><td>Gadi Glogowski</td><td>&mdash;</td><td>PM &mdash; SKU coordination</td><td>Brought Claude Pariz in</td></tr>
+      <tr><td>Leon Kang</td><td>lekang</td><td>SP RHEL Distribution consultant</td><td>Advised on EngID/content sets</td></tr>
+      <tr><td>Francisco da Rocha</td><td>&mdash;</td><td>Interim solution (VROOM-41496)</td><td><span class="badge badge-stalled">Stalled</span></td></tr>
+      <tr><td>Charles Timko</td><td>&mdash;</td><td>Supplier Solicitation flag</td><td>Commented Jun 22</td></tr>
+    </table>
   </div>
+</div>
 
-  <!-- Resolved Issues -->
-  <div class="section">
-    <div class="section-header"><h2>Resolved Issues</h2></div>
-    <div class="section-body">
-      <table>
-        <thead><tr><th>Issue</th><th>Ticket</th><th>Resolution</th></tr></thead>
-        <tbody>
-          <tr><td>Product IDs not pushing to CDN repo</td><td><a class="jira-link" href="https://redhat.atlassian.net/browse/RHELDST-42168">RHELDST-42168</a></td><td>Resolved by Michal (Jun 16)</td></tr>
-          <tr><td>Product listing debuginfo ghost entries</td><td><a class="jira-link" href="https://redhat.atlassian.net/browse/RHELWF-14266">RHELWF-14266</a></td><td>PLM overrides added for ppc64le/s390x. aarch64 entry remains. (Lukas Holecek)</td></tr>
-        </tbody>
-      </table>
-    </div>
+<div class="section">
+  <div class="section-header"><h2>Interim Solution (VROOM-41496)</h2> <span class="badge badge-stalled">Stalled</span></div>
+  <div class="section-body">
+    <p style="font-size: 0.88rem;">Stopgap while LP isn't ready: document how customers get QC packages from Qualcomm directly. Francisco da Rocha owns. 2 of 3 tasks unassigned, no activity since May 18. Status: <strong>New</strong>.</p>
   </div>
-
 </div>
 
 <footer>
-  Generated Jun 23, 2026 &middot; Sources: Jira (AUTOBU-1076, VROOM-41521 + children), Slack (#rhivos-sp-qc-layered-product), project files
+  <p>Generated: June 23, 2026 &mdash; Data sources: Jira (VROOM-41521 children, AUTOBU-1076, VROOM-41496), Slack (#rhivos-sp-qc-layered-product, cross-channel LP mentions)</p>
+  <p style="margin-top: 4px;">RHIVOS QC Layered Product Status Report &mdash; agentic-buddy</p>
 </footer>
 
+</div>
 </body>
 </html>
