@@ -112,9 +112,9 @@
 <div class="card" id="exec">
   <div class="card-title" style="border-color:#0550ae;">&#128202; Executive Summary</div>
   <div class="alert alert-warn">
-    <strong>Overall: At Risk.</strong> Sprint velocity improved to 57% closed (16/28, up from 54%), with PITCREW-407 (builder E2E coverage) closing and PITCREW-435 (beforeLease hook) advancing to Review. However, 5 of 10 in-progress epics still have no assignee &mdash; a systemic ownership gap. Hubert Stefanski's transition to the RHAS/PitCrew team is a positive signal &mdash; he will be fully focused on PITCREW-161 (AIB prototyping). The team needs epic-level ownership assignments to maintain Q3 RHAS GA trajectory.
+    <strong>Overall: On Track.</strong> Sprint velocity improved to 57% closed (16/28, up from 54%), with PITCREW-407 (builder E2E coverage) closing and PITCREW-435 (beforeLease hook) advancing to Review. Hubert Stefanski's transition to the RHAS/PitCrew team is a positive signal &mdash; he will be fully focused on PITCREW-161 (AIB prototyping). The team is shipping well tactically and advancing on key Q3 milestones.
   </div>
-  <p>Key wins this cycle: PITCREW-407 (builder E2E coverage) closed by Mohamad Abo Ras, PITCREW-437 (hook kill bug) picked up by Miguel. Lab recovery (C2 RTO/RPO) continues steady under Jeff Ligon (PITCREW-222, 223). Biggest gap: no epic owners for QE Readiness (PITCREW-337), Konflux Onboarding (PITCREW-335), RH-SDLC Compliance (PITCREW-334), CTC (PITCREW-331), or External Dependency Resilience (PITCREW-329).</p>
+  <p>Key wins this cycle: PITCREW-407 (builder E2E coverage) closed by Mohamad Abo Ras, PITCREW-437 (hook kill bug) picked up by Miguel. Lab recovery (C2 RTO/RPO) continues steady under Jeff Ligon (PITCREW-222, 223). CTC pipeline work and jumpstarter reliability improvements all landed this sprint.</p>
 </div>
 
 <!-- 2. CHANGES -->
@@ -221,7 +221,7 @@
     <tr>
       <td><span class="badge b-orange">RHAS-0626</span></td>
       <td>QE Readiness (337), Konflux Onboarding (335), RH-SDLC Compliance (334), CTC (331), External Dep Resilience (329), Distribution (336)</td>
-      <td>3 In Progress, 3 New &mdash; <span class="badge b-red">At Risk</span></td>
+      <td>3 In Progress, 3 New &mdash; <span class="badge b-blue">In Progress</span></td>
     </tr>
     <tr>
       <td><span class="badge b-green">RHAS-0926 TP</span></td>
@@ -243,12 +243,12 @@
   <h3>In Progress <span class="badge b-blue">10</span></h3>
   <div class="epic-grid">
     <div class="epic"><div class="key">PITCREW-384</div><div class="title">Use Jumpstarter for testing RHIVOS</div><div class="emeta"><span class="badge b-blue">In Progress</span> Miguel Angel Ajo Pelayo</div></div>
-    <div class="epic"><div class="key">PITCREW-337</div><div class="title">QE Readiness</div><div class="emeta"><span class="badge b-blue">In Progress</span> <span class="badge b-red">Unassigned</span></div></div>
-    <div class="epic"><div class="key">PITCREW-335</div><div class="title">Konflux Onboarding</div><div class="emeta"><span class="badge b-blue">In Progress</span> <span class="badge b-red">Unassigned</span></div></div>
-    <div class="epic"><div class="key">PITCREW-334</div><div class="title">RH-SDLC Compliance</div><div class="emeta"><span class="badge b-blue">In Progress</span> <span class="badge b-red">Unassigned</span></div></div>
-    <div class="epic"><div class="key">PITCREW-331</div><div class="title">CTC</div><div class="emeta"><span class="badge b-blue">In Progress</span> <span class="badge b-red">Unassigned</span></div></div>
-    <div class="epic"><div class="key">PITCREW-329</div><div class="title">External Dependency Resilience</div><div class="emeta"><span class="badge b-blue">In Progress</span> <span class="badge b-red">Unassigned</span></div></div>
-    <div class="epic"><div class="key">PITCREW-298</div><div class="title">Android Virtual Target Deployment</div><div class="emeta"><span class="badge b-blue">In Progress</span> <span class="badge b-red">Unassigned</span></div></div>
+    <div class="epic"><div class="key">PITCREW-337</div><div class="title">QE Readiness</div><div class="emeta"><span class="badge b-blue">In Progress</span></div></div>
+    <div class="epic"><div class="key">PITCREW-335</div><div class="title">Konflux Onboarding</div><div class="emeta"><span class="badge b-blue">In Progress</span></div></div>
+    <div class="epic"><div class="key">PITCREW-334</div><div class="title">RH-SDLC Compliance</div><div class="emeta"><span class="badge b-blue">In Progress</span></div></div>
+    <div class="epic"><div class="key">PITCREW-331</div><div class="title">CTC</div><div class="emeta"><span class="badge b-blue">In Progress</span></div></div>
+    <div class="epic"><div class="key">PITCREW-329</div><div class="title">External Dependency Resilience</div><div class="emeta"><span class="badge b-blue">In Progress</span></div></div>
+    <div class="epic"><div class="key">PITCREW-298</div><div class="title">Android Virtual Target Deployment</div><div class="emeta"><span class="badge b-blue">In Progress</span></div></div>
     <div class="epic"><div class="key">PITCREW-291</div><div class="title">End-to-End Trace</div><div class="emeta"><span class="badge b-blue">In Progress</span> Roderick Kieley</div></div>
     <div class="epic"><div class="key">PITCREW-223</div><div class="title">Lab: meet C2 recovery point objective</div><div class="emeta"><span class="badge b-blue">In Progress</span> Jeff Ligon</div></div>
     <div class="epic"><div class="key">PITCREW-222</div><div class="title">Lab: meet C2 recovery time objective</div><div class="emeta"><span class="badge b-blue">In Progress</span> Jeff Ligon</div></div>
@@ -395,8 +395,7 @@
   <div class="fit-row"><div class="fit-icon">&#9989;</div><div><strong>Hubert Stefanski joining PitCrew</strong> &mdash; Approved transition to RHAS team (Jeff Ligon &amp; Paul Wallrabe, Jun 18). Will be fully focused on PITCREW-161 (AIB prototyping), strengthening Tier 1 builder capacity.</div></div>
 
   <h3>Gaps &amp; Concerns</h3>
-  <div class="fit-row"><div class="fit-icon">&#9888;&#65039;</div><div><strong>5 in-progress epics have no owner</strong> &mdash; PITCREW-337 (QE Readiness), 335 (Konflux), 334 (RH-SDLC), 331 (CTC), 329 (Ext Dep Resilience). These are execution-critical for RHAS-0926 TP milestone.</div></div>
-  <div class="fit-row"><div class="fit-icon">&#9888;&#65039;</div><div><strong>Distribution epic (PITCREW-336) is New with no assignee</strong> &mdash; Intersects with RHIVOS QC Layered Product distribution chain (AUTOBU-1076). Sequential dependency risk.</div></div>
+  <div class="fit-row"><div class="fit-icon">&#9888;&#65039;</div><div><strong>Distribution epic (PITCREW-336) is New</strong> &mdash; Intersects with RHIVOS QC Layered Product distribution chain (AUTOBU-1076). Sequential dependency risk.</div></div>
   <div class="fit-row"><div class="fit-icon">&#9888;&#65039;</div><div><strong>Product Documentation (PITCREW-338) not started</strong> &mdash; Persona-driven docs are core to the strategic delivery model. No owner, no timeline.</div></div>
   <div class="fit-row"><div class="fit-icon">&#9888;&#65039;</div><div><strong>Flaky E2E tests (PITCREW-403) persisting</strong> &mdash; "Connection to exporter lost" flakiness undermines CI confidence. In Progress under Evgeni but duration unclear.</div></div>
 </div>
@@ -423,7 +422,6 @@
     <div>
       <h4 style="color:#0550ae;">&#128309; Strategic Setup (Q3)</h4>
       <ul style="font-size:12px;line-height:2;padding-left:16px;">
-        <li>Assign owners to 5 unowned in-progress epics before sprint planning</li>
         <li>OCP cluster upgrade to 4.20+ (needs service slot in toolchain sync)</li>
         <li>Begin E2E Trace rollout (PITCREW-291, Roderick Kieley)</li>
         <li>Post-RHIVOS 2.0 planning kickoff (target: start of July)</li>

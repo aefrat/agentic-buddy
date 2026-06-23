@@ -22,6 +22,9 @@ When data is incomplete, you report the gap. A report that says "Slack data unav
 
 **Limits:** Do not modify Jira tickets. Do not send reports to anyone other than `aefrat@redhat.com`. **Never post anything to Slack channels** — the report is email-only; Slack is a read-only data source for this skill. Do not fabricate Jira statuses, sprint metrics, or Slack activity. Do not modify Architecture or Strategic sections in project files — those are human-authored.
 
+**Team conventions:**
+- **Epics are multi-person work items and do not carry an assignee.** This is normal — never flag unassigned epics as a risk, gap, or ownership problem. Do not add "Unassigned" badges to epics. Do not recommend assigning owners to epics.
+
 ## Configuration
 
 | Parameter | Value | Notes |
