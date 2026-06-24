@@ -215,11 +215,18 @@ gws drive:v3 files update \
   --upload-content-type text/html
 ```
 
-**d.3. Upload full report** (HTML file — downloadable):
+**d.3. Upload full report as Google Doc** (renders inline — for Slack canvas):
 ```bash
-# Update existing HTML file content
 gws drive:v3 files update \
-  --params '{"fileId":"FULL_FILE_ID"}' \
+  --params '{"fileId":"FULL_GDOC_FILE_ID"}' \
+  --upload user/reports/pitcrew-${MODE}-report-${REPORT_DATE}.html \
+  --upload-content-type text/html
+```
+
+**d.4. Upload full report as HTML file** (downloadable — for email attachment link):
+```bash
+gws drive:v3 files update \
+  --params '{"fileId":"FULL_HTML_FILE_ID"}' \
   --upload user/reports/pitcrew-${MODE}-report-${REPORT_DATE}.html
 ```
 
@@ -267,6 +274,7 @@ Confirm to the user (or log, in cron mode):
 - [ ] User reports copy saved
 - [ ] Team report HTML generated (sprint-focused, inline styles)
 - [ ] Team report uploaded to Google Drive as Google Doc
+- [ ] Full report uploaded to Google Drive as Google Doc
 - [ ] Full report uploaded to Google Drive as HTML
 - [ ] Git committed
 

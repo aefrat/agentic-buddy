@@ -23,9 +23,22 @@ Lean report for the team: Exec Summary + Slack Digest + Changes + Sprint. Upload
 | `mime_type` | `application/vnd.google-apps.document` |
 | `upload_content_type` | `text/html` |
 
-## Full Report (HTML file — for email attachment)
+## Full Report — Google Doc (for Slack canvas)
 
-Complete report with strategic sections, roadmap, full epic grid. Uploaded as raw HTML (downloadable).
+Complete report with all sections, rendered as a Google Doc for inline viewing.
+
+| Field | Value |
+|-------|-------|
+| `folder_id` | `1i0terPrjH3fz_l_RRfhEZC5O7pFjiR0T` |
+| `file_id` | `1amSFPQaoennd9ey5C6sWuCykvNcfgVLcmzCvHHplfR4` |
+| `file_name` | `PitCrew-RHAS-Full-Report` |
+| `web_view_link` | `https://docs.google.com/document/d/1amSFPQaoennd9ey5C6sWuCykvNcfgVLcmzCvHHplfR4/edit?usp=drivesdk` |
+| `mime_type` | `application/vnd.google-apps.document` |
+| `upload_content_type` | `text/html` |
+
+## Full Report — HTML file (for email attachment)
+
+Same complete report uploaded as raw HTML (downloadable).
 
 | Field | Value |
 |-------|-------|
