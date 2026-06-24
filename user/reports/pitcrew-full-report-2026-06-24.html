@@ -46,7 +46,7 @@
 <h2 id="exec" style="font-size: 16px; color: #0550ae; border-bottom: 2px solid #0550ae; padding-bottom: 6px; margin-top: 24px;">Executive Summary</h2>
 <p style="font-size: 13px; line-height: 1.7;"><strong>Overall: At Risk.</strong> Sprint 13 velocity improved to 61% (17/28 closed, up from 57% yesterday). Two critical bugs resolved — beforeLease hook failure (PITCREW-437) and exporter lease kill on restart (PITCREW-436). However, the flaky E2E "connection to exporter lost" (PITCREW-403) remains in Review, and PITCREW-435 (beforeLease endLease stuck) is also still in Review. No epic status changes since previous run.</p>
 <p style="font-size: 13px; line-height: 1.7;">Lab health improved: sa8775p-04 and -05 firmware reflash successful. New issue: j784s4xevm-06 boot failure assigned to Shawn Doherty (PITCREW-450). Developer board availability flagged as a concern — proposal to reserve 2–3 sa8775p boards for dev use (raised by aesteve in #forum-jumpstarter).</p>
-<p style="font-size: 13px; line-height: 1.7;">Jumpstarter 0.9.0 and Builder 0.2.0 releases are queued (PITCREW-440, PITCREW-439). Brad Benson shared the hardware enablement bringup agent with CAIB+JMP integration. Cluster 4.20+ upgrade needed (bzlotnik).</p>
+<p style="font-size: 13px; line-height: 1.7;">Jumpstarter 0.9.0 and Builder 0.2.0 releases are queued (PITCREW-440, PITCREW-439). Bruce Benson shared the hardware enablement bringup agent with CAIB+JMP integration. Cluster 4.20+ upgrade needed (bzlotnik).</p>
 
 <hr style="border: none; border-top: 1px solid #d0d7de; margin: 20px 0;">
 
@@ -333,7 +333,7 @@
         <li>RHAS-0926 Tech Preview (Sep 29) — 97 days out</li>
         <li>Cluster 4.20+ upgrade planning</li>
         <li>Board reservation policy for dev vs. automation</li>
-        <li>Brad Benson's bringup agent — evaluate for lab onboarding</li>
+        <li>Bruce Benson's bringup agent — evaluate for lab onboarding</li>
         <li>Python 3.12-3.14 bump (PITCREW-417)</li>
         <li>stress-ng demo with Colin King (Luigi opportunity)</li>
       </ul>
@@ -356,7 +356,7 @@
         <li><strong>Lab maintenance:</strong> sa8775p-04/-05 firmware reflash successful. j784s4xevm-06 boot failure — ukiboot can't find active A/B slot (PITCREW-450, MR !281).</li>
         <li><strong>Lab smoke:</strong> 55 PASS, 4 FAIL, 6 XFAIL (automated run).</li>
         <li><strong>Jumpstarter 0.9.0:</strong> majopela reviewing PR candidates (PR #656 pending for mkuehl).</li>
-        <li><strong>Bringup agent:</strong> Brad Benson shared hardware enablement agent with CAIB+JMP integration.</li>
+        <li><strong>Bringup agent:</strong> Bruce Benson shared hardware enablement agent with CAIB+JMP integration.</li>
         <li><strong>Cluster upgrade:</strong> bzlotnik flagged need for 4.20+ upgrade plan.</li>
         <li><strong>RHIVOS nightly:</strong> Ozan reported provisioning timeouts on ride4-sa8775p-sx-r3 boards.</li>
         <li><strong>stress-ng:</strong> Luigi met Colin King at ELISA workshop — offered demo config help.</li>

@@ -8,7 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
-| 2026-06-24 | PitCrew reports: Drive upload automation, Miguel feedback (section reorder, audience views), white-text fix, daily cron, full report Google Doc added (4 Drive artifacts), TOC with anchor links for Google Docs | `77a3b0a9-45b9-43e7-9486-f77158985ec4` |
+| 2026-06-24 | PitCrew reports: Drive upload automation, Miguel feedback (section reorder, audience views), white-text fix, daily cron, full report Google Doc added (4 Drive artifacts), TOC, Google Docs HTML rewrite (table-based layouts, outer container table, H2 heading extraction, skill documentation) | `77a3b0a9-45b9-43e7-9486-f77158985ec4` |
 | 2026-06-24 | Slack MCP live validation + weekly report via MCP + full repo migration (12 files curl→MCP) | `eee966c7-35ae-4edd-9da1-4f4867b9d74f` |
 | 2026-06-24 | Community slack-mcp MCP server setup (redhat-community-ai-tools/slack-mcp), removed official Slack MCP plugin, global + project rule updates | `3adf84fe-327e-4389-8a1b-b53244207821` |
 | 2026-06-23–24 | W26 review + LP re-run + PitCrew agent creation (agent-forge, 4-store) + first full report + corrections (Slack posting incident, epic conventions, team health removal) + Slack canvas API dead end + LP status Jun 24 (cron) | `a23c36f0-dd83-4d71-9c3a-6ba6392e0dbb` |
