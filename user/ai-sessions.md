@@ -9,6 +9,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 | Date | Description | Session ID |
 |------|-------------|------------|
 | 2026-06-23 | W26 review + LP re-run + PitCrew agent creation (agent-forge, 4-store) + first full report + corrections (Slack posting incident, epic conventions, team health removal) | `a23c36f0-dd83-4d71-9c3a-6ba6392e0dbb` |
+| 2026-06-23 | Core RPMs Redux project + agent + skill creation (agent-forge, 4-store) + first report (22 tickets, 15 Closed, VROOM-31421 anomaly) | `337c8c94-c68a-4dcf-b253-3e24cf571d87` |
 | 2026-06-23 | EngID Confluence doc indexing (ATC wiki + QC LP projects), errata-distribution agent skill creation, Confluence API token discovery | `5ec900f7-4baf-448e-9987-666ef18537eb` |
 | 2026-06-23 | RHIVOS QC LP deep dive + LP status report skill creation (agent-forge, 4-store memory), first run, iterative refinements (kchim removal, RAZ→RHAS fix, Hubert risk removal, email attachment), system crontab scheduled | `cb61880f-7430-4fca-b38b-12d7c565ae17` |
 | 2026-06-23 | Jun 18 backlog refinement catch-up, ATC Scrum Meetings project, NXP/Polarion deep dive via Slack | `193fa53` |
