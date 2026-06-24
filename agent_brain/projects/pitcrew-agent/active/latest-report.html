@@ -4,203 +4,130 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PitCrew / RHAS — Full Status Report · June 24, 2026</title>
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f6f8fa; color: #24292f; padding: 20px 16px; }
-  .container { max-width: 1060px; margin: 0 auto; }
-
-  .hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #fff; padding: 22px 28px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,.2); }
-  .hero h1 { font-size: 21px; font-weight: 700; margin-bottom: 6px; }
-  .hero .meta { font-size: 12px; opacity: .7; }
-  .hero .meta span { margin-right: 18px; }
-
-  .toc { background: #fff; border: 1px solid #d0d7de; border-radius: 8px; padding: 14px 20px; margin-bottom: 20px; font-size: 13px; }
-  .toc h3 { font-size: 12px; font-weight: 700; color: #57606a; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
-  .toc a { color: #0550ae; text-decoration: none; margin-right: 20px; }
-  .toc a:hover { text-decoration: underline; }
-
-  .card { background: #fff; border: 1px solid #d0d7de; border-radius: 10px; padding: 20px 24px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
-  .card-title { font-size: 16px; font-weight: 700; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid; display: flex; align-items: center; gap: 8px; }
-
-  h3 { font-size: 14px; font-weight: 600; margin: 16px 0 8px 0; color: #1a1a2e; }
-  h4 { font-size: 13px; font-weight: 600; margin: 12px 0 6px 0; color: #444; }
-  p { font-size: 13px; line-height: 1.65; color: #444; margin-bottom: 8px; }
-
-  .tier-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin: 14px 0; }
-  .tier { border-radius: 8px; padding: 14px 16px; border: 1px solid; }
-  .tier h4 { margin: 0 0 6px 0; font-size: 13px; font-weight: 700; }
-  .tier ul { list-style: none; font-size: 12px; line-height: 1.9; }
-  .tier-1 { background: #f0fff4; border-color: #b7ebc8; } .tier-1 h4 { color: #1a7a3e; }
-  .tier-2 { background: #f0f4ff; border-color: #a8c4f5; } .tier-2 h4 { color: #0550ae; }
-  .tier-3 { background: #f9f0ff; border-color: #d4aef5; } .tier-3 h4 { color: #6e3db5; }
-
-  .roadmap-row { display: flex; gap: 10px; margin: 14px 0; }
-  .roadmap-q { flex: 1; border-radius: 8px; padding: 12px 14px; font-size: 12px; border: 1px solid; }
-  .roadmap-q h4 { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
-  .roadmap-q ul { list-style: none; line-height: 1.9; }
-  .q1 { background: #fffbf0; border-color: #f5d89a; } .q1 h4 { color: #856404; }
-  .q2 { background: #fff0f0; border-color: #f5a9a9; } .q2 h4 { color: #c00; }
-  .q3 { background: #f0fff4; border-color: #b7ebc8; } .q3 h4 { color: #1a7a3e; }
-  .q4 { background: #f0f4ff; border-color: #a8c4f5; } .q4 h4 { color: #0550ae; }
-
-  table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 10px 0; }
-  th { background: #f6f8fa; border: 1px solid #d0d7de; padding: 7px 10px; text-align: left; font-weight: 600; color: #57606a; text-transform: uppercase; letter-spacing: .04em; font-size: 11px; }
-  td { border: 1px solid #d0d7de; padding: 7px 10px; vertical-align: top; line-height: 1.5; }
-  tr:nth-child(even) td { background: #fafafa; }
-
-  .badge { display: inline-block; border-radius: 4px; padding: 2px 7px; font-size: 11px; font-weight: 600; }
-  .b-green  { background: #d4edda; color: #1a7a3e; border: 1px solid #b7ebc8; }
-  .b-blue   { background: #e8f0fe; color: #0550ae; border: 1px solid #a8c4f5; }
-  .b-orange { background: #fff0e6; color: #c44b00; border: 1px solid #f5c89a; }
-  .b-purple { background: #f0ebff; color: #6e3db5; border: 1px solid #c5adf5; }
-  .b-gray   { background: #f0f0f0; color: #57606a; border: 1px solid #d0d7de; }
-  .b-red    { background: #ffeef0; color: #c00;    border: 1px solid #f5a9a9; }
-  .b-yellow { background: #fffbf0; color: #856404; border: 1px solid #f5d89a; }
-
-  .alert { border-radius: 0 6px 6px 0; padding: 12px 16px; margin: 12px 0; border-left: 4px solid; font-size: 13px; line-height: 1.6; }
-  .alert-warn    { background: #fff8f0; border-color: #e05d00; }
-  .alert-warn strong { color: #c44b00; }
-  .alert-info    { background: #f0f4ff; border-color: #0550ae; }
-  .alert-info strong { color: #0550ae; }
-  .alert-success { background: #f0fff4; border-color: #1a7a3e; }
-  .alert-success strong { color: #1a7a3e; }
-  .alert-red     { background: #fff0f0; border-color: #c00; }
-  .alert-red strong { color: #c00; }
-
-  .epic-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
-  .epic { border: 1px solid #e8e8e8; border-radius: 6px; padding: 10px 14px; font-size: 12px; background: #fafafa; }
-  .epic .key   { font-weight: 700; color: #0550ae; font-size: 11px; }
-  .epic .title { font-size: 13px; font-weight: 600; margin: 2px 0; color: #1a1a2e; }
-  .epic .meta  { color: #888; font-size: 11px; }
-
-  .person { display: inline-flex; align-items: center; gap: 5px; background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 600; margin: 2px; }
-
-  .fit-row { display: flex; gap: 6px; align-items: flex-start; margin: 6px 0; font-size: 13px; line-height: 1.6; }
-  .fit-icon { flex-shrink: 0; width: 22px; }
-
-  .cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-
-  .release-timeline { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0; }
-  .rel { padding: 5px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; border: 1px solid; }
-  .rel-past    { background: #f0f0f0; border-color: #d0d7de; color: #888; }
-  .rel-current { background: #fff8f0; border-color: #e05d00; color: #c44b00; }
-  .rel-near    { background: #f0fff4; border-color: #b7ebc8; color: #1a7a3e; }
-  .rel-tp      { background: #f0ebff; border-color: #c5adf5; color: #6e3db5; }
-  .rel-ga      { background: #e8f0fe; border-color: #a8c4f5; color: #0550ae; }
-  .rel-future  { background: #fafafa; border-color: #e8e8e8; color: #aaa; }
-
-  code { background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 3px; padding: 1px 5px; font-size: 11px; font-family: monospace; color: #c44b00; }
-
-  footer { text-align: center; color: #aaa; font-size: 11px; margin-top: 16px; padding: 8px; }
-</style>
 </head>
-<body>
-<div class="container">
+<body style="font-family: Arial, sans-serif; color: #24292f; max-width: 1060px; margin: 0 auto; padding: 20px; background: #f6f8fa;">
 
-<!-- HERO -->
-<div class="hero">
-  <h1>PitCrew / RHAS — Full Status Report</h1>
-  <div class="meta">
-    <span>June 24, 2026</span>
-    <span>Release: RHAS-0626</span>
-    <span>Sprint 13</span>
-    <span class="badge b-orange">At Risk</span>
-  </div>
-</div>
+<!-- HERO — table-based for Google Docs cell background preservation -->
+<table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+  <tr>
+    <td style="background: #1a1a2e; padding: 20px 28px;">
+      <p style="font-size: 21px; font-weight: bold; color: #ffffff; margin: 0 0 6px 0;">PitCrew / RHAS — Full Status Report</p>
+      <p style="font-size: 12px; color: #b0b8c4; margin: 0;">June 24, 2026 · Release: RHAS-0626 · Sprint 13</p>
+    </td>
+    <td style="background: #c44b00; padding: 20px 24px; width: 110px; text-align: center; vertical-align: middle;">
+      <p style="font-size: 14px; font-weight: bold; color: #ffffff; margin: 0;">AT RISK</p>
+    </td>
+  </tr>
+</table>
 
-<!-- TOC -->
-<div class="toc">
-  <h3>Contents</h3>
-  <a href="#exec">Executive Summary</a>
-  <a href="#changes">Changes</a>
-  <a href="#strategy">Strategic Guide</a>
-  <a href="#roadmap">Roadmap</a>
-  <a href="#releases">Releases</a>
-  <a href="#epics">Epics</a>
-  <a href="#sprint">Sprint</a>
-  <a href="#alignment">Alignment</a>
-  <a href="#ahead">Looking Ahead</a>
-  <a href="#slack">Slack Digest</a>
-</div>
+<!-- TOC — table row with light background -->
+<table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+  <tr>
+    <td style="background: #ffffff; border: 1px solid #d0d7de; padding: 12px 20px; font-size: 13px;">
+      <strong style="font-size: 11px; color: #57606a; text-transform: uppercase; letter-spacing: .05em;">Contents:</strong><br>
+      <a href="#exec" style="color: #0550ae; text-decoration: none; margin-right: 14px;">Executive Summary</a> ·
+      <a href="#changes" style="color: #0550ae; text-decoration: none; margin-right: 14px; margin-left: 4px;">Changes</a> ·
+      <a href="#strategy" style="color: #0550ae; text-decoration: none; margin-right: 14px; margin-left: 4px;">Strategic Guide</a> ·
+      <a href="#roadmap" style="color: #0550ae; text-decoration: none; margin-right: 14px; margin-left: 4px;">Roadmap</a> ·
+      <a href="#releases" style="color: #0550ae; text-decoration: none; margin-right: 14px; margin-left: 4px;">Releases</a> ·
+      <a href="#epics" style="color: #0550ae; text-decoration: none; margin-right: 14px; margin-left: 4px;">Epics</a> ·
+      <a href="#sprint" style="color: #0550ae; text-decoration: none; margin-right: 14px; margin-left: 4px;">Sprint</a> ·
+      <a href="#alignment" style="color: #0550ae; text-decoration: none; margin-right: 14px; margin-left: 4px;">Alignment</a> ·
+      <a href="#ahead" style="color: #0550ae; text-decoration: none; margin-right: 14px; margin-left: 4px;">Looking Ahead</a> ·
+      <a href="#slack" style="color: #0550ae; text-decoration: none; margin-left: 4px;">Slack Digest</a>
+    </td>
+  </tr>
+</table>
 
 <!-- EXECUTIVE SUMMARY -->
-<div class="card" id="exec">
-  <div class="card-title" style="border-color:#0550ae;">Executive Summary</div>
-  <p><strong>Overall: At Risk.</strong> Sprint 13 velocity improved to 61% (17/28 closed, up from 57% yesterday). Two critical bugs resolved — beforeLease hook failure (<code>PITCREW-437</code>) and exporter lease kill on restart (<code>PITCREW-436</code>). However, the flaky E2E "connection to exporter lost" (<code>PITCREW-403</code>) remains in Review, and <code>PITCREW-435</code> (beforeLease endLease stuck) is also still in Review. No epic status changes since previous run.</p>
-  <p>Lab health improved: sa8775p-04 and -05 firmware reflash successful. New issue: j784s4xevm-06 boot failure assigned to Shawn Doherty (<code>PITCREW-450</code>). Developer board availability flagged as a concern — proposal to reserve 2–3 sa8775p boards for dev use (raised by aesteve in #forum-jumpstarter).</p>
-  <p>Jumpstarter 0.9.0 and Builder 0.2.0 releases are queued (<code>PITCREW-440</code>, <code>PITCREW-439</code>). Brad Benson shared the hardware enablement bringup agent with CAIB+JMP integration. Cluster 4.20+ upgrade needed (bzlotnik).</p>
-</div>
+<h2 id="exec" style="font-size: 16px; color: #0550ae; border-bottom: 2px solid #0550ae; padding-bottom: 6px; margin-top: 24px;">Executive Summary</h2>
+<p style="font-size: 13px; line-height: 1.7;"><strong>Overall: At Risk.</strong> Sprint 13 velocity improved to 61% (17/28 closed, up from 57% yesterday). Two critical bugs resolved — beforeLease hook failure (PITCREW-437) and exporter lease kill on restart (PITCREW-436). However, the flaky E2E "connection to exporter lost" (PITCREW-403) remains in Review, and PITCREW-435 (beforeLease endLease stuck) is also still in Review. No epic status changes since previous run.</p>
+<p style="font-size: 13px; line-height: 1.7;">Lab health improved: sa8775p-04 and -05 firmware reflash successful. New issue: j784s4xevm-06 boot failure assigned to Shawn Doherty (PITCREW-450). Developer board availability flagged as a concern — proposal to reserve 2–3 sa8775p boards for dev use (raised by aesteve in #forum-jumpstarter).</p>
+<p style="font-size: 13px; line-height: 1.7;">Jumpstarter 0.9.0 and Builder 0.2.0 releases are queued (PITCREW-440, PITCREW-439). Brad Benson shared the hardware enablement bringup agent with CAIB+JMP integration. Cluster 4.20+ upgrade needed (bzlotnik).</p>
 
-<!-- CHANGES -->
-<div class="card" id="changes">
-  <div class="card-title" style="border-color:#e05d00;">Changes Since Last Report <span class="badge b-orange">Jun 23 → Jun 24</span></div>
+<hr style="border: none; border-top: 1px solid #d0d7de; margin: 20px 0;">
 
-  <div class="alert alert-success">
-    <strong>PITCREW-437</strong> (beforeLease hook failure with onFailure exit does not kill exporter): <strong>In Progress → Closed</strong> — Miguel Angel Ajo Pelayo resolved.
-  </div>
-  <div class="alert alert-success">
-    <strong>PITCREW-436</strong> (Restarting exporter with hooks kills active lease prematurely): <strong>→ Closed</strong> — Miguel Angel Ajo Pelayo resolved.
-  </div>
+<!-- CHANGES SINCE LAST REPORT -->
+<table style="width: 100%; border-collapse: collapse; margin-bottom: 4px;">
+  <tr>
+    <td style="padding: 0;"><h2 id="changes" style="font-size: 16px; color: #e05d00; border-bottom: 2px solid #e05d00; padding-bottom: 6px; margin-top: 0;">Changes Since Last Report</h2></td>
+    <td style="text-align: right; vertical-align: bottom; padding-bottom: 10px;">
+      <table style="border-collapse: collapse; display: inline-table;"><tr><td style="background: #fff0e6; color: #c44b00; padding: 3px 10px; font-size: 11px; font-weight: bold; border: 1px solid #f5c89a;">Jun 23 → Jun 24</td></tr></table>
+    </td>
+  </tr>
+</table>
 
-  <h3>Sprint Movement</h3>
-  <table>
-    <tr><th>Metric</th><th>Jun 23</th><th>Jun 24</th><th>Delta</th></tr>
-    <tr><td>Closed</td><td>16</td><td>17</td><td style="color:#1a7a3e;">+1</td></tr>
-    <tr><td>In Progress</td><td>5</td><td>4</td><td style="color:#1a7a3e;">-1</td></tr>
-    <tr><td>Review</td><td>2</td><td>3</td><td style="color:#c44b00;">+1</td></tr>
-    <tr><td>New</td><td>5</td><td>4</td><td style="color:#1a7a3e;">-1</td></tr>
-    <tr><td><strong>% Complete</strong></td><td>57%</td><td>61%</td><td style="color:#1a7a3e;"><strong>+4pp</strong></td></tr>
-  </table>
+<table style="width: 100%; border-collapse: collapse; margin-bottom: 8px;">
+  <tr><td style="background: #1a7a3e; width: 5px; padding: 0;"></td><td style="background: #f0fff4; padding: 10px 14px; font-size: 13px;"><strong style="color: #1a7a3e;">PITCREW-437</strong> (beforeLease hook failure with onFailure exit does not kill exporter): <strong>In Progress → Closed</strong> — Miguel Angel Ajo Pelayo resolved.</td></tr>
+</table>
+<table style="width: 100%; border-collapse: collapse; margin-bottom: 12px;">
+  <tr><td style="background: #1a7a3e; width: 5px; padding: 0;"></td><td style="background: #f0fff4; padding: 10px 14px; font-size: 13px;"><strong style="color: #1a7a3e;">PITCREW-436</strong> (Restarting exporter with hooks kills active lease prematurely): <strong>→ Closed</strong> — Miguel Angel Ajo Pelayo resolved.</td></tr>
+</table>
 
-  <h3>Epic Movement</h3>
-  <p>No epic status changes since Jun 23. All 10 In Progress and 17 New epics unchanged.</p>
-</div>
+<h3 style="font-size: 14px; color: #1a1a2e; margin: 12px 0 6px;">Sprint Movement</h3>
+<table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+  <tr><th style="background: #f6f8fa; border: 1px solid #d0d7de; padding: 7px 10px; text-align: left;">Metric</th><th style="background: #f6f8fa; border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">Jun 23</th><th style="background: #f6f8fa; border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">Jun 24</th><th style="background: #f6f8fa; border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">Delta</th></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Closed</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">16</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">17</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center; color: #1a7a3e;">+1</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">In Progress</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">5</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">4</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center; color: #1a7a3e;">-1</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Review</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">2</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">3</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center; color: #c44b00;">+1</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">New</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">5</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">4</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center; color: #1a7a3e;">-1</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; font-weight: bold;">% Complete</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">57%</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">61%</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center; color: #1a7a3e; font-weight: bold; background: #f0fff4;">+4pp</td></tr>
+</table>
+
+<h3 style="font-size: 14px; color: #1a1a2e; margin: 12px 0 6px;">Epic Movement</h3>
+<p style="font-size: 13px; line-height: 1.7;">No epic status changes since Jun 23. All 10 In Progress and 17 New epics unchanged.</p>
+
+<hr style="border: none; border-top: 1px solid #d0d7de; margin: 20px 0;">
 
 <!-- STRATEGIC GUIDE -->
-<div class="card" id="strategy">
-  <div class="card-title" style="border-color:#6e3db5;">Strategic Guide — Three-Tier Architecture</div>
-  <div class="tier-grid">
-    <div class="tier tier-1">
-      <h4>Tier 1 — Standalone Builder</h4>
-      <ul>
+<h2 id="strategy" style="font-size: 16px; color: #6e3db5; border-bottom: 2px solid #6e3db5; padding-bottom: 6px; margin-top: 0;">Strategic Guide — Three-Tier Architecture</h2>
+
+<table style="width: 100%; border-collapse: collapse; font-size: 12px; margin: 14px 0;">
+  <tr>
+    <td style="background: #f0fff4; border: 1px solid #b7ebc8; padding: 14px 16px; vertical-align: top; width: 33%;">
+      <p style="font-size: 13px; font-weight: bold; color: #1a7a3e; margin: 0 0 6px 0;">Tier 1 — Standalone Builder</p>
+      <ul style="font-size: 12px; line-height: 1.9; padding-left: 16px; margin: 0;">
         <li>RHEL + AIB + Language Containers</li>
         <li>Target: systems admins, cost-sensitive orgs</li>
         <li>Max control, portable artifacts</li>
         <li>Entry point creating the OCP "value vacuum"</li>
       </ul>
-    </div>
-    <div class="tier tier-2">
-      <h4>Tier 2 — Automotive Suite (RHAS)</h4>
-      <ul>
+    </td>
+    <td style="background: #f0f4ff; border: 1px solid #a8c4f5; padding: 14px 16px; vertical-align: top; width: 33%;">
+      <p style="font-size: 13px; font-weight: bold; color: #0550ae; margin: 0 0 6px 0;">Tier 2 — Automotive Suite (RHAS)</p>
+      <ul style="font-size: 12px; line-height: 1.9; padding-left: 16px; margin: 0;">
         <li>OCP + Builder Operator + Jumpstarter</li>
         <li>Pipelines + GitOps + Keycloak</li>
         <li>Target: Platform Engineers</li>
         <li>HiL testing via Jumpstarter</li>
         <li>The core shipped product</li>
       </ul>
-    </div>
-    <div class="tier tier-3">
-      <h4>Tier 3 — Unified Environment (IDP)</h4>
-      <ul>
+    </td>
+    <td style="background: #f9f0ff; border: 1px solid #d4aef5; padding: 14px 16px; vertical-align: top; width: 33%;">
+      <p style="font-size: 13px; font-weight: bold; color: #6e3db5; margin: 0 0 6px 0;">Tier 3 — Unified Environment (IDP)</p>
+      <ul style="font-size: 12px; line-height: 1.9; padding-left: 16px; margin: 0;">
         <li>Adds Dev Spaces + Developer Hub + Quay</li>
         <li>Target: CIO/CISO, greenfield</li>
         <li>Single vendor, centralized governance</li>
         <li>Long-term "north star"</li>
       </ul>
-    </div>
-  </div>
-  <p><strong>Delivery model:</strong> IaC (Ansible playbooks), Kubernetes Operators for lifecycle, persona-driven docs. Dual-track release: OS-aligned majors tied to RHIVOS + continuous delivery for Builder/Jumpstarter via feature gates.</p>
-  <p><strong>Security posture:</strong> Software supply chain review (especially Jumpstarter dependencies). Privileged containers mitigated with guidance now, removed architecturally long-term.</p>
-</div>
+    </td>
+  </tr>
+</table>
+<p style="font-size: 13px; line-height: 1.7;"><strong>Delivery model:</strong> IaC (Ansible playbooks), Kubernetes Operators for lifecycle, persona-driven docs. Dual-track release: OS-aligned majors tied to RHIVOS + continuous delivery for Builder/Jumpstarter via feature gates.</p>
+<p style="font-size: 13px; line-height: 1.7;"><strong>Security posture:</strong> Software supply chain review (especially Jumpstarter dependencies). Privileged containers mitigated with guidance now, removed architecturally long-term.</p>
+
+<hr style="border: none; border-top: 1px solid #d0d7de; margin: 20px 0;">
 
 <!-- ROADMAP -->
-<div class="card" id="roadmap">
-  <div class="card-title" style="border-color:#1a7a3e;">2026 Roadmap — "Stabilize and Scale"</div>
-  <p>Primary mission (Shawn Davis): ensure RHIVOS 2.0 success while maintaining Nissan and Traton commitments.</p>
-  <div class="roadmap-row">
-    <div class="roadmap-q q2">
-      <h4>Q2 — Current</h4>
-      <ul>
+<h2 id="roadmap" style="font-size: 16px; color: #1a7a3e; border-bottom: 2px solid #1a7a3e; padding-bottom: 6px; margin-top: 0;">2026 Roadmap — "Stabilize and Scale"</h2>
+<p style="font-size: 13px; line-height: 1.7;">Primary mission (Shawn Davis): ensure RHIVOS 2.0 success while maintaining Nissan and Traton commitments.</p>
+
+<table style="width: 100%; border-collapse: collapse; font-size: 12px; margin: 14px 0;">
+  <tr>
+    <td style="background: #fff0f0; border: 1px solid #f5a9a9; padding: 14px 16px; vertical-align: top; width: 50%;">
+      <p style="font-size: 13px; font-weight: bold; color: #c00; margin: 0 0 8px 0;">Q2 — Current</p>
+      <ul style="font-size: 12px; line-height: 1.9; padding-left: 16px; margin: 0;">
         <li>RHIVOS 2.0 GA (ToolChain)</li>
         <li>OCI/bootc images</li>
         <li>Safe Rust/C/C++ binaries</li>
@@ -209,10 +136,10 @@
         <li>ISO 21434 cert (ToolChain)</li>
         <li>Tech Preview milestone target</li>
       </ul>
-    </div>
-    <div class="roadmap-q q3">
-      <h4>Q3 — Target</h4>
-      <ul>
+    </td>
+    <td style="background: #f0fff4; border: 1px solid #b7ebc8; padding: 14px 16px; vertical-align: top; width: 50%;">
+      <p style="font-size: 13px; font-weight: bold; color: #1a7a3e; margin: 0 0 8px 0;">Q3 — Target</p>
+      <ul style="font-size: 12px; line-height: 1.9; padding-left: 16px; margin: 0;">
         <li>RHAS / ADP General Availability</li>
         <li>Builder full release (SSO, RPMs)</li>
         <li>Jumpstarter full release</li>
@@ -221,334 +148,264 @@
         <li>Infra/Docs/Example assets</li>
         <li>Security Audit + UI in OCP</li>
       </ul>
-    </div>
-  </div>
-  <p><strong>Strategic risks:</strong> exida certification scope (FuSa body) could shift Q3 timeline. Partner driver maturity (NVIDIA, NXP, QC) drives Q2/Q4 hardware targets. QNX competitive pressure on boot-time and security metrics.</p>
-</div>
+    </td>
+  </tr>
+</table>
+<p style="font-size: 13px; line-height: 1.7;"><strong>Strategic risks:</strong> exida certification scope (FuSa body) could shift Q3 timeline. Partner driver maturity (NVIDIA, NXP, QC) drives Q2/Q4 hardware targets. QNX competitive pressure on boot-time and security metrics.</p>
+
+<hr style="border: none; border-top: 1px solid #d0d7de; margin: 20px 0;">
 
 <!-- RELEASES -->
-<div class="card" id="releases">
-  <div class="card-title" style="border-color:#c44b00;">RHAS Releases</div>
-  <div class="release-timeline">
-    <div class="rel rel-past">RHAS-0426 DP</div>
-    <div class="rel rel-past">RHAS-0526</div>
-    <div class="rel rel-current">RHAS-0626 (current)</div>
-    <div class="rel rel-near">RHAS-0726</div>
-    <div class="rel rel-near">RHAS-0826</div>
-    <div class="rel rel-tp">RHAS-0926 TP (Sep 29)</div>
-    <div class="rel rel-future">RHAS-1026</div>
-    <div class="rel rel-future">RHAS-1126</div>
-    <div class="rel rel-ga">RHAS-1226 GA (Dec 22)</div>
-  </div>
-  <p>Convention: <code>RHAS-MMYY</code> — monthly releases, last week of each month. Next milestone: <strong>Tech Preview</strong> (Sep 29, 2026).</p>
-</div>
+<h2 id="releases" style="font-size: 16px; color: #c44b00; border-bottom: 2px solid #c44b00; padding-bottom: 6px; margin-top: 0;">RHAS Releases</h2>
+
+<table style="width: 100%; border-collapse: collapse; font-size: 11px; margin: 14px 0;">
+  <tr>
+    <td style="background: #f0f0f0; border: 1px solid #d0d7de; padding: 6px 10px; text-align: center; color: #888;">RHAS-0426 DP</td>
+    <td style="background: #f0f0f0; border: 1px solid #d0d7de; padding: 6px 10px; text-align: center; color: #888;">RHAS-0526</td>
+    <td style="background: #fff0e6; border: 1px solid #e05d00; padding: 6px 10px; text-align: center; color: #c44b00; font-weight: bold;">RHAS-0626 ★</td>
+    <td style="background: #f0fff4; border: 1px solid #b7ebc8; padding: 6px 10px; text-align: center; color: #1a7a3e;">RHAS-0726</td>
+    <td style="background: #f0fff4; border: 1px solid #b7ebc8; padding: 6px 10px; text-align: center; color: #1a7a3e;">RHAS-0826</td>
+    <td style="background: #f0ebff; border: 1px solid #c5adf5; padding: 6px 10px; text-align: center; color: #6e3db5; font-weight: bold;">RHAS-0926 TP</td>
+    <td style="background: #fafafa; border: 1px solid #e8e8e8; padding: 6px 10px; text-align: center; color: #aaa;">RHAS-1026</td>
+    <td style="background: #fafafa; border: 1px solid #e8e8e8; padding: 6px 10px; text-align: center; color: #aaa;">RHAS-1126</td>
+    <td style="background: #e8f0fe; border: 1px solid #a8c4f5; padding: 6px 10px; text-align: center; color: #0550ae; font-weight: bold;">RHAS-1226 GA</td>
+  </tr>
+</table>
+<p style="font-size: 13px; line-height: 1.7;">Convention: RHAS-MMYY — monthly releases, last week of each month. Next milestone: <strong>Tech Preview</strong> (Sep 29, 2026).</p>
+
+<hr style="border: none; border-top: 1px solid #d0d7de; margin: 20px 0;">
 
 <!-- EPICS -->
-<div class="card" id="epics">
-  <div class="card-title" style="border-color:#0550ae;">Features &amp; Epics <span class="badge b-blue">10 In Progress</span> <span class="badge b-gray">17 New</span> <span class="badge b-green">18 Closed</span></div>
+<table style="width: 100%; border-collapse: collapse; margin-bottom: 4px;">
+  <tr>
+    <td style="padding: 0;"><h2 id="epics" style="font-size: 16px; color: #0550ae; border-bottom: 2px solid #0550ae; padding-bottom: 6px; margin-top: 0;">Features &amp; Epics</h2></td>
+    <td style="text-align: right; vertical-align: bottom; padding-bottom: 10px;">
+      <table style="border-collapse: collapse; display: inline-table;"><tr>
+        <td style="background: #e8f0fe; color: #0550ae; padding: 3px 8px; font-size: 11px; font-weight: bold; border: 1px solid #a8c4f5;">10 In Progress</td>
+        <td style="background: #f0f0f0; color: #57606a; padding: 3px 8px; font-size: 11px; font-weight: bold; border: 1px solid #d0d7de;">17 New</td>
+        <td style="background: #d4edda; color: #1a7a3e; padding: 3px 8px; font-size: 11px; font-weight: bold; border: 1px solid #b7ebc8;">18 Closed</td>
+      </tr></table>
+    </td>
+  </tr>
+</table>
 
-  <h3>In Progress (10)</h3>
-  <div class="epic-grid">
-    <div class="epic">
-      <div class="key">PITCREW-384</div>
-      <div class="title">Use Jumpstarter for testing RHIVOS</div>
-      <div class="meta"><span class="badge b-blue">In Progress</span> Miguel Angel Ajo Pelayo</div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-337</div>
-      <div class="title">QE Readiness</div>
-      <div class="meta"><span class="badge b-blue">In Progress</span></div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-335</div>
-      <div class="title">Konflux Onboarding</div>
-      <div class="meta"><span class="badge b-blue">In Progress</span></div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-334</div>
-      <div class="title">RH-SDLC Compliance</div>
-      <div class="meta"><span class="badge b-blue">In Progress</span></div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-331</div>
-      <div class="title">CTC</div>
-      <div class="meta"><span class="badge b-blue">In Progress</span></div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-329</div>
-      <div class="title">External Dependency Resilience</div>
-      <div class="meta"><span class="badge b-blue">In Progress</span></div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-298</div>
-      <div class="title">Android Virtual Target Deployment</div>
-      <div class="meta"><span class="badge b-blue">In Progress</span></div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-291</div>
-      <div class="title">End-to-End Trace</div>
-      <div class="meta"><span class="badge b-blue">In Progress</span> Roderick Kieley</div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-223</div>
-      <div class="title">Lab: meet C2 recovery point objective</div>
-      <div class="meta"><span class="badge b-blue">In Progress</span> Jeff Ligon</div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-222</div>
-      <div class="title">Lab: meet C2 recovery time objective</div>
-      <div class="meta"><span class="badge b-blue">In Progress</span> Jeff Ligon</div>
-    </div>
-  </div>
+<h3 style="font-size: 14px; color: #1a1a2e; margin: 12px 0 6px;">In Progress (10)</h3>
+<table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+  <tr><th style="background: #1a1a2e; color: #ffffff; padding: 8px 10px; text-align: left; font-size: 11px;">KEY</th><th style="background: #1a1a2e; color: #ffffff; padding: 8px 10px; text-align: left; font-size: 11px;">EPIC</th><th style="background: #1a1a2e; color: #ffffff; padding: 8px 10px; text-align: left; font-size: 11px;">ASSIGNEE</th></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-384</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Use Jumpstarter for testing RHIVOS</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Miguel Angel Ajo Pelayo</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-337</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">QE Readiness</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-335</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Konflux Onboarding</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-334</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">RH-SDLC Compliance</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-331</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">CTC</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-329</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">External Dependency Resilience</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-298</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Android Virtual Target Deployment</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-291</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">End-to-End Trace</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Roderick Kieley</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-223</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Lab: meet C2 recovery point objective</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Jeff Ligon</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-222</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Lab: meet C2 recovery time objective</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Jeff Ligon</td></tr>
+</table>
 
-  <h3>New (17)</h3>
-  <div class="epic-grid">
-    <div class="epic">
-      <div class="key">PITCREW-402</div>
-      <div class="title">Demo cluster</div>
-      <div class="meta"><span class="badge b-gray">New</span></div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-398</div>
-      <div class="title">Platform Web Console</div>
-      <div class="meta"><span class="badge b-gray">New</span></div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-396</div>
-      <div class="title">Pitcrew AI</div>
-      <div class="meta"><span class="badge b-gray">New</span></div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-343</div>
-      <div class="title">Ship with Evidence</div>
-      <div class="meta"><span class="badge b-gray">New</span></div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-339</div>
-      <div class="title">Python Distribution</div>
-      <div class="meta"><span class="badge b-gray">New</span></div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-338</div>
-      <div class="title">Product Documentation</div>
-      <div class="meta"><span class="badge b-gray">New</span></div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-336</div>
-      <div class="title">Distribution</div>
-      <div class="meta"><span class="badge b-gray">New</span></div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-332</div>
-      <div class="title">ATC</div>
-      <div class="meta"><span class="badge b-gray">New</span></div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-330</div>
-      <div class="title">Lab Infrastructure</div>
-      <div class="meta"><span class="badge b-gray">New</span></div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-300</div>
-      <div class="title">Virtual Interface Simulation</div>
-      <div class="meta"><span class="badge b-gray">New</span></div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-299</div>
-      <div class="title">Virtual Target Orchestration</div>
-      <div class="meta"><span class="badge b-gray">New</span></div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-296</div>
-      <div class="title">Cross-Vertical Identity</div>
-      <div class="meta"><span class="badge b-gray">New</span></div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-295</div>
-      <div class="title">Seconds-per-Iteration</div>
-      <div class="meta"><span class="badge b-gray">New</span></div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-294</div>
-      <div class="title">Autonomous Platform Reactions</div>
-      <div class="meta"><span class="badge b-gray">New</span></div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-293</div>
-      <div class="title">Ask the Platform</div>
-      <div class="meta"><span class="badge b-gray">New</span></div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-292</div>
-      <div class="title">Unified Developer Session</div>
-      <div class="meta"><span class="badge b-gray">New</span></div>
-    </div>
-    <div class="epic">
-      <div class="key">PITCREW-161</div>
-      <div class="title">ATC/RHAS AIB prototyping</div>
-      <div class="meta"><span class="badge b-gray">New</span> Hubert Stefanski</div>
-    </div>
-  </div>
-</div>
+<h3 style="font-size: 14px; color: #1a1a2e; margin: 16px 0 6px;">New (17)</h3>
+<table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+  <tr><th style="background: #57606a; color: #ffffff; padding: 8px 10px; text-align: left; font-size: 11px;">KEY</th><th style="background: #57606a; color: #ffffff; padding: 8px 10px; text-align: left; font-size: 11px;">EPIC</th><th style="background: #57606a; color: #ffffff; padding: 8px 10px; text-align: left; font-size: 11px;">ASSIGNEE</th></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-402</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Demo cluster</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-398</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Platform Web Console</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-396</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Pitcrew AI</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-343</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Ship with Evidence</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-339</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Python Distribution</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-338</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Product Documentation</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-336</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Distribution</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-332</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">ATC</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-330</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Lab Infrastructure</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-300</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Virtual Interface Simulation</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-299</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Virtual Target Orchestration</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-296</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Cross-Vertical Identity</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-295</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Seconds-per-Iteration</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-294</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Autonomous Platform Reactions</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-293</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Ask the Platform</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-292</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Unified Developer Session</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: bold;">PITCREW-161</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">ATC/RHAS AIB prototyping</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Hubert Stefanski</td></tr>
+</table>
+
+<hr style="border: none; border-top: 1px solid #d0d7de; margin: 20px 0;">
 
 <!-- CURRENT SPRINT -->
-<div class="card" id="sprint">
-  <div class="card-title" style="border-color:#1a7a3e;">Current Sprint (Sprint 13) <span class="badge b-green">61% Complete</span></div>
+<table style="width: 100%; border-collapse: collapse; margin-bottom: 4px;">
+  <tr>
+    <td style="padding: 0;"><h2 id="sprint" style="font-size: 16px; color: #1a7a3e; border-bottom: 2px solid #1a7a3e; padding-bottom: 6px; margin-top: 0;">Current Sprint (Sprint 13)</h2></td>
+    <td style="text-align: right; vertical-align: bottom; padding-bottom: 10px;">
+      <table style="border-collapse: collapse; display: inline-table;"><tr><td style="background: #d4edda; color: #1a7a3e; padding: 3px 10px; font-size: 11px; font-weight: bold; border: 1px solid #b7ebc8;">61% Complete</td></tr></table>
+    </td>
+  </tr>
+</table>
 
-  <table>
-    <tr><th>Status</th><th>Count</th></tr>
-    <tr><td><span class="badge b-green">Closed</span></td><td>17</td></tr>
-    <tr><td><span class="badge b-blue">In Progress</span></td><td>4</td></tr>
-    <tr><td><span class="badge b-orange">Review</span></td><td>3</td></tr>
-    <tr><td><span class="badge b-gray">New</span></td><td>4</td></tr>
-    <tr><td><strong>Total</strong></td><td><strong>28</strong></td></tr>
-  </table>
+<!-- Sprint summary bar -->
+<table style="width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 16px;">
+  <tr>
+    <td style="background: #d4edda; color: #1a7a3e; padding: 6px 10px; text-align: center; font-weight: bold; border: 1px solid #b7ebc8;">Closed: 17</td>
+    <td style="background: #e8f0fe; color: #0550ae; padding: 6px 10px; text-align: center; font-weight: bold; border: 1px solid #b8d4fe;">In Progress: 4</td>
+    <td style="background: #fff0e6; color: #c44b00; padding: 6px 10px; text-align: center; font-weight: bold; border: 1px solid #f5c89a;">Review: 3</td>
+    <td style="background: #f0f0f0; color: #57606a; padding: 6px 10px; text-align: center; font-weight: bold; border: 1px solid #d0d7de;">New: 4</td>
+  </tr>
+</table>
 
-  <h3>Open Tickets</h3>
-  <table>
-    <tr><th>Key</th><th>Summary</th><th>Status</th><th>Assignee</th><th>Type</th></tr>
-    <tr><td><code>PITCREW-435</code></td><td>beforeLease hook with onFailure endLease does not end the lease, exporter stuck in BeforeLeaseHookFailed</td><td><span class="badge b-orange">Review</span></td><td>Miguel Angel Ajo Pelayo</td><td>Bug</td></tr>
-    <tr><td><code>PITCREW-403</code></td><td>Flaky E2E: "Connection to exporter lost"</td><td><span class="badge b-orange">Review</span></td><td>Evgeni Vakhonin</td><td>Bug</td></tr>
-    <tr><td><code>PITCREW-119</code></td><td>productization: onboard builder upstream project to Konflux</td><td><span class="badge b-orange">Review</span></td><td>Bella Khizgiyaev</td><td>Story</td></tr>
-    <tr><td><code>PITCREW-417</code></td><td>Bump Python to [3.12-3.14]</td><td><span class="badge b-blue">In Progress</span></td><td>Jeff Ligon</td><td>Task</td></tr>
-    <tr><td><code>PITCREW-416</code></td><td>C2 Recovery: add Automotive Operator to ArgoCD</td><td><span class="badge b-blue">In Progress</span></td><td>Mohamad Abo Ras</td><td>Sub-task</td></tr>
-    <tr><td><code>PITCREW-393</code></td><td>e2e downstream testing: acquire prerequisites and credentials from ATC admins</td><td><span class="badge b-blue">In Progress</span></td><td>Evgeni Vakhonin</td><td>Story</td></tr>
-    <tr><td><code>PITCREW-227</code></td><td>Runbook for service rebuild from zero</td><td><span class="badge b-blue">In Progress</span></td><td>Miguel Angel Ajo Pelayo</td><td>Story</td></tr>
-    <tr><td><code>PITCREW-450</code></td><td>[Lab] ti-jacinto-j784s4xevm-06: ukiboot boot failure</td><td><span class="badge b-gray">New</span></td><td>Shawn Doherty</td><td>Task</td></tr>
-    <tr><td><code>PITCREW-440</code></td><td>jumpstarter: release 0.9.0</td><td><span class="badge b-gray">New</span></td><td>—</td><td>Task</td></tr>
-    <tr><td><code>PITCREW-439</code></td><td>builder: release 0.2.0</td><td><span class="badge b-gray">New</span></td><td>Benny Zlotnik</td><td>Task</td></tr>
-    <tr><td><code>PITCREW-438</code></td><td>Update lab to Jumpstarter 0.9.0 after release</td><td><span class="badge b-gray">New</span></td><td>Miguel Angel Ajo Pelayo</td><td>Task</td></tr>
-  </table>
+<h3 style="font-size: 14px; color: #1a1a2e; margin: 12px 0 6px;">Open Tickets</h3>
+<table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+  <tr>
+    <th style="background: #1a1a2e; color: #ffffff; padding: 8px 10px; text-align: left; font-size: 11px;">KEY</th>
+    <th style="background: #1a1a2e; color: #ffffff; padding: 8px 10px; text-align: left; font-size: 11px;">SUMMARY</th>
+    <th style="background: #1a1a2e; color: #ffffff; padding: 8px 10px; text-align: left; font-size: 11px;">STATUS</th>
+    <th style="background: #1a1a2e; color: #ffffff; padding: 8px 10px; text-align: left; font-size: 11px;">ASSIGNEE</th>
+    <th style="background: #1a1a2e; color: #ffffff; padding: 8px 10px; text-align: left; font-size: 11px;">TYPE</th>
+  </tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: 700;">PITCREW-435</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">beforeLease hook with onFailure endLease does not end the lease</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; background: #fff0e6; color: #c44b00; font-weight: bold;">Review</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Miguel Angel Ajo Pelayo</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Bug</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: 700;">PITCREW-403</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Flaky E2E: "Connection to exporter lost"</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; background: #fff0e6; color: #c44b00; font-weight: bold;">Review</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Evgeni Vakhonin</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Bug</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: 700;">PITCREW-119</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">productization: onboard builder upstream project to Konflux</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; background: #fff0e6; color: #c44b00; font-weight: bold;">Review</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Bella Khizgiyaev</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Story</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: 700;">PITCREW-417</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Bump Python to [3.12-3.14]</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; background: #e8f0fe; color: #0550ae; font-weight: bold;">In Progress</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Jeff Ligon</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Task</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: 700;">PITCREW-416</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">C2 Recovery: add Automotive Operator to ArgoCD</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; background: #e8f0fe; color: #0550ae; font-weight: bold;">In Progress</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Mohamad Abo Ras</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Sub-task</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: 700;">PITCREW-393</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">e2e downstream testing: acquire prerequisites from ATC admins</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; background: #e8f0fe; color: #0550ae; font-weight: bold;">In Progress</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Evgeni Vakhonin</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Story</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: 700;">PITCREW-227</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Runbook for service rebuild from zero</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; background: #e8f0fe; color: #0550ae; font-weight: bold;">In Progress</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Miguel Angel Ajo Pelayo</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Story</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: 700;">PITCREW-450</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">[Lab] ti-jacinto-j784s4xevm-06: ukiboot boot failure</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; background: #f0f0f0; color: #57606a; font-weight: bold;">New</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Shawn Doherty</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Task</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: 700;">PITCREW-440</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">jumpstarter: release 0.9.0</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; background: #f0f0f0; color: #57606a; font-weight: bold;">New</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Task</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: 700;">PITCREW-439</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">builder: release 0.2.0</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; background: #f0f0f0; color: #57606a; font-weight: bold;">New</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Benny Zlotnik</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Task</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: 700;">PITCREW-438</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Update lab to Jumpstarter 0.9.0 after release</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; background: #f0f0f0; color: #57606a; font-weight: bold;">New</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Miguel Angel Ajo Pelayo</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Task</td></tr>
+</table>
 
-  <h3>Recently Closed (Sprint 13)</h3>
-  <table>
-    <tr><th>Key</th><th>Summary</th><th>Assignee</th></tr>
-    <tr><td><code>PITCREW-448</code></td><td>jumpstarter: support in-exporter CA for u-boot boards</td><td>Benny Zlotnik</td></tr>
-    <tr><td><code>PITCREW-447</code></td><td>builder: validate shell scripts with shellcheck</td><td>Benny Zlotnik</td></tr>
-    <tr><td><code>PITCREW-446</code></td><td>builder: manifest validation</td><td>Benny Zlotnik</td></tr>
-    <tr><td><code>PITCREW-445</code></td><td>jumpstarter: support for description in ExporterAccessPolicy</td><td>Benny Zlotnik</td></tr>
-    <tr><td><code>PITCREW-444</code></td><td>ctc: support NXP in the TC pipelines</td><td>Benny Zlotnik</td></tr>
-    <tr><td><code>PITCREW-443</code></td><td>ctc: autobump tmt to match testing-farm</td><td>Benny Zlotnik</td></tr>
-    <tr><td><code>PITCREW-441</code></td><td>CTC: Fix report generation for multiple plans run</td><td>Bella Khizgiyaev</td></tr>
-    <tr><td><code>PITCREW-437</code></td><td>beforeLease hook failure with onFailure exit does not kill exporter</td><td>Miguel Angel Ajo Pelayo</td></tr>
-    <tr><td><code>PITCREW-436</code></td><td>Restarting exporter with hooks kills active lease prematurely</td><td>Miguel Angel Ajo Pelayo</td></tr>
-    <tr><td><code>PITCREW-433</code></td><td>CTC: fix results-junit.xml generation when pipeline fails</td><td>Bella Khizgiyaev</td></tr>
-    <tr><td><code>PITCREW-430</code></td><td>builder: caib login add --token option</td><td>Bella Khizgiyaev</td></tr>
-    <tr><td><code>PITCREW-426</code></td><td>Reorganize gitops repositories</td><td>Miguel Angel Ajo Pelayo</td></tr>
-    <tr><td><code>PITCREW-425</code></td><td>C2: Migrate existing cluster to new ArgoCD structure</td><td>Miguel Angel Ajo Pelayo</td></tr>
-    <tr><td><code>PITCREW-420</code></td><td>builder: Add support for OIDC CA certificates from Secrets/ConfigMaps</td><td>Bella Khizgiyaev</td></tr>
-    <tr><td><code>PITCREW-419</code></td><td>jumpstarter: Add support for OIDC CA certificates from Secrets/ConfigMaps</td><td>Bella Khizgiyaev</td></tr>
-    <tr><td><code>PITCREW-409</code></td><td>jumpstarter JEP: virtual scalable exporters</td><td>Miguel Angel Ajo Pelayo</td></tr>
-    <tr><td><code>PITCREW-407</code></td><td>builder: improve E2E coverage &amp; identify e2e tests</td><td>Mohamad Abo Ras</td></tr>
-  </table>
-</div>
+<h3 style="font-size: 14px; color: #1a1a2e; margin: 16px 0 6px;">Recently Closed (Sprint 13)</h3>
+<table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+  <tr><th style="background: #1a7a3e; color: #ffffff; padding: 8px 10px; text-align: left; font-size: 11px;">KEY</th><th style="background: #1a7a3e; color: #ffffff; padding: 8px 10px; text-align: left; font-size: 11px;">SUMMARY</th><th style="background: #1a7a3e; color: #ffffff; padding: 8px 10px; text-align: left; font-size: 11px;">ASSIGNEE</th></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-448</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">jumpstarter: support in-exporter CA for u-boot boards</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Benny Zlotnik</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-447</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">builder: validate shell scripts with shellcheck</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Benny Zlotnik</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-446</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">builder: manifest validation</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Benny Zlotnik</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-445</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">jumpstarter: support for description in ExporterAccessPolicy</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Benny Zlotnik</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-444</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">ctc: support NXP in the TC pipelines</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Benny Zlotnik</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-443</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">ctc: autobump tmt to match testing-farm</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Benny Zlotnik</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-441</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">CTC: Fix report generation for multiple plans run</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Bella Khizgiyaev</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-437</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">beforeLease hook failure with onFailure exit does not kill exporter</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Miguel Angel Ajo Pelayo</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-436</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Restarting exporter with hooks kills active lease prematurely</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Miguel Angel Ajo Pelayo</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-433</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">CTC: fix results-junit.xml generation when pipeline fails</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Bella Khizgiyaev</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-430</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">builder: caib login add --token option</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Bella Khizgiyaev</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-426</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Reorganize gitops repositories</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Miguel Angel Ajo Pelayo</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-425</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">C2: Migrate existing cluster to new ArgoCD structure</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Miguel Angel Ajo Pelayo</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-420</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">builder: Add support for OIDC CA certificates from Secrets/ConfigMaps</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Bella Khizgiyaev</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-419</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">jumpstarter: Add support for OIDC CA certificates from Secrets/ConfigMaps</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Bella Khizgiyaev</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-409</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">jumpstarter JEP: virtual scalable exporters</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Miguel Angel Ajo Pelayo</td></tr>
+  <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-407</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">builder: improve E2E coverage &amp; identify e2e tests</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Mohamad Abo Ras</td></tr>
+</table>
+
+<hr style="border: none; border-top: 1px solid #d0d7de; margin: 20px 0;">
 
 <!-- ALIGNMENT -->
-<div class="card" id="alignment">
-  <div class="card-title" style="border-color:#6e3db5;">Strategy ↔ Work Alignment</div>
+<h2 id="alignment" style="font-size: 16px; color: #6e3db5; border-bottom: 2px solid #6e3db5; padding-bottom: 6px; margin-top: 0;">Strategy ↔ Work Alignment</h2>
 
-  <h3>Well-Aligned</h3>
-  <div class="fit-row"><div class="fit-icon">✅</div><div><strong>Jumpstarter HiL testing</strong> — <code>PITCREW-384</code> directly enables Tier 2 value prop. 0.9.0 release (<code>PITCREW-440</code>) queued with PR #656 under review. Lab lab update (<code>PITCREW-438</code>) follows.</div></div>
-  <div class="fit-row"><div class="fit-icon">✅</div><div><strong>Builder ecosystem</strong> — 0.2.0 release (<code>PITCREW-439</code>) ready. Manifest validation, shellcheck, OIDC CA support, E2E coverage — all closed this sprint. Konflux onboarding (<code>PITCREW-119</code>, <code>PITCREW-335</code>) moving through Review.</div></div>
-  <div class="fit-row"><div class="fit-icon">✅</div><div><strong>CTC pipeline maturity</strong> — NXP support (<code>PITCREW-444</code>), tmt autobump (<code>PITCREW-443</code>), and report gen fix (<code>PITCREW-441</code>) all closed. CTC epic (<code>PITCREW-331</code>) progressing.</div></div>
-  <div class="fit-row"><div class="fit-icon">✅</div><div><strong>C2 disaster recovery</strong> — ArgoCD migration and gitops reorg both closed (<code>PITCREW-425</code>, <code>PITCREW-426</code>). Automotive Operator ArgoCD integration in progress (<code>PITCREW-416</code>).</div></div>
+<h3 style="font-size: 14px; color: #1a7a3e; margin: 12px 0 6px;">Well-Aligned</h3>
+<p style="font-size: 13px; line-height: 1.7;">✅ <strong>Jumpstarter HiL testing</strong> — PITCREW-384 directly enables Tier 2 value prop. 0.9.0 release (PITCREW-440) queued with PR #656 under review. Lab update (PITCREW-438) follows.</p>
+<p style="font-size: 13px; line-height: 1.7;">✅ <strong>Builder ecosystem</strong> — 0.2.0 release (PITCREW-439) ready. Manifest validation, shellcheck, OIDC CA support, E2E coverage — all closed this sprint. Konflux onboarding (PITCREW-119, PITCREW-335) moving through Review.</p>
+<p style="font-size: 13px; line-height: 1.7;">✅ <strong>CTC pipeline maturity</strong> — NXP support (PITCREW-444), tmt autobump (PITCREW-443), and report gen fix (PITCREW-441) all closed. CTC epic (PITCREW-331) progressing.</p>
+<p style="font-size: 13px; line-height: 1.7;">✅ <strong>C2 disaster recovery</strong> — ArgoCD migration and gitops reorg both closed (PITCREW-425, PITCREW-426). Automotive Operator ArgoCD integration in progress (PITCREW-416).</p>
 
-  <h3>Gaps &amp; Concerns</h3>
-  <div class="fit-row"><div class="fit-icon">⚠️</div><div><strong>Flaky E2E persists</strong> — <code>PITCREW-403</code> "connection to exporter lost" still in Review. Undermines CI confidence and blocks reliable downstream testing (<code>PITCREW-393</code>).</div></div>
-  <div class="fit-row"><div class="fit-icon">⚠️</div><div><strong>Developer board scarcity</strong> — All sa8775p boards leased for automation, blocking hands-on development. Proposal to reserve 2–3 boards for devs raised by team (aesteve, #forum-jumpstarter).</div></div>
-  <div class="fit-row"><div class="fit-icon">⚠️</div><div><strong>Cluster version lag</strong> — Dev cluster needs 4.20+ upgrade (bzlotnik). Aging cluster could block Q3 features requiring newer OCP APIs.</div></div>
-  <div class="fit-row"><div class="fit-icon">⚠️</div><div><strong>Product Documentation epic stalled</strong> — <code>PITCREW-338</code> still New. Q3 GA milestone requires docs; no visible activity.</div></div>
-</div>
+<h3 style="font-size: 14px; color: #c44b00; margin: 16px 0 6px;">Gaps &amp; Concerns</h3>
+<table style="width: 100%; border-collapse: collapse; margin-bottom: 8px;">
+  <tr><td style="background: #c44b00; width: 5px; padding: 0;"></td><td style="background: #fff8f0; padding: 10px 14px; font-size: 13px;"><strong>Flaky E2E persists</strong> — PITCREW-403 "connection to exporter lost" still in Review. Undermines CI confidence and blocks reliable downstream testing (PITCREW-393).</td></tr>
+</table>
+<table style="width: 100%; border-collapse: collapse; margin-bottom: 8px;">
+  <tr><td style="background: #c44b00; width: 5px; padding: 0;"></td><td style="background: #fff8f0; padding: 10px 14px; font-size: 13px;"><strong>Developer board scarcity</strong> — All sa8775p boards leased for automation, blocking hands-on development. Proposal to reserve 2–3 boards for devs raised by team (aesteve, #forum-jumpstarter).</td></tr>
+</table>
+<table style="width: 100%; border-collapse: collapse; margin-bottom: 8px;">
+  <tr><td style="background: #c44b00; width: 5px; padding: 0;"></td><td style="background: #fff8f0; padding: 10px 14px; font-size: 13px;"><strong>Cluster version lag</strong> — Dev cluster needs 4.20+ upgrade (bzlotnik). Aging cluster could block Q3 features requiring newer OCP APIs.</td></tr>
+</table>
+<table style="width: 100%; border-collapse: collapse; margin-bottom: 8px;">
+  <tr><td style="background: #c44b00; width: 5px; padding: 0;"></td><td style="background: #fff8f0; padding: 10px 14px; font-size: 13px;"><strong>Product Documentation epic stalled</strong> — PITCREW-338 still New. Q3 GA milestone requires docs; no visible activity.</td></tr>
+</table>
+
+<hr style="border: none; border-top: 1px solid #d0d7de; margin: 20px 0;">
 
 <!-- LOOKING AHEAD -->
-<div class="card" id="ahead">
-  <div class="card-title" style="border-color:#c44b00;">Looking Ahead</div>
+<h2 id="ahead" style="font-size: 16px; color: #c44b00; border-bottom: 2px solid #c44b00; padding-bottom: 6px; margin-top: 0;">Looking Ahead</h2>
 
-  <div class="cols2">
-    <div>
-      <h3 style="color:#c00;">This Week</h3>
-      <ul style="font-size:13px; line-height:1.8; list-style:none;">
-        <li>🔴 Jumpstarter 0.9.0 release (<code>PITCREW-440</code>)</li>
-        <li>🔴 Builder 0.2.0 release (<code>PITCREW-439</code>)</li>
-        <li>🔴 Resolve <code>PITCREW-435</code> (beforeLease endLease stuck — in Review)</li>
-        <li>🔴 ti-jacinto boot fix investigation (<code>PITCREW-450</code>)</li>
-        <li>🔴 Atlassian API token "Avi2" expires Jun 27 — rotate</li>
+<table style="width: 100%; border-collapse: collapse;">
+  <tr>
+    <td style="vertical-align: top; width: 50%; padding-right: 12px;">
+      <h3 style="font-size: 14px; color: #c00; margin: 4px 0 6px;">This Week</h3>
+      <ul style="font-size: 13px; line-height: 1.8; padding-left: 18px;">
+        <li>Jumpstarter 0.9.0 release (PITCREW-440)</li>
+        <li>Builder 0.2.0 release (PITCREW-439)</li>
+        <li>Resolve PITCREW-435 (beforeLease endLease stuck — in Review)</li>
+        <li>ti-jacinto boot fix investigation (PITCREW-450)</li>
+        <li>Atlassian API token "Avi2" expires Jun 27 — rotate</li>
       </ul>
 
-      <h3 style="color:#c44b00;">This Month</h3>
-      <ul style="font-size:13px; line-height:1.8; list-style:none;">
-        <li>🟠 RHAS-0626 monthly release</li>
-        <li>🟠 Land flaky E2E fix (<code>PITCREW-403</code>)</li>
-        <li>🟠 Complete Konflux onboarding review (<code>PITCREW-119</code>)</li>
-        <li>🟠 Lab update to Jumpstarter 0.9.0 (<code>PITCREW-438</code>)</li>
+      <h3 style="font-size: 14px; color: #c44b00; margin: 16px 0 6px;">This Month</h3>
+      <ul style="font-size: 13px; line-height: 1.8; padding-left: 18px;">
+        <li>RHAS-0626 monthly release</li>
+        <li>Land flaky E2E fix (PITCREW-403)</li>
+        <li>Complete Konflux onboarding review (PITCREW-119)</li>
+        <li>Lab update to Jumpstarter 0.9.0 (PITCREW-438)</li>
       </ul>
-    </div>
-    <div>
-      <h3 style="color:#0550ae;">Strategic Setup</h3>
-      <ul style="font-size:13px; line-height:1.8; list-style:none;">
-        <li>🔵 RHAS-0926 Tech Preview (Sep 29) — 97 days out</li>
-        <li>🔵 Cluster 4.20+ upgrade planning</li>
-        <li>🔵 Board reservation policy for dev vs. automation</li>
-        <li>🔵 Brad Benson's bringup agent — evaluate for lab onboarding</li>
-        <li>🔵 Python 3.12-3.14 bump (<code>PITCREW-417</code>)</li>
-        <li>🔵 stress-ng demo with Colin King (Luigi opportunity)</li>
+    </td>
+    <td style="vertical-align: top; width: 50%; padding-left: 12px; border-left: 1px solid #e1e4e8;">
+      <h3 style="font-size: 14px; color: #0550ae; margin: 4px 0 6px;">Strategic Setup</h3>
+      <ul style="font-size: 13px; line-height: 1.8; padding-left: 18px;">
+        <li>RHAS-0926 Tech Preview (Sep 29) — 97 days out</li>
+        <li>Cluster 4.20+ upgrade planning</li>
+        <li>Board reservation policy for dev vs. automation</li>
+        <li>Brad Benson's bringup agent — evaluate for lab onboarding</li>
+        <li>Python 3.12-3.14 bump (PITCREW-417)</li>
+        <li>stress-ng demo with Colin King (Luigi opportunity)</li>
       </ul>
-    </div>
-  </div>
-</div>
+    </td>
+  </tr>
+</table>
+
+<hr style="border: none; border-top: 1px solid #d0d7de; margin: 20px 0;">
 
 <!-- SLACK DIGEST -->
-<div class="card" id="slack">
-  <div class="card-title" style="border-color:#4A154B;">Slack Digest <span class="badge b-purple">Jun 17–24</span></div>
-  <div class="cols2">
-    <div>
-      <h3>#team-pitcrew-automotive</h3>
-      <p style="font-size:12px; color:#888;">~25 messages · 7 days</p>
-      <ul style="font-size:13px; line-height:1.8; list-style:none;">
-        <li>🔧 <strong>Lab maintenance:</strong> sa8775p-04/-05 firmware reflash successful. j784s4xevm-06 boot failure — ukiboot can't find active A/B slot (<code>PITCREW-450</code>, MR !281).</li>
-        <li>🔧 <strong>Lab smoke:</strong> 55 PASS, 4 FAIL, 6 XFAIL (automated run).</li>
-        <li>📦 <strong>Jumpstarter 0.9.0:</strong> majopela reviewing PR candidates (PR #656 pending for mkuehl).</li>
-        <li>🤖 <strong>Bringup agent:</strong> Brad Benson shared hardware enablement agent with CAIB+JMP integration — leverages team tooling for automated board bringup.</li>
-        <li>🏗️ <strong>Cluster upgrade:</strong> bzlotnik flagged need for 4.20+ upgrade plan.</li>
-        <li>⚡ <strong>RHIVOS nightly:</strong> Ozan reported provisioning timeouts on ride4-sa8775p-sx-r3 boards (PITCREW-contacted).</li>
-        <li>🎯 <strong>stress-ng opportunity:</strong> Luigi met Colin King (stress-ng author) at ELISA workshop — offered to help verify demo configuration.</li>
-        <li>🌐 <strong>ambient:</strong> red.ht/ambient is gone but scheduled prompts still running against the repo (majopela cleanup needed).</li>
+<table style="width: 100%; border-collapse: collapse; margin-bottom: 4px;">
+  <tr>
+    <td style="padding: 0;"><h2 id="slack" style="font-size: 16px; color: #4A154B; border-bottom: 2px solid #4A154B; padding-bottom: 6px; margin-top: 0;">Slack Digest</h2></td>
+    <td style="text-align: right; vertical-align: bottom; padding-bottom: 10px;">
+      <table style="border-collapse: collapse; display: inline-table;"><tr><td style="background: #f0ebff; color: #6e3db5; padding: 3px 10px; font-size: 11px; font-weight: bold; border: 1px solid #c5adf5;">Jun 17–24</td></tr></table>
+    </td>
+  </tr>
+</table>
+
+<table style="width: 100%; border-collapse: collapse;">
+  <tr>
+    <td style="vertical-align: top; width: 50%; padding-right: 12px;">
+      <h3 style="font-size: 14px; color: #1a1a2e; margin: 4px 0 2px 0;">#team-pitcrew-automotive</h3>
+      <p style="font-size: 11px; color: #888; margin: 0 0 6px 0;">~25 messages · 7 days</p>
+      <ul style="font-size: 13px; line-height: 1.8; padding-left: 18px; margin-top: 4px;">
+        <li><strong>Lab maintenance:</strong> sa8775p-04/-05 firmware reflash successful. j784s4xevm-06 boot failure — ukiboot can't find active A/B slot (PITCREW-450, MR !281).</li>
+        <li><strong>Lab smoke:</strong> 55 PASS, 4 FAIL, 6 XFAIL (automated run).</li>
+        <li><strong>Jumpstarter 0.9.0:</strong> majopela reviewing PR candidates (PR #656 pending for mkuehl).</li>
+        <li><strong>Bringup agent:</strong> Brad Benson shared hardware enablement agent with CAIB+JMP integration.</li>
+        <li><strong>Cluster upgrade:</strong> bzlotnik flagged need for 4.20+ upgrade plan.</li>
+        <li><strong>RHIVOS nightly:</strong> Ozan reported provisioning timeouts on ride4-sa8775p-sx-r3 boards.</li>
+        <li><strong>stress-ng:</strong> Luigi met Colin King at ELISA workshop — offered demo config help.</li>
+        <li><strong>ambient:</strong> red.ht/ambient gone, scheduled prompts still running.</li>
       </ul>
-      <p style="font-size:12px; color:#888; margin-top:8px;"><strong>Top contributors:</strong>
-        <span class="person">majopela (8)</span>
-        <span class="person">bzlotnik (4)</span>
-        <span class="person">bbenson (1)</span>
-        <span class="person">Luigi (1)</span>
-        <span class="person">Ozan (1)</span>
-      </p>
-    </div>
-    <div>
-      <h3>#forum-jumpstarter</h3>
-      <p style="font-size:12px; color:#888;">~11 messages · 7 days</p>
-      <ul style="font-size:13px; line-height:1.8; list-style:none;">
-        <li>⚠️ <strong>Board scarcity:</strong> All sa8775p boards leased for automation — proposal to reserve 2–3 for developer use (aesteve, pridolfi, majopela, bzlotnik discussing).</li>
-        <li>🐛 <strong>Flash failure:</strong> qam8650p-11 "No fastboot devices found" error when flashing RHIVOS-2.0-Core-TechPreview-RC1 (Sergei Gromeniuk).</li>
-        <li>🔌 <strong>Exporter offline:</strong> sa8775p-01 not responding — previous lease expired during fw-maintenance, needs recovery (echanude).</li>
-        <li>🏗️ <strong>RDU lab:</strong> Initial test MR submitted (sdoherty, MR !276). Dynamic CDT solution also proposed (MR !275).</li>
-        <li>❓ <strong>Board ID question:</strong> Is sa8775p-31 actually a v3? Jumpstarter reports it as one, javierm wants verification.</li>
-        <li>🤖 <strong>chai-bot:</strong> AI assistant activated in channel — indexes history, answers questions via Gemini/Claude.</li>
+      <p style="font-size: 11px; color: #888;">Top: majopela (8), bzlotnik (4), bbenson (1), Luigi (1), Ozan (1)</p>
+    </td>
+    <td style="vertical-align: top; width: 50%; padding-left: 12px; border-left: 1px solid #e1e4e8;">
+      <h3 style="font-size: 14px; color: #1a1a2e; margin: 4px 0 2px 0;">#forum-jumpstarter</h3>
+      <p style="font-size: 11px; color: #888; margin: 0 0 6px 0;">~11 messages · 7 days</p>
+      <ul style="font-size: 13px; line-height: 1.8; padding-left: 18px; margin-top: 4px;">
+        <li><strong>Board scarcity:</strong> All sa8775p boards leased for automation — proposal to reserve 2–3 for devs (aesteve).</li>
+        <li><strong>Flash failure:</strong> qam8650p-11 "No fastboot devices found" when flashing TP-RC1 (Sergei).</li>
+        <li><strong>Exporter offline:</strong> sa8775p-01 lease expired during fw-maintenance (echanude).</li>
+        <li><strong>RDU lab:</strong> Initial test MR (sdoherty, MR !276). Dynamic CDT solution (MR !275).</li>
+        <li><strong>Board ID:</strong> Is sa8775p-31 actually a v3? (javierm).</li>
+        <li><strong>chai-bot:</strong> AI assistant activated in channel.</li>
       </ul>
-      <p style="font-size:12px; color:#888; margin-top:8px;"><strong>Top contributors:</strong>
-        <span class="person">sdoherty (3)</span>
-        <span class="person">bzlotnik (2)</span>
-        <span class="person">echanude (2)</span>
-        <span class="person">Sergei (1)</span>
-        <span class="person">aesteve (1)</span>
-      </p>
-    </div>
-  </div>
-</div>
+      <p style="font-size: 11px; color: #888;">Top: sdoherty (3), bzlotnik (2), echanude (2), Sergei (1), aesteve (1)</p>
+    </td>
+  </tr>
+</table>
 
 <!-- FOOTER -->
-<footer>
+<hr style="border: none; border-top: 1px solid #d0d7de; margin: 24px 0 12px 0;">
+<p style="text-align: center; color: #888; font-size: 11px;">
   PitCrew / RHAS Status Report · Generated 2026-06-24 · Data: Jira PITCREW, Slack (slack-mcp), Strategic Context Cache (refreshed 2026-06-08)
-</footer>
+</p>
 
-</div>
 </body>
 </html>
