@@ -205,7 +205,7 @@ Two Drive artifacts are maintained — read `reference/drive-config.md` for file
 
 Sections excluded: Strategic Guide, Roadmap, Releases, full Epic grid, Looking Ahead.
 
-Use inline styles only (no `<style>` block) — this HTML gets converted to Google Docs format. Tables render well; CSS grid and badges do not. Save to `user/reports/pitcrew-team-report-${REPORT_DATE}.html`.
+Use inline styles only (no `<style>` block) — this HTML gets converted to Google Docs format. Tables render well; CSS grid and badges do not. **Never use white text (`color: #fff`) or rely on dark backgrounds for contrast** — Google Docs strips backgrounds but keeps text color, making white text invisible. Use dark text colors with borders/underlines for visual hierarchy instead. Save to `user/reports/pitcrew-team-report-${REPORT_DATE}.html`.
 
 **d.2. Upload team report** (Google Doc — opens inline with one click):
 ```bash
