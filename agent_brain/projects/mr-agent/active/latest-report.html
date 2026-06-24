@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; color: #333; background: #f8f9fa; }
+  .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; padding: 24px 32px; border-radius: 12px; margin-bottom: 24px; }
+  .header h1 { margin: 0 0 4px 0; font-size: 22px; }
+  .header .subtitle { opacity: 0.8; font-size: 14px; }
+  .header .meta { margin-top: 12px; font-size: 12px; opacity: 0.6; }
+  .exec-summary { background: #fff; border-left: 4px solid #4a90d9; padding: 16px 20px; border-radius: 0 8px 8px 0; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .exec-summary h2 { margin: 0 0 12px 0; font-size: 16px; color: #1a1a2e; }
+  .exec-summary p { margin: 6px 0; font-size: 14px; line-height: 1.5; }
+  .team-section { margin-bottom: 28px; }
+  .team-header { padding: 12px 20px; color: white; border-radius: 8px 8px 0 0; font-size: 16px; font-weight: 600; }
+  .atc-header { background: #1a1a2e; }
+  .pitcrew-header { background: #1a7a3e; }
+  .section { background: #fff; padding: 16px 20px; border-radius: 0 0 8px 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-bottom: 16px; }
+  .section h3 { margin: 0 0 12px 0; font-size: 14px; color: #555; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; padding: 8px 6px; background: #f1f3f5; border-bottom: 2px solid #dee2e6; font-weight: 600; color: #495057; }
+  td { padding: 6px; border-bottom: 1px solid #f1f3f5; vertical-align: top; }
+  td a { color: #4a90d9; text-decoration: none; }
+  td a:hover { text-decoration: underline; }
+  .priority-critical { color: #dc3545; font-weight: 600; }
+  .priority-major { color: #e67700; }
+  .status-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+  .status-inprogress { background: #e3f2fd; color: #1565c0; }
+  .status-review { background: #fff3e0; color: #e65100; }
+  .status-closed { background: #e8f5e9; color: #2e7d32; }
+  .slack-digest { background: #fff; padding: 16px 20px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-bottom: 16px; }
+  .slack-digest h3 { margin: 0 0 12px 0; font-size: 14px; color: #555; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+  .channel-name { font-weight: 600; color: #1a1a2e; margin: 12px 0 6px 0; font-size: 13px; }
+  .channel-name:first-child { margin-top: 0; }
+  .slack-item { margin: 4px 0 4px 16px; font-size: 13px; line-height: 1.5; }
+  .slack-thread { margin: 4px 0 4px 32px; font-size: 12px; color: #666; line-height: 1.4; }
+  .blocker-section { border-left: 4px solid #dc3545; }
+  .footer { text-align: center; font-size: 11px; color: #adb5bd; margin-top: 24px; padding: 12px; }
+  .data-source { display: inline-block; background: #e9ecef; padding: 2px 8px; border-radius: 4px; font-size: 11px; color: #6c757d; margin-left: 8px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>[Weekly] Team Summary — week of 2026-06-24</h1>
+  <div class="subtitle">ATC &amp; PitCrew Teams — Engineering Manager Report</div>
+  <div class="meta">Period: Jun 17–24, 2026 | Generated: 2026-06-24 | Slack source: MCP Server (community slack-mcp)</div>
+</div>
+
+<!-- ============ EXECUTIVE SUMMARY ============ -->
+<div class="exec-summary">
+  <h2>Executive Summary</h2>
+  <p><strong>ATC:</strong> RHIVOS 2.0-Core release on track — all errata at REL_PREP, RC3 reduced CTC at 93% (3 tickets remaining). Kanitha Chim closed critical distribution milestone (EngIDs for QC Layered Product obtained). Pipeline stability issues dominated mid-week — Polarion credential rotation + Python 3.14 TMT bug caused cascading nightly failures; Ozan Unsal traced, reverted a URL regression, and force-promoted nightlies. Hubert Stefanski approved Contcert S3 IAM extension (MR !889, merged). Infra team closed 7 tickets this week.</p>
+  <p><strong>PitCrew:</strong> Strong closure week — 10 tickets closed, led by Benny Zlotnik (4) and Bella Khizgiyaev (3). Jumpstarter OIDC CA, builder manifest validation, and CTC report generation fix all shipped. Active work on beforeLease hook fix (PITCREW-435, Review), flaky E2E connection issue (PITCREW-403, Review), and Konflux onboarding. Lab highlight: CDT firmware mismatch on QC boards identified as root cause for v3 misidentification — dynamic CDT flashing during firmware maintenance proposed. Cluster upgrade to 4.20+ planned for start of July.</p>
+</div>
+
+<!-- ============ ATC TEAM ============ -->
+<div class="team-section">
+  <div class="team-header atc-header">ATC — Auto ToolChain</div>
+
+  <div class="section">
+    <h3>Jira — In Progress &amp; In Review (47 tickets)</h3>
+    <table>
+      <tr><th>Key</th><th>Summary</th><th>Status</th><th>Assignee</th><th>Priority</th></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-41521">VROOM-41521</a></td><td>Toolchain QC Layered Product infrastructure set up</td><td><span class="status-badge status-inprogress">In Progress</span></td><td>Kanitha Chim</td><td class="priority-major">Major</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-41430">VROOM-41430</a></td><td>Pushing product ids for Fusa Repo to CDN stage/live</td><td><span class="status-badge status-review">Review</span></td><td>Kanitha Chim</td><td></td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-42116">VROOM-42116</a></td><td>[Distribution] Request CDN directory path for QC LP</td><td><span class="status-badge status-review">Review</span></td><td>Matt Goldman</td><td></td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-41517">VROOM-41517</a></td><td>Toolchain RHIVOS-2.0 ASIL RC release work</td><td><span class="status-badge status-inprogress">In Progress</span></td><td>Ozan Unsal</td><td></td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-41516">VROOM-41516</a></td><td>Toolchain RHIVOS-2.0-Core RC release work</td><td><span class="status-badge status-inprogress">In Progress</span></td><td>Ozan Unsal</td><td></td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-37475">VROOM-37475</a></td><td>Migrate AutoSD/RHIVOS pipelines to pac-jobs</td><td><span class="status-badge status-inprogress">In Progress</span></td><td>Juanje Ojeda</td><td class="priority-major">Major</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-40886">VROOM-40886</a></td><td>Migrate toolchain chatbot/agents to new GitLab ns</td><td><span class="status-badge status-inprogress">In Progress</span></td><td>Juanje Ojeda</td><td></td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-31789">VROOM-31789</a></td><td>AutoSD — Artifact storage and delivery</td><td><span class="status-badge status-inprogress">In Progress</span></td><td>Hubert Stefanski</td><td></td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-38628">VROOM-38628</a></td><td>s3pi — Inject custom HTML to generated pages</td><td><span class="status-badge status-review">Review</span></td><td>Hubert Stefanski</td><td></td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-41784">VROOM-41784</a></td><td>Onboard RHIVOS on access.redhat.com via SP team</td><td><span class="status-badge status-review">Review</span></td><td>Eitan Raviv</td><td></td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-41912">VROOM-41912</a></td><td>Add list of CPUs to the UI</td><td><span class="status-badge status-inprogress">In Progress</span></td><td>Roni Eliezer</td><td></td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-41539">VROOM-41539</a></td><td>Create GitLab MR Review Apps</td><td><span class="status-badge status-review">Review</span></td><td>Matt Goldman</td><td></td></tr>
+    </table>
+    <div style="font-size:12px; color:#888; margin-top:8px;">Showing 12 of 47 in-progress/review tickets. Full list: 8 Kanitha Chim, 8 Juanje Ojeda, 11 Hubert Stefanski, 5 Eitan Raviv, 5 Roni Eliezer, 4 Ozan Unsal, 4 Matt Goldman, 2 Sameera Kalgudi.</div>
+  </div>
+
+  <div class="section">
+    <h3>Completed This Week (7 tickets)</h3>
+    <table>
+      <tr><th>Key</th><th>Summary</th><th>Assignee</th></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-44450">VROOM-44450</a></td><td>Enable automated sanity/smoke tests for NXP S32G in CI pipeline</td><td>Pablo Ridolfi</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-44451">VROOM-44451</a></td><td>[Toolchain] Add S32G smoke test job to release pipeline</td><td>Ozan Unsal</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-42115">VROOM-42115</a></td><td>[Distribution] Request EngIDs for QC Layered Product</td><td>Matt Goldman</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-40773">VROOM-40773</a></td><td>Push product ids to Core CDN repositories</td><td>Kanitha Chim</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-40717">VROOM-40717</a></td><td>[toolchain] Run execopen tracer in pipeline / RPM list</td><td>Juanje Ojeda</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-40715">VROOM-40715</a></td><td>[toolchain] Build execopen RPM in pipeline</td><td>Juanje Ojeda</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-44572">VROOM-44572</a></td><td>AWS Enhancements — aws-internal house keeping</td><td>Eitan Raviv</td></tr>
+    </table>
+  </div>
+
+  <div class="section blocker-section">
+    <h3>Blockers &amp; At-Risk</h3>
+    <table>
+      <tr><th>Key</th><th>Summary</th><th>Status</th><th>Assignee</th><th>Priority</th></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-27971">VROOM-27971</a></td><td>[Test Console] — SOA work (non-compliant ESS controls)</td><td><span class="status-badge status-inprogress">In Progress</span></td><td>Roni Eliezer</td><td class="priority-critical">Critical</td></tr>
+    </table>
+  </div>
+
+  <div class="slack-digest">
+    <h3>Slack Activity Digest <span class="data-source">via MCP</span></h3>
+
+    <div class="channel-name">#automotive-release-readiness (11 messages, 5 threads)</div>
+    <div class="slack-item"><strong>RHIVOS 2.0-Core Release:</strong> All errata now at REL_PREP (Kanitha Chim). CDN stage content available. RC3 reduced CTC at 93% — 3 tickets remaining (Luigi cross-compilation, Pavol on sick leave). Kernel Debug testing started.</div>
+    <div class="slack-item"><strong>RC3 Polarion evidence:</strong> Now available for validators. FuSa evidence uses RHIVOS-2.0-RC3 results (ASIL release), QM testing completed earlier in the week.</div>
+    <div class="slack-item"><strong>NXP S32G boards:</strong> Jaime Flynn got go-ahead for 15 additional boards. Rachel confirmed ~15% speed improvement over RCar S4.</div>
+    <div class="slack-item"><strong>RPM signature issue (contyk):</strong> aarch64 signature validation anomaly traced to rpmdb state — reinstall resolves it; not a blocker.</div>
+
+    <div class="channel-name">#automotive-toolchain (6 messages, 3 threads)</div>
+    <div class="slack-item"><strong>Contcert S3 access:</strong> msobczyk requested RO S3 credentials for compose indexing (bypassing CloudFront). Hubert approved IAM policy extension (2 lines), MR !889 pushed and merged same day.</div>
+    <div class="slack-item"><strong>RHIVOS 2.1 tagging:</strong> mkorpershoek requested downstream-dtbs and qcom-scmi tagging from sidetag to rhivos-2.1-gate — completed by Sameera.</div>
+    <div class="slack-item">Sprint Planning, weekly status doc, and ATC team meeting agenda reminders sent.</div>
+
+    <div class="channel-name">#alerts-auto-toolchain (30+ alerts, 4 threads)</div>
+    <div class="slack-item"><strong>Nightly pipeline failures (Jun 18-19):</strong> Cascading failures from (1) Ozan's URL path regression in MR (missing "Ride4" in path) — reverted same day via MR !616, (2) Polarion credential rotation breaking report uploads, (3) Python 3.14 TMT compatibility bug crashing cleanup phase. Juanje's AI pipeline diagnosis traced Jumpstarter lease starvation to leaked leases from TMT crashes.</div>
+    <div class="slack-item"><strong>Testing Farm API instability (Jun 18):</strong> 5xx errors, API recovered by itself; large queue processed after.</div>
+    <div class="slack-item"><strong>SonarQube token expired (Jun 22):</strong> Juanje flagged; Eitan fixed for both dpac and infra repos.</div>
+    <div class="slack-item"><strong>Git token expired (Jun 22):</strong> Juanje updated and retried pipeline successfully.</div>
+
+    <div class="channel-name">#automotive-image-builder (40+ messages, 8 threads)</div>
+    <div class="slack-item"><strong>Multiple DTB support for QC boards:</strong> javierm validated aboot-deploy changes on 8775 v2 and v3 boards. ABL DTB selection works correctly — simplifies QC manifests. alexl reviewed, approved approach.</div>
+    <div class="slack-item"><strong>oci-delta in Fedora:</strong> alexl announced oci-delta 0.3.0 now in Fedora 44. Discussion on composefs native backend for future sealing model (kernel cmdline composefs.digest approach vs current ostree commit signing).</div>
+    <div class="slack-item"><strong>Jumpstarter target/ebbr labeling:</strong> Extensive thread (bzlotnik, majopela, mperina, eballetbo, javierm) debating target=ebbr vs board-type labels. Converging on: deprecate board-type, use target aligned with AIB targets, add hidden/deprecated label support. majopela to create Jira + design doc.</div>
+    <div class="slack-item"><strong>AIB repo security incident resolved (Jun 18):</strong> mperina announced repo is public again; all MRs must rebase on latest main.</div>
+    <div class="slack-item"><strong>aarch64 bare-metal CI:</strong> Amit investigating options for aarch64 CI beyond Duffy (which only has virt, not bare-metal for aarch64).</div>
+
+    <div class="channel-name">#test-console (4 messages, 2 threads)</div>
+    <div class="slack-item"><strong>TC Bad Gateway incident (Jun 17):</strong> sbertram reported 502; Luigi fixed. Root cause: imagePullPolicy:Always + strategy:Recreate causing downtime on container image pushes. Hubert suggested RollingUpdate strategy. Init container for DB readiness discussed (Benny's suggestion).</div>
+    <div class="slack-item"><strong>Jumpstarter network hiccups (Jun 22):</strong> sbertram reported lease timeout for sa8775p board + fastboot device not found for qam8650p-16. bzlotnik recovered both boards.</div>
+
+    <div class="channel-name">#wg-team-auto-toolchain-infra (3 messages, 2 threads)</div>
+    <div class="slack-item"><strong>SonarQube token fixed:</strong> Eitan fixed tokens for dpac and infra repos.</div>
+    <div class="slack-item"><strong>TC Polarion deployment:</strong> Luigi updated infrastructure with new TC_POLARION password; Hubert showed how to manually trigger deployment from main.</div>
+    <div class="slack-item"><strong>Matt Goldman's infra MR !885:</strong> Submitted for review by Hubert and Eitan.</div>
+
+    <div class="channel-name">#wg-team-auto-toolchain-tc (3 messages, 1 thread)</div>
+    <div class="slack-item"><strong>In-app notifications MRs:</strong> Luigi rebased MRs !717 (backend) and !108 (frontend); feature available in preprod. Roni approved; noted Jira ID should be in body, not title.</div>
+
+    <div class="channel-name">#wg-team-auto-toolchain-pipelines (1 message)</div>
+    <div class="slack-item">Ozan requested quick review for pipeline fix MR !617.</div>
+
+    <div class="channel-name">#rhivos-sp-qc-layered-product (1 message)</div>
+    <div class="slack-item"><strong>QC Layered Product EngIDs obtained:</strong> Kanitha announced EngID 1123 (Core QC Layered) and 1124 (Fusa QC Layered) are now registered in product-service-config-auto.</div>
+  </div>
+</div>
+
+<!-- ============ PITCREW TEAM ============ -->
+<div class="team-section">
+  <div class="team-header pitcrew-header">PitCrew — RHAS</div>
+
+  <div class="section">
+    <h3>Jira — In Progress &amp; In Review (19 tickets)</h3>
+    <table>
+      <tr><th>Key</th><th>Summary</th><th>Status</th><th>Assignee</th><th>Priority</th></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-435">PITCREW-435</a></td><td>beforeLease hook with onFailure endLease fix</td><td><span class="status-badge status-review">Review</span></td><td>Miguel Angel Ajo Pelayo</td><td class="priority-major">Major</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-403">PITCREW-403</a></td><td>Flaky E2E: "Connection to exporter lost"</td><td><span class="status-badge status-review">Review</span></td><td>Evgeni Vakhonin</td><td class="priority-major">Major</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-119">PITCREW-119</a></td><td>Onboard builder upstream to Konflux</td><td><span class="status-badge status-review">Review</span></td><td>Bella Khizgiyaev</td><td></td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-416">PITCREW-416</a></td><td>C2 Recovery: add Automotive Operator to ArgoCD</td><td><span class="status-badge status-inprogress">In Progress</span></td><td>Muhamad Abo Ras</td><td></td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-417">PITCREW-417</a></td><td>Bump Python to [3.12-3.14]</td><td><span class="status-badge status-inprogress">In Progress</span></td><td>Jeff Ligon</td><td></td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-291">PITCREW-291</a></td><td>End-to-End Trace</td><td><span class="status-badge status-inprogress">In Progress</span></td><td>Roderick Kieley</td><td class="priority-critical">Critical</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-384">PITCREW-384</a></td><td>Use Jumpstarter for testing RHIVOS</td><td><span class="status-badge status-inprogress">In Progress</span></td><td>Miguel Angel Ajo Pelayo</td><td></td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-337">PITCREW-337</a></td><td>QE Readiness</td><td><span class="status-badge status-inprogress">In Progress</span></td><td>Unassigned</td><td></td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-335">PITCREW-335</a></td><td>Konflux Onboarding</td><td><span class="status-badge status-inprogress">In Progress</span></td><td>Unassigned</td><td></td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-334">PITCREW-334</a></td><td>RH-SDLC Compliance</td><td><span class="status-badge status-inprogress">In Progress</span></td><td>Unassigned</td><td></td></tr>
+    </table>
+    <div style="font-size:12px; color:#888; margin-top:8px;">5 unassigned in-progress epics: QE Readiness, Konflux, RH-SDLC, CTC, Ext Dep Resilience.</div>
+  </div>
+
+  <div class="section">
+    <h3>Completed This Week (10 tickets)</h3>
+    <table>
+      <tr><th>Key</th><th>Summary</th><th>Assignee</th></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-448">PITCREW-448</a></td><td>jumpstarter: support in-exporter CA for u-boot boards</td><td>Benny Zlotnik</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-447">PITCREW-447</a></td><td>builder: validate shell scripts with shellcheck</td><td>Benny Zlotnik</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-446">PITCREW-446</a></td><td>builder: manifest validation</td><td>Benny Zlotnik</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-445">PITCREW-445</a></td><td>jumpstarter: description in ExporterAccessPolicy</td><td>Benny Zlotnik</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-441">PITCREW-441</a></td><td>CTC: Fix report generation for multiple plans run</td><td>Bella Khizgiyaev</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-430">PITCREW-430</a></td><td>builder: caib login add --token option</td><td>Bella Khizgiyaev</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-419">PITCREW-419</a></td><td>jumpstarter: OIDC CA certificates from Secrets/ConfigMaps</td><td>Bella Khizgiyaev</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-437">PITCREW-437</a></td><td>beforeLease hook failure: exporter stuck offline</td><td>Miguel Angel Ajo Pelayo</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-409">PITCREW-409</a></td><td>jumpstarter JEP: virtual scalable exporters</td><td>Miguel Angel Ajo Pelayo</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-407">PITCREW-407</a></td><td>builder: improve E2E coverage &amp; identify e2e tests</td><td>Muhamad Abo Ras</td></tr>
+    </table>
+  </div>
+
+  <div class="section blocker-section">
+    <h3>Blockers &amp; At-Risk</h3>
+    <table>
+      <tr><th>Key</th><th>Summary</th><th>Status</th><th>Assignee</th><th>Priority</th></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-291">PITCREW-291</a></td><td>End-to-End Trace</td><td><span class="status-badge status-inprogress">In Progress</span></td><td>Roderick Kieley</td><td class="priority-critical">Critical</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-272">PITCREW-272</a></td><td>A/B boot on 8665 stops working, needs reflash</td><td><span class="status-badge status-inprogress">In Progress</span></td><td>Miguel Angel Ajo Pelayo</td><td class="priority-critical">Critical</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-223">PITCREW-223</a></td><td>lab: meet C2 recovery point objective</td><td><span class="status-badge status-inprogress">In Progress</span></td><td>Jeff Ligon</td><td class="priority-critical">Critical</td></tr>
+      <tr><td><a href="https://redhat.atlassian.net/browse/PITCREW-222">PITCREW-222</a></td><td>lab: meet C2 recovery time objective</td><td><span class="status-badge status-inprogress">In Progress</span></td><td>Jeff Ligon</td><td class="priority-critical">Critical</td></tr>
+    </table>
+  </div>
+
+  <div class="slack-digest">
+    <h3>Slack Activity Digest <span class="data-source">via MCP</span></h3>
+
+    <div class="channel-name">#team-pitcrew-automotive (25+ messages, 8 threads)</div>
+    <div class="slack-item"><strong>Cluster upgrade to 4.20+:</strong> Benny flagged need for upgrade, interested in new features. Avihai suggested start of July timing. Rachel Sibley confirmed start of July works, asked about expected downtime.</div>
+    <div class="slack-item"><strong>PitCrew Full report posted:</strong> Avihai shared RHAS status summary (Sprint 54% velocity, 5 unowned epics). Majopela feedback: epics don't have assignees in PitCrew — fine-tune report accordingly. Avihai added HTML report to channel canvas.</div>
+    <div class="slack-item"><strong>Exporter connection loss design:</strong> Detailed technical discussion (majopela, bzlotnik, Evgeni V.) on 5-step fix plan for exporter offline scenarios: (1) client retries, (2) retry timeout > heartbeat timeout, (3) gRPC Dial fails if exporter offline, (4) client stops retrying on failure code, (5) RFE for lease reassignment (complex — "here be dragons").</div>
+    <div class="slack-item"><strong>Bringup agent shared:</strong> bbenson pushed hardware enablement board-bringup agent with caib + jmp functionality to GitLab.</div>
+    <div class="slack-item"><strong>Lab maintenance (Jun 23):</strong> 55 PASS, 4 FAIL, 6 XFAIL in 48h smoke. sa8775p-04 and -05 firmware reflash successful. ti-jacinto-j784s4xevm-06 disabled (boot failure, PITCREW-450).</div>
+    <div class="slack-item"><strong>stress-ng collaboration:</strong> Luigi met Colin King (stress-ng author) at ELISA London — offered to help configure stress-ng for RHAS demo.</div>
+
+    <div class="channel-name">#forum-jumpstarter (70+ messages, 10 threads)</div>
+    <div class="slack-item"><strong>QC board CDT firmware root cause:</strong> javierm investigation revealed sa8775p-31 reported as v2 due to incorrect CDT partition data — not a hardware mismatch. Firmware reflash fixed it. Discussion on making CDT flashing part of standard maintenance flow (sdoherty, mkorpershoek). "Belt and suspenders" approach proposed.</div>
+    <div class="slack-item"><strong>Dev board pool created:</strong> 2 QC v3 boards moved to dev pool (MR !274) after aesteve raised concern about automated CI consuming all boards. bzlotnik implemented; pidrolfi and mripard agreed 2 boards is a good start.</div>
+    <div class="slack-item"><strong>Firmware recovery for Sergei:</strong> majopela walked Sergei Gromeniuk through qcom-firmware recovery (uv qcom-firmware qualcomm/cs4.yaml) — board recovered in ~15min.</div>
+    <div class="slack-item"><strong>Jumpstarter 0.9.0 prep:</strong> majopela reviewing open PRs for candidates, asked Michael Kuehl about PR #656.</div>
+    <div class="slack-item"><strong>RDU lab initial test:</strong> sdoherty submitted MR !276 for RDU + dynamic CDT solution MR !275.</div>
+    <div class="slack-item"><strong>chai-bot onboarded:</strong> AI assistant activated in channel; Benny taught it correct QC flash commands.</div>
+
+    <div class="channel-name">#forum-rhivos-dut — no activity this week</div>
+  </div>
+</div>
+
+<div class="footer">
+  Generated by agentic-buddy manager report (MCP Slack edition) | Slack data sourced exclusively from community slack-mcp MCP server | Jira via jira-cli
+</div>
+
+</body>
+</html>
