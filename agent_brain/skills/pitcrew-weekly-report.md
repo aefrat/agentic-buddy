@@ -198,12 +198,11 @@ Two Drive artifacts are maintained — read `reference/drive-config.md` for file
 **d.1. Generate team report HTML.** The team report is a lean view of the full report, ordered for sprint-focused readers (Miguel's feedback). Sections included:
 1. Hero banner (compact)
 2. Executive Summary (same as full)
-3. Changes Since Last Report
-4. Current Sprint (full ticket tables — open + recently closed)
-5. Slack Digest (two-column, same as full)
-6. Strategy ↔ Work Alignment
+3. Slack Digest (two-column, same as full)
+4. Changes Since Last Report
+5. Current Sprint (full ticket tables — open + recently closed)
 
-Sections excluded: Strategic Guide, Roadmap, Releases, full Epic grid, Looking Ahead.
+Sections excluded: Strategic Guide, Roadmap, Releases, full Epic grid, Looking Ahead, Strategy ↔ Work Alignment.
 
 Use inline styles only (no `<style>` block) — this HTML gets converted to Google Docs format. Tables render well; CSS grid and badges do not. **Never use white text (`color: #fff`) or rely on dark backgrounds for contrast** — Google Docs strips backgrounds but keeps text color, making white text invisible. Use dark text colors with borders/underlines for visual hierarchy instead. Save to `user/reports/pitcrew-team-report-${REPORT_DATE}.html`.
 

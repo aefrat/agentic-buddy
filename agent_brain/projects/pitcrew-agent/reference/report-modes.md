@@ -61,12 +61,11 @@ Lean view for sprint-focused readers, uploaded as a Google Doc to the Slack canv
 **Sections included:**
 1. Hero banner (compact)
 2. Executive Summary
-3. Changes Since Last Report
-4. Current Sprint (full ticket tables — open + recently closed)
-5. Slack Digest (two-column, same as full — included even when parent mode is weekly)
-6. Strategy ↔ Work Alignment
+3. Slack Digest (two-column, same as full — included even when parent mode is weekly)
+4. Changes Since Last Report
+5. Current Sprint (full ticket tables — open + recently closed)
 
-**Sections excluded:** Strategic Guide, Roadmap, Releases, full Epic grid, Looking Ahead.
+**Sections excluded:** Strategic Guide, Roadmap, Releases, full Epic grid, Looking Ahead, Strategy ↔ Work Alignment.
 
 **Format:** Inline-styled HTML (no `<style>` block), auto-converted to Google Docs on upload. Tables OK; CSS grids/badges simplified by conversion.
 

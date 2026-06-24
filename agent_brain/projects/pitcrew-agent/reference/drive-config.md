@@ -12,7 +12,7 @@ Persistent config for the PitCrew report Google Drive upload step. File IDs are 
 
 ## Team Report (Google Doc — for Slack canvas)
 
-Lean report for the team: Sprint + Changes + Slack Digest + Alignment. Uploaded as a Google Doc so it renders inline with one click (no download).
+Lean report for the team: Exec Summary + Slack Digest + Changes + Sprint. Uploaded as a Google Doc so it renders inline with one click (no download).
 
 | Field | Value |
 |-------|-------|

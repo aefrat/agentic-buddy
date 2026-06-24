@@ -22,6 +22,42 @@
 </div>
 
 <div style="background: #fff; border: 1px solid #d0d7de; border-radius: 8px; padding: 16px 20px; margin-bottom: 16px;">
+  <h2 style="font-size: 15px; border-bottom: 2px solid #4A154B; padding-bottom: 8px;">Slack Digest <span style="background: #f0ebff; color: #6e3db5; border: 1px solid #c5adf5; padding: 2px 7px; border-radius: 4px; font-size: 11px;">Jun 17–24</span></h2>
+
+  <table style="width: 100%; border-collapse: collapse;"><tr><td style="vertical-align: top; width: 50%; padding-right: 10px;">
+
+  <h3 style="font-size: 14px; margin: 8px 0;">#team-pitcrew-automotive</h3>
+  <p style="font-size: 11px; color: #888;">~25 messages · 7 days</p>
+  <ul style="font-size: 13px; line-height: 1.8; padding-left: 18px;">
+    <li><strong>Lab maintenance:</strong> sa8775p-04/-05 firmware reflash successful. j784s4xevm-06 boot failure — ukiboot can't find active A/B slot (PITCREW-450, MR !281).</li>
+    <li><strong>Lab smoke:</strong> 55 PASS, 4 FAIL, 6 XFAIL.</li>
+    <li><strong>Jumpstarter 0.9.0:</strong> majopela reviewing PR candidates (PR #656 pending for mkuehl).</li>
+    <li><strong>Bringup agent:</strong> Brad Benson shared hardware enablement agent with CAIB+JMP integration.</li>
+    <li><strong>Cluster upgrade:</strong> bzlotnik flagged need for 4.20+ upgrade.</li>
+    <li><strong>RHIVOS nightly:</strong> Ozan reported provisioning timeouts on ride4-sa8775p-sx-r3 boards.</li>
+    <li><strong>stress-ng:</strong> Luigi met Colin King at ELISA workshop — offered demo config help.</li>
+    <li><strong>ambient:</strong> red.ht/ambient gone, scheduled prompts still running.</li>
+  </ul>
+  <p style="font-size: 11px; color: #888;">Top: majopela (8), bzlotnik (4), bbenson (1), Luigi (1), Ozan (1)</p>
+
+  </td><td style="vertical-align: top; width: 50%; padding-left: 10px;">
+
+  <h3 style="font-size: 14px; margin: 8px 0;">#forum-jumpstarter</h3>
+  <p style="font-size: 11px; color: #888;">~11 messages · 7 days</p>
+  <ul style="font-size: 13px; line-height: 1.8; padding-left: 18px;">
+    <li><strong>Board scarcity:</strong> All sa8775p boards leased for automation — proposal to reserve 2–3 for devs (aesteve).</li>
+    <li><strong>Flash failure:</strong> qam8650p-11 "No fastboot devices found" when flashing TP-RC1 (Sergei).</li>
+    <li><strong>Exporter offline:</strong> sa8775p-01 lease expired during fw-maintenance (echanude).</li>
+    <li><strong>RDU lab:</strong> Initial test MR (sdoherty, MR !276). Dynamic CDT solution (MR !275).</li>
+    <li><strong>Board ID:</strong> Is sa8775p-31 actually a v3? (javierm).</li>
+    <li><strong>chai-bot:</strong> AI assistant activated in channel.</li>
+  </ul>
+  <p style="font-size: 11px; color: #888;">Top: sdoherty (3), bzlotnik (2), echanude (2), Sergei (1), aesteve (1)</p>
+
+  </td></tr></table>
+</div>
+
+<div style="background: #fff; border: 1px solid #d0d7de; border-radius: 8px; padding: 16px 20px; margin-bottom: 16px;">
   <h2 style="font-size: 15px; border-bottom: 2px solid #e05d00; padding-bottom: 8px;">Changes Since Last Report <span style="background: #fff0e6; color: #c44b00; border: 1px solid #f5c89a; padding: 2px 7px; border-radius: 4px; font-size: 11px;">Jun 23 → Jun 24</span></h2>
 
   <div style="background: #f0fff4; border-left: 4px solid #1a7a3e; padding: 10px 14px; margin: 10px 0; border-radius: 0 6px 6px 0; font-size: 13px;">
@@ -102,58 +138,6 @@
     <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-409</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">jumpstarter JEP: virtual scalable exporters</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Miguel Angel Ajo Pelayo</td></tr>
     <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-407</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">builder: improve E2E coverage &amp; identify e2e tests</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Mohamad Abo Ras</td></tr>
   </table>
-</div>
-
-<div style="background: #fff; border: 1px solid #d0d7de; border-radius: 8px; padding: 16px 20px; margin-bottom: 16px;">
-  <h2 style="font-size: 15px; border-bottom: 2px solid #4A154B; padding-bottom: 8px;">Slack Digest <span style="background: #f0ebff; color: #6e3db5; border: 1px solid #c5adf5; padding: 2px 7px; border-radius: 4px; font-size: 11px;">Jun 17–24</span></h2>
-
-  <table style="width: 100%; border-collapse: collapse;"><tr><td style="vertical-align: top; width: 50%; padding-right: 10px;">
-
-  <h3 style="font-size: 14px; margin: 8px 0;">#team-pitcrew-automotive</h3>
-  <p style="font-size: 11px; color: #888;">~25 messages · 7 days</p>
-  <ul style="font-size: 13px; line-height: 1.8; padding-left: 18px;">
-    <li><strong>Lab maintenance:</strong> sa8775p-04/-05 firmware reflash successful. j784s4xevm-06 boot failure — ukiboot can't find active A/B slot (PITCREW-450, MR !281).</li>
-    <li><strong>Lab smoke:</strong> 55 PASS, 4 FAIL, 6 XFAIL.</li>
-    <li><strong>Jumpstarter 0.9.0:</strong> majopela reviewing PR candidates (PR #656 pending for mkuehl).</li>
-    <li><strong>Bringup agent:</strong> Brad Benson shared hardware enablement agent with CAIB+JMP integration.</li>
-    <li><strong>Cluster upgrade:</strong> bzlotnik flagged need for 4.20+ upgrade.</li>
-    <li><strong>RHIVOS nightly:</strong> Ozan reported provisioning timeouts on ride4-sa8775p-sx-r3 boards.</li>
-    <li><strong>stress-ng:</strong> Luigi met Colin King at ELISA workshop — offered demo config help.</li>
-    <li><strong>ambient:</strong> red.ht/ambient gone, scheduled prompts still running.</li>
-  </ul>
-  <p style="font-size: 11px; color: #888;">Top: majopela (8), bzlotnik (4), bbenson (1), Luigi (1), Ozan (1)</p>
-
-  </td><td style="vertical-align: top; width: 50%; padding-left: 10px;">
-
-  <h3 style="font-size: 14px; margin: 8px 0;">#forum-jumpstarter</h3>
-  <p style="font-size: 11px; color: #888;">~11 messages · 7 days</p>
-  <ul style="font-size: 13px; line-height: 1.8; padding-left: 18px;">
-    <li><strong>Board scarcity:</strong> All sa8775p boards leased for automation — proposal to reserve 2–3 for devs (aesteve).</li>
-    <li><strong>Flash failure:</strong> qam8650p-11 "No fastboot devices found" when flashing TP-RC1 (Sergei).</li>
-    <li><strong>Exporter offline:</strong> sa8775p-01 lease expired during fw-maintenance (echanude).</li>
-    <li><strong>RDU lab:</strong> Initial test MR (sdoherty, MR !276). Dynamic CDT solution (MR !275).</li>
-    <li><strong>Board ID:</strong> Is sa8775p-31 actually a v3? (javierm).</li>
-    <li><strong>chai-bot:</strong> AI assistant activated in channel.</li>
-  </ul>
-  <p style="font-size: 11px; color: #888;">Top: sdoherty (3), bzlotnik (2), echanude (2), Sergei (1), aesteve (1)</p>
-
-  </td></tr></table>
-</div>
-
-<div style="background: #fff; border: 1px solid #d0d7de; border-radius: 8px; padding: 16px 20px; margin-bottom: 16px;">
-  <h2 style="font-size: 15px; border-bottom: 2px solid #6e3db5; padding-bottom: 8px;">Strategy ↔ Work Alignment</h2>
-
-  <h3 style="font-size: 13px; color: #1a7a3e;">Well-Aligned</h3>
-  <p style="font-size: 13px; line-height: 1.7;">✅ <strong>Jumpstarter HiL testing</strong> — PITCREW-384 enables Tier 2. 0.9.0 release queued, PR #656 under review.</p>
-  <p style="font-size: 13px; line-height: 1.7;">✅ <strong>Builder ecosystem</strong> — 0.2.0 ready. Manifest validation, shellcheck, OIDC CA, E2E coverage all closed. Konflux onboarding moving.</p>
-  <p style="font-size: 13px; line-height: 1.7;">✅ <strong>CTC pipeline maturity</strong> — NXP support, tmt autobump, report gen fix all closed.</p>
-  <p style="font-size: 13px; line-height: 1.7;">✅ <strong>C2 disaster recovery</strong> — ArgoCD migration + gitops reorg closed. Automotive Operator integration in progress.</p>
-
-  <h3 style="font-size: 13px; color: #c44b00;">Gaps &amp; Concerns</h3>
-  <p style="font-size: 13px; line-height: 1.7;">⚠️ <strong>Flaky E2E persists</strong> — PITCREW-403 still in Review. Undermines CI confidence.</p>
-  <p style="font-size: 13px; line-height: 1.7;">⚠️ <strong>Developer board scarcity</strong> — All sa8775p leased for automation, blocking dev work.</p>
-  <p style="font-size: 13px; line-height: 1.7;">⚠️ <strong>Cluster version lag</strong> — Dev cluster needs 4.20+ upgrade.</p>
-  <p style="font-size: 13px; line-height: 1.7;">⚠️ <strong>Product Documentation</strong> — PITCREW-338 still New. Q3 GA needs docs.</p>
 </div>
 
 <p style="text-align: center; color: #aaa; font-size: 11px; margin-top: 16px;">
