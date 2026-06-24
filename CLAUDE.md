@@ -60,7 +60,7 @@ Factual updates to Right now (changed dates, flipped statuses) are allowed mid-s
 - **CAT in 5 days.** RHIVOS 2.0-Core CAT Jun 29-30, content on CDN/ET ~Jun 26 (2 days). RC3 reduced CTC at 93% (3 tickets remaining). All errata at REL_PREP.
 - **Atlassian API token "Avi2" expires Jun 27** (3 days). Needs rotation this week.
 - **Hubert Stefanski joining RHAS/PitCrew team** (approved Jeff Ligon & Paul Wallrabe, Jun 18). He is transitioning TO this team and will be fully focused on PITCREW-161 (AIB prototyping). Next: discuss timelines with Hubert, communicate plan to stakeholders.
-- **RHIVOS QC Layered Product** — CDN path naming convention (VROOM-42116) awaiting Petr Sabata approval. 4/16 tasks done, 6 distribution tasks unassigned.
+- **RHIVOS QC Layered Product** — CDN path MR #149 submitted (VROOM-42116 → Review), awaiting merge. 2 new compose tickets (VROOM-44910, 44911). 4/18 tasks done, 6 distribution tasks unassigned.
 - **Roderick Kieley** — 23 days into onboarding (started Jun 1). 1:1 biweekly, active.
 
 ### Files
