@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-06-24 | Slack MCP live validation + weekly report via MCP + full repo migration (12 files curl→MCP) | `eee966c7-35ae-4edd-9da1-4f4867b9d74f` |
 | 2026-06-24 | Community slack-mcp MCP server setup (redhat-community-ai-tools/slack-mcp), removed official Slack MCP plugin, global + project rule updates | `3adf84fe-327e-4389-8a1b-b53244207821` |
 | 2026-06-23–24 | W26 review + LP re-run + PitCrew agent creation (agent-forge, 4-store) + first full report + corrections (Slack posting incident, epic conventions, team health removal) + Slack canvas API dead end + LP status Jun 24 (cron) | `a23c36f0-dd83-4d71-9c3a-6ba6392e0dbb` |
 | 2026-06-23 | Core RPMs Redux project + agent + skill creation (agent-forge, 4-store) + first report (22 tickets, 15 Closed, VROOM-31421 anomaly) | `337c8c94-c68a-4dcf-b253-3e24cf571d87` |
