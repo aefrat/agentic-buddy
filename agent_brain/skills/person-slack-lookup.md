@@ -16,31 +16,28 @@ or any request to find what a specific person posted across Slack channels.
 
 ### 1. Resolve the person's Slack username and user ID
 
-Use `slack:slack-search` to find a recent message from the person, or
-search for their display name. Extract the Slack user ID (`U...`).
+Use `mcp__slack-mcp__search_messages` with the person's name to find a
+recent message from them. Extract the Slack user ID (`U...`) and username.
 
 **Purpose:** All subsequent queries depend on having the correct user ID.
 Display names and real names can be ambiguous.
 
 ### 2. Search messages authored by the person
 
-Use `slack:slack-search` with query `from:<username>` for the target
-time range. If the Slack search API date filter (`after:`) returns 0
-results (known issue with xoxc tokens), omit it and post-filter by
-timestamp.
+Use `mcp__slack-mcp__search_messages` with query `from:<username>` for
+the target time range.
 
 ### 3. Search @mentions of the person
 
-Use `slack:slack-search` with query `<@USER_ID>` to find messages where
-others mentioned them. This captures discussions about their work even
-when they didn't post.
+Use `mcp__slack-mcp__search_messages` with query `<@USER_ID>` to find
+messages where others mentioned them. This captures discussions about
+their work even when they didn't post.
 
-### 4. Scan team channels with conversations.history
+### 4. Scan team channels for the person's activity
 
 For key channels (team channels, project channels), use
-`slack:slack-search` or direct channel history with `oldest=` unix
-timestamp. The `conversations.history` API's `oldest=` parameter works
-reliably for date filtering.
+`mcp__slack-mcp__get_channel_history` with `oldest`/`latest` ISO date
+parameters for date filtering.
 
 **Judgment call:** Scope channels based on context. For a team member,
 scan their team's channels. For a stakeholder, scan channels where they
@@ -48,9 +45,9 @@ interact with the user's team.
 
 ### 5. Check thread replies
 
-For significant messages found, check thread replies to capture the
-full context. Standalone messages often lack the working-group formation
-and coordination context visible in threads.
+For significant messages found, use `mcp__slack-mcp__get_thread` to
+fetch the full thread context. Standalone messages often lack the
+working-group formation and coordination context visible in threads.
 
 ### 6. Synthesize findings
 

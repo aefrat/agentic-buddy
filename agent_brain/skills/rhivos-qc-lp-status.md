@@ -70,24 +70,16 @@ For each ticket, capture: key, summary, status, assignee. Note any tickets with 
 
 ### 3. Fetch Slack activity
 
-Use bash curl with `$SLACK_XOXC_TOKEN` and `$SLACK_XOXD_COOKIE` from `~/.bashrc` (per CLAUDE.md Rule 20 — never use Slack MCP plugin).
+Use the community slack-mcp MCP server (per CLAUDE.md Rule 20). Two queries (last 7 days):
 
-Two searches (last 7 days):
-
-```bash
-source ~/.bashrc
-curl -s "https://redhat.enterprise.slack.com/api/search.messages" \
-  -H "Authorization: Bearer $SLACK_XOXC_TOKEN" \
-  -H "Cookie: d=$SLACK_XOXD_COOKIE" \
-  -d "query=in:%23rhivos-sp-qc-layered-product&sort=timestamp&sort_dir=desc&count=20"
+**Channel history:**
+```
+mcp__slack-mcp__get_channel_history(channel_id="C0B3MNQSYE7", oldest=<7_DAYS_AGO_ISO>, limit=200)
 ```
 
-```bash
-source ~/.bashrc
-curl -s "https://redhat.enterprise.slack.com/api/search.messages" \
-  -H "Authorization: Bearer $SLACK_XOXC_TOKEN" \
-  -H "Cookie: d=$SLACK_XOXD_COOKIE" \
-  -d "query=%22layered+product%22+OR+AUTOBU-1076&sort=timestamp&sort_dir=desc&count=20"
+**Cross-channel keyword search:**
+```
+mcp__slack-mcp__search_messages(query="\"layered product\" OR AUTOBU-1076", limit=20, sort="timestamp")
 ```
 
 Extract: timestamp, author, channel, message text. Filter to last 7 days.
@@ -252,9 +244,8 @@ Confirm to the user (or log, in cron mode):
 
 ## Gotchas
 
-- **Slack tokens expire.** If Slack searches return `invalid_auth`, the `$SLACK_XOXC_TOKEN` in `~/.bashrc` needs refreshing. Flag in report, don't silently skip.
+- **Slack via MCP only.** All Slack access uses the community slack-mcp MCP server (read-only, configured in `~/.mcp.json`). No curl, no xoxc/xoxd tokens. If MCP tools return errors, flag in report — don't silently skip.
 - **Jira CLI auth.** The `jira` CLI uses tokens from `~/.netrc` or config. If it fails, fall back to `jira-mcp-cli` or flag.
 - **CronCreate 7-day expiry.** Durable cron jobs auto-expire after 7 days. Either re-schedule weekly or set up a system crontab entry for permanent scheduling: `17 8 * * 1-5 cd /home/aefrat/agentic-buddy && claude -p "Run the RHIVOS QC LP status report. Read agent_brain/skills/rhivos-qc-lp-status.md and execute all steps."`.
 - **History immutability.** Never overwrite a dated file in `history/`. If re-running same day, append sequence number (e.g., `2026-06-23-2.html`).
 - **Email attachment.** The HTML report is sent as an attachment (`-a`), not inline HTML. The body is plain text summary only.
-- **Slack URL encoding.** Channel names with hyphens need URL encoding in the query parameter. Use `%23` for `#` in channel names.

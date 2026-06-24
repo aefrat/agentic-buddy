@@ -113,7 +113,7 @@ When data is missing, you report the gap explicitly. A report with a clearly lab
 - `claude -p` in cron lacks Vertex AI env vars — AI summaries show "Not logged in." Known issue, tracked in CLAUDE.md Active context. When running interactively, `source ~/.bashrc` resolves this.
 - `gws` token cache at `~/.config/gws/token_cache.json` can go stale. The script clears it at startup, but `gws gmail +send` uses its own cache — if email send fails with 403, clear the cache manually.
 - Jira API token "Avi2" expires Jun 27. If Jira sections are empty, check token expiry first.
-- Slack xoxc/xoxd tokens can expire without warning. If Slack section is degraded, verify tokens are still valid: `crontab -l | grep SLACK_XOXC_TOKEN`.
+- Slack access uses the community slack-mcp MCP server (read-only). If Slack section is degraded, check MCP server availability.
 - The script writes a sidecar JSON to `/tmp/report_data.json` (or custom path via `--sidecar-output`). Contains `metrics` (per-team counts), `slack` (channel/message stats), and closed issue details. Both HTML and sidecar are needed for verification and history.
 - Jira search uses v3 POST (v2 was removed with HTTP 410). Changelog is fetched per-issue, not in bulk.
 

@@ -64,14 +64,13 @@ Read via `gws docs` CLI. Auth via gws OAuth token cache (auto-cleared by script 
 
 | Field | Value |
 |-------|-------|
-| API | `https://slack.com/api` |
-| Auth | xoxc token + xoxd cookie |
-| Env vars | `SLACK_XOXC_TOKEN`, `SLACK_XOXD_COOKIE` |
+| Access | Community slack-mcp MCP server (read-only) |
+| Config | `~/.mcp.json` |
 | Notable thread threshold | 3+ replies |
 
-Channels are configured per team in shared `members.yaml`. Slack section degrades gracefully if tokens are missing.
+Channels are configured per team in shared `members.yaml`. Slack section degrades gracefully if MCP server is unavailable.
 
-**Rate limits:** 3-attempt retry loop on 429; respects `Retry-After` header.
+MCP tools: `get_channel_history` (with oldest/latest date filters), `search_messages`, `search_channel_messages`, `get_thread`.
 
 ## AI summaries (claude -p)
 

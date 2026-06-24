@@ -96,9 +96,14 @@ For each epic, capture: key, summary, status, assignee, fix version. For sprint,
 
 Skip in daily and weekly modes.
 
-Use bash curl with `$SLACK_XOXC_TOKEN` and `$SLACK_XOXD_COOKIE` from `~/.bashrc` (per CLAUDE.md Rule 20 — never use Slack MCP plugin).
+Use the community slack-mcp MCP server (per CLAUDE.md Rule 20).
 
-Search each channel (last 7 days): `#team-pitcrew-automotive`, `#forum-jumpstarter`.
+Search each channel (last 7 days):
+
+```
+mcp__slack-mcp__get_channel_history(channel_id="C08SRMMGDK2", oldest=<7_DAYS_AGO_ISO>, limit=200)  # #team-pitcrew-automotive
+mcp__slack-mcp__get_channel_history(channel_id="C064EKCGEF8", oldest=<7_DAYS_AGO_ISO>, limit=200)  # #forum-jumpstarter
+```
 
 Extract: message count, top contributors, key themes (5–8 bullets per channel).
 
@@ -228,11 +233,10 @@ Confirm to the user (or log, in cron mode):
 
 ## Gotchas
 
-- **Slack tokens expire.** If Slack searches return `invalid_auth`, the `$SLACK_XOXC_TOKEN` in `~/.bashrc` needs refreshing. Flag in report, don't silently skip.
+- **Slack via MCP only.** All Slack access uses the community slack-mcp MCP server (read-only, configured in `~/.mcp.json`). No curl, no xoxc/xoxd tokens. If MCP tools return errors, flag in report — don't silently skip.
 - **Jira CLI auth.** Uses tokens from `~/.netrc` or config. If it fails, flag. Atlassian API token "Avi2" expires Jun 27, 2026.
 - **History immutability.** Never overwrite a dated file in `history/`. If re-running same day and mode, append sequence number (e.g., `2026-06-23-weekly-2.html`).
 - **Email attachment mode.** HTML sent as attachment (`-a`), not inline body. Previous `--html` mode caused truncation on large reports.
 - **Strategic cache TTL.** 30-day refresh. Daily mode never triggers refresh — only weekly/full do.
 - **Google Docs auth.** Can expire silently. `gws docs` returns empty on 403. Run `gws auth status` first.
-- **Slack URL encoding.** Channel names with hyphens need URL encoding. Use `%23` for `#`.
 - **Sprint gaps.** `sprint in openSprints()` fails if no sprint is active. Fall back to date-range query.

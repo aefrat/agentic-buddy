@@ -52,26 +52,28 @@ jira issue list -q 'project = PITCREW AND fixVersion is not EMPTY ORDER BY fixVe
 | Field | Value |
 |-------|-------|
 | Channels | `#team-pitcrew-automotive`, `#forum-jumpstarter` |
-| Channel IDs | Look up via `conversations.list` if needed |
-| Auth | `$SLACK_XOXC_TOKEN` + `$SLACK_XOXD_COOKIE` from `~/.bashrc` |
-| Method | bash curl (per CLAUDE.md Rule 20 — never use Slack MCP) |
+| Channel IDs | C08SRMMGDK2, C064EKCGEF8 |
+| Access | Community slack-mcp MCP server (read-only, configured in `~/.mcp.json`) |
+| Method | MCP tool calls (per CLAUDE.md Rule 20) |
 
 ### Queries
 
-**Channel search (last 7 days):**
-```bash
-source ~/.bashrc
-curl -s "https://redhat.enterprise.slack.com/api/search.messages" \
-  -H "Authorization: Bearer $SLACK_XOXC_TOKEN" \
-  -H "Cookie: d=$SLACK_XOXD_COOKIE" \
-  -d "query=in:%23team-pitcrew-automotive&sort=timestamp&sort_dir=desc&count=50"
+**Channel history (last 7 days):**
+```
+mcp__slack-mcp__get_channel_history(channel_id="C08SRMMGDK2", oldest=<7_DAYS_AGO_ISO>, limit=200)
 ```
 
-Repeat for `%23forum-jumpstarter`.
+Repeat for `C064EKCGEF8` (#forum-jumpstarter).
+
+**Channel search:**
+```
+mcp__slack-mcp__search_channel_messages(channel_id="C08SRMMGDK2", query="*", limit=50, sort="timestamp")
+```
 
 ### Known issues
 
-- Slack tokens expire without warning. If search returns `invalid_auth`, tokens need refreshing in `~/.bashrc`.
+- MCP server is read-only. Never attempt write operations.
+- If MCP tools return errors, flag in the report — don't silently skip.
 
 ## Google Docs
 

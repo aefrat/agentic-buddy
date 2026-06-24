@@ -55,7 +55,7 @@ agent_brain/projects/mr-agent/
 | GitLab CEE | REST v4 | Private token | `GITLAB_CEE_TOKEN` |
 | GitHub | REST v3 | Bearer token | `GITHUB_TOKEN` |
 | Google Docs | `gws docs` CLI | OAuth | gws token cache |
-| Slack | Web API | xoxc + cookie | `SLACK_XOXC_TOKEN`, `SLACK_XOXD_COOKIE` |
+| Slack | Community slack-mcp MCP server | Read-only, configured in `~/.mcp.json` | No env vars needed |
 | AI summaries | `claude -p` | Vertex AI / API key | cron auth broken (known issue) |
 
 ## Plan — phased delivery

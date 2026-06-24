@@ -58,13 +58,13 @@ For each ticket capture: key, summary, status, assignee. Note any blockers.
 
 ### 3. Fetch Slack activity and Google Docs context
 
-**Slack:** Use bash curl with `$SLACK_XOXC_TOKEN` and `$SLACK_XOXD_COOKIE` from `~/.bashrc` (per CLAUDE.md Rule 20 — never Slack MCP plugin). Read `reference/data-sources.md` for exact queries.
+**Slack:** Use the community slack-mcp MCP server (per CLAUDE.md Rule 20). Read `reference/data-sources.md` for channel IDs.
 
-Four searches:
-- **(a)** #team-toolchain-automotive (primary work, 30 messages)
-- **(b)** #alerts-auto-toolchain (pipeline failures, 20 messages)
-- **(c)** #team-auto-follow-on-activities (FoA/validators, 20 messages)
-- **(d)** Cross-channel keyword search ("core-rpms" OR execopen OR VROOM-31017)
+Four queries:
+- **(a)** `search_channel_messages(channel_id=<team-toolchain-automotive>, query="*", limit=30)` — primary work
+- **(b)** `search_channel_messages(channel_id=<alerts-auto-toolchain>, query="*", limit=20)` — pipeline failures
+- **(c)** `search_channel_messages(channel_id=<team-auto-follow-on-activities>, query="*", limit=20)` — FoA/validators
+- **(d)** `search_messages(query="\"core-rpms\" OR execopen OR VROOM-31017", limit=20)` — cross-channel keyword search
 
 From #alerts-auto-toolchain: extract pipeline failure count, most recent failure, whether resolved.
 
@@ -260,7 +260,7 @@ Confirm to the user:
 
 ## Gotchas
 
-- **Slack tokens expire.** If Slack searches return `invalid_auth`, the `$SLACK_XOXC_TOKEN` in `~/.bashrc` needs refreshing. Flag in report, don't silently skip.
+- **Slack via MCP only.** All Slack access uses the community slack-mcp MCP server (read-only, configured in `~/.mcp.json`). No curl, no xoxc/xoxd tokens. If MCP tools return errors, flag in report — don't silently skip.
 - **Jira CLI auth.** Atlassian API token "Avi2" expires Jun 27, 2026.
 - **History immutability.** Never overwrite a dated file in `history/`. If re-running same day, append sequence number (e.g., `2026-06-23-2.html`).
 - **Email attachment.** HTML sent as attachment (`-a`), not inline body.

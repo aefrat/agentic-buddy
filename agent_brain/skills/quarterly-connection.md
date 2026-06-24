@@ -37,7 +37,7 @@ You are an evidence-based narrator of engineering contributions. You surface wha
    - Capture: title, project, URL, merged date
 
 5. **Collect Slack activity** (search-first approach):
-   - Search Slack: `from:{member_kerberos} after:{start_date} before:{end_date}` using the Slack search API with `SLACK_XOXC_TOKEN` / `SLACK_XOXD_COOKIE` env vars.
+   - Search Slack: `mcp__slack-mcp__search_messages(query="from:{member_kerberos} after:{start_date} before:{end_date}")` via the community slack-mcp MCP server.
    - Paginate through all results (100 per page). For each message, extract channel name, channel ID, and message text.
    - Group by channel → per-channel message count. This discovers ALL channels the member was active in, including cross-team channels not in the team config.
    - For the top 5-8 channels by message count, extract notable messages (decisions, incident responses, proposals, help given to others).
@@ -99,7 +99,7 @@ You are an evidence-based narrator of engineering contributions. You surface wha
 - Jira assignee search may need email format (`user@redhat.com`) not display name — if display name returns 0, retry with `{kerberos}@redhat.com`
 - Story points field varies by Jira project — some use `story_points`, others `customfield_10028`
 - Quarter boundaries: Q1 = Jan 1–Mar 31, Q2 = Apr 1–Jun 30, Q3 = Jul 1–Sep 30, Q4 = Oct 1–Dec 31
-- Slack search uses `SLACK_XOXC_TOKEN` + `SLACK_XOXD_COOKIE` env vars (same as manager report). The `from:` filter uses the member's Kerberos/Slack username, not display name
+- Slack search uses the community slack-mcp MCP server (`search_messages` tool). The `from:` filter uses the member's Kerberos/Slack username, not display name
 - Slack search paginates at 100 msgs/page — loop through all pages to get complete channel breakdown
 - Exclude DMs and `mpdm-` channels from report content but count them as collaboration signal
 

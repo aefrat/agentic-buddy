@@ -43,53 +43,41 @@ jira issue list -q "key in (VROOM-37039, VROOM-29696, VROOM-38899)" --plain --co
 
 ## Slack
 
-Auth: `$SLACK_XOXC_TOKEN` + `$SLACK_XOXD_COOKIE` from `~/.bashrc` (per CLAUDE.md Rule 20 — never Slack MCP plugin).
+Access: community slack-mcp MCP server (read-only, configured in `~/.mcp.json`). No tokens or credentials needed.
 
-### Searches
+### Channels
+
+| Channel | ID |
+|---|---|
+| team-toolchain-automotive | C04JDFLHJN6 |
+| alerts-auto-toolchain | C04QLT849KN |
+| team-auto-follow-on-activities | *(resolve via `get_channel_id_by_name`)* |
+
+### Queries
 
 **a. #team-toolchain-automotive (primary, last 7 days):**
-```bash
-source ~/.bashrc
-curl -s "https://redhat.enterprise.slack.com/api/search.messages" \
-  -H "Authorization: Bearer $SLACK_XOXC_TOKEN" \
-  -H "Cookie: d=$SLACK_XOXD_COOKIE" \
-  --data-urlencode "query=in:#team-toolchain-automotive" \
-  -d "sort=timestamp&sort_dir=desc&count=30"
+```
+mcp__slack-mcp__search_channel_messages(channel_id="C04JDFLHJN6", query="*", limit=30, sort="timestamp")
 ```
 
 **b. #alerts-auto-toolchain (pipeline failures):**
-```bash
-source ~/.bashrc
-curl -s "https://redhat.enterprise.slack.com/api/search.messages" \
-  -H "Authorization: Bearer $SLACK_XOXC_TOKEN" \
-  -H "Cookie: d=$SLACK_XOXD_COOKIE" \
-  --data-urlencode "query=in:#alerts-auto-toolchain" \
-  -d "sort=timestamp&sort_dir=desc&count=20"
+```
+mcp__slack-mcp__search_channel_messages(channel_id="C04QLT849KN", query="*", limit=20, sort="timestamp")
 ```
 
 **c. #team-auto-follow-on-activities (FoA/validators):**
-```bash
-source ~/.bashrc
-curl -s "https://redhat.enterprise.slack.com/api/search.messages" \
-  -H "Authorization: Bearer $SLACK_XOXC_TOKEN" \
-  -H "Cookie: d=$SLACK_XOXD_COOKIE" \
-  --data-urlencode "query=in:#team-auto-follow-on-activities" \
-  -d "sort=timestamp&sort_dir=desc&count=20"
+```
+mcp__slack-mcp__search_channel_messages(channel_id=<RESOLVE_ID>, query="*", limit=20, sort="timestamp")
 ```
 
 **d. Cross-channel keyword search:**
-```bash
-source ~/.bashrc
-curl -s "https://redhat.enterprise.slack.com/api/search.messages" \
-  -H "Authorization: Bearer $SLACK_XOXC_TOKEN" \
-  -H "Cookie: d=$SLACK_XOXD_COOKIE" \
-  --data-urlencode "query=\"core-rpms\" OR execopen OR VROOM-31017" \
-  -d "sort=timestamp&sort_dir=desc&count=20"
+```
+mcp__slack-mcp__search_messages(query="\"core-rpms\" OR execopen OR VROOM-31017", limit=20, sort="timestamp")
 ```
 
 ### Known issues
-- Tokens expire without warning. `invalid_auth` response means `~/.bashrc` tokens need refresh.
-- Use `redhat.enterprise.slack.com` (not `slack.com`) for API endpoint.
+- MCP server is read-only. Never attempt write operations.
+- If MCP tools return errors, flag in the report — don't silently skip.
 
 ## Google Docs
 
