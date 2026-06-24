@@ -1,7 +1,7 @@
 ---
 name: scan-slack-channels
 description: Scan Slack channels and generate activity summaries with key findings and action items. Use when asked to scan Slack, check channels, summarize channel activity, or get a Slack update. Supports single channel, channel group (ATC, PitCrew), or all monitored channels.
-compatibility: Requires SLACK_XOXC_TOKEN and SLACK_XOXD_COOKIE in crontab. Uses coreos.slack.com API.
+compatibility: Uses community slack-mcp MCP server (read-only). No tokens or credentials needed — configured in ~/.mcp.json.
 ---
 
 ## Channel registry
@@ -50,70 +50,39 @@ Parse the user's request to determine:
 
 Compute the Unix timestamp for the start of the window.
 
-### 2. Source Slack credentials
+### 2. Fetch channel history
 
-```bash
-source ~/.bashrc
+For each target channel, use the community slack-mcp MCP server:
+
 ```
-
-Tokens are set in crontab as `SLACK_XOXC_TOKEN` and `SLACK_XOXD_COOKIE`. Source them:
-
-```bash
-eval $(crontab -l 2>/dev/null | grep -E '^SLACK_XOXC_TOKEN=|^SLACK_XOXD_COOKIE=' | head -2)
-```
-
-### 3. Fetch channel history
-
-For each target channel, call the Slack API:
-
-```bash
-curl -s "https://coreos.slack.com/api/conversations.history" \
-  -H "Authorization: Bearer ${SLACK_XOXC_TOKEN}" \
-  -H "Cookie: d=${SLACK_XOXD_COOKIE}" \
-  -d "channel=<CHANNEL_ID>&limit=200"
+mcp__slack-mcp__get_channel_history(channel_id=<CHANNEL_ID>, oldest=<ISO_DATE>, latest=<ISO_DATE>, limit=200)
 ```
 
 Filter messages by timestamp (>= computed oldest). Exclude `channel_join`, `channel_leave` subtypes.
 
 For channels with threaded discussions (reply_count > 0), fetch key threads:
 
-```bash
-curl -s "https://coreos.slack.com/api/conversations.replies" \
-  -H "Authorization: Bearer ${SLACK_XOXC_TOKEN}" \
-  -H "Cookie: d=${SLACK_XOXD_COOKIE}" \
-  -d "channel=<CHANNEL_ID>&ts=<THREAD_TS>&limit=20"
+```
+mcp__slack-mcp__get_thread(channel_id=<CHANNEL_ID>, thread_ts=<THREAD_TS>)
 ```
 
 Only fetch threads with 3+ replies or threads that contain decisions, blockers, or action items.
 
-### 4. Resolve user IDs to names
+### 3. Resolve user IDs to names
 
-Collect all unique user IDs from fetched messages. Resolve each via:
+The slack-mcp MCP server resolves usernames automatically in message output. No separate user lookup step needed.
 
-```bash
-curl -s "https://coreos.slack.com/api/users.info" \
-  -H "Authorization: Bearer ${SLACK_XOXC_TOKEN}" \
-  -H "Cookie: d=${SLACK_XOXD_COOKIE}" \
-  -d "user=<USER_ID>"
-```
-
-Extract `user.real_name`. Cache resolved names to avoid duplicate lookups. Add 0.3s delay between user lookups to respect rate limits.
-
-### 5. Check user's activity inbox
+### 4. Check user's activity inbox
 
 If the scan is comprehensive (all channels or weekly), also search for messages directed at the user:
 
-```bash
-curl -s "https://coreos.slack.com/api/search.messages" \
-  -H "Authorization: Bearer ${SLACK_XOXC_TOKEN}" \
-  -H "Cookie: d=${SLACK_XOXD_COOKIE}" \
-  --data-urlencode "query=to:me after:<YYYY-MM-DD>" \
-  -d "count=50&sort=timestamp&sort_dir=asc"
+```
+mcp__slack-mcp__search_messages(query="to:me after:<YYYY-MM-DD>", limit=50, sort="timestamp")
 ```
 
 This surfaces DMs, mentions, and threads the user is part of.
 
-### 6. Generate summary
+### 5. Generate summary
 
 Structure the output as:
 
@@ -131,7 +100,7 @@ Structure the output as:
 | Priority | Item | Owner | Channel |
 |----------|------|-------|---------|
 
-### 7. Capture results
+### 6. Capture results
 
 Write findings to the daily log (`logs/YYYY-MM-DD.md`) under a `## Slack channel scan` section.
 
@@ -139,8 +108,8 @@ If scanning for a specific project, also update the relevant project file in `ag
 
 ## Gotchas
 
-- **`oldest` parameter is unreliable.** The Slack `conversations.history` `oldest` parameter sometimes returns 0 messages even when unfiltered returns recent messages. Workaround: fetch without `oldest` (limit=200), then filter client-side by timestamp.
-- **Rate limits.** Add 0.5s delay between channel fetches, 0.3s between user lookups. For 17+ channels this takes ~30 seconds total.
+- **MCP date filtering.** `get_channel_history` accepts ISO 8601 dates (e.g., `"2024-01-15"`) or Unix timestamps for `oldest`/`latest`. If date filtering returns unexpected results, fetch without filters and post-filter by timestamp.
 - **Bot messages.** Filter out `subtype: bot_message` unless specifically relevant (e.g., CI notifications in alerts channels).
-- **Enterprise Grid usernames.** Slack `from:` search only works with usernames (e.g., `matgoldm`), not display names. `conversations.members` may return `enterprise_is_restricted`.
+- **Enterprise Grid usernames.** Slack `from:` search only works with usernames (e.g., `matgoldm`), not display names.
 - **Thread depth.** Don't fetch threads with 50+ replies in full — summarize from the parent message + first few replies. Very long threads are usually live debugging sessions where the conclusion matters more than the play-by-play.
+- **Read-only.** The slack-mcp server is read-only. Never attempt to post messages or perform write operations.

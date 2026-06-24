@@ -85,5 +85,5 @@ Calls `claude -p` subprocess for exec summaries and Slack digests. 4 calls per r
 | Token | Expiry | Rotation |
 |-------|--------|----------|
 | Atlassian API "Avi2" | Jun 27, 2026 | Needs rotation this week |
-| Slack xoxc/xoxd | No fixed expiry | Can expire without warning |
+| Slack (MCP server) | Depends on underlying token | MCP server handles auth; check server status if Slack section degrades |
 | GitLab tokens | Varies | Check periodically |
