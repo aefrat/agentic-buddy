@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-06-23
-access_count: 2
+last_accessed: 2026-06-24
+access_count: 3
 created: 2026-05-21
 ---
 
@@ -63,6 +63,50 @@ Engineering ID (EngID) is correlated to a Product (e.g., RHIVOS) and can be grou
 8. EngID is created after prod MR merges
 
 **Note:** Contact #psca-support for repository access. Additional docs: PSCA User documentation (Confluence space PVCORE).
+
+## Pulp Migration — Knowledge Base Content
+
+From Toolchain Demo/Review (Jun 24, 2026) — [meeting notes](https://docs.google.com/document/d/1HWpHwkWYZY1rlx6h8gQnlNDWPDJ7fabpIsFckrJsQ_I/edit?tab=t.2w7vbphf7en7).
+
+### What is the migration?
+
+Moving artifacts management (compose RPMs and images) from S3 + custom web servers to Pulp instances for both upstream and downstream builds. Currently in dual-upload phase: artifacts go to both S3 and Pulp, with S3 to be phased out later.
+
+### Main benefits of migrating to Pulp
+
+1. **Faster promotions** — Pulp references packages rather than copying them across the network. rsync is inefficient for directories with many small files; Pulp eliminates this bottleneck.
+2. **Native OCI container support** — Pulp handles OCI containers natively, removing the need for separate container registry tooling.
+3. **Eliminates custom web servers** — No need to maintain bespoke web server infrastructure for artifact serving.
+4. **Reduces S3 dependency and costs** — Moves away from external S3 storage, cutting costs and reducing external dependencies.
+5. **Faster uploads observed** — During testing, uploading compose data (including arch-specific RPMs) to Pulp stage was faster than the existing web server method.
+
+### Technical implementation details
+
+- Pulp CLI can't reach internal network for downstream — using Pulp Python libraries for uploads within each job instead.
+- Changes in `pack-jobs` and `create-os-build` repos to enable dual-upload.
+- Pipeline checks if Pulp is enabled before uploading.
+- Product build promotion copies artifacts to public auto-sd stage once pipelines finish.
+- Smoke tests and promotion logic still being finalized.
+
+### Transition strategy
+
+- Dual-upload (S3 + Pulp) during transition to avoid breaking dependencies.
+- Existing URLs must be preserved — tools like test console and Polarium depend on them.
+- Team will identify all URL/command references before cutting over.
+- No rushed timeline — taking necessary time to avoid disruption (Juanje).
+
+### Next steps (from demo)
+
+- Ozan: summarize Pulp migration changes for review.
+- Ozan: compare S3 vs Pulp upload durations once migration is functional.
+- Ozan: add upload performance metrics to job logs.
+
+### Key people (Pulp migration)
+
+- **Ozan Unsal** — pipeline implementation, Pulp upload integration
+- **Juanje Ojeda** — architecture decisions, rationale
+- **Hubert Stefanski** — OCI/infrastructure context
+- **Roni Eliezer** — URL consistency concerns
 
 ## Notes
 

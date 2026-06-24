@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-06-23
-access_count: 1
+last_accessed: 2026-06-24
+access_count: 2
 created: 2026-06-23
 ---
 
@@ -130,6 +130,39 @@ Strategy (Jul 2024): tag from CentOS Stream / rebuild without changes / rebuild 
 | VROOM-41422 | Add RHIVOS targets for non-toolchain packages in Brew | In Progress (unassigned) |
 | VROOM-41599 | Create presentation for toolchain packages | Done |
 | VROOM-42073 | RHIVOS toolchain documentation on rhivos.io | In Progress (jfrancoa) |
+
+## Toolchain Demo Review (Jun 24, 2026)
+
+From [meeting notes](https://docs.google.com/document/d/1HWpHwkWYZY1rlx6h8gQnlNDWPDJ7fabpIsFckrJsQ_I/edit?tab=t.2w7vbphf7en7).
+
+### X-open (execopen) demo summary
+
+- Uses eBPF to monitor processes, files, and RPMs during image boot and runtime.
+- Generates an accurate, comprehensive list of required packages for FuSa certification.
+- Statically compiled binaries + systemd services to trace boot sequences.
+- Pipeline builds images in Testing Farm, runs tracer, produces JSON output for validators.
+- Filters remove testing artifacts (SSH, Python) not intended for production image.
+- Replaces previous text-based format with structured JSON.
+
+### Canonical lists and pipeline blocking
+
+- Transitioning from nightly-build baseline to stable curated "canonical list" for comparisons.
+- Nightly builds were unreliable as baseline (lists fluctuate).
+- Pipeline will halt if generated package list deviates from approved canonical list.
+- ~90% complete; focus now on finalizing blocking logic and baseline comparisons.
+
+### Scope: core vs full server
+
+- Validation primarily required for the full server variant (certification target).
+- Pipeline could theoretically run for both variants.
+- Need to discuss with FuSa team whether discrepancies between core and full server should block promotion (different package requirements).
+
+### Remaining work (from demo)
+
+- Generate fourth list focused on "tooling" and build dependencies.
+- Coordinating with FuSa team on format and list splitting for certification.
+- Update check job to compare against canonical lists instead of nightly builds.
+- Discuss blocking criteria with FuSa team.
 
 ## Key people
 
