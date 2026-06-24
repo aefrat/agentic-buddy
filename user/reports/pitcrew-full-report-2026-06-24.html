@@ -20,7 +20,7 @@
   .toc a:hover { text-decoration: underline; }
 
   .card { background: #fff; border: 1px solid #d0d7de; border-radius: 10px; padding: 20px 24px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
-  .card-title { font-size: 16px; font-weight: 700; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid; display: flex; align-items: center; gap: 8px; }
+  .card-title { font-size: 16px; font-weight: 700; padding-bottom: 10px; margin-top: 0; margin-bottom: 16px; border-bottom: 2px solid; display: flex; align-items: center; gap: 8px; }
 
   h3 { font-size: 14px; font-weight: 600; margin: 16px 0 8px 0; color: #1a1a2e; }
   h4 { font-size: 13px; font-weight: 600; margin: 12px 0 6px 0; color: #444; }
@@ -125,7 +125,7 @@
 
 <!-- EXECUTIVE SUMMARY -->
 <div class="card" id="exec">
-  <div class="card-title" style="border-color:#0550ae;">Executive Summary</div>
+  <h2 class="card-title" style="border-color:#0550ae;"><a name="exec"></a>Executive Summary</h2>
   <p><strong>Overall: At Risk.</strong> Sprint 13 velocity improved to 61% (17/28 closed, up from 57% yesterday). Two critical bugs resolved — beforeLease hook failure (<code>PITCREW-437</code>) and exporter lease kill on restart (<code>PITCREW-436</code>). However, the flaky E2E "connection to exporter lost" (<code>PITCREW-403</code>) remains in Review, and <code>PITCREW-435</code> (beforeLease endLease stuck) is also still in Review. No epic status changes since previous run.</p>
   <p>Lab health improved: sa8775p-04 and -05 firmware reflash successful. New issue: j784s4xevm-06 boot failure assigned to Shawn Doherty (<code>PITCREW-450</code>). Developer board availability flagged as a concern — proposal to reserve 2–3 sa8775p boards for dev use (raised by aesteve in #forum-jumpstarter).</p>
   <p>Jumpstarter 0.9.0 and Builder 0.2.0 releases are queued (<code>PITCREW-440</code>, <code>PITCREW-439</code>). Brad Benson shared the hardware enablement bringup agent with CAIB+JMP integration. Cluster 4.20+ upgrade needed (bzlotnik).</p>
@@ -133,7 +133,7 @@
 
 <!-- CHANGES -->
 <div class="card" id="changes">
-  <div class="card-title" style="border-color:#e05d00;">Changes Since Last Report <span class="badge b-orange">Jun 23 → Jun 24</span></div>
+  <h2 class="card-title" style="border-color:#e05d00;"><a name="changes"></a>Changes Since Last Report <span class="badge b-orange">Jun 23 → Jun 24</span></h2>
 
   <div class="alert alert-success">
     <strong>PITCREW-437</strong> (beforeLease hook failure with onFailure exit does not kill exporter): <strong>In Progress → Closed</strong> — Miguel Angel Ajo Pelayo resolved.
@@ -158,7 +158,7 @@
 
 <!-- STRATEGIC GUIDE -->
 <div class="card" id="strategy">
-  <div class="card-title" style="border-color:#6e3db5;">Strategic Guide — Three-Tier Architecture</div>
+  <h2 class="card-title" style="border-color:#6e3db5;"><a name="strategy"></a>Strategic Guide — Three-Tier Architecture</h2>
   <div class="tier-grid">
     <div class="tier tier-1">
       <h4>Tier 1 — Standalone Builder</h4>
@@ -195,7 +195,7 @@
 
 <!-- ROADMAP -->
 <div class="card" id="roadmap">
-  <div class="card-title" style="border-color:#1a7a3e;">2026 Roadmap — "Stabilize and Scale"</div>
+  <h2 class="card-title" style="border-color:#1a7a3e;"><a name="roadmap"></a>2026 Roadmap — "Stabilize and Scale"</h2>
   <p>Primary mission (Shawn Davis): ensure RHIVOS 2.0 success while maintaining Nissan and Traton commitments.</p>
   <div class="roadmap-row">
     <div class="roadmap-q q2">
@@ -228,7 +228,7 @@
 
 <!-- RELEASES -->
 <div class="card" id="releases">
-  <div class="card-title" style="border-color:#c44b00;">RHAS Releases</div>
+  <h2 class="card-title" style="border-color:#c44b00;"><a name="releases"></a>RHAS Releases</h2>
   <div class="release-timeline">
     <div class="rel rel-past">RHAS-0426 DP</div>
     <div class="rel rel-past">RHAS-0526</div>
@@ -245,7 +245,7 @@
 
 <!-- EPICS -->
 <div class="card" id="epics">
-  <div class="card-title" style="border-color:#0550ae;">Features &amp; Epics <span class="badge b-blue">10 In Progress</span> <span class="badge b-gray">17 New</span> <span class="badge b-green">18 Closed</span></div>
+  <h2 class="card-title" style="border-color:#0550ae;"><a name="epics"></a>Features &amp; Epics <span class="badge b-blue">10 In Progress</span> <span class="badge b-gray">17 New</span> <span class="badge b-green">18 Closed</span></h2>
 
   <h3>In Progress (10)</h3>
   <div class="epic-grid">
@@ -393,7 +393,7 @@
 
 <!-- CURRENT SPRINT -->
 <div class="card" id="sprint">
-  <div class="card-title" style="border-color:#1a7a3e;">Current Sprint (Sprint 13) <span class="badge b-green">61% Complete</span></div>
+  <h2 class="card-title" style="border-color:#1a7a3e;"><a name="sprint"></a>Current Sprint (Sprint 13) <span class="badge b-green">61% Complete</span></h2>
 
   <table>
     <tr><th>Status</th><th>Count</th></tr>
@@ -445,7 +445,7 @@
 
 <!-- ALIGNMENT -->
 <div class="card" id="alignment">
-  <div class="card-title" style="border-color:#6e3db5;">Strategy ↔ Work Alignment</div>
+  <h2 class="card-title" style="border-color:#6e3db5;"><a name="alignment"></a>Strategy ↔ Work Alignment</h2>
 
   <h3>Well-Aligned</h3>
   <div class="fit-row"><div class="fit-icon">✅</div><div><strong>Jumpstarter HiL testing</strong> — <code>PITCREW-384</code> directly enables Tier 2 value prop. 0.9.0 release (<code>PITCREW-440</code>) queued with PR #656 under review. Lab lab update (<code>PITCREW-438</code>) follows.</div></div>
@@ -462,7 +462,7 @@
 
 <!-- LOOKING AHEAD -->
 <div class="card" id="ahead">
-  <div class="card-title" style="border-color:#c44b00;">Looking Ahead</div>
+  <h2 class="card-title" style="border-color:#c44b00;"><a name="ahead"></a>Looking Ahead</h2>
 
   <div class="cols2">
     <div>
@@ -499,7 +499,7 @@
 
 <!-- SLACK DIGEST -->
 <div class="card" id="slack">
-  <div class="card-title" style="border-color:#4A154B;">Slack Digest <span class="badge b-purple">Jun 17–24</span></div>
+  <h2 class="card-title" style="border-color:#4A154B;"><a name="slack"></a>Slack Digest <span class="badge b-purple">Jun 17–24</span></h2>
   <div class="cols2">
     <div>
       <h3>#team-pitcrew-automotive</h3>
