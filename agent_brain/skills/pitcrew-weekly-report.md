@@ -191,39 +191,40 @@ cp /tmp/pitcrew-snapshot-${REPORT_DATE}.json agent_brain/projects/pitcrew-agent/
 cp /tmp/pitcrew-${MODE}-report-${REPORT_DATE}.html user/reports/pitcrew-${MODE}-report-${REPORT_DATE}.html
 ```
 
-**d. Upload to Google Drive:**
+**d. Generate team report and upload to Google Drive:**
 
-Read `reference/drive-config.md` for `file_id` and `folder_id`.
+Two Drive artifacts are maintained — read `reference/drive-config.md` for file IDs and folder ID.
 
-**If `file_id` is empty (first run):**
+**d.1. Generate team report HTML.** The team report is a lean view of the full report, ordered for sprint-focused readers (Miguel's feedback). Sections included:
+1. Hero banner (compact)
+2. Executive Summary (same as full)
+3. Changes Since Last Report
+4. Current Sprint (full ticket tables — open + recently closed)
+5. Slack Digest (two-column, same as full)
+6. Strategy ↔ Work Alignment
+
+Sections excluded: Strategic Guide, Roadmap, Releases, full Epic grid, Looking Ahead.
+
+Use inline styles only (no `<style>` block) — this HTML gets converted to Google Docs format. Tables render well; CSS grid and badges do not. Save to `user/reports/pitcrew-team-report-${REPORT_DATE}.html`.
+
+**d.2. Upload team report** (Google Doc — opens inline with one click):
 ```bash
-# Create the file in Drive
-gws drive:v3 files create \
-  --json '{"name":"PitCrew-RHAS-Status-Report.html","parents":["FOLDER_ID"],"mimeType":"text/html"}' \
-  --upload user/reports/pitcrew-${MODE}-report-${REPORT_DATE}.html
-
-# Extract file_id from JSON response
-
-# Set Red Hat domain-level viewer permission (public sharing blocked by Workspace admin)
-gws drive:v3 permissions create \
-  --json '{"role":"reader","type":"domain","domain":"redhat.com"}' \
-  --params '{"fileId":"FILE_ID"}'
-
-# Get the shareable link
-gws drive:v3 files get --params '{"fileId":"FILE_ID","fields":"webViewLink"}'
-
-# Save file_id and web_view_link to reference/drive-config.md
-```
-
-**If `file_id` exists (subsequent runs):**
-```bash
-# Update existing file content (link never changes)
+# Update existing Google Doc content
 gws drive:v3 files update \
-  --params '{"fileId":"FILE_ID"}' \
+  --params '{"fileId":"TEAM_FILE_ID"}' \
+  --upload user/reports/pitcrew-team-report-${REPORT_DATE}.html \
+  --upload-content-type text/html
+```
+
+**d.3. Upload full report** (HTML file — downloadable):
+```bash
+# Update existing HTML file content
+gws drive:v3 files update \
+  --params '{"fileId":"FULL_FILE_ID"}' \
   --upload user/reports/pitcrew-${MODE}-report-${REPORT_DATE}.html
 ```
 
-The Drive link is permanent — the #team-pitcrew-automotive Slack canvas links to it once, and every run refreshes the content behind the same URL.
+Both Drive links are permanent — the #team-pitcrew-automotive Slack canvas links to the team report (Google Doc), and every run refreshes content behind the same URLs. If either `file_id` is empty (first run), create the file and set `redhat.com` domain reader permission, then save the ID to `drive-config.md`.
 
 **e. Update strategic cache** if refreshed in step 4.
 
@@ -265,7 +266,9 @@ Confirm to the user (or log, in cron mode):
 - [ ] Active store updated
 - [ ] History store updated (dated + mode suffix, immutable)
 - [ ] User reports copy saved
-- [ ] Uploaded to Google Drive (created or updated, link unchanged)
+- [ ] Team report HTML generated (sprint-focused, inline styles)
+- [ ] Team report uploaded to Google Drive as Google Doc
+- [ ] Full report uploaded to Google Drive as HTML
 - [ ] Git committed
 
 ## Gotchas

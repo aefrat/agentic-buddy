@@ -54,9 +54,27 @@ Weekly + Slack Digest. Bi-weekly or on demand.
 
 **Subject line:** `[PitCrew Full] RHAS Status — YYYY-MM-DD`
 
+## Team Report (auto-generated alongside full/weekly)
+
+Lean view for sprint-focused readers, uploaded as a Google Doc to the Slack canvas. Not a standalone mode — generated automatically as part of every full or weekly run (step 11d).
+
+**Sections included:**
+1. Hero banner (compact)
+2. Executive Summary
+3. Changes Since Last Report
+4. Current Sprint (full ticket tables — open + recently closed)
+5. Slack Digest (two-column, same as full — included even when parent mode is weekly)
+6. Strategy ↔ Work Alignment
+
+**Sections excluded:** Strategic Guide, Roadmap, Releases, full Epic grid, Looking Ahead.
+
+**Format:** Inline-styled HTML (no `<style>` block), auto-converted to Google Docs on upload. Tables OK; CSS grids/badges simplified by conversion.
+
+**Delivery:** Google Doc overwrite (same file ID, permanent link pinned in #team-pitcrew-automotive Slack canvas).
+
 ## Mode selection logic
 
 - User says "daily" or "pitcrew daily" → daily
 - User says "full" or argument is "full" → full
 - Otherwise → weekly
-- Cron: weekdays 08:17 = daily, Sundays 08:17 = weekly (even ISO weeks = full)
+- Cron: weekdays 08:37 = full (generates both full + team reports)

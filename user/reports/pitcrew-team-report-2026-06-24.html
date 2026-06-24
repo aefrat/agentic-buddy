@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PitCrew / RHAS — Team Report · June 24, 2026</title>
+</head>
+<body style="font-family: Arial, sans-serif; color: #24292f; max-width: 900px; margin: 0 auto; padding: 20px;">
+
+<div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #fff; padding: 20px 24px; border-radius: 10px; margin-bottom: 20px;">
+  <h1 style="font-size: 20px; margin: 0 0 6px 0;">PitCrew / RHAS — Team Report</h1>
+  <p style="font-size: 12px; opacity: 0.7; margin: 0;">June 24, 2026 · Sprint 13 · RHAS-0626 · <span style="background: #c44b00; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 11px;">At Risk</span></p>
+</div>
+
+<div style="background: #fff; border: 1px solid #d0d7de; border-radius: 8px; padding: 16px 20px; margin-bottom: 16px;">
+  <h2 style="font-size: 15px; border-bottom: 2px solid #0550ae; padding-bottom: 8px;">Executive Summary</h2>
+  <p style="font-size: 13px; line-height: 1.65;">
+    <strong>Overall: At Risk.</strong> Sprint 13 velocity improved to 61% (17/28 closed, up from 57% yesterday). Two critical bugs resolved — beforeLease hook failure (PITCREW-437) and exporter lease kill on restart (PITCREW-436). Flaky E2E "connection to exporter lost" (PITCREW-403) and beforeLease endLease stuck (PITCREW-435) remain in Review.
+  </p>
+  <p style="font-size: 13px; line-height: 1.65;">
+    Lab health improved: sa8775p-04/-05 firmware reflash successful. New issue: j784s4xevm-06 boot failure (PITCREW-450). Developer board availability flagged — proposal to reserve 2–3 sa8775p boards for dev use.
+  </p>
+</div>
+
+<div style="background: #fff; border: 1px solid #d0d7de; border-radius: 8px; padding: 16px 20px; margin-bottom: 16px;">
+  <h2 style="font-size: 15px; border-bottom: 2px solid #e05d00; padding-bottom: 8px;">Changes Since Last Report <span style="background: #fff0e6; color: #c44b00; border: 1px solid #f5c89a; padding: 2px 7px; border-radius: 4px; font-size: 11px;">Jun 23 → Jun 24</span></h2>
+
+  <div style="background: #f0fff4; border-left: 4px solid #1a7a3e; padding: 10px 14px; margin: 10px 0; border-radius: 0 6px 6px 0; font-size: 13px;">
+    <strong style="color: #1a7a3e;">PITCREW-437</strong> (beforeLease hook failure — onFailure exit doesn't kill exporter): <strong>In Progress → Closed</strong> — Miguel Angel Ajo Pelayo
+  </div>
+  <div style="background: #f0fff4; border-left: 4px solid #1a7a3e; padding: 10px 14px; margin: 10px 0; border-radius: 0 6px 6px 0; font-size: 13px;">
+    <strong style="color: #1a7a3e;">PITCREW-436</strong> (Restarting exporter with hooks kills active lease): <strong>→ Closed</strong> — Miguel Angel Ajo Pelayo
+  </div>
+
+  <table style="width: 100%; border-collapse: collapse; font-size: 12px; margin: 10px 0;">
+    <tr><th style="background: #f6f8fa; border: 1px solid #d0d7de; padding: 7px 10px; text-align: left;">Metric</th><th style="background: #f6f8fa; border: 1px solid #d0d7de; padding: 7px 10px;">Jun 23</th><th style="background: #f6f8fa; border: 1px solid #d0d7de; padding: 7px 10px;">Jun 24</th><th style="background: #f6f8fa; border: 1px solid #d0d7de; padding: 7px 10px;">Delta</th></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Closed</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">16</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">17</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center; color: #1a7a3e;">+1</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">In Progress</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">5</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">4</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center; color: #1a7a3e;">-1</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Review</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">2</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">3</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center; color: #c44b00;">+1</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">New</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">5</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">4</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center; color: #1a7a3e;">-1</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;"><strong>% Complete</strong></td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">57%</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">61%</td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center; color: #1a7a3e;"><strong>+4pp</strong></td></tr>
+  </table>
+</div>
+
+<div style="background: #fff; border: 1px solid #d0d7de; border-radius: 8px; padding: 16px 20px; margin-bottom: 16px;">
+  <h2 style="font-size: 15px; border-bottom: 2px solid #1a7a3e; padding-bottom: 8px;">Current Sprint (Sprint 13) <span style="background: #d4edda; color: #1a7a3e; border: 1px solid #b7ebc8; padding: 2px 7px; border-radius: 4px; font-size: 11px;">61% Complete</span></h2>
+
+  <table style="width: 100%; border-collapse: collapse; font-size: 12px; margin: 10px 0;">
+    <tr>
+      <th style="background: #f6f8fa; border: 1px solid #d0d7de; padding: 7px 10px; text-align: left;">Status</th>
+      <th style="background: #f6f8fa; border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">Count</th>
+    </tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;"><span style="background: #d4edda; color: #1a7a3e; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Closed</span></td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">17</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;"><span style="background: #e8f0fe; color: #0550ae; padding: 2px 6px; border-radius: 3px; font-size: 11px;">In Progress</span></td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">4</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;"><span style="background: #fff0e6; color: #c44b00; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Review</span></td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">3</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;"><span style="background: #f0f0f0; color: #57606a; padding: 2px 6px; border-radius: 3px; font-size: 11px;">New</span></td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;">4</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;"><strong>Total</strong></td><td style="border: 1px solid #d0d7de; padding: 7px 10px; text-align: center;"><strong>28</strong></td></tr>
+  </table>
+
+  <h3 style="font-size: 14px; margin: 16px 0 8px;">Open Tickets</h3>
+  <table style="width: 100%; border-collapse: collapse; font-size: 12px; margin: 10px 0;">
+    <tr>
+      <th style="background: #f6f8fa; border: 1px solid #d0d7de; padding: 7px 10px; text-align: left; font-size: 11px;">KEY</th>
+      <th style="background: #f6f8fa; border: 1px solid #d0d7de; padding: 7px 10px; text-align: left; font-size: 11px;">SUMMARY</th>
+      <th style="background: #f6f8fa; border: 1px solid #d0d7de; padding: 7px 10px; text-align: left; font-size: 11px;">STATUS</th>
+      <th style="background: #f6f8fa; border: 1px solid #d0d7de; padding: 7px 10px; text-align: left; font-size: 11px;">ASSIGNEE</th>
+    </tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: 700;">PITCREW-435</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">beforeLease hook with onFailure endLease does not end the lease</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;"><span style="background: #fff0e6; color: #c44b00; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Review</span></td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Miguel Angel Ajo Pelayo</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: 700;">PITCREW-403</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Flaky E2E: "Connection to exporter lost"</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;"><span style="background: #fff0e6; color: #c44b00; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Review</span></td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Evgeni Vakhonin</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: 700;">PITCREW-119</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">productization: onboard builder upstream to Konflux</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;"><span style="background: #fff0e6; color: #c44b00; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Review</span></td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Bella Khizgiyaev</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: 700;">PITCREW-417</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Bump Python to [3.12-3.14]</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;"><span style="background: #e8f0fe; color: #0550ae; padding: 2px 6px; border-radius: 3px; font-size: 11px;">In Progress</span></td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Jeff Ligon</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: 700;">PITCREW-416</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">C2 Recovery: add Automotive Operator to ArgoCD</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;"><span style="background: #e8f0fe; color: #0550ae; padding: 2px 6px; border-radius: 3px; font-size: 11px;">In Progress</span></td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Mohamad Abo Ras</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: 700;">PITCREW-393</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">e2e downstream testing: acquire prerequisites from ATC admins</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;"><span style="background: #e8f0fe; color: #0550ae; padding: 2px 6px; border-radius: 3px; font-size: 11px;">In Progress</span></td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Evgeni Vakhonin</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: 700;">PITCREW-227</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Runbook for service rebuild from zero</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;"><span style="background: #e8f0fe; color: #0550ae; padding: 2px 6px; border-radius: 3px; font-size: 11px;">In Progress</span></td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Miguel Angel Ajo Pelayo</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: 700;">PITCREW-450</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">[Lab] ti-jacinto-j784s4xevm-06: ukiboot boot failure</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;"><span style="background: #f0f0f0; color: #57606a; padding: 2px 6px; border-radius: 3px; font-size: 11px;">New</span></td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Shawn Doherty</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: 700;">PITCREW-440</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">jumpstarter: release 0.9.0</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;"><span style="background: #f0f0f0; color: #57606a; padding: 2px 6px; border-radius: 3px; font-size: 11px;">New</span></td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">—</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: 700;">PITCREW-439</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">builder: release 0.2.0</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;"><span style="background: #f0f0f0; color: #57606a; padding: 2px 6px; border-radius: 3px; font-size: 11px;">New</span></td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Benny Zlotnik</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px; color: #0550ae; font-weight: 700;">PITCREW-438</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Update lab to Jumpstarter 0.9.0 after release</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;"><span style="background: #f0f0f0; color: #57606a; padding: 2px 6px; border-radius: 3px; font-size: 11px;">New</span></td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Miguel Angel Ajo Pelayo</td></tr>
+  </table>
+
+  <h3 style="font-size: 14px; margin: 16px 0 8px;">Recently Closed</h3>
+  <table style="width: 100%; border-collapse: collapse; font-size: 12px; margin: 10px 0;">
+    <tr>
+      <th style="background: #f6f8fa; border: 1px solid #d0d7de; padding: 7px 10px; text-align: left; font-size: 11px;">KEY</th>
+      <th style="background: #f6f8fa; border: 1px solid #d0d7de; padding: 7px 10px; text-align: left; font-size: 11px;">SUMMARY</th>
+      <th style="background: #f6f8fa; border: 1px solid #d0d7de; padding: 7px 10px; text-align: left; font-size: 11px;">ASSIGNEE</th>
+    </tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-448</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">jumpstarter: support in-exporter CA for u-boot boards</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Benny Zlotnik</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-447</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">builder: validate shell scripts with shellcheck</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Benny Zlotnik</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-446</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">builder: manifest validation</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Benny Zlotnik</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-445</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">jumpstarter: support for description in ExporterAccessPolicy</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Benny Zlotnik</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-444</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">ctc: support NXP in the TC pipelines</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Benny Zlotnik</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-443</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">ctc: autobump tmt to match testing-farm</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Benny Zlotnik</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-441</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">CTC: Fix report generation for multiple plans run</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Bella Khizgiyaev</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-437</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">beforeLease hook failure — onFailure exit doesn't kill exporter</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Miguel Angel Ajo Pelayo</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-436</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Restarting exporter with hooks kills active lease prematurely</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Miguel Angel Ajo Pelayo</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-433</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">CTC: fix results-junit.xml generation when pipeline fails</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Bella Khizgiyaev</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-430</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">builder: caib login add --token option</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Bella Khizgiyaev</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-426</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Reorganize gitops repositories</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Miguel Angel Ajo Pelayo</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-425</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">C2: Migrate existing cluster to new ArgoCD structure</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Miguel Angel Ajo Pelayo</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-420</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">builder: OIDC CA certificates from Secrets/ConfigMaps</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Bella Khizgiyaev</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-419</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">jumpstarter: OIDC CA certificates from Secrets/ConfigMaps</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Bella Khizgiyaev</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-409</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">jumpstarter JEP: virtual scalable exporters</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Miguel Angel Ajo Pelayo</td></tr>
+    <tr><td style="border: 1px solid #d0d7de; padding: 7px 10px;">PITCREW-407</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">builder: improve E2E coverage &amp; identify e2e tests</td><td style="border: 1px solid #d0d7de; padding: 7px 10px;">Mohamad Abo Ras</td></tr>
+  </table>
+</div>
+
+<div style="background: #fff; border: 1px solid #d0d7de; border-radius: 8px; padding: 16px 20px; margin-bottom: 16px;">
+  <h2 style="font-size: 15px; border-bottom: 2px solid #4A154B; padding-bottom: 8px;">Slack Digest <span style="background: #f0ebff; color: #6e3db5; border: 1px solid #c5adf5; padding: 2px 7px; border-radius: 4px; font-size: 11px;">Jun 17–24</span></h2>
+
+  <table style="width: 100%; border-collapse: collapse;"><tr><td style="vertical-align: top; width: 50%; padding-right: 10px;">
+
+  <h3 style="font-size: 14px; margin: 8px 0;">#team-pitcrew-automotive</h3>
+  <p style="font-size: 11px; color: #888;">~25 messages · 7 days</p>
+  <ul style="font-size: 13px; line-height: 1.8; padding-left: 18px;">
+    <li><strong>Lab maintenance:</strong> sa8775p-04/-05 firmware reflash successful. j784s4xevm-06 boot failure — ukiboot can't find active A/B slot (PITCREW-450, MR !281).</li>
+    <li><strong>Lab smoke:</strong> 55 PASS, 4 FAIL, 6 XFAIL.</li>
+    <li><strong>Jumpstarter 0.9.0:</strong> majopela reviewing PR candidates (PR #656 pending for mkuehl).</li>
+    <li><strong>Bringup agent:</strong> Brad Benson shared hardware enablement agent with CAIB+JMP integration.</li>
+    <li><strong>Cluster upgrade:</strong> bzlotnik flagged need for 4.20+ upgrade.</li>
+    <li><strong>RHIVOS nightly:</strong> Ozan reported provisioning timeouts on ride4-sa8775p-sx-r3 boards.</li>
+    <li><strong>stress-ng:</strong> Luigi met Colin King at ELISA workshop — offered demo config help.</li>
+    <li><strong>ambient:</strong> red.ht/ambient gone, scheduled prompts still running.</li>
+  </ul>
+  <p style="font-size: 11px; color: #888;">Top: majopela (8), bzlotnik (4), bbenson (1), Luigi (1), Ozan (1)</p>
+
+  </td><td style="vertical-align: top; width: 50%; padding-left: 10px;">
+
+  <h3 style="font-size: 14px; margin: 8px 0;">#forum-jumpstarter</h3>
+  <p style="font-size: 11px; color: #888;">~11 messages · 7 days</p>
+  <ul style="font-size: 13px; line-height: 1.8; padding-left: 18px;">
+    <li><strong>Board scarcity:</strong> All sa8775p boards leased for automation — proposal to reserve 2–3 for devs (aesteve).</li>
+    <li><strong>Flash failure:</strong> qam8650p-11 "No fastboot devices found" when flashing TP-RC1 (Sergei).</li>
+    <li><strong>Exporter offline:</strong> sa8775p-01 lease expired during fw-maintenance (echanude).</li>
+    <li><strong>RDU lab:</strong> Initial test MR (sdoherty, MR !276). Dynamic CDT solution (MR !275).</li>
+    <li><strong>Board ID:</strong> Is sa8775p-31 actually a v3? (javierm).</li>
+    <li><strong>chai-bot:</strong> AI assistant activated in channel.</li>
+  </ul>
+  <p style="font-size: 11px; color: #888;">Top: sdoherty (3), bzlotnik (2), echanude (2), Sergei (1), aesteve (1)</p>
+
+  </td></tr></table>
+</div>
+
+<div style="background: #fff; border: 1px solid #d0d7de; border-radius: 8px; padding: 16px 20px; margin-bottom: 16px;">
+  <h2 style="font-size: 15px; border-bottom: 2px solid #6e3db5; padding-bottom: 8px;">Strategy ↔ Work Alignment</h2>
+
+  <h3 style="font-size: 13px; color: #1a7a3e;">Well-Aligned</h3>
+  <p style="font-size: 13px; line-height: 1.7;">✅ <strong>Jumpstarter HiL testing</strong> — PITCREW-384 enables Tier 2. 0.9.0 release queued, PR #656 under review.</p>
+  <p style="font-size: 13px; line-height: 1.7;">✅ <strong>Builder ecosystem</strong> — 0.2.0 ready. Manifest validation, shellcheck, OIDC CA, E2E coverage all closed. Konflux onboarding moving.</p>
+  <p style="font-size: 13px; line-height: 1.7;">✅ <strong>CTC pipeline maturity</strong> — NXP support, tmt autobump, report gen fix all closed.</p>
+  <p style="font-size: 13px; line-height: 1.7;">✅ <strong>C2 disaster recovery</strong> — ArgoCD migration + gitops reorg closed. Automotive Operator integration in progress.</p>
+
+  <h3 style="font-size: 13px; color: #c44b00;">Gaps &amp; Concerns</h3>
+  <p style="font-size: 13px; line-height: 1.7;">⚠️ <strong>Flaky E2E persists</strong> — PITCREW-403 still in Review. Undermines CI confidence.</p>
+  <p style="font-size: 13px; line-height: 1.7;">⚠️ <strong>Developer board scarcity</strong> — All sa8775p leased for automation, blocking dev work.</p>
+  <p style="font-size: 13px; line-height: 1.7;">⚠️ <strong>Cluster version lag</strong> — Dev cluster needs 4.20+ upgrade.</p>
+  <p style="font-size: 13px; line-height: 1.7;">⚠️ <strong>Product Documentation</strong> — PITCREW-338 still New. Q3 GA needs docs.</p>
+</div>
+
+<p style="text-align: center; color: #aaa; font-size: 11px; margin-top: 16px;">
+  PitCrew / RHAS Team Report · Generated 2026-06-24 · Data: Jira PITCREW, Slack (slack-mcp)
+</p>
+
+</body>
+</html>
