@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-06-24 | Continuation — Slack MCP confirmation, reflect | `0d5492b1-6f62-41f3-b36f-9f24ce8323de` |
 | 2026-06-24 | Toolchain Demo notes → ATC wiki (Pulp migration benefits) + Core RPMs Redux (X-open/execopen demo, canonical list strategy) | `659de962-3b81-4597-a717-02f4b90e075b` |
 | 2026-06-24 | PitCrew reports: Drive upload automation, Miguel feedback (section reorder, audience views), white-text fix, daily cron, full report Google Doc added (4 Drive artifacts), TOC, Google Docs HTML rewrite (table-based layouts, outer container table, H2 heading extraction, skill documentation) | `77a3b0a9-45b9-43e7-9486-f77158985ec4` |
 | 2026-06-24 | Slack MCP live validation + weekly report via MCP + full repo migration (12 files curl→MCP) | `eee966c7-35ae-4edd-9da1-4f4867b9d74f` |
