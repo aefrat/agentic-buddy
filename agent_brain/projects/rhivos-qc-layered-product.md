@@ -36,7 +36,7 @@ Full chain required: new EngIDs → new SKU → gated content sets → CDN repos
 
 ---
 
-## Progress (as of Jun 23, 2026)
+## Progress (as of Jun 24, 2026)
 
 ### Completed
 
@@ -49,11 +49,11 @@ Full chain required: new EngIDs → new SKU → gated content sets → CDN repos
 | CDN product ID push fix | RHELDST-42168 | Michal | Jun 16 |
 | Product listing partial fix | RHELWF-14266 | Lukas Holecek | Jun 14 |
 
-### In Progress
+### In Review
 
-| Step | Ticket | Who | Blocker |
-|------|--------|-----|---------|
-| CDN directory path naming | VROOM-42116 | Matt Goldman | **Waiting on Petr Sabata** to approve path (asked Jun 22) |
+| Step | Ticket | Who | Notes |
+|------|--------|-----|-------|
+| CDN directory path naming | VROOM-42116 | Matt Goldman | **Review** — MR #149 submitted in cdn-definitions-private (Jun 23). Awaiting review/merge. |
 
 ### Not Started — Distribution chain (sequential, all unassigned)
 
@@ -73,9 +73,15 @@ Full chain required: new EngIDs → new SKU → gated content sets → CDN repos
 | VROOM-42050 | Generate Gator configs for LP | Hubert Stefanski |
 | VROOM-42184 | WaiverDB permission config for LP | Hubert Stefanski |
 
+### Not Started — Compose (new tickets, Jun 23)
+
+| Ticket | Summary | Assignee |
+|--------|---------|----------|
+| VROOM-44910 | Create QC variant for RHIVOS Core and RHIVOS Fusa LP | Ozan Unsal |
+| VROOM-44911 | Create brew tags for QC packages | Ozan Unsal |
+
 ### Not yet ticketed
 
-- Compose/pipeline implementation (Pungi config, pipeline updates, smoke tests) — spike validated approach but no tickets created.
 - Image distribution via access.redhat.com (needs `-files`/`-isos` repos; ref: RHELDST-34953).
 
 ### Interim solution (VROOM-41496 — stalled)
@@ -87,7 +93,7 @@ Stopgap while LP isn't ready: document how customers get QC packages from Qualco
 ## Critical Path
 
 ```
-CDN path decision (Petr Sabata) ←── CURRENT BLOCKER
+CDN path MR under review (VROOM-42116) ←── GATE
         │
         ▼
 Create CDN repos (VROOM-42114)
@@ -107,19 +113,18 @@ Gator configs (VROOM-42050) ──────────────┤── 
 WaiverDB perms (VROOM-42184) ─────────────┘
 
 Parallel: SKU creation (Claude Pariz) — can proceed now
-Parallel: Compose/pipeline — needs tickets first
+Parallel: Compose variant + brew tags (VROOM-44910, 44911) — Ozan Unsal
 ```
 
 ---
 
 ## Risks
 
-1. **CDN path decision is the active bottleneck.** Everything downstream blocked on Petr Sabata.
+1. **CDN path MR needs approval.** MR #149 submitted in cdn-definitions-private but not yet merged. All 6 distribution tasks gated on this.
 2. **6 distribution tasks are unassigned.** Sequential chain, long lead time.
 3. **Supplier Solicitation.** Charles Timko flagged (Jun 22) that AUTOBU-1076 needs this process.
 4. **SP RHEL Workflow staffing.** Christine Freitas warned — lost release engineering expertise (China Engineering exit).
-5. **No compose/pipeline tickets.** Approach validated but no implementation work tracked.
-6. **Image distribution.** No process for RHIVOS qcow images via access.redhat.com. Not on Konflux.
+5. **Image distribution.** No process for RHIVOS qcow images via access.redhat.com. Not on Konflux.
 
 ---
 
@@ -128,14 +133,14 @@ Parallel: Compose/pipeline — needs tickets first
 | Milestone | Target | Status |
 |-----------|--------|--------|
 | EngIDs | Done | Complete |
-| CDN path decision | This week | **High risk** — no response from Petr yet |
+| CDN path decision | This week | **Medium** — MR #149 submitted, awaiting review |
 | CDN repos + Errata configs | ~1-2 weeks after path decision | Medium — sequential, unassigned |
 | SKU creation | ~2-3 weeks | Low — Claude Pariz notified, can start |
 | Gating setup | Before August | **High risk** — Hubert transitioning |
-| Compose/pipeline | Before August | Medium — not ticketed |
+| Compose variant + brew tags | Before August | Low — Ozan Unsal assigned (VROOM-44910, 44911) |
 | **LP infra ready** | **August 2026** | **At risk** — CDN path + unassigned work |
 
-~5 weeks to August target. CDN path decision must happen this week to keep timeline viable. Distribution chain alone could take 3-4 weeks given external team dependencies.
+~5 weeks to August target. CDN path MR submitted — once approved, distribution chain can start. The chain (6 sequential tasks, all unassigned) could take 3-4 weeks given external team dependencies.
 
 ---
 
@@ -147,7 +152,7 @@ Parallel: Compose/pipeline — needs tickets first
 | Whitney Chadwick | | Program owner, August timeline | — |
 | Petr Sabata | contyk | Release/distribution, epic assignee | **Needs to approve CDN path** |
 | Claude Pariz | | SKU team | **Next: create QC-specific SKU** |
-| Matt Goldman | | Distribution — EngID/CDN tickets | Assigned to VROOM-42116 |
+| Matt Goldman | | Distribution — EngID/CDN tickets | Submitted MR #149 for CDN path (VROOM-42116 → Review) |
 | Hubert Stefanski | | Gating (transitioning to RHAS) | Owns VROOM-42050, 42184 |
 | Gadi Glogowski | | PM — SKU coordination | Brought Claude Pariz in |
 | Leon Kang | lekang | SP RHEL Distribution consultant | Advised on EngID/content sets |
