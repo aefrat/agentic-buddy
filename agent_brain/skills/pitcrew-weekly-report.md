@@ -12,7 +12,7 @@ Generate and send the PitCrew/RHAS status report. Fetches live data from Jira an
 
 **Knowledge base:** `agent_brain/projects/pitcrew-agent/` — reference, active store, history, patterns.
 
-**CSS template reference:** `user/reports/pitcrew-full-report-2026-06-01.html` (lines 7–95)
+**HTML template reference:** `user/reports/pitcrew-full-report-2026-06-24.html` (full) and `user/reports/pitcrew-team-report-2026-06-24.html` (team) — Google Docs-optimized, inline styles, table-based layouts
 
 ## Identity
 
@@ -32,7 +32,7 @@ When data is incomplete, you report the gap. A report that says "Slack data unav
 |-----------|-------|-------|
 | Jira project | `PITCREW` | Board 4323 |
 | Email recipient | `aefrat@redhat.com` | |
-| CSS reference | `user/reports/pitcrew-full-report-2026-06-01.html` lines 7–95 | Full CSS block |
+| HTML templates | `user/reports/pitcrew-full-report-2026-06-24.html` + `pitcrew-team-report-2026-06-24.html` | Google Docs-optimized |
 | Active store | `agent_brain/projects/pitcrew-agent/active/` | Overwritten each run |
 | History store | `agent_brain/projects/pitcrew-agent/history/` | Immutable |
 | Patterns store | `agent_brain/projects/pitcrew-agent/patterns/` | Strategic cache |
@@ -152,15 +152,13 @@ All statistics in synthesis must come from the computed diff or raw Jira data �
 
 Write self-contained HTML to `/tmp/pitcrew-{mode}-report-YYYY-MM-DD.html`.
 
-**CSS:** Copy the full CSS block from `user/reports/pitcrew-full-report-2026-06-01.html` (lines 7–95). This is the design system. Use these classes exactly.
+**Template:** Use `user/reports/pitcrew-full-report-2026-06-24.html` as the structural reference. This uses Google Docs-friendly inline-styled, table-based HTML (same patterns documented in step 11d.1). Apply all the same rules: outer container table, inline styles only, table cell backgrounds for colored blocks, plain H2 headings with colored borders, no CSS classes/grid/flexbox.
 
 **Sections:** Follow mode-specific section list from `reference/report-modes.md`.
 
-**Key classes:** `.hero`, `.toc`, `.card` + `.card-title`, `.badge .b-*`, `.alert .alert-*`, `.tier-grid` + `.tier`, `.roadmap-row` + `.roadmap-q`, `.epic-grid` + `.epic`, `.release-timeline` + `.rel`, `.fit-row` + `.fit-icon`, `.cols2`, `table`.
+**Changes section:** Use change alert tables (narrow colored left cell + content cell) showing what moved since previous run. Green left cell for positive changes (ticket closed, velocity up), orange for negative (stalled, velocity down). Skip if first run.
 
-**Changes section (new):** Use `.alert` styled highlight showing what moved since previous run. `.alert-success` for positive changes (epic completed, sprint velocity up), `.alert-warn` for negative (epic stalled, velocity down). Skip if first run.
-
-Email-safe constraints: all CSS inline or in `<style>` block, no JavaScript, no external images, tables use explicit widths for Outlook compatibility.
+Email-safe constraints: inline styles only, no JavaScript, no external images, tables use explicit widths for Outlook compatibility.
 
 ### 11. Send and save
 
@@ -204,7 +202,22 @@ Two Drive artifacts are maintained — read `reference/drive-config.md` for file
 
 Sections excluded: Strategic Guide, Roadmap, Releases, full Epic grid, Looking Ahead, Strategy ↔ Work Alignment.
 
-Use inline styles only (no `<style>` block) — this HTML gets converted to Google Docs format. Tables render well; CSS grid and badges do not. **Never use white text (`color: #fff`) or rely on dark backgrounds for contrast** — Google Docs strips backgrounds but keeps text color, making white text invisible. Use dark text colors with borders/underlines for visual hierarchy instead. Save to `user/reports/pitcrew-team-report-${REPORT_DATE}.html`.
+**Google Docs-friendly HTML rules (apply to BOTH team and full report):**
+
+- **Outer container table.** Wrap ALL body content in `<table style="width: 100%; border-collapse: collapse; border: none;"><tr><td style="padding: 0;">...</td></tr></table>`. This forces Google Docs to render tables and text at the same width (without it, tables render narrower than paragraphs).
+- **Inline styles only** — no `<style>` block, no CSS classes. Google Docs strips them.
+- **No CSS grid, flexbox, border-radius, box-shadow, gradients, or opacity.** Google Docs strips all of these.
+- **Table cell backgrounds survive conversion.** Use `<td style="background: #color;">` for colored blocks (hero, sprint summary bar, status badges, change alerts, tier cards, roadmap cards, release timeline).
+- **Hero:** two-cell table row — dark left cell (`background: #1a1a2e`) + colored right cell for status badge (`background: #c44b00`). White text on dark backgrounds is OK inside table cells (Google Docs preserves cell backgrounds).
+- **All H2 headings must be plain `<h2>` elements** — never inside table cells. Use consistent style: `font-size: 16px; color: <section-color>; border-bottom: 2px solid <section-color>; padding-bottom: 6px; margin-top: 24px;`. Badges/labels go in a `<p>` below the heading, not alongside it in a table.
+- **Change alerts:** two-cell table row — narrow colored left cell (`width: 5px; padding: 0;`) + content cell with light background.
+- **Status badges in data tables:** use cell background + colored text (`<td style="background: #fff0e6; color: #c44b00; font-weight: bold;">Review</td>`), not `<span class="badge">`.
+- **Two-column layouts:** use `<table><tr><td style="width: 50%;">` with `border-left: 1px solid #e1e4e8` on the right cell for a divider.
+- **Never use white text (`color: #fff`) on backgrounds outside of table cells** — Google Docs strips div/body backgrounds but keeps text color, making white text invisible.
+- **`<h2>` headings enable Google Docs Document Outline** sidebar navigation (anchor links don't work in Docs).
+- **Reference template:** `user/reports/pitcrew-full-report-2026-06-24.html` (full report) and `user/reports/pitcrew-team-report-2026-06-24.html` (team report) — use these as the structural reference for future reports.
+
+Save to `user/reports/pitcrew-team-report-${REPORT_DATE}.html`.
 
 **d.2. Upload team report** (Google Doc — opens inline with one click):
 ```bash
