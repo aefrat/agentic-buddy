@@ -5,10 +5,21 @@
       "cron": "17 8 * * 1-5",
       "prompt": "Run the RHIVOS QC LP status report. Read agent_brain/skills/rhivos-qc-lp-status.md and execute all steps. This is a cron-triggered run — no user interaction, log all decisions.",
       "createdAt": 1782204470624,
+      "lastFiredAt": 1782280020387,
       "recurring": true,
       "createdBySessionId": "cb61880f-7430-4fca-b38b-12d7c565ae17",
       "createdByPid": 71567,
       "createdByProcStart": "6329995"
+    },
+    {
+      "id": "8245b5ad",
+      "cron": "37 8 * * 1-5",
+      "prompt": "Run the PitCrew full report. Read and execute all steps in agent_brain/skills/pitcrew-weekly-report.md in full mode. This is a non-interactive cron run — execute autonomously, log all decisions, and if the disconfirmation gate flags anomalies, prefix the email subject with [VERIFY] and note anomalies in the report header.",
+      "createdAt": 1782289307017,
+      "recurring": true,
+      "createdBySessionId": "77a3b0a9-45b9-43e7-9486-f77158985ec4",
+      "createdByPid": 309333,
+      "createdByProcStart": "15195134"
     }
   ]
 }

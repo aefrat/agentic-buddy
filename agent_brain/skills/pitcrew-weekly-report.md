@@ -36,6 +36,7 @@ When data is incomplete, you report the gap. A report that says "Slack data unav
 | Active store | `agent_brain/projects/pitcrew-agent/active/` | Overwritten each run |
 | History store | `agent_brain/projects/pitcrew-agent/history/` | Immutable |
 | Patterns store | `agent_brain/projects/pitcrew-agent/patterns/` | Strategic cache |
+| Drive config | `agent_brain/projects/pitcrew-agent/reference/drive-config.md` | file_id, folder_id, web_view_link |
 
 Detailed data source config (Jira queries, Slack channels, Google Doc IDs, auth): read `agent_brain/projects/pitcrew-agent/reference/data-sources.md` on demand.
 
@@ -190,9 +191,43 @@ cp /tmp/pitcrew-snapshot-${REPORT_DATE}.json agent_brain/projects/pitcrew-agent/
 cp /tmp/pitcrew-${MODE}-report-${REPORT_DATE}.html user/reports/pitcrew-${MODE}-report-${REPORT_DATE}.html
 ```
 
-**d. Update strategic cache** if refreshed in step 4.
+**d. Upload to Google Drive:**
 
-**e. Git commit:**
+Read `reference/drive-config.md` for `file_id` and `folder_id`.
+
+**If `file_id` is empty (first run):**
+```bash
+# Create the file in Drive
+gws drive:v3 files create \
+  --json '{"name":"PitCrew-RHAS-Status-Report.html","parents":["FOLDER_ID"],"mimeType":"text/html"}' \
+  --upload user/reports/pitcrew-${MODE}-report-${REPORT_DATE}.html
+
+# Extract file_id from JSON response
+
+# Set Red Hat domain-level viewer permission (public sharing blocked by Workspace admin)
+gws drive:v3 permissions create \
+  --json '{"role":"reader","type":"domain","domain":"redhat.com"}' \
+  --params '{"fileId":"FILE_ID"}'
+
+# Get the shareable link
+gws drive:v3 files get --params '{"fileId":"FILE_ID","fields":"webViewLink"}'
+
+# Save file_id and web_view_link to reference/drive-config.md
+```
+
+**If `file_id` exists (subsequent runs):**
+```bash
+# Update existing file content (link never changes)
+gws drive:v3 files update \
+  --params '{"fileId":"FILE_ID"}' \
+  --upload user/reports/pitcrew-${MODE}-report-${REPORT_DATE}.html
+```
+
+The Drive link is permanent — the #team-pitcrew-automotive Slack canvas links to it once, and every run refreshes the content behind the same URL.
+
+**e. Update strategic cache** if refreshed in step 4.
+
+**f. Git commit:**
 ```bash
 git add agent_brain/projects/pitcrew-agent/ user/reports/pitcrew-*-report-*.html
 git commit -m "pitcrew-report: ${MODE} $(date +%Y-%m-%d)"
@@ -211,6 +246,7 @@ Confirm to the user (or log, in cron mode):
 - HTML report generated with all mode-appropriate sections populated from live data
 - Email sent successfully as attachment to `aefrat@redhat.com`
 - Snapshot saved to active and history stores
+- HTML uploaded to Google Drive (same file ID — link never changes)
 - Strategic cache updated if refreshed
 - Changes committed to git
 
@@ -229,6 +265,7 @@ Confirm to the user (or log, in cron mode):
 - [ ] Active store updated
 - [ ] History store updated (dated + mode suffix, immutable)
 - [ ] User reports copy saved
+- [ ] Uploaded to Google Drive (created or updated, link unchanged)
 - [ ] Git committed
 
 ## Gotchas
@@ -240,3 +277,4 @@ Confirm to the user (or log, in cron mode):
 - **Strategic cache TTL.** 30-day refresh. Daily mode never triggers refresh — only weekly/full do.
 - **Google Docs auth.** Can expire silently. `gws docs` returns empty on 403. Run `gws auth status` first.
 - **Sprint gaps.** `sprint in openSprints()` fails if no sprint is active. Fall back to date-range query.
+- **Drive upload.** Uses `gws drive:v3` CLI. First run creates file + sets permission; subsequent runs update content only. `file_id` stored in `reference/drive-config.md`. If Drive upload fails (auth expired, quota), flag in report but don't block email send. The permanent Drive link is pinned in the #team-pitcrew-automotive Slack canvas.
