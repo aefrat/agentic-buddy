@@ -36,7 +36,7 @@ Full chain required: new EngIDs → new SKU → gated content sets → CDN repos
 
 ---
 
-## Progress (as of Jun 24, 2026)
+## Progress (as of Jun 25, 2026)
 
 ### Completed
 
@@ -49,11 +49,11 @@ Full chain required: new EngIDs → new SKU → gated content sets → CDN repos
 | CDN product ID push fix | RHELDST-42168 | Michal | Jun 16 |
 | Product listing partial fix | RHELWF-14266 | Lukas Holecek | Jun 14 |
 
-### In Review
+### In Progress
 
 | Step | Ticket | Who | Notes |
 |------|--------|-----|-------|
-| CDN directory path naming | VROOM-42116 | Matt Goldman | **Review** — MR #149 submitted in cdn-definitions-private (Jun 23). Awaiting review/merge. |
+| CDN directory path naming | VROOM-42116 | Matt Goldman | **In Progress** — was Review (MR #149 submitted Jun 23), regressed to In Progress Jun 25. MR may need rework. All 6 distribution tasks gated on this. |
 
 ### Not Started — Distribution chain (sequential, all unassigned)
 
@@ -120,7 +120,7 @@ Parallel: Compose variant + brew tags (VROOM-44910, 44911) — Ozan Unsal
 
 ## Risks
 
-1. **CDN path MR needs approval.** MR #149 submitted in cdn-definitions-private but not yet merged. All 6 distribution tasks gated on this.
+1. **CDN path MR regressed.** VROOM-42116 moved from Review back to In Progress (Jun 25). MR #149 may need rework. All 6 distribution tasks gated on this.
 2. **6 distribution tasks are unassigned.** Sequential chain, long lead time.
 3. **Supplier Solicitation.** Charles Timko flagged (Jun 22) that AUTOBU-1076 needs this process.
 4. **SP RHEL Workflow staffing.** Christine Freitas warned — lost release engineering expertise (China Engineering exit).
