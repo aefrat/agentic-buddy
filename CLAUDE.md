@@ -61,7 +61,7 @@ Factual updates to Right now (changed dates, flipped statuses) are allowed mid-s
 - **Atlassian API token "Avi2" EXPIRED** (Jun 27). Jira CLI and Confluence API will fail. Rotate immediately.
 - **CY26Q2 Quarterly Connection** — Accomplishments and Feedback & Development drafts ready in `~/Documents/`. May need supplementing with Jira/G-docs/1:1 data before Workday submission.
 - **Hubert Stefanski joining RHAS/PitCrew team** (approved Jeff Ligon & Paul Wallrabe, Jun 18). Transitioning TO this team, focused on PITCREW-161 (AIB prototyping). Next: discuss timelines with Hubert, communicate plan to stakeholders.
-- **RHIVOS QC Layered Product** — CDN path MR #149 submitted (VROOM-42116 → Review), awaiting merge. 2 new compose tickets (VROOM-44910, 44911). 4/18 tasks done, 6 distribution tasks unassigned.
+- **RHIVOS QC Layered Product — DEPRIORITIZED** (Jun 24). Petr Sabata: "still figuring out what LP will look like." Kanitha moved compose tickets to backlog. CDN path work (VROOM-42116, In Progress) may continue for knowledge capture only. New team priorities: GitLab onboarding, CAIB integration, Konflux.
 - **Roderick Kieley** — 27 days into onboarding (started Jun 1). 1:1 biweekly, active.
 
 ### Files
