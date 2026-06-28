@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-06-24
-access_count: 17
+last_accessed: 2026-06-28
+access_count: 18
 created: 2026-06-01
 ---
 
@@ -67,8 +67,7 @@ Resolved observations are moved to the bottom.
 - **2026-06-23:** "Subagent rule/permission lag" — when rules or permissions are added to settings mid-session, already-running subagents don't inherit them. A subagent launched before Rule 20 (Slack bash curl, not MCP) was added still attempted MCP and failed on auth. Pragmatic fix: run the task directly rather than re-spawn. Platform behavior, not a skill design issue, but relevant for skill authors who spawn long-lived subagents. (seen: 1)
 - **2026-06-23:** "Cross-agent knowledge propagation" — when a procedure is documented in one agent's knowledge base (agentic-buddy QC LP project file), it can be extracted into a reusable skill for a domain-specific agent (errata-distribution). The Confluence EngID page was already linked in errata-distribution's reference.md but only as an unfetchable URL — creating a skill file with the actual content makes the agent self-sufficient. Pattern: when reference docs are behind auth the agent can't reach, inline the content as a skill rather than leaving a dead link. (seen: 1)
 - **2026-06-24:** "Env var bridge pattern for MCP servers" — when an MCP server expects differently-named env vars from what the user's shell exports (e.g., `SLACK_XOXD_TOKEN` vs `SLACK_XOXD_COOKIE`), a thin wrapper script that sources the profile and remaps is the cleanest bridge. Avoids modifying either side. Applied: `~/slack-mcp/run-slack-mcp.sh`. Generalizable to any stdio MCP server needing env var adaptation. (seen: 1)
-- **2026-06-23:** "Context compaction data drift" — when a conversation is compacted/summarized mid-task (context window limits), the summary can deviate from actual agent results. Numbers get rounded, data gets synthesized, intermediate/final results get mixed. Core RPMs Redux report initially used compacted summary data (19 children, 9 Closed) which was significantly different from actual task notification data (22 children, 15 Closed). Lesson: always verify data from actual task notifications after compaction, not the summary. (seen: 1)
-  - 2026-06-24: Related pattern — "context compaction idempotency trap." Summary listed 8 files as pending migration, but 10 of 12 were already committed before compaction. Edit tool accepted idempotent edits silently (old_string matched current content = no-op). Mitigation: check `git log` for files before re-applying edits after compaction. (seen: 2)
+- ~~**2026-06-23:** "Context compaction data drift"~~ → **resolved 2026-06-28:** created concept `agent_brain/concepts/context-compaction-data-drift.md` (seen 2x, includes idempotency trap variant)
 - **2026-06-23:** "Read vs write permission asymmetry" — a skill that reads from a service for data collection should never assume write access to the same service. The PitCrew agent reads Slack for team activity (authorized) but posting summaries back (unauthorized) was a permission violation at 2:47 AM. Pattern: reading a service and writing to it are separate permissions that should be explicitly granted, not implied by data source access. Generalizable to any agent interacting with external services. (seen: 1)
 - **2026-06-23:** "Team conventions as agent configuration" — domain-specific team practices (epics are multi-person without assignee; no team health commentary in reports) are invisible from raw data. Agents need explicit "team conventions" sections in skills to avoid misinterpreting normal state as anomalies. Without this, the agent generates plausible but wrong risk assessments. Applied: PitCrew skill now has a Team conventions subsection under Identity. (seen: 1)
 

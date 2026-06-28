@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-06-24
-access_count: 3
+last_accessed: 2026-06-28
+access_count: 4
 created: 2026-06-18
 ---
 
@@ -11,6 +11,10 @@ Generalized knowledge, patterns, and lessons learned from project work.
 ## Agent design
 
 - [Stateful process-oriented agents](stateful-process-oriented-agents.md) — Juanje Ojeda's agent-forge design principles: identity/character, progressive disclosure, 4-store memory, skill design, tool design, permissions as design. Read when building or reviewing agents.
+
+## LLM operational patterns
+
+- [Context compaction data drift](context-compaction-data-drift.md) — context window summarization introduces plausible but wrong data (rounded numbers, merged results, idempotent edit traps). Mitigation: re-query sources after compaction, check git state before re-applying edits. Read when working with long conversations or post-compaction.
 
 ## Process patterns
 
