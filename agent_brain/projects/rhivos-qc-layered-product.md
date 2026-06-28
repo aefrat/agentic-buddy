@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-06-23
-access_count: 3
+last_accessed: 2026-06-28
+access_count: 4
 created: 2026-06-23
 ---
 
@@ -36,7 +36,7 @@ Full chain required: new EngIDs → new SKU → gated content sets → CDN repos
 
 ---
 
-## Progress (as of Jun 25, 2026)
+## Progress (as of Jun 28, 2026)
 
 ### Completed
 
