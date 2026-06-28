@@ -23,6 +23,17 @@ Whitney Chadwick gave the go-ahead (Jun 3): "Please proceed with creating new En
 
 Full chain required: new EngIDs → new SKU → gated content sets → CDN repos → Errata configs.
 
+## Decision: LP deprioritized (Jun 24, 2026)
+
+**Petr Sabata** stated at Sprint Planning: *"We are still figuring out what LP will look like"* — implementation work should not proceed until the LP model is clarified.
+
+**Kanitha Chim** relayed in #only-toolchain-allowed (Jun 24): *"There is second thought about layered product so we can slow down the work there."* Matt Goldman may continue current work (CDN path) for knowledge capture, but no rush. Kanitha moved Ozan's LP compose tickets (VROOM-44910, VROOM-44911) back to backlog (Jun 25).
+
+**New team priorities** (per Petr, relayed by Kanitha):
+1. Onboarding RHIVOS to GitLab (like RHEL on GitLab) — toolchain provides mechanism/infrastructure workflow
+2. CAIB integration
+3. Konflux
+
 ---
 
 ## Architecture
@@ -120,11 +131,12 @@ Parallel: Compose variant + brew tags (VROOM-44910, 44911) — Ozan Unsal
 
 ## Risks
 
-1. **CDN path MR regressed.** VROOM-42116 moved from Review back to In Progress (Jun 25). MR #149 may need rework. All 6 distribution tasks gated on this.
-2. **6 distribution tasks are unassigned.** Sequential chain, long lead time.
-3. **Supplier Solicitation.** Charles Timko flagged (Jun 22) that AUTOBU-1076 needs this process.
-4. **SP RHEL Workflow staffing.** Christine Freitas warned — lost release engineering expertise (China Engineering exit).
-5. **Image distribution.** No process for RHIVOS qcow images via access.redhat.com. Not on Konflux.
+1. **LP direction uncertain.** Petr Sabata: "We are still figuring out what LP will look like." Work deprioritized (Jun 24). LP may not proceed in current form.
+2. **CDN path MR regressed.** VROOM-42116 moved from Review back to In Progress (Jun 25). MR #149 may need rework. Deprioritized — Matt Goldman may continue for knowledge capture only.
+3. **6 distribution tasks are unassigned.** Sequential chain, long lead time. Moot if LP direction changes.
+4. **Supplier Solicitation.** Charles Timko flagged (Jun 22) that AUTOBU-1076 needs this process.
+5. **SP RHEL Workflow staffing.** Christine Freitas warned — lost release engineering expertise (China Engineering exit).
+6. **Image distribution.** No process for RHIVOS qcow images via access.redhat.com. Not on Konflux.
 
 ---
 
