@@ -9,7 +9,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 | Date | Description | Session ID |
 |------|-------------|------------|
 | 2026-06-28 | ATC Slack channel scan (7 days, 18 channels) | `a268a101-97cd-4b33-bf84-41de0e332cdc` |
-| 2026-06-28 | LP status report (cron) + LP deprioritization capture (Petr/Kanitha) | `0816ead2-cfdb-4e2a-b9cc-5eb7bff736f9` |
+| 2026-06-28 | LP status + LP deprioritization + weekly manager report + full PitCrew report (parallel agents) | `0816ead2-cfdb-4e2a-b9cc-5eb7bff736f9` |
 | 2026-06-28 | Brew tags CLI documentation capture, CY26Q2 QC context | `c86c2ac7-ff5b-4b13-9dc0-0938e7fada3a` |
 | 2026-06-24 | Continuation — Slack MCP confirmation, reflect | `0d5492b1-6f62-41f3-b36f-9f24ce8323de` |
 | 2026-06-24 | Toolchain Demo notes → ATC wiki (Pulp migration benefits) + Core RPMs Redux (X-open/execopen demo, canonical list strategy) | `659de962-3b81-4597-a717-02f4b90e075b` |
