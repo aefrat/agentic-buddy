@@ -1,0 +1,89 @@
+{
+  "generated_at": "2026-06-28T08:49:04Z",
+  "mode": "weekly",
+  "days": 7,
+  "period": "last 7 days",
+  "metrics": {
+    "ATC": {
+      "in_progress": 10,
+      "closed": 0,
+      "new": 1,
+      "blocked": 0,
+      "high_pri": 0,
+      "state_changes": 6,
+      "mrs": 9
+    },
+    "PitCrew": {
+      "in_progress": 7,
+      "closed": 7,
+      "new": 1,
+      "blocked": 0,
+      "high_pri": 0,
+      "state_changes": 16,
+      "prs": 14
+    }
+  },
+  "slack": {
+    "ATC": {
+      "channels_active": 21,
+      "total_messages": 174,
+      "notable_threads": 10
+    },
+    "PitCrew": {
+      "channels_active": 9,
+      "total_messages": 125,
+      "notable_threads": 10
+    },
+    "Stakeholders": {
+      "Jaime Flynn": 3,
+      "Jeff Ligon": 39,
+      "Paul Wallrabe": 13,
+      "Petr Sabata": 4
+    }
+  },
+  "ATC": [],
+  "PitCrew": [
+    {
+      "key": "PITCREW-441",
+      "summary": "CTC: Fix report generation for multiple plans run",
+      "assignee": "Bella Khizgiyaev",
+      "linked": []
+    },
+    {
+      "key": "PITCREW-437",
+      "summary": "beforeLease hook failure with onFailure exit does not kill the exporter, only marks it offline",
+      "assignee": "Miguel Angel Ajo Pelayo",
+      "linked": []
+    },
+    {
+      "key": "PITCREW-430",
+      "summary": "builder: caib login add --token option",
+      "assignee": "Bella Khizgiyaev",
+      "linked": []
+    },
+    {
+      "key": "PITCREW-419",
+      "summary": "jumpstarter: Add support for referencing OIDC CA certificates from Secrets and ConfigMaps",
+      "assignee": "Bella Khizgiyaev",
+      "linked": []
+    },
+    {
+      "key": "PITCREW-409",
+      "summary": "jumpstarter JEP: virtual scalable exporters",
+      "assignee": "Miguel Angel Ajo Pelayo",
+      "linked": []
+    },
+    {
+      "key": "PITCREW-407",
+      "summary": "builder: improve E2E coverage & identify e2e tests",
+      "assignee": "Mohamad Abo Ras",
+      "linked": []
+    },
+    {
+      "key": "PITCREW-403",
+      "summary": "Flaky E2E: \"Connection to exporter lost\"",
+      "assignee": "Evgeni Vakhonin",
+      "linked": []
+    }
+  ]
+}
