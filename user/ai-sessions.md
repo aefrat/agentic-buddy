@@ -13,6 +13,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 | 2026-06-29 | QC report locations, Juanje ACP/articles evidence, LP status (cron), Rule 21 (no AI-tell chars), Juanje QC self-input integration, development feedback (IC progression matrices + Job Leveling Framework + Job Architecture), QC skill Step 12 update, Workday table conversion, Juanje career aspirations response | `cc9f821f-e173-4109-bbb9-0a573c938504` → `fe2aebb2-5501-4496-b462-5093f01a3446` |
 | 2026-06-29 | Monday catch-up: daily manager + PitCrew RHAS daily reports, Slack + Gmail scan (17 channels + 48h email), task capture, Jira token resolution | `3bc2e04d-3316-422b-bec2-3409e30f9019` |
 | 2026-06-29 | Eitan QC self-input + Job Leveling + development self-assessment + Slack/Gmail feedback evidence + Workday manager response (feedback + career growth) | `47b712f4-55ea-42ef-800f-5ec25960f027` |
+| 2026-06-29 | PitCrew Drive upload bug fix (daily cron overwrote full report), skill mode gate + path hardcode | `ffdc970d-f9a0-4c1c-80d3-10c3c6d2a913` |
 | 2026-06-29 | AI Methodology Intelligence agent creation (agent-forge), standalone GitLab project, daily/weekly/monthly integration | `b61d3806-b729-48f1-adf2-6a730813c195` |
 | 2026-06-29 | Tuesday manager report changed to weekly for RHIVOS program call | `72d980f6-ba53-419f-8260-51b2a89d8822` |
 | 2026-06-28 | LP status + LP deprioritization + weekly manager report + full PitCrew report (parallel agents) | `0816ead2-cfdb-4e2a-b9cc-5eb7bff736f9` |
