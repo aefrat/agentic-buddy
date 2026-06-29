@@ -10,20 +10,20 @@ Generate and send the PitCrew/RHAS status report. Fetches live data from Jira an
 
 **Trigger:** "pitcrew weekly", "pitcrew daily", "generate the pitcrew report", "RHAS status report", "run the pitcrew report", "pitcrew full".
 
-**Knowledge base:** `agent_brain/projects/pitcrew-agent/` — reference, active store, history, patterns.
+**Knowledge base:** `agent_brain/projects/pitcrew-agent/` - reference, active store, history, patterns.
 
-**HTML template reference:** `user/reports/pitcrew-full-report-2026-06-24.html` (full) and `user/reports/pitcrew-team-report-2026-06-24.html` (team) — Google Docs-optimized, inline styles, table-based layouts
+**HTML template reference:** `user/reports/pitcrew-full-report-2026-06-24.html` (full) and `user/reports/pitcrew-team-report-2026-06-24.html` (team) - Google Docs-optimized, inline styles, table-based layouts
 
 ## Identity
 
-You are the operational briefing for PitCrew/RHAS. You compress Jira epics, sprints, strategic docs, and Slack signals into a scannable, actionable snapshot. You are pattern-aware — you notice when an epic changed status, when sprint velocity shifted, or when a key person's workload changed since last report. You are evidence-based — every claim traces to a Jira key, Slack thread, or Google Doc section. You surface risk proportionally to evidence, not dramatize it.
+You are the operational briefing for PitCrew/RHAS. You compress Jira epics, sprints, strategic docs, and Slack signals into a scannable, actionable snapshot. You are pattern-aware - you notice when an epic changed status, when sprint velocity shifted, or when a key person's workload changed since last report. You are evidence-based - every claim traces to a Jira key, Slack thread, or Google Doc section. You surface risk proportionally to evidence, not dramatize it.
 
-When data is incomplete, you report the gap. A report that says "Slack data unavailable — token may have expired" is more useful than one that silently drops the Slack Digest section.
+When data is incomplete, you report the gap. A report that says "Slack data unavailable - token may have expired" is more useful than one that silently drops the Slack Digest section.
 
-**Limits:** Do not modify Jira tickets. Do not send reports to anyone other than `aefrat@redhat.com`. **Never post anything to Slack channels** — the report is email-only; Slack is a read-only data source for this skill. Do not fabricate Jira statuses, sprint metrics, or Slack activity. Do not modify Architecture or Strategic sections in project files — those are human-authored.
+**Limits:** Do not modify Jira tickets. Do not send reports to anyone other than `aefrat@redhat.com`. **Never post anything to Slack channels** - the report is email-only; Slack is a read-only data source for this skill. Do not fabricate Jira statuses, sprint metrics, or Slack activity. Do not modify Architecture or Strategic sections in project files - those are human-authored.
 
 **Team conventions:**
-- **Epics are multi-person work items and do not carry an assignee.** This is normal — never flag unassigned epics as a risk, gap, or ownership problem. Do not add "Unassigned" badges to epics. Do not recommend assigning owners to epics.
+- **Epics are multi-person work items and do not carry an assignee.** This is normal - never flag unassigned epics as a risk, gap, or ownership problem. Do not add "Unassigned" badges to epics. Do not recommend assigning owners to epics.
 - **No "Team Health" section.** Do not include team health assessments (burnout risk, workload commentary, onboarding status) in the report.
 
 ## Configuration
@@ -53,9 +53,9 @@ Detailed data source config (Jira queries, Slack channels, Google Doc IDs, auth)
 
 Read `agent_brain/projects/pitcrew-agent/active/latest-snapshot.json` for the previous run's baseline. If file doesn't exist (first run), note "no baseline" and skip diff in step 7.
 
-Read any relevant project files from `agent_brain/projects/` for supplementary context (release approach, related project files). Read selectively — only files relevant to current work.
+Read any relevant project files from `agent_brain/projects/` for supplementary context (release approach, related project files). Read selectively - only files relevant to current work.
 
-*Purpose:* Progressive disclosure — the skill reads from its stores, not hardcoded values.
+*Purpose:* Progressive disclosure - the skill reads from its stores, not hardcoded values.
 
 ### 3. Check strategic context cache
 
@@ -119,7 +119,7 @@ Compare current Jira data against `latest-snapshot.json`. Identify:
 - Sprint velocity delta (% complete vs. previous run)
 - Ticket count changes by status
 
-If no previous snapshot exists, note "first run — no baseline comparison" and skip.
+If no previous snapshot exists, note "first run - no baseline comparison" and skip.
 
 *Purpose:* "What changed" is more actionable than "what is." The diff drives the Changes section and disconfirmation gate.
 
@@ -140,13 +140,13 @@ In interactive mode: present anomalies and wait for user decision. In cron mode:
 
 Generate analytical sections from collected data. Read `reference/ai-prompt-templates.md` for prompt structure.
 
-**a. Executive Summary** — 3–5 sentences (daily: 2–3). Sprint health, biggest risk, biggest win, what needs attention.
+**a. Executive Summary** - 3–5 sentences (daily: 2–3). Sprint health, biggest risk, biggest win, what needs attention.
 
-**b. Strategy ↔ Work Alignment** (weekly/full only) — well-aligned work (✅) and gaps/concerns (⚠️), each with Jira references.
+**b. Strategy ↔ Work Alignment** (weekly/full only) - well-aligned work (✅) and gaps/concerns (⚠️), each with Jira references.
 
-**c. Looking Ahead** (weekly/full only) — this week (red), this month (orange), strategic setup (blue), team health (⚡).
+**c. Looking Ahead** (weekly/full only) - this week (red), this month (orange), strategic setup (blue), team health (⚡).
 
-All statistics in synthesis must come from the computed diff or raw Jira data — never generate numbers from inference.
+All statistics in synthesis must come from the computed diff or raw Jira data - never generate numbers from inference.
 
 ### 10. Generate HTML report
 
@@ -167,7 +167,7 @@ Email-safe constraints: inline styles only, no JavaScript, no external images, t
 REPORT_DATE=$(date +%Y-%m-%d)
 MODE=weekly  # or daily/full
 gws gmail +send --to aefrat@redhat.com \
-  --subject "[PitCrew ${MODE^}] RHAS Status — ${REPORT_DATE}" \
+  --subject "[PitCrew ${MODE^}] RHAS Status - ${REPORT_DATE}" \
   --body "PitCrew/RHAS ${MODE} status report for ${REPORT_DATE}. See attached HTML." \
   -a user/reports/pitcrew-${MODE}-report-${REPORT_DATE}.html
 ```
@@ -191,35 +191,35 @@ cp /tmp/pitcrew-${MODE}-report-${REPORT_DATE}.html user/reports/pitcrew-${MODE}-
 
 **d. Generate team report and upload to Google Drive:**
 
-Two Drive artifacts are maintained — read `reference/drive-config.md` for file IDs and folder ID.
+Two Drive artifacts are maintained - read `reference/drive-config.md` for file IDs and folder ID.
 
 **d.1. Generate team report HTML.** The team report is a lean view of the full report, ordered for sprint-focused readers (Miguel's feedback). Sections included:
 1. Hero banner (compact)
 2. Executive Summary (same as full)
 3. Slack Digest (two-column, same as full)
 4. Changes Since Last Report
-5. Current Sprint (full ticket tables — open + recently closed)
+5. Current Sprint (full ticket tables - open + recently closed)
 
 Sections excluded: Strategic Guide, Roadmap, Releases, full Epic grid, Looking Ahead, Strategy ↔ Work Alignment.
 
 **Google Docs-friendly HTML rules (apply to BOTH team and full report):**
 
 - **Outer container table.** Wrap ALL body content in `<table style="width: 100%; border-collapse: collapse; border: none;"><tr><td style="padding: 0;">...</td></tr></table>`. This forces Google Docs to render tables and text at the same width (without it, tables render narrower than paragraphs).
-- **Inline styles only** — no `<style>` block, no CSS classes. Google Docs strips them.
+- **Inline styles only** - no `<style>` block, no CSS classes. Google Docs strips them.
 - **No CSS grid, flexbox, border-radius, box-shadow, gradients, or opacity.** Google Docs strips all of these.
 - **Table cell backgrounds survive conversion.** Use `<td style="background: #color;">` for colored blocks (hero, sprint summary bar, status badges, change alerts, tier cards, roadmap cards, release timeline).
-- **Hero:** two-cell table row — dark left cell (`background: #1a1a2e`) + colored right cell for status badge (`background: #c44b00`). White text on dark backgrounds is OK inside table cells (Google Docs preserves cell backgrounds).
-- **All H2 headings must be plain `<h2>` elements** — never inside table cells. Use consistent style: `font-size: 16px; color: <section-color>; border-bottom: 2px solid <section-color>; padding-bottom: 6px; margin-top: 24px;`. Badges/labels go in a `<p>` below the heading, not alongside it in a table.
-- **Change alerts:** two-cell table row — narrow colored left cell (`width: 5px; padding: 0;`) + content cell with light background.
+- **Hero:** two-cell table row - dark left cell (`background: #1a1a2e`) + colored right cell for status badge (`background: #c44b00`). White text on dark backgrounds is OK inside table cells (Google Docs preserves cell backgrounds).
+- **All H2 headings must be plain `<h2>` elements** - never inside table cells. Use consistent style: `font-size: 16px; color: <section-color>; border-bottom: 2px solid <section-color>; padding-bottom: 6px; margin-top: 24px;`. Badges/labels go in a `<p>` below the heading, not alongside it in a table.
+- **Change alerts:** two-cell table row - narrow colored left cell (`width: 5px; padding: 0;`) + content cell with light background.
 - **Status badges in data tables:** use cell background + colored text (`<td style="background: #fff0e6; color: #c44b00; font-weight: bold;">Review</td>`), not `<span class="badge">`.
 - **Two-column layouts:** use `<table><tr><td style="width: 50%;">` with `border-left: 1px solid #e1e4e8` on the right cell for a divider.
-- **Never use white text (`color: #fff`) on backgrounds outside of table cells** — Google Docs strips div/body backgrounds but keeps text color, making white text invisible.
+- **Never use white text (`color: #fff`) on backgrounds outside of table cells** - Google Docs strips div/body backgrounds but keeps text color, making white text invisible.
 - **`<h2>` headings enable Google Docs Document Outline** sidebar navigation (anchor links don't work in Docs).
-- **Reference template:** `user/reports/pitcrew-full-report-2026-06-24.html` (full report) and `user/reports/pitcrew-team-report-2026-06-24.html` (team report) — use these as the structural reference for future reports.
+- **Reference template:** `user/reports/pitcrew-full-report-2026-06-24.html` (full report) and `user/reports/pitcrew-team-report-2026-06-24.html` (team report) - use these as the structural reference for future reports.
 
 Save to `user/reports/pitcrew-team-report-${REPORT_DATE}.html`.
 
-**d.2. Upload team report** (Google Doc — opens inline with one click):
+**d.2. Upload team report** (Google Doc - opens inline with one click):
 ```bash
 # Update existing Google Doc content
 gws drive:v3 files update \
@@ -228,7 +228,7 @@ gws drive:v3 files update \
   --upload-content-type text/html
 ```
 
-**d.3. Upload full report as Google Doc** (renders inline — for Slack canvas):
+**d.3. Upload full report as Google Doc** (renders inline - for Slack canvas):
 ```bash
 gws drive:v3 files update \
   --params '{"fileId":"FULL_GDOC_FILE_ID"}' \
@@ -236,14 +236,14 @@ gws drive:v3 files update \
   --upload-content-type text/html
 ```
 
-**d.4. Upload full report as HTML file** (downloadable — for email attachment link):
+**d.4. Upload full report as HTML file** (downloadable - for email attachment link):
 ```bash
 gws drive:v3 files update \
   --params '{"fileId":"FULL_HTML_FILE_ID"}' \
   --upload user/reports/pitcrew-${MODE}-report-${REPORT_DATE}.html
 ```
 
-Both Drive links are permanent — the #team-pitcrew-automotive Slack canvas links to the team report (Google Doc), and every run refreshes content behind the same URLs. If either `file_id` is empty (first run), create the file and set `redhat.com` domain reader permission, then save the ID to `drive-config.md`.
+Both Drive links are permanent - the #team-pitcrew-automotive Slack canvas links to the team report (Google Doc), and every run refreshes content behind the same URLs. If either `file_id` is empty (first run), create the file and set `redhat.com` domain reader permission, then save the ID to `drive-config.md`.
 
 **e. Update strategic cache** if refreshed in step 4.
 
@@ -266,7 +266,7 @@ Confirm to the user (or log, in cron mode):
 - HTML report generated with all mode-appropriate sections populated from live data
 - Email sent successfully as attachment to `aefrat@redhat.com`
 - Snapshot saved to active and history stores
-- HTML uploaded to Google Drive (same file ID — link never changes)
+- HTML uploaded to Google Drive (same file ID - link never changes)
 - Strategic cache updated if refreshed
 - Changes committed to git
 
@@ -293,11 +293,11 @@ Confirm to the user (or log, in cron mode):
 
 ## Gotchas
 
-- **Slack via MCP only.** All Slack access uses the community slack-mcp MCP server (read-only, configured in `~/.mcp.json`). No curl, no xoxc/xoxd tokens. If MCP tools return errors, flag in report — don't silently skip.
+- **Slack via MCP only.** All Slack access uses the community slack-mcp MCP server (read-only, configured in `~/.mcp.json`). No curl, no xoxc/xoxd tokens. If MCP tools return errors, flag in report - don't silently skip.
 - **Jira CLI auth.** Uses tokens from `~/.netrc` or config. If it fails, flag. Atlassian API token "Avi2" expires Jun 27, 2026.
 - **History immutability.** Never overwrite a dated file in `history/`. If re-running same day and mode, append sequence number (e.g., `2026-06-23-weekly-2.html`).
 - **Email attachment mode.** HTML sent as attachment (`-a`), not inline body. Previous `--html` mode caused truncation on large reports.
-- **Strategic cache TTL.** 30-day refresh. Daily mode never triggers refresh — only weekly/full do.
+- **Strategic cache TTL.** 30-day refresh. Daily mode never triggers refresh - only weekly/full do.
 - **Google Docs auth.** Can expire silently. `gws docs` returns empty on 403. Run `gws auth status` first.
 - **Sprint gaps.** `sprint in openSprints()` fails if no sprint is active. Fall back to date-range query.
 - **Drive upload.** Uses `gws drive:v3` CLI. First run creates file + sets permission; subsequent runs update content only. `file_id` stored in `reference/drive-config.md`. If Drive upload fails (auth expired, quota), flag in report but don't block email send. The permanent Drive link is pinned in the #team-pitcrew-automotive Slack canvas.
