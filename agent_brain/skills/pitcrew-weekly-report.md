@@ -189,7 +189,7 @@ cp /tmp/pitcrew-snapshot-${REPORT_DATE}.json agent_brain/projects/pitcrew-agent/
 cp /tmp/pitcrew-${MODE}-report-${REPORT_DATE}.html user/reports/pitcrew-${MODE}-report-${REPORT_DATE}.html
 ```
 
-**d. Generate team report and upload to Google Drive:**
+**d. Generate team report and upload to Google Drive (weekly/full only — skip entirely in daily mode):**
 
 Two Drive artifacts are maintained - read `reference/drive-config.md` for file IDs and folder ID.
 
@@ -232,7 +232,7 @@ gws drive:v3 files update \
 ```bash
 gws drive:v3 files update \
   --params '{"fileId":"FULL_GDOC_FILE_ID"}' \
-  --upload user/reports/pitcrew-${MODE}-report-${REPORT_DATE}.html \
+  --upload user/reports/pitcrew-full-report-${REPORT_DATE}.html \
   --upload-content-type text/html
 ```
 
@@ -240,7 +240,7 @@ gws drive:v3 files update \
 ```bash
 gws drive:v3 files update \
   --params '{"fileId":"FULL_HTML_FILE_ID"}' \
-  --upload user/reports/pitcrew-${MODE}-report-${REPORT_DATE}.html
+  --upload user/reports/pitcrew-full-report-${REPORT_DATE}.html
 ```
 
 Both Drive links are permanent - the #team-pitcrew-automotive Slack canvas links to the team report (Google Doc), and every run refreshes content behind the same URLs. If either `file_id` is empty (first run), create the file and set `redhat.com` domain reader permission, then save the ID to `drive-config.md`.
@@ -285,10 +285,10 @@ Confirm to the user (or log, in cron mode):
 - [ ] Active store updated
 - [ ] History store updated (dated + mode suffix, immutable)
 - [ ] User reports copy saved
-- [ ] Team report HTML generated (sprint-focused, inline styles)
-- [ ] Team report uploaded to Google Drive as Google Doc
-- [ ] Full report uploaded to Google Drive as Google Doc
-- [ ] Full report uploaded to Google Drive as HTML
+- [ ] Team report HTML generated (weekly/full only - sprint-focused, inline styles)
+- [ ] Team report uploaded to Google Drive as Google Doc (weekly/full only)
+- [ ] Full report uploaded to Google Drive as Google Doc (weekly/full only)
+- [ ] Full report uploaded to Google Drive as HTML (weekly/full only)
 - [ ] Git committed
 
 ## Gotchas
