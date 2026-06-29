@@ -70,6 +70,16 @@ Question: "What feedback have you received? Key takeaways including top strength
 Answer: "The informal feedback I received suggests to me that my development trajectory is continued hands-on work, with an inclination to go deep into an area in order to enhance it. This is also my personal inclination."
 - **Key signal:** Eitan's self-identified development direction is depth-first, enhancement-oriented. Aligns with observed infrastructure deep-dives (s3pi, CloudFront, runner consolidation). Growth recommendations should channel this inclination toward Level 4 impact (formalize, share, scale) rather than fight it.
 
+### Impact/Career Growth self-assessment (collected 2026-06-29)
+Question: "Impact/Career Growth - skills most relevant to current role and skills needed for future career aspirations"
+Answer: "My personal inclination - both from a suitability perspective and what I like to do - is to continue with hands on software engineering. I like to go deep into a subject matter and enhance it to a production-level grade. I like designing new functionality, creating efficiencies and improvements and I like to implement them. With AI, I see myself doing more and faster in the coming future - moving towards what the industry describes as an 'overseer' to the AI who will do the implementation work. I would also like to see myself hitting the 'Principal Software Engineer' at some point in the future."
+- **Key signals:**
+  - Explicitly aspirational: wants to reach Principal SE (IC Level 4)
+  - AI vision: sees himself as "overseer" directing AI implementation - forward-thinking, aligns with industry trajectory
+  - Confirmed depth-first preference: "go deep into a subject matter and enhance it to production-level grade"
+  - Values the full cycle: design, efficiency, implementation - not just execution
+  - Growth path should emphasize: knowledge sharing, AI methodology leadership, strategic framing of deep technical work
+
 ## Jira Tickets Resolved (Q2 2026)
 
 | Key | Summary | Type | Priority |

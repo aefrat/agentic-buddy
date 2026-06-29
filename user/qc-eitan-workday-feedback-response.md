@@ -57,6 +57,37 @@ The gap between where you are and Level 4 is not about working harder or taking 
 
 I want to be clear: these are growth opportunities, not gaps. You are performing well at your current level and the feedback from peers confirms that. The question is how to position the depth you naturally bring so it creates impact at the next level. Let us discuss specific goals and timelines in our next 1:1 so we can turn these into a concrete plan for the second half of the year.
 
+**Impact/Career Growth:**
+
+Eitan, I appreciate you being direct about where you want to go. You said you want to "continue with hands-on software engineering," that you like to "go deep into a subject matter and enhance it to production-level grade," that you see yourself moving toward an AI "overseer" role where you direct AI to do implementation work, and that you would like to reach Principal Software Engineer at some point in the future. That is a clear and honest self-assessment, and I want to help you get there.
+
+The good news is that your natural working style - going deep, designing new functionality, creating efficiencies, and implementing them - is exactly what the Principal SE role values. The path from Senior to Principal is not about changing what you do. It is about expanding the reach and visibility of how you do it.
+
+*Skills most relevant to your current role (Senior SE) that you are strong in:*
+
+- Infrastructure engineering (AWS, CloudFront, CI/CD pipelines, Terraform) - this is your core and you are performing well here
+- Security and compliance awareness - you handle vulnerability remediation and compliance decisions with good judgment
+- Troubleshooting and root cause analysis - the VPC/DNS resolution work and CloudFront debugging show strong diagnostic skills
+- Cross-team collaboration - you navigate external teams (IT Cloud, PSCA, GRC) effectively and independently
+- AI-assisted development - your claude-code adoption with custom hooks and skills puts you ahead of most engineers in practical AI tooling
+
+*Skills you need to grow for Principal Software Engineer (IC Level 4):*
+
+- Technical leadership and influence - moving from "the person who fixes infrastructure" to "the person who shapes how the team thinks about infrastructure." You are already showing this with the runner consolidation and the webserver decommission proposal. The next step is doing it more deliberately and consistently
+- Knowledge formalization - your depth produces real expertise, but right now it lives mostly in your head and in Slack threads. Writing design documents, blog posts, or presenting at tech talks turns that expertise into something durable and visible. This is one of the clearest differentiators between Level 3 and Level 4
+- Strategic thinking - connecting your technical work to business outcomes. The runner consolidation is a perfect example: you reduced EC2 costs. At Level 4, you would frame that proactively as a CI/CD optimization strategy, present the cost impact to stakeholders, and propose the next round of improvements. The technical work is the same - the framing and communication change
+- Mentoring and coaching - not just onboarding new members (which you already do well with the Gator sessions), but shaping how more experienced colleagues approach problems. With Matt Goldman joining and Hubert transitioning, you have a natural opportunity here
+- AI workflow design - your vision of becoming an AI "overseer" is forward-thinking and aligns with where the industry is heading. To get there at Level 4, you should move from building tools for yourself to evaluating and introducing AI methodologies for the team. Document which tasks AI handles well in your workflow, which ones still need human judgment, and share those patterns. That positions you as a leader in AI-augmented engineering, not just a user of it
+
+*Concrete next steps for H2 2026:*
+
+1. Pick one piece of your deep work this quarter (runner consolidation or claude-code skills) and write it up as an internal blog post or design document. Present it at a team demo or broader tech talk. This is the single highest-leverage action for Level 4 visibility
+2. Explore Red Hat Core Skills in Workday and update your skills profile. This will improve your recommendations in Career Hub for projects, contacts, and internal opportunities that match where you want to grow. Focus on adding your infrastructure, CI/CD, and AI tooling skills so the system can surface relevant opportunities
+3. Set up a recurring knowledge-sharing session (monthly or bi-weekly) on infrastructure patterns with Matt and other interested team members. This builds the mentoring track naturally
+4. In our next 1:1, let us map out a timeline for when you want to target Principal SE and work backward to identify which Level 4 differentiators to focus on first. Based on this quarter, I would suggest starting with knowledge sharing and AI methodology leadership - they align most closely with your stated inclination and require the least change to how you already work
+
+Your aspiration to reach Principal Software Engineer is realistic and well-grounded. You are not starting from scratch - you already have Level 4 signals in business impact (runner consolidation), AI methodology (claude-code tooling), and cross-team scope. The work ahead is about consistency and visibility: doing what you already do naturally, but making sure it is seen, shared, and scaled. I am here to support that journey and I look forward to discussing a concrete plan together.
+
 I am proud of your work this quarter, Eitan. Keep going deep - and let us work together on making that depth more visible.
 
 Avihai
