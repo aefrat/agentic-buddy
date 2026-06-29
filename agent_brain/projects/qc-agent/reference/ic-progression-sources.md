@@ -158,3 +158,15 @@ Associate SQE -> SQE -> Senior SQE -> Principal SQE -> Senior Principal SQE -> D
 The Talent Architecture page is the hub for all job family progression matrices at Red Hat. It links to the Skill Progression Matrices (broken down by Job Family) and the Job Interests Catalog in Workday. The Engineering Competencies (Distinguished Engineer level, IC-6) are a separate framework.
 
 The page also covers the promotion process overview for IC levels 2-5, manager level, and senior director level.
+
+## Engineering Manager Progression
+
+**Source:** [Manager, Engineering Job Progression - Google Sheets (April 2026)](https://docs.google.com/spreadsheets/d/1oPb05Hzt-vvE6jb1mfnqBagW0aq0mctNvA9zqr07Et4/edit?gid=906581613)
+
+Manager Levels 2-6 (Associate Manager through Senior Director). Includes job descriptions, core responsibilities, and job skills progression. Full extraction available at `../../talent-architecture/reference/engineering-manager-progression.md`.
+
+## Full Talent Architecture Knowledge Base
+
+For comprehensive talent architecture reference (full Radford framework dimensions, Enterprise competency proficiency levels, Career Track Pathway, Manager progression), see the dedicated project:
+
+**`agent_brain/projects/talent-architecture/index.md`** - Read the index for navigation to specific reference documents. This project consolidates all talent architecture knowledge from PDFs, HTML sources, and Google Sheets into structured agent-consumable reference files.
