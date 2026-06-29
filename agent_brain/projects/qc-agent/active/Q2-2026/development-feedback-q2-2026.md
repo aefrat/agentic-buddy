@@ -85,33 +85,39 @@ For each team member:
 
 ### Eitan Raviv - Senior Software Engineer, ATC
 
+*Updated 2026-06-29 with self-assessment input. Eitan's stated development trajectory: "continued hands-on work, with an inclination to go deep into an area in order to enhance it."*
+
 **Dimension assessment (Professional Track):**
 
-- Scope [Level 3]: Works independently on infrastructure and security tasks. Delivers on existing processes (AWS provisioning, CloudFront, security patching). Monitoring criticality tiers initiative hints at proposing new methods (Level 4), but hasn't scaled to functional-level impact yet.
-- Complexity [Level 3, trending 4]: Navigated 5+ external organizational channels (PSCA, IT Cloud, GRC, BOA) - this breadth of relationship exceeds Level 3's "within discipline." Resolves cross-team procedural complexity. Not yet recognized as expert leading cooperative efforts.
-- Impact [Level 3]: Infrastructure work contributes to team goals through operational stability. Decisions impact immediate team's ability to release. Not yet at "operational direction for functional goals" (Level 4).
+- Scope [Level 3, with Level 4 signals]: Works independently across broad infrastructure domain (AWS, CloudFront, CI/CD, monitoring, security). GitLab runner consolidation is a clear Level 4 behavior - proposed a new technique (pipeline pooling) based on business context (cost reduction) with impact within the function. AI tooling adoption (claude-code hooks/skills) shows "proposing new methods." Gator sessions with Hubert and Distribution Focus area help show cross-scope willingness.
+- Complexity [Level 3, trending 4]: Navigated 5+ external organizational channels (PSCA, IT Cloud, GRC, BOA) - this breadth of relationship exceeds Level 3's "within discipline." Built reusable AI tools (hooks, skills) rather than one-off usage - creative problem-solving characteristic of Level 4. Not yet recognized as expert leading cooperative efforts.
+- Impact [Level 3, with Level 4 data points]: Runner consolidation delivered measurable budget savings - impacts operational objectives beyond immediate team (Level 4). CPPX ticket affects customer-facing outcomes. Monitoring SLA criticality tiers shape how the broader team prioritizes incident response. Infrastructure work keeps release pipeline secure and operational.
 
-**Current level fit:** Meeting expectations. Strong in infrastructure ownership, security compliance, and cross-organizational navigation. Independently manages AWS, CloudFront, and monitoring infrastructure.
+**Current level fit:** Meeting expectations and showing emerging Level 4 signals. Strong in infrastructure ownership, security compliance, cross-organizational navigation, cost optimization, and AI tooling adoption.
 
 **Already demonstrating at IC Level 4:**
-- *Cross-team collaboration:* Navigated 5+ external channels (PSCA, IT Cloud, GRC, BOA Automotive) - this breadth of organizational reach exceeds Level 3
-- *Monitoring initiative:* Criticality tiers in monitoring SLA specification is a system-design initiative that spans the team - Level 4 behavior
+- *Business impact:* GitLab runner consolidation delivered measurable EC2 cost savings - "visible business impact initiative" (Level 4 SE progression)
+- *AI methodology:* Built reusable claude-code hooks and skills (Jira ticket creator, GitLab MR fetcher, notification hook) - approaching "evaluate and introduce new methodologies" (Level 4)
+- *Cross-team collaboration:* Navigated 5+ external channels, jumped into Distribution Focus area for urgent work, conducted Gator sessions with Hubert
+- *Monitoring initiative:* Criticality tiers in monitoring SLA specification is a system-design initiative that spans the team
 - *Communication:* Multi-channel incident communication pattern (advance notice, status, all-clear) demonstrates leadership communication
 
 **Growth areas for IC Level 4:**
-- *Technical scope:* Most contributions are infrastructure operations rather than "features that cross multiple subsystems." Level 4 expects leading design of cross-component features, not just maintaining infrastructure
-- *Mentoring:* No evidence of coaching or mentoring others. Level 4 expects mentoring senior engineers across teams
-- *Business impact articulation:* Level 4 expects "owns and delivers technical initiatives with visible business impact." Infrastructure work is critical but not positioned as business initiatives
-- *Community engagement:* Level 4 expects "key representative and leader within the community." Limited upstream or community activity visible this quarter
-- *AI tools:* Level 4 expects "evaluates and introduces new AI-driven methodologies." No AI tooling evidence
-- *Knowledge sharing:* No design documents, blog posts, or presentations evident
+- *Technical scope:* Runner consolidation touched cross-subsystem (SOA + Services + Gating + pipe-x + Jumpstarter), but most work remains subsystem-level infrastructure. Level 4 expects leading design of cross-component features
+- *Quality practices:* Added integration tests for s3pi (own code quality). Level 4 expects establishing/monitoring testing practices for multiple teams
+- *Mentoring breadth:* Gator sessions with Hubert (new member) meet Level 3. Level 4 expects coaching/mentoring senior engineers across teams
+- *Community engagement:* Active contributor across 14 Slack channels but not yet a recognized community leader
+- *Knowledge sharing:* No blog posts, design documents, or conference presentations evident this quarter
+- *SDLC leadership:* Champion for infra practices within team. Level 4 expects leading SDLC definition for multi-component systems
+
+**Self-assessment alignment:** Eitan identifies his trajectory as "continued hands-on work, with an inclination to go deep into an area in order to enhance it." This aligns naturally with the infrastructure depth he already demonstrates (s3pi performance + testing + debt reduction, CloudFront module extensions, monitoring SLA tiers). The recommended development path below channels this depth-oriented inclination toward Level 4 impact by ensuring his deep-dive improvements are formalized, shared, and positioned as functional-level contributions.
 
 **Recommended development path:**
-1. **Lead a cross-component design initiative** - the monitoring criticality tiers is a great foundation. Expand it into a formal monitoring/observability strategy for ATC with documented design decisions and present it to stakeholders
-2. **Mentor newer team members** on infrastructure and AWS patterns. Matt Goldman, who is new and touching similar infrastructure, would benefit from Eitan's deep operational knowledge
-3. **Document infrastructure decisions** - write internal design documents for key infrastructure choices (CloudFront architecture, AWS provisioning patterns). This builds the knowledge-sharing and communication skills needed at Level 4
-4. **Engage with SRE or infrastructure communities** at Red Hat - contribute patterns or tools to internal SRE forums
-5. **Explore AI tools** for infrastructure management, monitoring, or incident response automation
+1. **Formalize and share the AI tooling work** - the claude-code hooks and skills are exactly Level 4's "evaluate and introduce new methodologies." Share with the team, document workflow improvements, propose adoption patterns. This turns personal depth into team-wide methodology introduction - directly aligned with Eitan's stated inclination to "go deep and enhance"
+2. **Lead a cross-component design initiative** - the monitoring criticality tiers and runner consolidation are strong foundations. Expand the runner consolidation into a formal CI/CD optimization strategy with documented design decisions and cost impact analysis. Present to stakeholders
+3. **Mentor newer team members** on infrastructure and AWS patterns. Matt Goldman and Hubert Stefanski, who touch similar infrastructure, would benefit from Eitan's deep operational knowledge. The Gator sessions are a good start - expand to regular knowledge-sharing sessions
+4. **Document infrastructure decisions** - write internal design documents or blog posts for key infrastructure choices (runner consolidation cost savings, CloudFront architecture, s3pi optimization patterns). This builds the knowledge-sharing and expert recognition needed at Level 4
+5. **Engage with SRE or infrastructure communities** at Red Hat - contribute patterns or tools to internal SRE forums. Eitan's depth-first approach would produce valuable, detailed content
 
 ---
 
@@ -432,7 +438,7 @@ Conclusion: Not yet ready for promotion. Juanje is on a clear trajectory from Le
 ### Where the team sits on Scope / Complexity / Impact
 
 - Bella [Level 3] - Scope: 3 / Complexity: 3 / Impact: 3, trending 4. Strongest: Impact (CTC affects release certification). Biggest gap: Scope - needs cross-team coordination as primary responsibility.
-- Eitan [Level 3] - Scope: 3 / Complexity: 3, trending 4 / Impact: 3. Strongest: Complexity (navigates 5+ external orgs). Biggest gap: Impact - infrastructure work not positioned as functional direction.
+- Eitan [Level 3, with L4 signals] - Scope: 3, with L4 signals (runner consolidation, AI tooling) / Complexity: 3, trending 4 / Impact: 3, with L4 data points (budget savings). Strongest: Business impact (runner consolidation), AI methodology (claude-code skills). Biggest gap: Knowledge sharing, community leadership.
 - Hubert [Level 3] - Scope: 3, trending 4 / Complexity: 3-4 boundary / Impact: 3, trending 4. Strongest: Complexity (gating expertise + cross-team relationships). Biggest gap: Impact - needs to own a strategic initiative with functional-level accountability.
 - Kanitha [Level 3] - Scope: 3-4 boundary / Complexity: 3, trending 4 / Impact: 3-4 boundary. Strongest: Scope (25 channels, 4 Jira projects, broadest reach). Biggest gap: Complexity - needs formal recognition as expert and team lead role.
 - Muhamad [Level 3] - Scope: 3 / Complexity: 3 / Impact: 3. Strongest: Scope (independent, well-structured testing work). Biggest gap: Complexity - low visibility, needs broader relationships.
@@ -445,7 +451,7 @@ Conclusion: Not yet ready for promotion. Juanje is on a clear trajectory from Le
 ### Common themes
 
 - Knowledge sharing (articles, design docs) - Who: Bella, Eitan, Benny, Muhamad, Kanitha. Dimension: Scope + Complexity (expert recognition). Action: Write at least one internal article or design doc per quarter.
-- AI tools exploration - Who: Bella, Eitan, Hubert, Kanitha, Muhamad. Dimension: Scope (proposing new methods). Action: Try AI tools for daily work; share findings in team channel.
+- AI tools exploration - Who: Bella, Hubert, Kanitha, Muhamad. Dimension: Scope (proposing new methods). Action: Try AI tools for daily work; share findings in team channel. (Note: Eitan has already progressed past exploration - built reusable claude-code hooks and skills. His next step is formalizing and sharing with team.)
 - Mentoring relationships - Who: Bella, Eitan, Muhamad, Benny. Dimension: Scope (guidance to others). Action: Establish at least one formal mentoring pair.
 - External presentations - Who: Juanje, Benny, Roni. Dimension: Complexity (industry recognition). Action: Submit conference talks; internal demos are a stepping stone.
 - Business impact articulation - Who: All. Dimension: Impact (strategy contribution). Action: Frame technical work in terms of business value when presenting to leadership.
