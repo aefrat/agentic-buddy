@@ -10,7 +10,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 |------|-------------|------------|
 | 2026-06-28 | ATC Slack channel scan (7 days, 18 channels) | `a268a101-97cd-4b33-bf84-41de0e332cdc` |
 | 2026-06-29 | QC report locations, Juanje ACP/articles evidence, LP status (cron), Rule 21 (no AI-tell chars), Juanje QC self-input integration, development feedback (IC progression matrices + Job Leveling Framework + Job Architecture), QC skill Step 12 update, Workday table conversion, Juanje career aspirations response | `cc9f821f-e173-4109-bbb9-0a573c938504` → `fe2aebb2-5501-4496-b462-5093f01a3446` |
-| 2026-06-29 | Monday catch-up: daily manager report + PitCrew RHAS daily (parallel agents), LP cron confirmed | `3bc2e04d-3316-422b-bec2-3409e30f9019` |
+| 2026-06-29 | Monday catch-up: daily manager + PitCrew RHAS daily reports, Slack + Gmail scan (17 channels + 48h email), task capture, Jira token resolution | `3bc2e04d-3316-422b-bec2-3409e30f9019` |
 | 2026-06-28 | LP status + LP deprioritization + weekly manager report + full PitCrew report (parallel agents) | `0816ead2-cfdb-4e2a-b9cc-5eb7bff736f9` |
 | 2026-06-28 | Brew tags CLI documentation capture, CY26Q2 QC context | `c86c2ac7-ff5b-4b13-9dc0-0938e7fada3a` |
 | 2026-06-24 | Continuation — Slack MCP confirmation, reflect | `0d5492b1-6f62-41f3-b36f-9f24ce8323de` |
