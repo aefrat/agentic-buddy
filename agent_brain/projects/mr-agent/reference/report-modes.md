@@ -20,17 +20,18 @@ Three operating modes controlling the time window and report label.
 
 ## Cron schedule
 
-Weekend arrives 30 minutes before weekly on Sundays — focused Thu-Sun view first, then full 7-day context.
+Weekend arrives 30 minutes before weekly on Sundays — focused Thu-Sun view first, then full 7-day context. Tuesday runs as weekly (shared in the broader RHIVOS program call).
 
 ```
 # Weekend — Sunday 07:00
 0 7 * * 0   generate_report.py --mode weekend
 
-# Weekly — Sunday 07:30
+# Weekly — Sunday 07:30 and Tuesday 07:30
 30 7 * * 0  generate_report.py --mode weekly
+30 7 * * 2  generate_report.py --mode weekly
 
-# Daily — Mon-Fri 07:30
-30 7 * * 1-5  generate_report.py --mode daily
+# Daily — Mon, Wed-Fri 07:30
+30 7 * * 1,3-5  generate_report.py --mode daily
 ```
 
 Logs: `/tmp/manager_report.log`
@@ -39,5 +40,6 @@ Logs: `/tmp/manager_report.log`
 
 When the user doesn't specify a mode:
 - Sunday → weekend (most useful for weekend catch-up)
-- Mon-Fri → daily
+- Tuesday → weekly (shared in the RHIVOS program call)
+- Mon, Wed-Fri → daily
 - Saturday → weekly (rare; full week in review)
