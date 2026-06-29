@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-06-28
-access_count: 18
+last_accessed: 2026-06-29
+access_count: 19
 created: 2026-06-01
 ---
 
@@ -54,6 +54,7 @@ Resolved observations are moved to the bottom.
 - **2026-06-21:** "Shared config, additive extension" — when two agents need overlapping team data, extend the existing config file with new fields rather than duplicating. Each agent ignores fields it doesn't use. Prevents config drift. Applied: QC agent's `members.yaml` extended with `accent_color` and `google_docs` for the manager report agent. (seen: 1)
 - **2026-06-21:** Google Docs `replaceAllText` uses substring matching — "Software Engineer" matches inside "Senior Software Engineer". When doing targeted text replacements, qualify with surrounding context (e.g., `"Name | Title"`) to prevent double-prefixing. Tested: no garbling occurred in this batch because title strings appeared only once per doc in non-overlapping positions. (seen: 1)
 - **2026-06-21:** "Behavioral evidence vs deliverable evidence" — when evaluating how someone works (behaviors), Slack interaction patterns (tone, helpfulness, thread participation, cross-team engagement) are better evidence than ticket/MR metrics. Deliverable-based behavioral claims are unfalsifiable and interchangeable between people. Applied: QC Section B methodology rewrite from deliverable-based to Slack-behavioral. (seen: 1)
+- **2026-06-29:** "Self-input integration for QC reports" — team member self-authored accomplishment narratives are the richest source for QC Section A, containing specific ticket numbers, demo dates, cross-team coordination details, and the "how" narrative that Slack/Jira alone miss. The auto-generated draft missed several major deliverables (CTC agent, Pi extensions, Matt Goldman onboarding) that only surfaced from Juanje's self-input. Pattern: auto-generated QC drafts from Jira+Slack are a strong baseline but should be supplemented with team member self-input before finalizing. The gap is especially large for "how" (Section B/C) and for work that doesn't leave Jira/Slack traces (mentoring, onboarding support, design thinking). (seen: 1)
 - **2026-06-21:** "Accumulation mechanism for periodic reports" — daily/weekly reports should extract and accumulate signals into a dedicated file for quarterly consumption. Applied: manager report → `multiplier-observations.md` → quarterly QC Section B. Pattern: "frequent captures → accumulation file → periodic synthesis." (seen: 1)
 - **2026-06-22:** Slack search API `after:YYYY-MM-DD` date filter returns 0 results with xoxc tokens even when messages exist. Workaround: omit date filter, post-filter by timestamp in code. The `conversations.history` API `oldest=` unix timestamp works correctly. (seen: 1)
 - **2026-06-22:** "Stakeholder visibility in team reports" — adding non-team-member activity tracking to automated reports fills the gap of cross-team context that affects the team's work. AI-synthesized digest keeps it low-noise. Pattern: "track the people who influence your team's work, not just the people who do it." (seen: 1)
