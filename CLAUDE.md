@@ -87,6 +87,7 @@ Directories with an `index.md` have a content map — read it first to decide wh
 - [Core RPMs Redux Report Agent](agent_brain/projects/core-rpms-redux-agent/index.md) — Core RPMs Redux (VROOM-31017) report agent stores (active snapshot, history, data sources). Read when running Core RPMs Redux status report or comparing against previous run.
 - [Quarterly Connection Agent](agent_brain/projects/qc-agent/index.md) — CY26Q2 team member QC report drafts, collected data, HTML outputs. Read when running QC reports, reviewing member evaluations, or preparing Quarterly Connection submissions.
 - [Talent Architecture](agent_brain/projects/talent-architecture/index.md) — Red Hat Global Engineering Talent Architecture: Job Leveling Framework (Radford), Career Track Pathway, Competency Proficiency Levels, Engineering Manager progression, and job-family progression matrix links. Read when assessing career levels, preparing 1:1 development conversations, evaluating promotion readiness, or answering "what does level X look like."
+- [Team Priorities](agent_brain/projects/team-priorities.md) — ATC and PitCrew/RHAS Q3 2026 priorities + RHIVOS program priorities. Read when generating development plans, running weekly reports, or assessing work alignment.
 
 New directories inside `agent_brain/` or `user/` are created as needed. Add them to this list. Format: **what the directory contains** (content description) + **when to read it** (trigger). Don't describe how it's built or maintained — that belongs in the skill, not here.
 

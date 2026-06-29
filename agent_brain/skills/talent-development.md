@@ -36,26 +36,28 @@ You are warm but precise. You write as a thoughtful manager would: specific, con
    - For ICs: `qc-agent/reference/ic-progression-sources.md` - the job-family-specific progression matrix (SE, QE, or SRE) with key differentiators for their level transition. Fetch from Google Sheets if the extracted content is insufficient.
    - For Managers: `talent-architecture/reference/engineering-manager-progression.md` - manager-specific responsibilities and level transitions.
 
-3. **Gather available evidence.** Check in this order, stopping when you have enough to assess:
+3. **Load team priorities.** Read `agent_brain/projects/team-priorities.md`. Identify priorities relevant to this member's team (ATC or PitCrew/RHAS) and program-level priorities. These feed into sections (e) Growth opportunities and (g) Recommended next steps - match framework gaps to real team needs rather than generic advice.
+
+4. **Gather available evidence.** Check in this order, stopping when you have enough to assess:
    a. Most recent QC collected data: `qc-agent/active/{quarter}/collected-data/{member_id}.md`
    b. Development feedback from last QC: `qc-agent/active/{quarter}/development-feedback-{quarter}.md`
    c. Previous quarter's QC reports: `qc-agent/history/`
    d. Previous development briefs: `talent-architecture/active/{member_id}/`
    e. If no evidence found: inform the user. Offer to either (a) run a targeted Jira + Slack data pull, or (b) proceed with user-provided context from the 1:1.
 
-4. **Assess current positioning.** For each of the 3 Job Leveling Framework dimensions:
+5. **Assess current positioning.** For each of the 3 Job Leveling Framework dimensions:
    - **Scope:** Map the member's observed reach, responsibilities, and guidance role against their current level's descriptor and the next level's descriptor. Where do they sit?
    - **Complexity:** Map their judgment quality, expertise recognition, and relationship breadth. Are they working on the types of problems expected at their level? Beyond?
    - **Impact:** Map their accountability scope, strategic contribution, and decision impact. Team-level? Functional? Cross-functional?
    - Rate each dimension: "solidly at level" / "stretching toward next" / "gaps to address"
    - For Enterprise competencies: compare observed Multiplier behaviors (from QC Section B if available) to the expected proficiency at their IC level from the competency matrix.
 
-5. **Disconfirmation gate.** Before generating the development brief:
+6. **Disconfirmation gate.** Before generating the development brief:
    - If the assessment leans "ready for promotion" on all 3 dimensions: actively seek contradicting evidence. Have they demonstrated next-level behaviors consistently or only in isolated instances? Are there dimensions where evidence is strong in one area but weak in another (e.g., technical scope expanded but relationship breadth hasn't)? Is the "stretch" sustained over the quarter or a single event?
    - If the assessment shows "gaps to address": verify these aren't just data gaps. Was the member on leave? Did they change roles mid-quarter? Is the evidence period too short? Ask the user if uncertain.
    - Document what you checked and what you concluded in the brief.
 
-6. **Generate development brief.** Produce a structured 1:1-ready document with these sections:
+7. **Generate development brief.** Produce a structured 1:1-ready document with these sections:
 
    **a. Current position snapshot** (2-3 sentences)
    Place the member in the framework: their level, track, and the key sentence from the Job Leveling Framework that best describes where they are.
@@ -75,7 +77,7 @@ You are warm but precise. You write as a thoughtful manager would: specific, con
    Specific strengths with evidence. Things to celebrate in the 1:1.
 
    **e. Growth opportunities** (2-4 items)
-   Areas where framework language points to a gap, with specific actions. Not "improve communication" but "build productive working relationships beyond own team - currently interacting mainly within the immediate team, next level expects leading cooperative efforts among teams."
+   Areas where framework language points to a gap, with specific actions. Not "improve communication" but "build productive working relationships beyond own team - currently interacting mainly within the immediate team, next level expects leading cooperative efforts among teams." Where possible, map growth areas to current team or program priorities from Step 3. Instead of generic "lead a cross-component design initiative," recommend specific initiatives from the team priorities list that would stretch the right dimensions.
 
    **f. 1:1 talking points** (3-5 questions)
    Open-ended questions the manager can use to explore development with the member. Examples:
@@ -84,11 +86,11 @@ You are warm but precise. You write as a thoughtful manager would: specific, con
    - "Where do you see your career going in the next 1-2 years - deeper technical, broader scope, or management?"
 
    **g. Recommended next steps** (3-5 items)
-   Concrete actions: stretch assignments, mentoring pairings, cross-team projects, conference proposals, skill-building. Each mapped to the dimension or competency it addresses.
+   Concrete actions: stretch assignments, mentoring pairings, cross-team projects, conference proposals, skill-building. Each mapped to the dimension or competency it addresses. Tie at least 2 recommendations to active team or program priorities - this makes the development plan serve both the member's growth AND the team's delivery needs.
 
-7. **Save development snapshot.** Write the brief to `agent_brain/projects/talent-architecture/active/{member_id}/YYYY-MM-DD-development-brief.md` with metadata. This is episodic - write once, don't edit later.
+8. **Save development snapshot.** Write the brief to `agent_brain/projects/talent-architecture/active/{member_id}/YYYY-MM-DD-development-brief.md` with metadata. This is episodic - write once, don't edit later.
 
-8. **Offer integration.** Ask the user if they want to:
+9. **Offer integration.** Ask the user if they want to:
    - Feed this into the next QC report's development feedback section
    - Create action items in `user/` for follow-up on the recommended next steps
    - Schedule a reminder for the next 1:1 to revisit these development areas
@@ -100,6 +102,7 @@ You are warm but precise. You write as a thoughtful manager would: specific, con
 - Disconfirmation gate documented: what was checked, what was concluded
 - At least 3 actionable 1:1 talking points that reference framework language
 - At least 3 recommended next steps mapped to specific dimensions or competencies
+- At least 2 recommended next steps mapped to active team or program priorities
 - Development snapshot saved to episodic active store
 - User offered integration options
 
@@ -116,6 +119,7 @@ You are warm but precise. You write as a thoughtful manager would: specific, con
 
 - [ ] Member identified, job family and level confirmed from members.yaml
 - [ ] Appropriate reference material loaded (Job Leveling Framework + progression matrix + competency levels)
+- [ ] Team priorities loaded and relevant priorities identified for member's team
 - [ ] Available evidence gathered (QC data, previous briefs, observations)
 - [ ] 3-dimension assessment completed (Scope, Complexity, Impact) with ratings
 - [ ] Enterprise competency readiness assessed against expected proficiency
