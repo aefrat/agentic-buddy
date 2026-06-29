@@ -204,6 +204,23 @@ across weeks and months of accumulated knowledge.
 
 ---
 
+### Phase 5b: AI Methodology monthly synthesis
+
+Check if `agent_brain/projects/methodology-agent/active/daily-observations.md`
+has 20 or more daily captures since the last monthly synthesis (check
+`methodology-agent/history/` for the most recent `*-monthly.md` file).
+
+If threshold met:
+1. Read and execute `agent_brain/skills/ai-methodology.md` Mode B
+   (periodic synthesis) with period `monthly`.
+2. The monthly brief covers a 30-day window with deeper pattern analysis,
+   adoption readiness assessments, and trend analysis across the full
+   period.
+3. This produces a comprehensive shareable artifact in
+   `user/ai-methodology-brief-YYYY-MM-DD.md`.
+
+If fewer than 20 daily captures exist since last monthly, skip.
+
 ### Phase 6: Contradiction detection
 
 **Goal:** Maintain coherence in the knowledge base. Contradictions erode trust

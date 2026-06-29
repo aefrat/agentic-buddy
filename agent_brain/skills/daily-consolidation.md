@@ -316,6 +316,19 @@ Examples:
 Avoid: accumulated history, internal scores, operational detail that only
 matters during maintenance.
 
+#### 8b. AI Methodology daily capture
+
+If today was an active session (not maintenance-only per Step 0b), run
+the AI methodology daily capture:
+
+1. Read and execute `agent_brain/skills/ai-methodology.md` Mode A
+   (daily capture).
+2. The methodology agent scans today's log (already in context from
+   Step 1), classifies tasks against its taxonomy, detects patterns and
+   anti-patterns, and appends to its active stores.
+3. Skip this step entirely for maintenance-only sessions - there is
+   no substantive content to classify.
+
 #### 8. Log rotation
 
 Keep the `logs/` root at a manageable size. Older logs are archived but

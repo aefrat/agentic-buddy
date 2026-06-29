@@ -265,6 +265,22 @@ memory type): depth in the hierarchy is the cooling mechanism.
 Log flags in today's log (System observations section). Don't move files —
 that's the monthly cycle's job for operational/procedural only.
 
+### 8b. AI Methodology weekly synthesis
+
+Check if `agent_brain/projects/methodology-agent/active/daily-observations.md`
+has entries since the last weekly synthesis (check
+`methodology-agent/history/` for the most recent `*-weekly.md` file).
+
+If 5 or more daily captures exist since last synthesis:
+1. Read and execute `agent_brain/skills/ai-methodology.md` Mode B
+   (periodic synthesis) with period `weekly`.
+2. The methodology agent computes statistics, synthesizes patterns,
+   applies a disconfirmation gate, and generates a shareable brief
+   in `user/ai-methodology-brief-YYYY-MM-DD.md`.
+
+If fewer than 5 daily captures exist, skip - insufficient data for a
+meaningful synthesis.
+
 ### 8. Write weekly summary to journal
 
 Write a summary of the week to `user/journal/weekly/YYYY-WNN.md` (create the
