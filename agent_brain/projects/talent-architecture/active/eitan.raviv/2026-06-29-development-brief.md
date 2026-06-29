@@ -15,6 +15,8 @@ time_at_red_hat: ~9 years
 
 **Priority sources:** [CY26Q3 Priorities](https://docs.google.com/document/d/1uX_NBIRiDA46d_xzxCgWYkE7AaMUKoW9L1rDh-tp7kg) (Kanitha Chim, Paul Wallrabe) | [RHIVOS April 2026 All-Hands slides 17-24](https://docs.google.com/presentation/d/18b4bZ75C1c_K8KUELQRtiWibm9-Wmi1zB5Ct0HiHe0Y) | [Team priorities reference](../../../team-priorities.md)
 
+**Tenure:** ~9 years in current role (Senior Software Engineer) | ~9 years at Red Hat
+
 ## a. Current position snapshot
 
 Eitan is performing at IC Level 3 with targeted Level 4 signals in infrastructure impact and AI tooling adoption. His GitLab runner consolidation delivered measurable EC2 cost savings - a concrete business impact data point that maps to Level 4. His self-described working style ("go deep into an area to enhance it") is a strength for technical depth but limits the cross-team visibility and breadth expected at Level 4. With 28 MRs merged (highest on team) and explicit aspiration to reach Principal SE, the path forward is about amplifying impact and visibility, not changing approach.

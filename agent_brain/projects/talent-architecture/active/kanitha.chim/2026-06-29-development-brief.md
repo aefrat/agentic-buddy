@@ -15,6 +15,8 @@ time_at_red_hat: ~5 years
 
 **Priority sources:** [CY26Q3 Priorities](https://docs.google.com/document/d/1uX_NBIRiDA46d_xzxCgWYkE7AaMUKoW9L1rDh-tp7kg) (Kanitha Chim, Paul Wallrabe) | [RHIVOS April 2026 All-Hands slides 17-24](https://docs.google.com/presentation/d/18b4bZ75C1c_K8KUELQRtiWibm9-Wmi1zB5Ct0HiHe0Y) | [Team priorities reference](../../../team-priorities.md)
 
+**Tenure:** ~1 year 9 months in current role (Senior Software Engineer) | ~5 years at Red Hat
+
 ## a. Current position snapshot
 
 Kanitha is solidly performing at IC Level 3 with multiple signals trending toward Level 4. Her distribution and release expertise spans 4 Jira projects and 25 Slack channels - the broadest reach on the ATC team - positioning her as the team's de facto release distribution specialist. Her cross-project coordination (RHELDST, RHELWF, PSSECAUT alongside VROOM) and functional-level impact on release readiness show emerging Level 4 scope and complexity.

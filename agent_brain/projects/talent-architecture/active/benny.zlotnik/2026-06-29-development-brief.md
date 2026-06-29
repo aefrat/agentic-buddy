@@ -15,6 +15,8 @@ time_at_red_hat: ~9.5 years
 
 **Priority sources:** [CY26Q3 Priorities](https://docs.google.com/document/d/1uX_NBIRiDA46d_xzxCgWYkE7AaMUKoW9L1rDh-tp7kg) (Kanitha Chim, Paul Wallrabe) | [RHIVOS April 2026 All-Hands slides 17-24](https://docs.google.com/presentation/d/18b4bZ75C1c_K8KUELQRtiWibm9-Wmi1zB5Ct0HiHe0Y) | [Team priorities reference](../../../team-priorities.md)
 
+**Tenure:** ~4 years 3 months in current role (Principal Software Engineer) | ~9.5 years at Red Hat
+
 ## a. Current position snapshot
 
 Benny is solidly operating at IC Level 4 (Principal) with clear signals of Level 5 capability in several dimensions. He is the highest-output individual on PitCrew by volume (30 tickets closed, 897 Slack messages across 17 channels) and serves as the connective hub of the team - spanning jumpstarter, builder, hardware enablement, security, observability, and customer-facing work. His breadth is exceptional; the development opportunity is channeling that breadth into strategic direction rather than tactical responsiveness.

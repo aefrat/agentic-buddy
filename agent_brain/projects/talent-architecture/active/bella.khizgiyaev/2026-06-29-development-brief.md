@@ -15,6 +15,8 @@ time_at_red_hat: ~6 years
 
 **Priority sources:** [CY26Q3 Priorities](https://docs.google.com/document/d/1uX_NBIRiDA46d_xzxCgWYkE7AaMUKoW9L1rDh-tp7kg) (Kanitha Chim, Paul Wallrabe) | [RHIVOS April 2026 All-Hands slides 17-24](https://docs.google.com/presentation/d/18b4bZ75C1c_K8KUELQRtiWibm9-Wmi1zB5Ct0HiHe0Y) | [Team priorities reference](../../../team-priorities.md)
 
+**Tenure:** ~9 months in current role (Senior Software Engineer) | ~6 years at Red Hat
+
 ## a. Current position snapshot
 
 Bella is a Senior Software Engineer (IC Level 3) on the PitCrew team, performing solidly within the Level 3 framework expectations. She works independently across CTC reporting, builder platform hardening, and security features with minimal oversight. Her CTC specialization, OIDC cross-subsystem work, and active Konflux integration contributions (visible in her GitHub PRs on automotive-dev-operator) show early signs of Level 4 scope, though she has not yet taken on formal coordination or mentoring responsibilities that would fully establish the next level.

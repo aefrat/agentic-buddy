@@ -15,6 +15,8 @@ time_at_red_hat: ~6 years
 
 **Priority sources:** [CY26Q3 Priorities](https://docs.google.com/document/d/1uX_NBIRiDA46d_xzxCgWYkE7AaMUKoW9L1rDh-tp7kg) (Kanitha Chim, Paul Wallrabe) | [RHIVOS April 2026 All-Hands slides 17-24](https://docs.google.com/presentation/d/18b4bZ75C1c_K8KUELQRtiWibm9-Wmi1zB5Ct0HiHe0Y) | [Team priorities reference](../../../team-priorities.md)
 
+**Tenure:** ~7 months in current role (Principal Software Engineer) | ~6 years at Red Hat
+
 ## a. Current position snapshot
 
 Juanje is a Principal Software Engineer (IC Level 4) on the Professional track, where the framework expects someone who "works independently to set and achieve objectives tied to functional targets and goals" and is "recognized as an expert within the team or department with extensive mastery of functional, business or technical knowledge." He comfortably meets Level 4 expectations and is actively demonstrating several Level 5 (Senior Principal) behaviors - particularly in technical strategy, AI innovation leadership, and cross-team community building. The question for his development conversation is not whether he's at Level 4, but which specific Level 5 gaps remain and what deliberate actions will close them.

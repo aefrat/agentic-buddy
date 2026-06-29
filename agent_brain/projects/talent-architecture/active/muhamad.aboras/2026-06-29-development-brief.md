@@ -15,6 +15,8 @@ time_at_red_hat: ~6 months
 
 **Priority sources:** [CY26Q3 Priorities](https://docs.google.com/document/d/1uX_NBIRiDA46d_xzxCgWYkE7AaMUKoW9L1rDh-tp7kg) (Kanitha Chim, Paul Wallrabe) | [RHIVOS April 2026 All-Hands slides 17-24](https://docs.google.com/presentation/d/18b4bZ75C1c_K8KUELQRtiWibm9-Wmi1zB5Ct0HiHe0Y) | [Team priorities reference](../../../team-priorities.md)
 
+**Tenure:** ~6 months in current role (Senior Software Engineer) | ~6 months at Red Hat
+
 ## a. Current position snapshot
 
 Muhamad is a Senior Software Engineer (IC Level 3) on the PitCrew team, performing within Level 3 expectations on the technical execution dimension but below expectations on visibility and cross-team engagement. His work on E2E testing infrastructure and CI/CD improvements is solid and substantive - all 5 closed tickets are Stories, indicating multi-day engineering work rather than quick fixes. However, his low Slack presence (38 messages, lowest on the team) and narrow channel spread limit his organizational impact and make it difficult to build the influence needed for Level 4 progression.

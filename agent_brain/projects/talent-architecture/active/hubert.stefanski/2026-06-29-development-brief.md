@@ -15,6 +15,8 @@ time_at_red_hat: ~6.5 years
 
 **Priority sources:** [CY26Q3 Priorities](https://docs.google.com/document/d/1uX_NBIRiDA46d_xzxCgWYkE7AaMUKoW9L1rDh-tp7kg) (Kanitha Chim, Paul Wallrabe) | [RHIVOS April 2026 All-Hands slides 17-24](https://docs.google.com/presentation/d/18b4bZ75C1c_K8KUELQRtiWibm9-Wmi1zB5Ct0HiHe0Y) | [Team priorities reference](../../../team-priorities.md)
 
+**Tenure:** ~4 years in current role (Senior Software Engineer) | ~6.5 years at Red Hat
+
 ## a. Current position snapshot
 
 Hubert is performing at IC Level 3 with consistent Level 4 signals across scope, complexity, and impact. His combination of deep infrastructure expertise, gating innovation (dependency triggers, kernel variant handling, QC LP gating spike), and cross-team collaboration (ATC, PitCrew, CAT, ITSEC) positions him at the Level 3-4 boundary. The approved transition to PitCrew/RHAS (Jun 18) creates a unique opportunity: he can carry his infrastructure and gating expertise into a new team context, demonstrating the cross-team leadership and mentoring breadth expected at Level 4.

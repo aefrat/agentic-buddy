@@ -15,6 +15,8 @@ time_at_red_hat: ~2.5 months
 
 **Priority sources:** [CY26Q3 Priorities](https://docs.google.com/document/d/1uX_NBIRiDA46d_xzxCgWYkE7AaMUKoW9L1rDh-tp7kg) (Kanitha Chim, Paul Wallrabe) | [RHIVOS April 2026 All-Hands slides 17-24](https://docs.google.com/presentation/d/18b4bZ75C1c_K8KUELQRtiWibm9-Wmi1zB5Ct0HiHe0Y) | [Team priorities reference](../../../team-priorities.md)
 
+**Tenure:** ~2.5 months in current role (Principal SRE) | ~2.5 months at Red Hat
+
 ## a. Current position snapshot
 
 Matt joined the ATC team on April 13, 2026, giving him approximately 2.5 months in role during this evidence period. He is building toward IC Level 4 (Principal) expectations in a new domain - automotive toolchain SRE - and showing healthy ramp signals: independent investigation (2 spikes), security responsiveness (VHCL-005 critical fix), and broad relationship-building (148 messages across 15 channels). The assessment below reflects a ramp period, not a steady-state evaluation. Gaps are primarily domain-driven, not skill-driven.

@@ -16,6 +16,8 @@ note: Joined June 1, 2026. Only 21 working days in period. Preliminary assessmen
 
 **Priority sources:** [CY26Q3 Priorities](https://docs.google.com/document/d/1uX_NBIRiDA46d_xzxCgWYkE7AaMUKoW9L1rDh-tp7kg) (Kanitha Chim, Paul Wallrabe) | [RHIVOS April 2026 All-Hands slides 17-24](https://docs.google.com/presentation/d/18b4bZ75C1c_K8KUELQRtiWibm9-Wmi1zB5Ct0HiHe0Y) | [Team priorities reference](../../../team-priorities.md)
 
+**Tenure:** ~1 year in current role (Principal Software Engineer) | ~10.5 years at Red Hat
+
 ## a. Current position snapshot
 
 Roderick is a Principal Software Engineer (IC Level 4) who joined the PitCrew team on June 1, 2026. With only 21 working days in the evidence period, this brief is a preliminary baseline rather than a performance assessment. Early signals are positive: he landed his first code contribution within 3 weeks (agentic-collections PR), his Slack engagement pattern shows deep thread participation (29/44 messages are thread replies), and his channel selection shows intentional community engagement in AI/agent forums. He is focused on PITCREW-161 (AIB prototyping), which aligns with the team's productization and agentic platform priorities.

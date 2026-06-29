@@ -15,6 +15,8 @@ time_at_red_hat: ~8 years
 
 **Priority sources:** [CY26Q3 Priorities](https://docs.google.com/document/d/1uX_NBIRiDA46d_xzxCgWYkE7AaMUKoW9L1rDh-tp7kg) (Kanitha Chim, Paul Wallrabe) | [RHIVOS April 2026 All-Hands slides 17-24](https://docs.google.com/presentation/d/18b4bZ75C1c_K8KUELQRtiWibm9-Wmi1zB5Ct0HiHe0Y) | [Team priorities reference](../../../team-priorities.md)
 
+**Tenure:** ~3 months in current role (Principal Software Quality Engineer) | ~8 years at Red Hat
+
 ## a. Current position snapshot
 
 Roni is operating at a strong IC Level 4 with clear Level 5 signals in scope and complexity. He owns the Test Console platform end-to-end - a cross-functional tool that the entire ATC team and QE organization depends on - and has served as de facto project lead for CTC scheduling and execution across RC1, RC2, and RC3. His Q2 output (32 tickets closed, 43 MRs, 497 Slack messages) is the highest individual output on the team. The development path to Level 5 runs through strategic positioning of Test Console as an enterprise QE asset and formalizing his leadership beyond the ATC boundary.
