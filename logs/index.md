@@ -11,3 +11,4 @@ Log files: `logs/YYYY-MM-DD.md` (derive from the date in each entry).
 - 2026-06-24: active — LP progress tracking (3 changes), Slack access migration (canvas dead-end → community slack-mcp), weekly W26 addendum
 - 2026-06-25: maintenance
 - 2026-06-28: active — CY26Q2 Quarterly Connection preparation (accomplishments + feedback drafts), daily maintenance
+- 2026-06-29: active — QC report refinement (Juanje self-input, em-dash cleanup), Rule 21 (no AI-tell characters), daily/PitCrew reports
