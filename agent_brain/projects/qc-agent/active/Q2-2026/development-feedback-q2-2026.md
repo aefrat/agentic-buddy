@@ -16,29 +16,27 @@
 
 Red Hat uses the Radford leveling methodology. All IC engineers are on the **Professional track**, assessed across three dimensions that increase with level:
 
-| Dimension | What it measures |
-|-----------|-----------------|
-| **Scope** | Functional reach, breadth of responsibility, guidance provided to others |
-| **Complexity** | Judgment required, expertise depth, nature of relationships |
-| **Impact** | Accountability for results, contribution to strategy, decision consequence |
+- Scope: Functional reach, breadth of responsibility, guidance provided to others
+- Complexity: Judgment required, expertise depth, nature of relationships
+- Impact: Accountability for results, contribution to strategy, decision consequence
 
 The IC Progression Matrices (per job family) add **10 role-specific responsibilities and skills** on top of these dimensions. Both lenses are used below.
 
 ### Level 3 to 4 shift (Senior to Principal)
 
-| Dimension | Level 3 (Senior) | Level 4 (Principal) |
-|-----------|------------------|---------------------|
-| Scope | Works independently, enhances existing processes, mentors new members | Sets objectives tied to functional targets, proposes new methods, coordinates team activities |
-| Complexity | Good judgment on moderately complex issues, experienced professional, relationships within discipline | Independent judgment on complex issues with creative solutions, recognized expert, leads cooperative efforts among teams, min 8 years |
-| Impact | Contributes to team goals through tasks, moderate impact on immediate team | Contributes to functional goals through operational direction, decisions impact customer/program objectives, begins to serve as project lead |
+Level 3 (Senior) to Level 4 (Principal):
+
+- Scope: From "works independently, enhances existing processes, mentors new members" to "sets objectives tied to functional targets, proposes new methods, coordinates team activities"
+- Complexity: From "good judgment on moderately complex issues, experienced professional, relationships within discipline" to "independent judgment on complex issues with creative solutions, recognized expert, leads cooperative efforts among teams, min 8 years"
+- Impact: From "contributes to team goals through tasks, moderate impact on immediate team" to "contributes to functional goals through operational direction, decisions impact customer/program objectives, begins to serve as project lead"
 
 ### Level 4 to 5 shift (Principal to Senior Principal)
 
-| Dimension | Level 4 (Principal) | Level 5 (Senior Principal) |
-|-----------|---------------------|---------------------------|
-| Scope | Objectives tied to functional targets, new techniques within function, mentors new members | Mid-term objectives aligned to RH business goals, drives vision with cross-functional impact, leads professional staff as expert resource, mentors colleagues in own discipline |
-| Complexity | Expert within team/department, leads cooperative efforts among teams, interacts with senior colleagues | Subject matter expert advising functional leaders and customers on strategy, formal networks across RH to influence priorities, min 12 years |
-| Impact | Functional goals through operational direction, decisions impact program objectives, begins as project lead | Directly impacts function's medium-to-long-term results and strategy, decisions significantly impact resource allocation, consistently serves as project lead and SME |
+Level 4 (Principal) to Level 5 (Senior Principal):
+
+- Scope: From "objectives tied to functional targets, new techniques within function, mentors new members" to "mid-term objectives aligned to RH business goals, drives vision with cross-functional impact, leads professional staff as expert resource, mentors colleagues in own discipline"
+- Complexity: From "expert within team/department, leads cooperative efforts among teams, interacts with senior colleagues" to "subject matter expert advising functional leaders and customers on strategy, formal networks across RH to influence priorities, min 12 years"
+- Impact: From "functional goals through operational direction, decisions impact program objectives, begins as project lead" to "directly impacts function's medium-to-long-term results and strategy, decisions significantly impact resource allocation, consistently serves as project lead and SME"
 
 ## How to read this document
 
@@ -57,11 +55,9 @@ For each team member:
 
 **Dimension assessment (Professional Track):**
 
-| Dimension | Current | Assessment |
-|-----------|---------|------------|
-| Scope | Level 3 | Works independently with minimal instruction. Delivers on enhanced processes (CTC reporting, OIDC hardening). Provides guidance within PitCrew. Occasional cross-subsystem reach (OIDC to jumpstarter) nudges toward Level 4 |
-| Complexity | Level 3 | Good judgment on moderately complex issues (CTC pipeline failures, certificate handling). Recognized as experienced within PitCrew. Relationships mostly within discipline. Not yet at "recognized expert leading cooperative efforts among teams" (Level 4) |
-| Impact | Level 3, trending 4 | CTC reporting directly impacts release certification - this touches program objectives (Level 4 territory). But scope of operational direction is still primarily within PitCrew |
+- Scope [Level 3]: Works independently with minimal instruction. Delivers on enhanced processes (CTC reporting, OIDC hardening). Provides guidance within PitCrew. Occasional cross-subsystem reach (OIDC to jumpstarter) nudges toward Level 4.
+- Complexity [Level 3]: Good judgment on moderately complex issues (CTC pipeline failures, certificate handling). Recognized as experienced within PitCrew. Relationships mostly within discipline. Not yet at "recognized expert leading cooperative efforts among teams" (Level 4).
+- Impact [Level 3, trending 4]: CTC reporting directly impacts release certification - this touches program objectives (Level 4 territory). But scope of operational direction is still primarily within PitCrew.
 
 **Current level fit:** Solid. Meeting Level 3 expectations across all responsibility areas. Independently designs and develops solutions (CTC reporting, OIDC patterns), owns quality of her code, provides guidance to teammates, and contributes to upstream communities.
 
@@ -91,11 +87,9 @@ For each team member:
 
 **Dimension assessment (Professional Track):**
 
-| Dimension | Current | Assessment |
-|-----------|---------|------------|
-| Scope | Level 3 | Works independently on infrastructure and security tasks. Delivers on existing processes (AWS provisioning, CloudFront, security patching). Monitoring criticality tiers initiative hints at proposing new methods (Level 4), but hasn't scaled to functional-level impact yet |
-| Complexity | Level 3, trending 4 | Navigated 5+ external organizational channels (PSCA, IT Cloud, GRC, BOA) - this breadth of relationship exceeds Level 3's "within discipline." Resolves cross-team procedural complexity. Not yet recognized as expert leading cooperative efforts |
-| Impact | Level 3 | Infrastructure work contributes to team goals through operational stability. Decisions impact immediate team's ability to release. Not yet at "operational direction for functional goals" (Level 4) |
+- Scope [Level 3]: Works independently on infrastructure and security tasks. Delivers on existing processes (AWS provisioning, CloudFront, security patching). Monitoring criticality tiers initiative hints at proposing new methods (Level 4), but hasn't scaled to functional-level impact yet.
+- Complexity [Level 3, trending 4]: Navigated 5+ external organizational channels (PSCA, IT Cloud, GRC, BOA) - this breadth of relationship exceeds Level 3's "within discipline." Resolves cross-team procedural complexity. Not yet recognized as expert leading cooperative efforts.
+- Impact [Level 3]: Infrastructure work contributes to team goals through operational stability. Decisions impact immediate team's ability to release. Not yet at "operational direction for functional goals" (Level 4).
 
 **Current level fit:** Meeting expectations. Strong in infrastructure ownership, security compliance, and cross-organizational navigation. Independently manages AWS, CloudFront, and monitoring infrastructure.
 
@@ -125,11 +119,9 @@ For each team member:
 
 **Dimension assessment (Professional Track):**
 
-| Dimension | Current | Assessment |
-|-----------|---------|------------|
-| Scope | Level 3, trending 4 | Works independently with deep expertise. Gating work proposes new techniques (dependency triggering, QC LP gating workflow) - this is Level 4 "proposes new methods based on business context." Helped PitCrew design GitLab repo structure (cross-team scope) |
-| Complexity | Level 3-4 boundary | Independent judgment on non-routine gating issues. Recognized as experienced across infrastructure and gating. Productive relationships across multiple teams (PitCrew, CAT, ITSEC) - moving beyond "within discipline." 18 channels. Min 5 years met |
-| Impact | Level 3, trending 4 | Gating improvements impact team's release quality (team goals). Infrastructure decisions affect multiple downstream consumers. Starting to impact functional objectives through gating reliability |
+- Scope [Level 3, trending 4]: Works independently with deep expertise. Gating work proposes new techniques (dependency triggering, QC LP gating workflow) - this is Level 4 "proposes new methods based on business context." Helped PitCrew design GitLab repo structure (cross-team scope).
+- Complexity [Level 3-4 boundary]: Independent judgment on non-routine gating issues. Recognized as experienced across infrastructure and gating. Productive relationships across multiple teams (PitCrew, CAT, ITSEC) - moving beyond "within discipline." 18 channels. Min 5 years met.
+- Impact [Level 3, trending 4]: Gating improvements impact team's release quality (team goals). Infrastructure decisions affect multiple downstream consumers. Starting to impact functional objectives through gating reliability.
 
 **Current level fit:** Strong. Exceeds Level 3 expectations in several areas. 400+ Slack messages across 18 channels shows exceptional transparency. Infrastructure anchor for ATC with deep gating expertise.
 
@@ -159,11 +151,9 @@ For each team member:
 
 **Dimension assessment (Professional Track):**
 
-| Dimension | Current | Assessment |
-|-----------|---------|------------|
-| Scope | Level 3-4 boundary | Works independently on complex distribution workflows. Broadest channel reach on team (25 channels). Cross-team coordination spanning 4 Jira projects (VROOM, RHELDST, RHELWF, PSSECAUT) - this exceeds Level 3's "within discipline" scope. The distribution/release work is functional-level, not just team-level |
-| Complexity | Level 3, trending 4 | Resolves moderately complex issues (errata, CDN propagation failures, product listing). Cross-team relationships are productive and extend well beyond own team. Not yet at "recognized expert leading cooperative efforts" formally, but acts as the de facto distribution expert |
-| Impact | Level 3-4 boundary | Distribution work contributes directly to release readiness - customer-facing impact. Product listing and CDN decisions affect whether customers can download RHIVOS. This touches "customer, operational, or program objectives" (Level 4) |
+- Scope [Level 3-4 boundary]: Works independently on complex distribution workflows. Broadest channel reach on team (25 channels). Cross-team coordination spanning 4 Jira projects (VROOM, RHELDST, RHELWF, PSSECAUT) - this exceeds Level 3's "within discipline" scope. The distribution/release work is functional-level, not just team-level.
+- Complexity [Level 3, trending 4]: Resolves moderately complex issues (errata, CDN propagation failures, product listing). Cross-team relationships are productive and extend well beyond own team. Not yet at "recognized expert leading cooperative efforts" formally, but acts as the de facto distribution expert.
+- Impact [Level 3-4 boundary]: Distribution work contributes directly to release readiness - customer-facing impact. Product listing and CDN decisions affect whether customers can download RHIVOS. This touches "customer, operational, or program objectives" (Level 4).
 
 **Current level fit:** Strong. Broadest Slack reach on the team (25 channels). Distribution and release readiness specialist. Strong cross-organizational coordination.
 
@@ -193,11 +183,9 @@ For each team member:
 
 **Dimension assessment (Professional Track):**
 
-| Dimension | Current | Assessment |
-|-----------|---------|------------|
-| Scope | Level 3 | Works independently on testing infrastructure. Delivers on enhanced processes (e2e rebuild, PR-triggered test tiers). Scope stays within builder testing domain. No evidence of coordinating others or mentoring. Needs to expand reach beyond own area |
-| Complexity | Level 3 | Good judgment on moderately complex issues (OIDC e2e, Kind-to-CRC migration). Productive relationships within own team. 38 Slack messages across 7 channels is the lowest visibility - relationships largely "within own team" (Level 2-3 boundary on this sub-dimension) |
-| Impact | Level 3 | Contributes to team goals through completion of testing tasks. Decisions impact team's testing quality. Not yet at "operational direction" or "customer/program objectives" (Level 4) |
+- Scope [Level 3]: Works independently on testing infrastructure. Delivers on enhanced processes (e2e rebuild, PR-triggered test tiers). Scope stays within builder testing domain. No evidence of coordinating others or mentoring. Needs to expand reach beyond own area.
+- Complexity [Level 3]: Good judgment on moderately complex issues (OIDC e2e, Kind-to-CRC migration). Productive relationships within own team. 38 Slack messages across 7 channels is the lowest visibility - relationships largely "within own team" (Level 2-3 boundary on this sub-dimension).
+- Impact [Level 3]: Contributes to team goals through completion of testing tasks. Decisions impact team's testing quality. Not yet at "operational direction" or "customer/program objectives" (Level 4).
 
 **Current level fit:** Meeting expectations. Solid engineering work on testing infrastructure. Independently designs and implements testing solutions.
 
@@ -230,11 +218,9 @@ For each team member:
 
 **Dimension assessment (Professional Track):**
 
-| Dimension | Current | Assessment |
-|-----------|---------|------------|
-| Scope | Level 4-5 | Sets and achieves objectives tied to functional targets (Level 4 - met). Agent Forge and the pipelines-debugger propose new techniques with cross-functional impact - others across teams adopt the patterns. This is Level 5 "drives vision and innovation with cross-functional impact." Mentors Matt Goldman (Level 4), and cross-team adoption of agent patterns is effectively mentoring colleagues in own discipline (Level 5). Published articles and AAA Sprint 5 demo show emerging expert-resource behavior |
-| Complexity | Level 4-5 | Independent judgment on complex, non-routine issues (6 Blockers resolved, creative agent solutions). Recognized as expert within team and increasingly across department. Leads cooperative efforts among 5+ teams for execopen. Cross-team relationships are productive and include FoA, QE, AIB upstream. Approaching "formal networks across Red Hat to influence priorities" (Level 5) through forum engagement |
-| Impact | Level 4, trending 5 | Contributes to functional goals through operational direction (release pipeline, agent infrastructure). Decisions impact customer and program objectives (RC1-RC3, CTC). Agent Forge is starting to impact medium-term results. Not yet "consistently serves as project lead and SME for highly complex issues" at the organizational level (Level 5), but the trajectory is clear |
+- Scope [Level 4-5]: Sets and achieves objectives tied to functional targets (Level 4 - met). Agent Forge and the pipelines-debugger propose new techniques with cross-functional impact - others across teams adopt the patterns. This is Level 5 "drives vision and innovation with cross-functional impact." Mentors Matt Goldman (Level 4), and cross-team adoption of agent patterns is effectively mentoring colleagues in own discipline (Level 5). Published articles and AAA Sprint 5 demo show emerging expert-resource behavior.
+- Complexity [Level 4-5]: Independent judgment on complex, non-routine issues (6 Blockers resolved, creative agent solutions). Recognized as expert within team and increasingly across department. Leads cooperative efforts among 5+ teams for execopen. Cross-team relationships are productive and include FoA, QE, AIB upstream. Approaching "formal networks across Red Hat to influence priorities" (Level 5) through forum engagement.
+- Impact [Level 4, trending 5]: Contributes to functional goals through operational direction (release pipeline, agent infrastructure). Decisions impact customer and program objectives (RC1-RC3, CTC). Agent Forge is starting to impact medium-term results. Not yet "consistently serves as project lead and SME for highly complex issues" at the organizational level (Level 5), but the trajectory is clear.
 
 **Current level fit:** Exceeds expectations. Comfortably operating at Level 4 with multiple areas of Level 5 behavior already evident. 28 tickets (6 Blockers), 39 MRs, 711 Slack messages - output and influence significantly exceed Level 4 norms.
 
@@ -267,11 +253,9 @@ For each team member:
 
 **Dimension assessment (Professional Track):**
 
-| Dimension | Current | Assessment |
-|-----------|---------|------------|
-| Scope | Level 4 | Works independently to achieve objectives across all PitCrew workstreams. De facto first responder in jumpstarter community (281 messages in #forum-jumpstarter). Proposes and delivers new methods (CA support for u-boot, OCI flashing, Vault migration). Coordinates others reactively through community engagement. Needs to shift from reactive to directive to reach Level 5 "drives vision and innovation" |
-| Complexity | Level 4, trending 5 | Independent judgment on complex, varied issues spanning every PitCrew workstream. Recognized as expert within PitCrew and the jumpstarter ecosystem. Leads cooperative efforts among teams (897 msgs, 17 channels). Cross-team relationships are strong. Approaching Level 5's "formal networks across Red Hat to influence priorities" - already acts as a connective hub |
-| Impact | Level 4 | Contributes to functional goals through broad operational delivery. Decisions impact program objectives (jumpstarter releases, security, CTC). Not yet at Level 5 "directly impacts function's medium-to-long-term results and strategy" - his impact is tactical breadth rather than strategic direction |
+- Scope [Level 4]: Works independently to achieve objectives across all PitCrew workstreams. De facto first responder in jumpstarter community (281 messages in #forum-jumpstarter). Proposes and delivers new methods (CA support for u-boot, OCI flashing, Vault migration). Coordinates others reactively through community engagement. Needs to shift from reactive to directive to reach Level 5 "drives vision and innovation."
+- Complexity [Level 4, trending 5]: Independent judgment on complex, varied issues spanning every PitCrew workstream. Recognized as expert within PitCrew and the jumpstarter ecosystem. Leads cooperative efforts among teams (897 msgs, 17 channels). Cross-team relationships are strong. Approaching Level 5's "formal networks across Red Hat to influence priorities" - already acts as a connective hub.
+- Impact [Level 4]: Contributes to functional goals through broad operational delivery. Decisions impact program objectives (jumpstarter releases, security, CTC). Not yet at Level 5 "directly impacts function's medium-to-long-term results and strategy" - his impact is tactical breadth rather than strategic direction.
 
 **Current level fit:** Strong. Highest ticket throughput (30 closed), broadest community connector on PitCrew (897 Slack messages, 17 channels). "Connect" behavior at Advanced level per QC assessment.
 
@@ -303,11 +287,9 @@ For each team member:
 
 **Dimension assessment (Professional Track):**
 
-| Dimension | Current | Assessment |
-|-----------|---------|------------|
-| Scope | Too early | 21 working days. First code contribution landed. Community engagement in AI/agent forums suggests he will quickly establish Level 4 scope once domain depth is built |
-| Complexity | Too early | Prior career level suggests principal-level judgment and expertise, but RHIVOS domain expertise is still developing. Broad AI/agent community connections signal he will bring cross-functional relationships |
-| Impact | Too early | No Jira tickets yet (expected for onboarding). Impact assessment deferred to Q3 |
+- Scope [Too early]: 21 working days. First code contribution landed. Community engagement in AI/agent forums suggests he will quickly establish Level 4 scope once domain depth is built.
+- Complexity [Too early]: Prior career level suggests principal-level judgment and expertise, but RHIVOS domain expertise is still developing. Broad AI/agent community connections signal he will bring cross-functional relationships.
+- Impact [Too early]: No Jira tickets yet (expected for onboarding). Impact assessment deferred to Q3.
 
 **Current level fit:** Too early to assess (joined June 1, 21 working days). Early signals are positive: first code contribution within 3 weeks, notably broad Slack presence in AI/agent communities. QC assessment notes trajectory toward Advanced on "Connect."
 
@@ -337,11 +319,9 @@ For each team member:
 
 **Dimension assessment (Professional Track - SRE):**
 
-| Dimension | Current | Assessment |
-|-----------|---------|------------|
-| Scope | Level 4 (building) | Works independently on assigned infrastructure and security tasks. Delivers on existing processes (container vulnerabilities, CI fixes). The jinja2 and Review Apps investigation spikes show initiative to "propose new techniques" (Level 4 behavior). Still building domain breadth to fully "set and achieve objectives tied to functional targets" |
-| Complexity | Level 3-4 | Good judgment on moderately complex issues (security fixes, CI pipeline debugging). Still developing domain expertise to be "recognized as expert." Productive relationships across 15 channels spanning team and broader Red Hat - healthy relationship breadth for ramp period. "Thinks out loud during debugging" shows transparency but also that he's learning publicly - a strength that maps to Level 4 collaborative style |
-| Impact | Level 3 | Contributes through completion of tasks. 6 tickets (2 Major) - meaningful but scope is still task-level. Not yet at "operational direction for functional goals" (Level 4). Expected for 2.5 months in role |
+- Scope [Level 4 (building)]: Works independently on assigned infrastructure and security tasks. Delivers on existing processes (container vulnerabilities, CI fixes). The jinja2 and Review Apps investigation spikes show initiative to "propose new techniques" (Level 4 behavior). Still building domain breadth to fully "set and achieve objectives tied to functional targets."
+- Complexity [Level 3-4]: Good judgment on moderately complex issues (security fixes, CI pipeline debugging). Still developing domain expertise to be "recognized as expert." Productive relationships across 15 channels spanning team and broader Red Hat - healthy relationship breadth for ramp period. "Thinks out loud during debugging" shows transparency but also that he's learning publicly - a strength that maps to Level 4 collaborative style.
+- Impact [Level 3]: Contributes through completion of tasks. 6 tickets (2 Major) - meaningful but scope is still task-level. Not yet at "operational direction for functional goals" (Level 4). Expected for 2.5 months in role.
 
 **Current level fit (SRE Level 4):** Building toward expectations. Strong start for a new hire. Level 4 SRE expects "managing complex systems and solving intricate problems" and "expert judgment and decision-making." Matt is demonstrating competence but still ramping on domain knowledge.
 
@@ -382,11 +362,9 @@ For each team member:
 
 **Dimension assessment (Professional Track - QE):**
 
-| Dimension | Current | Assessment |
-|-----------|---------|------------|
-| Scope | Level 4-5 | Works independently to set and achieve objectives (Test Console platform, CTC pipeline, AI analysis). Proposes new techniques (AI-powered test analysis, Gemini transitions, packages.redhat.com PoC) with impact within the function. Coordinates CTC activities for RC1-RC3 as functional team lead. 199 mentions by others - acts as expert resource. Approaching Level 5 "drives vision and innovation with cross-functional impact" through Test Console's central role |
-| Complexity | Level 4, trending 5 | Independent judgment on complex, non-routine issues (3 Gemini model transitions, fallback mechanisms, long-standing Blocker-level security fix). Recognized as expert within team - primary Test Console owner. Productive relationships within function (QE automotive, testing-farm, PitCrew). Leading cooperative efforts across QE teams. Approaching "subject matter expert advising on strategy" (Level 5) |
-| Impact | Level 4, trending 5 | Contributes to functional goals through operational direction of testing infrastructure. Decisions impact program objectives (CTC certification timeline, release readiness). Serves as de facto project lead for Test Console and CTC pipeline. Approaching Level 5 "directly impacts function's medium-to-long-term results" - Test Console IS the testing infrastructure strategy |
+- Scope [Level 4-5]: Works independently to set and achieve objectives (Test Console platform, CTC pipeline, AI analysis). Proposes new techniques (AI-powered test analysis, Gemini transitions, packages.redhat.com PoC) with impact within the function. Coordinates CTC activities for RC1-RC3 as functional team lead. 199 mentions by others - acts as expert resource. Approaching Level 5 "drives vision and innovation with cross-functional impact" through Test Console's central role.
+- Complexity [Level 4, trending 5]: Independent judgment on complex, non-routine issues (3 Gemini model transitions, fallback mechanisms, long-standing Blocker-level security fix). Recognized as expert within team - primary Test Console owner. Productive relationships within function (QE automotive, testing-farm, PitCrew). Leading cooperative efforts across QE teams. Approaching "subject matter expert advising on strategy" (Level 5).
+- Impact [Level 4, trending 5]: Contributes to functional goals through operational direction of testing infrastructure. Decisions impact program objectives (CTC certification timeline, release readiness). Serves as de facto project lead for Test Console and CTC pipeline. Approaching Level 5 "directly impacts function's medium-to-long-term results" - Test Console IS the testing infrastructure strategy.
 
 **Current level fit (QE Level 4):** Exceeds expectations. Highest individual output (32 tickets, 43 MRs). Owns the Test Console platform end-to-end. Leads test automation framework design, coordinates team activities for CTC delivery, and applies creative problem-solving (AI-powered test analysis, Gemini model transitions).
 
@@ -425,28 +403,24 @@ For each team member:
 
 ### Where the team sits on Scope / Complexity / Impact
 
-| Member | Level | Scope | Complexity | Impact | Strongest dimension | Biggest gap to next level |
-|--------|-------|-------|------------|--------|--------------------|----|
-| Bella | 3 | 3 | 3 | 3, trending 4 | Impact (CTC affects release certification) | Scope - needs cross-team coordination as primary responsibility |
-| Eitan | 3 | 3 | 3, trending 4 | 3 | Complexity (navigates 5+ external orgs) | Impact - infrastructure work not positioned as functional direction |
-| Hubert | 3 | 3, trending 4 | 3-4 boundary | 3, trending 4 | Complexity (gating expertise + cross-team relationships) | Impact - needs to own a strategic initiative with functional-level accountability |
-| Kanitha | 3 | 3-4 boundary | 3, trending 4 | 3-4 boundary | Scope (25 channels, 4 Jira projects, broadest reach) | Complexity - needs formal recognition as expert and team lead role |
-| Muhamad | 3 | 3 | 3 | 3 | Scope (independent, well-structured testing work) | Complexity - low visibility, needs broader relationships |
-| Juanje | 4 | 4-5 | 4-5 | 4, trending 5 | Scope (cross-functional vision + innovation, approaching Level 5) | Impact - needs to consistently serve as organizational-level SME and project lead |
-| Benny | 4 | 4 | 4, trending 5 | 4 | Complexity (connective hub, community expert) | Impact - tactical breadth, needs strategic direction-setting |
-| Roderick | 4 | Too early | Too early | Too early | N/A (onboarding) | Domain depth - establish Level 4 baseline first |
-| Matt | 4 | 4 (building) | 3-4 | 3 | Scope (initiative to propose improvements) | Complexity + Impact - domain expertise and delivery cadence still ramping |
-| Roni | 4 | 4-5 | 4, trending 5 | 4, trending 5 | Impact (Test Console decisions directly affect CTC/release) | Complexity - needs to be recognized as SME advising functional leaders |
+- Bella [Level 3] - Scope: 3 / Complexity: 3 / Impact: 3, trending 4. Strongest: Impact (CTC affects release certification). Biggest gap: Scope - needs cross-team coordination as primary responsibility.
+- Eitan [Level 3] - Scope: 3 / Complexity: 3, trending 4 / Impact: 3. Strongest: Complexity (navigates 5+ external orgs). Biggest gap: Impact - infrastructure work not positioned as functional direction.
+- Hubert [Level 3] - Scope: 3, trending 4 / Complexity: 3-4 boundary / Impact: 3, trending 4. Strongest: Complexity (gating expertise + cross-team relationships). Biggest gap: Impact - needs to own a strategic initiative with functional-level accountability.
+- Kanitha [Level 3] - Scope: 3-4 boundary / Complexity: 3, trending 4 / Impact: 3-4 boundary. Strongest: Scope (25 channels, 4 Jira projects, broadest reach). Biggest gap: Complexity - needs formal recognition as expert and team lead role.
+- Muhamad [Level 3] - Scope: 3 / Complexity: 3 / Impact: 3. Strongest: Scope (independent, well-structured testing work). Biggest gap: Complexity - low visibility, needs broader relationships.
+- Juanje [Level 4] - Scope: 4-5 / Complexity: 4-5 / Impact: 4, trending 5. Strongest: Scope (cross-functional vision + innovation, approaching Level 5). Biggest gap: Impact - needs to consistently serve as organizational-level SME and project lead.
+- Benny [Level 4] - Scope: 4 / Complexity: 4, trending 5 / Impact: 4. Strongest: Complexity (connective hub, community expert). Biggest gap: Impact - tactical breadth, needs strategic direction-setting.
+- Roderick [Level 4] - Scope: Too early / Complexity: Too early / Impact: Too early. Strongest: N/A (onboarding). Biggest gap: Domain depth - establish Level 4 baseline first.
+- Matt [Level 4] - Scope: 4 (building) / Complexity: 3-4 / Impact: 3. Strongest: Scope (initiative to propose improvements). Biggest gap: Complexity + Impact - domain expertise and delivery cadence still ramping.
+- Roni [Level 4] - Scope: 4-5 / Complexity: 4, trending 5 / Impact: 4, trending 5. Strongest: Impact (Test Console decisions directly affect CTC/release). Biggest gap: Complexity - needs to be recognized as SME advising functional leaders.
 
 ### Common themes
 
-| Theme | Who needs it most | Dimension it addresses | Action |
-|-------|------------------|----------------------|--------|
-| Knowledge sharing (articles, design docs) | Bella, Eitan, Benny, Muhamad, Kanitha | Scope + Complexity (expert recognition) | Write at least one internal article or design doc per quarter |
-| AI tools exploration | Bella, Eitan, Hubert, Kanitha, Muhamad | Scope (proposing new methods) | Try AI tools for daily work; share findings in team channel |
-| Mentoring relationships | Bella, Eitan, Muhamad, Benny | Scope (guidance to others) | Establish at least one formal mentoring pair |
-| External presentations | Juanje, Benny, Roni | Complexity (industry recognition) | Submit conference talks; internal demos are a stepping stone |
-| Business impact articulation | All | Impact (strategy contribution) | Frame technical work in terms of business value when presenting to leadership |
-| Strategic thinking (roadmaps) | Benny, Kanitha, Roni | Impact (medium-to-long-term direction) | Write one forward-looking strategy/architecture document per half |
-| Visibility and communication | Muhamad | Complexity (broader relationships) | Increase Slack engagement, share work proactively, join 8+ more channels |
-| Cross-team coordination | Bella, Eitan, Muhamad | Scope (functional-level reach) | Lead at least one initiative requiring coordination with another team |
+- Knowledge sharing (articles, design docs) - Who: Bella, Eitan, Benny, Muhamad, Kanitha. Dimension: Scope + Complexity (expert recognition). Action: Write at least one internal article or design doc per quarter.
+- AI tools exploration - Who: Bella, Eitan, Hubert, Kanitha, Muhamad. Dimension: Scope (proposing new methods). Action: Try AI tools for daily work; share findings in team channel.
+- Mentoring relationships - Who: Bella, Eitan, Muhamad, Benny. Dimension: Scope (guidance to others). Action: Establish at least one formal mentoring pair.
+- External presentations - Who: Juanje, Benny, Roni. Dimension: Complexity (industry recognition). Action: Submit conference talks; internal demos are a stepping stone.
+- Business impact articulation - Who: All. Dimension: Impact (strategy contribution). Action: Frame technical work in terms of business value when presenting to leadership.
+- Strategic thinking (roadmaps) - Who: Benny, Kanitha, Roni. Dimension: Impact (medium-to-long-term direction). Action: Write one forward-looking strategy/architecture document per half.
+- Visibility and communication - Who: Muhamad. Dimension: Complexity (broader relationships). Action: Increase Slack engagement, share work proactively, join 8+ more channels.
+- Cross-team coordination - Who: Bella, Eitan, Muhamad. Dimension: Scope (functional-level reach). Action: Lead at least one initiative requiring coordination with another team.
