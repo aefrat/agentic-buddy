@@ -37,6 +37,45 @@ Eitan delivered a broad and impactful quarter spanning infrastructure cost optim
 
 **Monitoring Maturity.** Eitan introduced criticality tiers into the monitoring SLA specification (VROOM-38184), establishing a framework for differentiating alert severity based on service impact. This is foundational work - without tiered criticality, the team cannot prioritize incident response effectively or set meaningful SLAs with internal consumers. The specification work reflects a shift from reactive monitoring ("everything alerts the same way") to a structured observability practice.
 
+### Job Leveling Assessment (Red Hat Radford Framework)
+
+> **Current level:** IC Level 3 (Senior Software Engineer)
+> **Assessment basis:** Q2 2026 accomplishments mapped to Professional Track dimensions (Scope, Complexity, Impact) and SE Progression Matrix differentiators
+
+**Scope - Solid Level 3, with emerging Level 4 signals.**
+Eitan works independently with minimal instruction across a broad infrastructure domain - AWS, CloudFront, CI/CD, monitoring, security compliance - and consistently delivers enhancements to existing processes and products. This is squarely Level 3 ("delivers on/enhances existing processes or products to support business priorities"). The GitLab runner consolidation stands out as a Level 4 behavior: he proposed a new technique (pipeline pooling) based on business context (cost reduction) that had impact within the function - this maps directly to the Level 4 scope descriptor ("proposes new techniques and methods based on business context that have impact within the function"). His Gator learning sessions with Hubert fulfill the Level 3 mentoring expectation ("mentors and provides guidance and advice to new team members"), and his coordination across CloudFront work and Distribution Focus shows willingness to operate outside his defined area.
+
+**Complexity - Meets Level 3, with cross-boundary reach.**
+Eitan demonstrates good judgment across moderately complex, non-routine issues spanning multiple technical domains (infrastructure, CI/CD, security, S3 proxy development, monitoring). His Slack activity across 14 channels - including 5 external-facing channels (psca-support, help-it-cloud-publiccloud, talk-to-grc, team-boa-automotive, forum-customer-portal) - shows productive working relationships beyond his immediate discipline, touching the upper range of Level 3 ("productive working relationships within discipline; some interaction with senior colleagues"). His AI tooling adoption, where he built reusable hooks and skills rather than just using claude-code as a one-off tool, shows the kind of creative problem-solving that characterizes Level 4 judgment ("resolves complex issues with creative solutions"). To fully operate at Level 4 in this dimension, he would need to be recognized as an expert within the team or department with extensive mastery, and lead cooperative efforts among teams rather than contributing to them.
+
+**Impact - Meets Level 3, with one clear Level 4 data point.**
+Eitan's work contributes directly to team and discipline goals through task completion - the Level 3 baseline. Most decisions moderately impact his immediate team (infrastructure reliability, security posture). The GitLab runner consolidation is the standout: it delivered measurable budget savings, which is a decision that impacts operational objectives beyond the immediate team - a Level 4 impact descriptor. The CPPX ticket (VROOM-41525) for customer portal visibility is another impact indicator: it affects customer-facing outcomes, aligning with Level 4's "decisions impact customer, operational, or program objectives." The monitoring SLA criticality tiers also point toward Level 4 impact by establishing a framework that shapes how the broader team prioritizes incident response.
+
+**SE Progression Matrix - Level 3 to 4 differentiators:**
+
+| Dimension | Level 3 (current) | Level 4 (target) | Eitan Q2 status |
+|-----------|-------------------|-------------------|-----------------|
+| Technical Impact | Subsystem | Cross-subsystem/component | Mostly subsystem (infra). Runner consolidation touched cross-subsystem (SOA + Services + Gating + pipe-x + Jumpstarter) |
+| Quality | Own code quality | Establish/monitor testing practices for multiple teams | Added integration tests for s3pi (own code). Not yet establishing practices for others |
+| Community | Active contributor | Key representative and leader | Active contributor across 14 Slack channels. Not yet a recognized community leader |
+| Mentoring | Guide new team members | Coach/mentor senior engineers across teams | Gator sessions with Hubert (new member). Not yet mentoring senior engineers |
+| Business | Proactive feature development | Visible business impact initiatives | Runner consolidation = visible budget impact. Could be communicated more broadly |
+| AI | Independently apply tools | Evaluate and introduce new methodologies | Built reusable hooks and skills - approaching Level 4 ("evaluate and introduce new methodologies") |
+| Knowledge Sharing | Team documentation | Blog posts, design docs, conference presentations | No evidence of external knowledge sharing this quarter |
+| SDLC | Champion within team | Lead definition for multi-component systems | Champion for infra practices. Not yet leading SDLC for multi-component systems |
+
+**Growth opportunities toward Level 4 (Principal Software Engineer):**
+
+1. **Cross-subsystem technical impact.** The runner consolidation is a good start - it touched multiple pipeline systems. Look for opportunities to own initiatives that span multiple subsystems or components, not just infrastructure improvements to individual services. Leading an initiative like unified CI/CD patterns across SOA, Services, and Gating (beyond just pooling runners) would demonstrate Level 4 scope.
+
+2. **Establish practices for others.** The s3pi integration tests show Eitan values test coverage. The next step is to turn that into a practice others adopt - define integration testing patterns or templates that other ATC services can use, or champion a testing standard across the team's service portfolio.
+
+3. **External knowledge sharing.** Eitan has deep practical knowledge in AWS infrastructure, CloudFront CDN patterns, CI/CD optimization, and now AI tooling. Writing a blog post (e.g., on the runner consolidation cost savings, or on building claude-code skills for infrastructure work) or presenting at an internal tech talk would demonstrate Level 4 knowledge sharing and build his visibility as an expert.
+
+4. **Formalize the AI tooling work.** The claude-code hooks and skills Eitan built are exactly the kind of "evaluate and introduce new methodologies" behavior Level 4 expects. To get full credit for this dimension, he should share these tools with the team, document the workflow improvements, and potentially propose adoption patterns - moving from personal productivity to team-wide methodology introduction.
+
+5. **Lead cooperative efforts among teams.** Eitan already collaborates cross-team (Distribution Focus help, PSCA support, BOA troubleshooting). The Level 4 shift is from contributing to these efforts to leading them - owning a cross-team initiative end to end, driving alignment between teams, and being the person others come to for coordination on infrastructure decisions.
+
 ---
 
 ## Section B - The How
