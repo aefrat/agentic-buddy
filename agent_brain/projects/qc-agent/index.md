@@ -10,7 +10,7 @@ Content map for the QC agent's memory stores. Read this index first, then naviga
 
 ## Stores
 
-- `reference/` — Red Hat Multiplier competencies, report template structure. **Read-only.** Read when generating Section B or structuring a report.
+- `reference/` — Red Hat Multiplier competencies, report template structure, IC progression matrices (development feedback). **Read-only.** Read when generating Section B, structuring a report, or generating development feedback.
 - `team/` — Team roster with Jira/GitLab usernames. **Manager-maintained.** Read when collecting data or listing team members.
 - `active/` — Current quarter's workspace: collected data, observations, drafts. Read when generating or reviewing a report in progress.
 - `history/` — Past quarters' completed reports and data. **Immutable after close.** Read when comparing quarters or building growth narratives.

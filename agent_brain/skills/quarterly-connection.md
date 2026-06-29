@@ -55,6 +55,7 @@ You are an evidence-based narrator of engineering contributions. You surface wha
 7. **Read reference material.** Load:
    - `agent_brain/projects/qc-agent/reference/report-template.md` - structure and tone
    - `agent_brain/projects/qc-agent/reference/multiplier-competencies.md` - Section B framework
+   - `agent_brain/projects/qc-agent/reference/ic-progression-sources.md` - IC level progression matrices and source links (for development feedback)
    - Previous quarter report from `history/` if available (for growth narrative)
 
 8. **Generate Section A - The What.** Using collected data, write a narrative of accomplishments organized by theme. Highlight impact, not just activity. Connect work to team/org goals.
@@ -76,7 +77,21 @@ You are an evidence-based narrator of engineering contributions. You surface wha
 
 11. **Generate Section C - Summary.** Synthesize Sections A and B into 3-5 sentences. Tone: appreciative, specific, forward-looking. Written for the engineer to read.
 
-12. **Assemble and export report.** Produce three outputs:
+12. **Generate development feedback (Section D - optional).** If the user requests development feedback (triggered by "development feedback", "growth paths", "development paths", or "--with-development"):
+   - Read `agent_brain/projects/qc-agent/reference/ic-progression-sources.md` for the IC progression matrix sources and level mapping.
+   - For each member, fetch the appropriate IC progression matrix from Google Sheets based on their job family (Software Engineer, SRE, or Quality Engineer). Use the spreadsheet IDs in ic-progression-sources.md.
+   - Compare the member's Q2 evidence (Sections A and B) against:
+     a. **Current level expectations** - confirm they meet their IC level's responsibilities and skills
+     b. **Next level requirements** - identify which next-level behaviors they already demonstrate and which are gaps
+   - For each member, produce:
+     - Current level fit assessment (1-2 sentences)
+     - "Already demonstrating at next level" (2-4 bullet points with evidence from the QC data)
+     - "Growth areas for next level" (3-6 bullet points with specific matrix requirements they don't yet meet)
+     - "Recommended development path" (4-6 concrete, actionable recommendations)
+   - Write to `agent_brain/projects/qc-agent/active/{quarter}/development-feedback-{quarter}.md`
+   - Include source links to the progression matrices and the Talent Architecture page
+
+13. **Assemble and export report.** Produce three outputs (plus development feedback if generated):
    - **Individual Google Docs** - one per member via `google:gws-docs` (Sections A, B, C + supporting data).
    - **Combined HTML report** (`qc-{quarter}-all-members.html`) - all members in one file with sticky sidebar navigation, Section A/B/C, How-summary condensed lines in Summary, proficiency badges, and supporting data tables.
    - **Summary-only HTML report** (`qc-{quarter}-summary-only.html`) - compact version with only: sticky jump-nav bar (member names), member name + title, How-summary (condensed Multiplier behaviors), Section C summary paragraph, and per-member "View full details →" link deep-linking to the corresponding section in the combined HTML report. Header includes a global "View full detailed report →" link.
@@ -93,6 +108,7 @@ You are an evidence-based narrator of engineering contributions. You surface wha
 - Combined HTML and summary-only HTML reports generated
 - Summary-only report has jump nav, member names, complete How-summary, and details links to full report
 - Collected data saved to active store
+- Development feedback (when requested): each member has current-level assessment, next-level evidence, growth areas, and actionable development path grounded in the IC progression matrix
 
 ## Gotchas
 
@@ -122,4 +138,5 @@ You are an evidence-based narrator of engineering contributions. You surface wha
 - [ ] Individual Google Docs exported
 - [ ] Combined HTML report generated (all members, full detail)
 - [ ] Summary-only HTML report generated (jump nav, names, How-summary, Section C, details links)
+- [ ] Development feedback generated (if requested: current level, next-level evidence, growth areas, development path per member)
 - [ ] User confirmation received
