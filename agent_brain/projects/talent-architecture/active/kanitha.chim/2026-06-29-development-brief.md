@@ -7,6 +7,8 @@ job_family: Software Engineering
 track: Professional
 evidence_period: Q2 2026 (April 1 - June 30)
 generated: 2026-06-29
+time_in_role: ~1 year 9 months
+time_at_red_hat: ~5 years
 ---
 
 # Development Brief - Kanitha Chim

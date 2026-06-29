@@ -7,6 +7,8 @@ job_family: Software Engineering
 track: Professional
 evidence_period: Q2 2026 (April 1 - June 30)
 generated: 2026-06-29
+time_in_role: ~1 year
+time_at_red_hat: ~10.5 years
 note: Joined June 1, 2026. Only 21 working days in period. Preliminary assessment only.
 ---
 

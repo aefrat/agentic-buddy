@@ -7,6 +7,8 @@ job_family: Software Engineering
 track: Professional
 evidence_period: Q2 2026 (April 1 - June 30)
 generated: 2026-06-29
+time_in_role: ~4 years 3 months
+time_at_red_hat: ~9.5 years
 ---
 
 # Development Brief - Benny Zlotnik
