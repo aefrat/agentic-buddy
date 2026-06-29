@@ -9,6 +9,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 | Date | Description | Session ID |
 |------|-------------|------------|
 | 2026-06-28 | ATC Slack channel scan (7 days, 18 channels) | `a268a101-97cd-4b33-bf84-41de0e332cdc` |
+| 2026-06-29 | Talent Architecture project + talent-development skill (agent-forge), Juanje development brief (IC4->5 Radford + 8 Enterprise Competencies + disconfirmation gate), QC dev feedback enrichment | `f16bc08f-797a-42cf-9d15-e7333fa21c37` |
 | 2026-06-29 | QC report locations, Juanje ACP/articles evidence, LP status (cron), Rule 21 (no AI-tell chars), Juanje QC self-input integration, development feedback (IC progression matrices + Job Leveling Framework + Job Architecture), QC skill Step 12 update, Workday table conversion, Juanje career aspirations response | `cc9f821f-e173-4109-bbb9-0a573c938504` → `fe2aebb2-5501-4496-b462-5093f01a3446` |
 | 2026-06-29 | Monday catch-up: daily manager + PitCrew RHAS daily reports, Slack + Gmail scan (17 channels + 48h email), task capture, Jira token resolution | `3bc2e04d-3316-422b-bec2-3409e30f9019` |
 | 2026-06-29 | Eitan QC self-input integration + Radford Job Leveling Assessment (Scope/Complexity/Impact + SE progression matrix + L4 growth paths), HTML reports updated | `47b712f4-55ea-42ef-800f-5ec25960f027` |
