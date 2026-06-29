@@ -78,18 +78,24 @@ You are an evidence-based narrator of engineering contributions. You surface wha
 11. **Generate Section C - Summary.** Synthesize Sections A and B into 3-5 sentences. Tone: appreciative, specific, forward-looking. Written for the engineer to read.
 
 12. **Generate development feedback (Section D - optional).** If the user requests development feedback (triggered by "development feedback", "growth paths", "development paths", or "--with-development"):
-   - Read `agent_brain/projects/qc-agent/reference/ic-progression-sources.md` for the IC progression matrix sources and level mapping.
+   - Read `agent_brain/projects/qc-agent/reference/ic-progression-sources.md` for the IC progression matrix sources, level mapping, Job Leveling Framework dimensions, and Job Architecture context.
    - For each member, fetch the appropriate IC progression matrix from Google Sheets based on their job family (Software Engineer, SRE, or Quality Engineer). Use the spreadsheet IDs in ic-progression-sources.md.
-   - Compare the member's Q2 evidence (Sections A and B) against:
-     a. **Current level expectations** - confirm they meet their IC level's responsibilities and skills
+   - Assess each member across the **3 Job Leveling Framework dimensions** (Professional track):
+     - **Scope:** functional reach, breadth, guidance provided - where do they sit between current and next level?
+     - **Complexity:** judgment, expertise depth, nature of relationships - are they recognized as expert? leading cooperative efforts?
+     - **Impact:** accountability, strategy contribution, decision consequence - team goals vs. functional/program goals?
+   - Compare the member's quarter evidence (Sections A and B) against:
+     a. **Current level expectations** - confirm they meet their IC level's responsibilities and skills per the progression matrix
      b. **Next level requirements** - identify which next-level behaviors they already demonstrate and which are gaps
    - For each member, produce:
+     - Dimension assessment table (Scope/Complexity/Impact with current level and assessment text)
      - Current level fit assessment (1-2 sentences)
      - "Already demonstrating at next level" (2-4 bullet points with evidence from the QC data)
      - "Growth areas for next level" (3-6 bullet points with specific matrix requirements they don't yet meet)
      - "Recommended development path" (4-6 concrete, actionable recommendations)
+   - Include a summary table showing all members' dimension ratings and strongest/weakest dimensions
    - Write to `agent_brain/projects/qc-agent/active/{quarter}/development-feedback-{quarter}.md`
-   - Include source links to the progression matrices and the Talent Architecture page
+   - Include source links to all reference documents (progression matrices, Job Leveling Framework, Job Architecture, Talent Architecture)
 
 13. **Assemble and export report.** Produce three outputs (plus development feedback if generated):
    - **Individual Google Docs** - one per member via `google:gws-docs` (Sections A, B, C + supporting data).
