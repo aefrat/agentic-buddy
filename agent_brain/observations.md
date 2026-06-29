@@ -1,6 +1,6 @@
 ---
 last_accessed: 2026-06-29
-access_count: 19
+access_count: 20
 created: 2026-06-01
 ---
 
@@ -79,6 +79,7 @@ Resolved observations are moved to the bottom.
 - ~~**2026-06-23:** "Context compaction data drift"~~ → **resolved 2026-06-28:** created concept `agent_brain/concepts/context-compaction-data-drift.md` (seen 2x, includes idempotency trap variant)
 - **2026-06-23:** "Read vs write permission asymmetry" — a skill that reads from a service for data collection should never assume write access to the same service. The PitCrew agent reads Slack for team activity (authorized) but posting summaries back (unauthorized) was a permission violation at 2:47 AM. Pattern: reading a service and writing to it are separate permissions that should be explicitly granted, not implied by data source access. Generalizable to any agent interacting with external services. (seen: 1)
 - **2026-06-23:** "Team conventions as agent configuration" — domain-specific team practices (epics are multi-person without assignee; no team health commentary in reports) are invisible from raw data. Agents need explicit "team conventions" sections in skills to avoid misinterpreting normal state as anomalies. Without this, the agent generates plausible but wrong risk assessments. Applied: PitCrew skill now has a Team conventions subsection under Identity. (seen: 1)
+- **2026-06-29:** "Batch assessment via parallel agents" — when generating the same type of assessment (development brief) for multiple people, parallel agents with identical framework context + individual evidence produce consistent, independently correct output. 3 agents x 3 members completed faster than sequential processing and produced comparable quality. The key is that assessments are independent - no cross-member comparison needed at generation time. Applied: 9 development briefs for all remaining directs. (seen: 1)
 
 - **2026-06-24:** "Google Docs as rendering proxy" — uploading HTML with `mimeType: application/vnd.google-apps.document` converts to native Docs format, rendering inline in browser. Bypasses Google Drive's download-only behavior for HTML files. Tradeoff: loses CSS (grids, badges, gradients) but gains one-click viewing. Combined with permanent file_id reuse, creates a "live dashboard" pattern: stable URL, content refreshed on each run. Applied: PitCrew team report for Slack canvas link. (seen: 1)
 - **2026-06-24:** "Audience-specific report views from shared data" — generating multiple report formats from the same data collection pass (full for exec email, team for Slack canvas). Each view includes only the sections its audience cares about, ordered by priority. Data fetch is shared; only HTML generation and upload targets differ. Reduces redundant API calls while serving different stakeholders. Applied: PitCrew full report (email) + team report (Google Doc for canvas). (seen: 1)
