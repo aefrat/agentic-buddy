@@ -1,5 +1,6 @@
 ---
 collected: 2026-06-21
+updated: 2026-06-29
 quarter: Q2 2026
 period: 2026-04-01 to 2026-06-30
 member: Eitan Raviv
@@ -14,6 +15,55 @@ member: Eitan Raviv
 - **GitLab.com MRs merged:** 0
 - **GitHub PRs:** 0
 - **Slack messages:** 76 across 14 channels
+
+## Self-Assessment (collected 2026-06-29)
+
+Source: Eitan's reply to QC self-reflection question ("What accomplishments are you most proud of last quarter?")
+
+### AI Tooling Adoption (claude-code)
+- Started using claude-code this quarter, applied it across all tasks
+- Learning day: built hooks and skills:
+  - Hook: notification when Claude finishes response (no babysitting)
+  - Skill: create Jira ticket without UI (auto-fills default fields)
+  - Skill: design a new feature (not fully tested yet)
+  - Skill: fetch GitLab MRs
+  - Skill: fetch Jira tickets
+- Learned session naming and resuming for multi-session context
+- Proud of: learning to use AI better to save time
+
+### GitLab Runner Consolidation (budget savings)
+- Upgraded gitlab-runners to allow multiple pipelines on same runner pool
+- Combined SOA, Services, and Gating pipelines into one pool - reduced EC2 count
+- Same consolidation for pipe-x-release and Rhas-ci-Jumpstarter pipelines
+- Direct budget savings from reduced EC2 usage
+- Proud of: reducing budget consumption
+
+### CloudFront Upgrades
+- Upgraded CloudFront distributions to resolve multiple issues
+- Worked with Hubert on the configuration
+
+### s3pi Development
+- Performance improvements
+- Reduced technical debt
+- Created integration tests
+- Proud of: enhancing performance and usability
+
+### Cross-Team Contributions
+- Jumped into Distribution Focus area for urgent work
+- Conducted learning sessions with Hubert about Gator
+
+### Ongoing Maintenance
+- Vulnerability resolution
+- Token refresh
+- Bitwarden housekeeping
+- Proud of: maintaining the "grey" everyday stuff
+
+### Self-identified themes
+- Budget reduction
+- Performance and usability enhancement
+- Adding new functionality as requested
+- Maintaining everyday infrastructure ("grey stuff")
+- AI adoption for personal productivity
 
 ## Jira Tickets Resolved (Q2 2026)
 
@@ -34,10 +84,13 @@ member: Eitan Raviv
 ### Notable patterns
 
 - **Infrastructure and operations focus** — AWS EC2, CloudFront, vulnerability remediation, housekeeping
-- **s3pi development** — integration tests, performance improvements
+- **CI/CD cost optimization** — GitLab runner consolidation across multiple pipeline groups (from self-assessment, not visible in Jira tickets)
+- **s3pi development** — integration tests, performance improvements, technical debt reduction
 - **Security compliance** — container vulnerability fixes (VHCL-009), webserver vulnerabilities
 - **Monitoring maturity** — SLA spec with criticality tiers
+- **AI tooling adoption** — claude-code hooks and skills (from self-assessment, not visible in Jira tickets)
 - **2 Major-priority tickets** — security and CPPX integration
+- **Cross-team contribution** — Distribution Focus area help, Gator sessions with Hubert (from self-assessment)
 
 ## Internal GitLab MRs (gitlab.cee.redhat.com) — 28 merged
 
