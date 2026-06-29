@@ -58,7 +58,6 @@ Factual updates to Right now (changed dates, flipped statuses) are allowed mid-s
 ### Right now
 
 - **CAT today/tomorrow.** RHIVOS 2.0-Core CAT Jun 29-30. Content deadline was ~Jun 26 — should already be on CDN/ET. RC3 CTC at 93% (3 tickets remaining). All errata at REL_PREP.
-- **Atlassian API token "Avi2" — status uncertain.** Flagged as expired Jun 27, but `jira me` and `jira issue view` work as of Jun 29. May have been auto-rotated. Verify and clear.
 - **CY26Q2 Quarterly Connection** — Accomplishments and Feedback & Development drafts ready in `~/Documents/`. Team member QC reports (RHAS + ATC) in `agent_brain/projects/qc-agent/active/Q2-2026/`. Juanje draft expanded with self-input. May need supplementing with Jira/G-docs/1:1 data before Workday submission.
 - **Hubert Stefanski joining RHAS/PitCrew team** (approved Jeff Ligon & Paul Wallrabe, Jun 18). Transitioning TO this team, focused on PITCREW-161 (AIB prototyping). Next: discuss timelines with Hubert, communicate plan to stakeholders.
 - **RHIVOS QC Layered Product — DEPRIORITIZED** (Jun 24). Petr Sabata: "still figuring out what LP will look like." Kanitha moved compose tickets to backlog. CDN path work (VROOM-42116, In Progress) may continue for knowledge capture only. New team priorities: GitLab onboarding, CAIB integration, Konflux.
