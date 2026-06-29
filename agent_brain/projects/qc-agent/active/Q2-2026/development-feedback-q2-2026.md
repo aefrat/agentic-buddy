@@ -216,36 +216,64 @@ For each team member:
 
 ### Juanje Ojeda - Principal Software Engineer, ATC
 
-**Dimension assessment (Professional Track):**
+**Dimension assessment (Professional Track, Radford + Enterprise Competencies):**
 
-- Scope [Level 4-5]: Sets and achieves objectives tied to functional targets (Level 4 - met). Agent Forge and the pipelines-debugger propose new techniques with cross-functional impact - others across teams adopt the patterns. This is Level 5 "drives vision and innovation with cross-functional impact." Mentors Matt Goldman (Level 4), and cross-team adoption of agent patterns is effectively mentoring colleagues in own discipline (Level 5). Published articles and AAA Sprint 5 demo show emerging expert-resource behavior.
-- Complexity [Level 4-5]: Independent judgment on complex, non-routine issues (6 Blockers resolved, creative agent solutions). Recognized as expert within team and increasingly across department. Leads cooperative efforts among 5+ teams for execopen. Cross-team relationships are productive and include FoA, QE, AIB upstream. Approaching "formal networks across Red Hat to influence priorities" (Level 5) through forum engagement.
-- Impact [Level 4, trending 5]: Contributes to functional goals through operational direction (release pipeline, agent infrastructure). Decisions impact customer and program objectives (RC1-RC3, CTC). Agent Forge is starting to impact medium-term results. Not yet "consistently serves as project lead and SME for highly complex issues" at the organizational level (Level 5), but the trajectory is clear.
+- Scope [Stretching toward Level 5]: Sets and achieves objectives tied to functional targets (Level 4 - met). Agent Forge proposes new techniques adopted cross-team. Execopen pipeline spanned 5 repos with FoA coordination. Mentored Matt Goldman. Led pipelines-debugger from PoC to production adoption. Published articles on Red Hat Source and LinkedIn. Level 5 expects "mid-term objectives aligned to RH business goals, drives vision with cross-functional impact, leads professional staff as expert resource" - he's demonstrating most of this but hasn't yet positioned work as organizational strategy.
+- Complexity [Stretching toward Level 5]: Independent judgment on complex, non-routine issues (6 Blockers resolved, creative agent solutions). Recognized as expert within team and increasingly across department. Leads cooperative efforts among 5+ teams for execopen. Cross-team relationships with FoA, QE, AIB. Engaged across #forum-ambient-code-platform, #forum-qe-automotive. Level 5 expects "formal networks across Red Hat to influence priorities and objectives both internally and with customers" - the #forum engagement is a start, not yet an established cross-org network.
+- Impact [Gaps to address]: Contributes to functional goals through operational direction (release pipeline, agent infrastructure). Decisions impact customer and program objectives (RC1-RC3, CTC). Agent Forge emerging as reusable methodology. 28 tickets, 39 MRs. Level 5 expects "activities directly impact function's medium-to-long-term results and strategy, decisions significantly impact resource allocation" - impact remains primarily functional/tactical, not yet organizational-level strategic direction.
+
+**Enterprise Competency Readiness (IC Level 4 expectations, source: Competency Proficiency Levels by Job Levels, March 2022):**
+
+| Competency | Expected | Assessment | Evidence |
+|-----------|----------|------------|----------|
+| Red Hat Multiplier | Experienced | At/above | 711 Slack messages, cross-team community building around AI agents, articles published, demos to broader org |
+| Strategic | Experienced | At/above | Agent Forge as reusable strategy, technical vision for AI-driven engineering, execopen architecture decisions |
+| Influence | Experienced | At/above | Cross-team adoption of agent patterns (Ozan, Ian, Kanitha), articles on Red Hat Source, AAA and Rollup Demo presentations |
+| Execution | Advanced | At level | 28 tickets (6 Blockers), RC1-RC3 release pipeline kept operational, pac-jobs Phase 3 completed. Not yet driving execution at multi-team/department scope |
+| Team Advocate | Experienced | At level | Matt Goldman onboarding, cheatsheets, wiki generation, MR reviews. Connecting colleagues to domain experts |
+| Problem Solving | Advanced | At level | Complex pipeline diagnoses, AI agent solutions to systemic problems. Approaches Advanced in creative problem-solving but "building through programs and systems" (Expert-level) still emerging |
+| Customer Focus | Advanced | Below expected | No direct customer-facing evidence this quarter. Internal stakeholder coordination is strong, but external customer engagement is not visible |
+| Continuous Learning | Experienced | Above expected | Multi-agent memory research (VROOM-41514), Agent Forge design principles research with prior art analysis, published articles - approaches Advanced |
+
+Summary: 5 of 8 competencies at or above expected proficiency. Customer Focus (Advanced expected) is the main gap.
 
 **Current level fit:** Exceeds expectations. Comfortably operating at Level 4 with multiple areas of Level 5 behavior already evident. 28 tickets (6 Blockers), 39 MRs, 711 Slack messages - output and influence significantly exceed Level 4 norms.
 
 **Already demonstrating at IC Level 5:**
-- *Technical strategy across teams:* Agent Forge is a reusable framework adopted across teams. Execopen pipeline integration spanned 5 repositories with FoA coordination. This is Level 5 "drives the technical strategy and design of software solutions across multiple subsystems, influencing the overall architecture"
-- *AI leadership:* Pipelines-debugger, CTC agent, Agent Forge, Pi extensions for CI - this is Level 5 "drives the strategy and best practices for integrating advanced AI ecosystems." He isn't just using AI tools; he's building the strategy and infrastructure
-- *Knowledge sharing:* Published articles on Red Hat Source and LinkedIn, presented at AAA Sprint 5 and Rollup Demo. Level 5 expects "frequently presents at technical conferences." Internal demos aren't conferences, but the trajectory is clear
-- *Mentoring:* Matt Goldman onboarding with cheatsheets, wiki generation, MR reviews. Cross-team adoption of agent patterns (Ian, Kanitha building their own). This is Level 5 "coaches and mentors principal engineers and role models mentorship for the organization"
-- *Community building:* Shared articles in #forum-ambient-code-platform, #wg-team-auto-toolchain-ai. Engaged across organizational boundaries. Building a community of practice around AI agents
-- *Innovation:* Level 5 expects "drives innovation by leading significant product-area initiatives with a community-first mindset." Agent Forge and the AAA agent practice is exactly this
+- *AI innovation leadership:* Pipelines-debugger, CTC agent, Agent Forge, Pi extensions, CI infrastructure for agent skills. Cross-team adoption happened organically. This is the strongest evidence of Level 5 "drives the strategy and best practices for integrating advanced AI ecosystems at scale"
+- *Transparent, public-first communication:* 711 Slack messages with a consistent pattern of surfacing reasoning, blockers, and context in open channels. In #alerts-auto-toolchain he narrates his diagnostic process so others can learn. This teaches the team how to think about problems, not just what the answer is - a force multiplier
+- *Cross-team enablement through tooling:* Agent Forge, codebase-documenter skill, wiki-kb skill, Pi npm packages, CI job templates - Juanje builds things others pick up and extend. This "build once, multiply across the org" instinct is exactly what Level 5 demands for organizational impact
+- *Technical strategy across teams:* Agent Forge is a reusable framework adopted cross-team. Execopen pipeline integration spanned 5 repositories with FoA coordination. Level 5: "drives the technical strategy and design of software solutions across multiple subsystems, influencing the overall architecture"
+- *Knowledge sharing and mentoring:* Published articles, AAA Sprint 5 and Rollup Demo. Matt Goldman onboarding with cheatsheets, wiki generation, MR reviews. Cross-team adoption of agent patterns (Ian, Kanitha building their own). Level 5: "coaches and mentors principal engineers and role models mentorship for the organization"
+
+**Disconfirmation gate (assessed 2026-06-29):**
+
+Question: Is Juanje ready for promotion to IC Level 5?
+
+Contradicting evidence sought and found:
+- Impact remains primarily functional/tactical, not yet organizational-level strategic direction. Agent Forge has organizational potential but hasn't been positioned or recognized as organizational strategy
+- Customer Focus at Advanced is unmet - no external customer engagement evidence
+- External conference presentations are missing - internal demos are strong but Level 5 expects external visibility
+- Cross-org influence is emerging but not yet "formal networks across Red Hat to influence priorities." The #forum-ambient-code-platform engagement is a start, not an established network
+- Sustained consistency is unproven - Level 5 behaviors emerged in Q2 but need to be demonstrated consistently over multiple quarters
+
+Conclusion: Not yet ready for promotion. Juanje is on a clear trajectory from Level 4 to Level 5, with multiple Level 5 behaviors already demonstrated. The gaps are specific and addressable: organizational-level impact positioning, external visibility, cross-org network formalization, and customer-impact articulation. With deliberate action on 2-3 of these areas over the next 1-2 quarters, the promotion case would be substantially stronger.
 
 **Growth areas for IC Level 5:**
-- *Organizational-level strategy:* Level 5 expects "drives the technical strategy... influencing the overall architecture" at an organizational level (not just team/product). Juanje's influence is growing but still primarily within the Automotive vertical
-- *Conference presentations:* Level 5 expects "frequently presents at technical conferences, often to larger audiences." Internal demos and team meetings are strong but external conference presentations would strengthen the case
-- *Cross-org mentoring:* Level 5 expects "across organizations, coaches and mentors principal engineers." His mentoring is currently within ATC/Automotive. Expanding to mentor or consult across other engineering organizations would strengthen the profile
-- *SDLC evolution:* Level 5 expects "drives the evolution of the SDLC within the organization, introducing new methodologies." The agent-driven pipeline diagnosis is changing how the team works, but hasn't been positioned as an SDLC methodology change
-- *Business impact articulation:* Level 5 expects "owns and drives technical initiatives across the organization recognizing which pieces flow together to deliver value to the end user." Juanje delivers enormous value but could improve at articulating business impact to leadership audiences
-- *Industry engagement:* Level 5 expects "participates across multiple communities, fosters and monitors community health, engages in industry and internal working groups." Some gaps in formal industry engagement
+- *Position AI work as organizational strategy (Impact):* Level 5 expects "activities directly impact function's medium-to-long-term results and strategy." Agent Forge and the pipelines-debugger have real organizational value but are currently framed as team-level tooling. A proposal positioning the agent practice as an engineering methodology for the broader organization - with business impact language (incident resolution time reduction, engineering velocity, knowledge capture ROI) - would shift impact from functional-level to organizational-level
+- *Build formal networks beyond Automotive (Complexity):* Level 5 expects "formal networks across Red Hat to influence priorities and objectives both internally and with customers." Deepening relationships with engineering leaders in other BUs (RHEL Platforms, Ansible, Hybrid Platforms) who might adopt agent patterns would strengthen this. Current influence sphere is primarily Automotive
+- *Present at external conferences (Scope):* Level 5 expects "frequently presents at technical conferences, often to larger audiences." An external talk - DevConf, Red Hat Summit, or an open source CI/CD conference - would demonstrate the "expert regional or functional resource" scope expected at Level 5
+- *Articulate customer-facing impact (Customer Focus):* The one competency below expected proficiency for IC Level 4. Connecting infrastructure work to customer outcomes - pipeline reliability enabling faster customer-facing releases, FuSa traceability meeting automotive compliance - would address this gap
+- *Document SDLC methodology change (Scope):* Level 5 expects "drives the evolution of the SDLC within the organization." Write a design doc describing how agent-driven pipeline diagnosis changes the SDLC: from manual log reading to agent-first triage, from tribal knowledge to file-based KB. Position as methodology innovation
 
 **Recommended development path:**
-1. **Present externally** - submit a talk to DevConf, Red Hat Summit, or an open source conference on AI agents for CI/CD pipeline diagnosis. The pipelines-debugger story is compelling and original
-2. **Position Agent Forge as organizational strategy** - write a proposal positioning the agent practice as an engineering methodology for the broader organization, not just Automotive. Frame it in business terms: incident resolution time, engineering velocity, knowledge capture
-3. **Expand mentoring across organizations** - offer to consult with teams outside Automotive who are exploring AI agents. The #forum-ambient-code-platform engagement is a start; deepen it
-4. **Articulate SDLC impact** - document how the agent-driven approach changes the SDLC (pipeline diagnosis, CTC triage, code review). Position it as a methodology innovation, not just tooling
-5. **Develop business acumen** - partner with product or business leadership to connect technical innovations to revenue/customer impact. Level 5 expects this connection
+1. **Write a strategic proposal for the agent practice** - 2-3 page document positioning Agent Forge and the pipelines-debugger as an engineering methodology for the organization. Include business metrics (incident resolution time before/after, engineering hours saved). Present to leadership. Addresses: Impact dimension, Strategic competency, business acumen
+2. **Submit a conference proposal** - DevConf.cz or Red Hat Summit. Topic: "AI Agents for CI/CD Pipeline Diagnosis: From Idea to Production in One Quarter." Addresses: Scope dimension, Influence competency
+3. **Establish a cross-org consulting relationship** - identify 1-2 teams outside Automotive exploring AI agents. Offer to consult on their agent design. Addresses: Complexity dimension, cross-org mentoring
+4. **Connect technical work to customer outcomes** - explicitly articulate how pipeline reliability enables faster customer-facing releases, how FuSa traceability meets automotive compliance, how agent-driven triage improves SLAs. Addresses: Customer Focus competency, Impact dimension
+5. **Document SDLC methodology change** - short internal article or design doc on how agent-driven pipeline diagnosis changes the SDLC. Position as methodology innovation. Addresses: Scope dimension (Level 5: "drives the evolution of the SDLC within the organization")
+
+*Full development brief with 1:1 talking points: `agent_brain/projects/talent-architecture/active/juanje.ojeda/2026-06-29-development-brief.md`*
 
 ---
 
