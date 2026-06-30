@@ -20,7 +20,8 @@ Keycloak, targeting platform engineers at automotive OEMs.
 
 - `features-requiring-testing.md` - RHAS features/epics mapped to testing domains
 - `candidate-qualifications.md` - Must-have and nice-to-have qualifications for testing candidates
+- `testing-landscape-report.md` - Current state of RHAS testing: upstream, downstream, HiL, CTC, QE readiness, infrastructure, risks, recommendations
 
 ## Status
 
-Phase: Initial analysis (Jun 29, 2026)
+Phase: Landscape assessment complete (Jun 30, 2026)
