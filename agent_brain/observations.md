@@ -1,6 +1,6 @@
 ---
 last_accessed: 2026-06-30
-access_count: 21
+access_count: 22
 created: 2026-06-01
 ---
 
@@ -89,6 +89,8 @@ Resolved observations are moved to the bottom.
 - **2026-06-14:** Skill format migration — user has skills in two locations: old format (`agent_brain/skills/*.md`) and new agentskills.io format (`.claude/skills/<name>/SKILL.md`). User explicitly stated all new skills should use agentskills.io format. GitLab collection uses `.agents/skills/`. Consider migrating remaining old-format skills to `.claude/skills/` during a maintenance cycle and archiving the old files. (seen: 1)
   - 2026-06-18: Second new skill (`process-1on1s`) built in agentskills.io format. Pattern is now established — all new skills go to `.claude/skills/`. (seen: 2)
   - 2026-06-23 (daily): Deferred — migration requires moving 8+ skills, updating all CLAUDE.md references, and adapting format. Permission constraints also blocked `.claude/skills/` writes from autonomous mode. Needs a dedicated interactive session. New skill `person-slack-lookup` created in `agent_brain/skills/` as fallback.
+
+- **2026-06-30:** "Same-day documentation drift" - parallel verification agents caught 4 categories of inaccuracy in docs generated hours earlier (skills miscounted, hook details incomplete, config claims wrong). The codebase was unchanged; the generation pass applied heuristics that produced plausible-but-wrong results. Pattern: verify generated documentation against primary sources even when same-day, because LLM generation applies counting/categorization heuristics that can silently drift from reality. Distinct from code-level staleness - this is generation-accuracy drift. (seen: 1)
 
 ## Structure candidates (tools)
 
