@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-06-30 | CODEBASE.md update #3 (codebase-documenter update mode, 3 fixes: hooks.json in tree, hook wiring paragraph, config section clarification) | (auto-reflect) |
 | 2026-06-30 | CODEBASE.md update #2 (codebase-documenter update mode, 6 fixes applied: hook events, AB_MAINTENANCE guard, consolidate locking, optional KB dirs) | (auto-reflect) |
 | 2026-06-30 | CODEBASE.md re-verification #6 (codebase-documenter update mode, 2 minor fixes pending: project age, missing hooks.json in tree) | (auto-reflect) |
 | 2026-06-30 | CODEBASE.md re-verification #5 (codebase-documenter update mode, 1 minor hook description fix pending) | (auto-reflect) |
