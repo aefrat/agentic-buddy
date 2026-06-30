@@ -14,3 +14,5 @@ Example:
 
 ---
 
+2026-06-30|assisted|documentation|codebase-documentation-generation|high
+

@@ -57,11 +57,11 @@ Factual updates to Right now (changed dates, flipped statuses) are allowed mid-s
 
 ### Right now
 
-- **CAT today/tomorrow.** RHIVOS 2.0-Core CAT Jun 29-30. Content deadline was ~Jun 26 — should already be on CDN/ET. RC3 CTC at 93% (3 tickets remaining). All errata at REL_PREP.
-- **CY26Q2 Quarterly Connection** — Accomplishments and Feedback & Development drafts ready in `~/Documents/`. Team member QC reports (RHAS + ATC) in `agent_brain/projects/qc-agent/active/Q2-2026/`. Juanje draft expanded with self-input. May need supplementing with Jira/G-docs/1:1 data before Workday submission.
-- **Hubert Stefanski joining RHAS/PitCrew team** (approved Jeff Ligon & Paul Wallrabe, Jun 18). Transitioning TO this team, focused on PITCREW-161 (AIB prototyping). Next: discuss timelines with Hubert, communicate plan to stakeholders.
-- **RHIVOS QC Layered Product — DEPRIORITIZED** (Jun 24). Petr Sabata: "still figuring out what LP will look like." Kanitha moved compose tickets to backlog. CDN path work (VROOM-42116, In Progress) may continue for knowledge capture only. New team priorities: GitLab onboarding, CAIB integration, Konflux.
-- **Roderick Kieley** — 28 days into onboarding (started Jun 1). 1:1 biweekly, active.
+- **CAT complete.** RHIVOS 2.0-Core CAT Jun 29-30 finished. RC3 CTC at 93% (3 tickets remaining). All errata at REL_PREP.
+- **CY26Q2 Quarterly Connection** — Accomplishments and Feedback & Development drafts ready in `~/Documents/`. Team member QC reports (RHAS + ATC) in `agent_brain/projects/qc-agent/active/Q2-2026/`. Juanje and Eitan drafts expanded with self-input. Development briefs for all 10 directs at `talent-architecture/active/`. May need supplementing with Jira/G-docs/1:1 data before Workday submission.
+- **Hubert Stefanski transition starts Jul 1.** Approved Jeff Ligon & Paul Wallrabe (Jun 18). Moving to RHAS/PitCrew team, focused on PITCREW-161 (AIB prototyping). Knowledge transfer plan overdue. Discuss onboarding and timeline.
+- **Container vulnerability remediation deadline ~Jul 1.** VHCL-005/007/009 delegated (Eitan/Matt, Ozan/Matt, Ryan Smith). Follow up on status.
+- **Roderick Kieley** — 29 days into onboarding (started Jun 1). 1:1 biweekly, active.
 
 ### Files
 
