@@ -66,8 +66,50 @@ primary risk for Tech Preview (Sep 2026) and GA (Dec 2026).
   we can tell from Slack)
 - Mohamad had console access issues (Jun 22) - his RH user is in the wrong
   org (11009103 instead of 6340056), blocking OpenShift cluster access
-- Benny noted: "No doc exists yet" - he was asked to document all testing
-  knowledge but has not yet created it
+
+---
+
+---
+
+## Benny Zlotnik's Testing Architecture Doc
+
+Source: [Google Doc](https://docs.google.com/document/d/1NEzWHE1K4CiGkEDjhL5gpQUpcnepsiBvMDWPXUxLOHQ/edit?tab=t.0)
+(Title: "Jumpstarter + automotive-dev-operator Testing")
+
+This is Benny's documentation of the RHAS testing strategy. It defines three
+layers:
+
+### Layer 1: Jumpstarter E2E Tests
+- Upstream E2E tests for Jumpstarter
+- Run on **kind clusters** (suitable for Jumpstarter)
+
+### Layer 2: automotive-dev-operator (Builder) E2E Tests
+- Upstream E2E tests for the Builder
+- Also run on **kind clusters** - but Benny notes this is "less ideal for the
+  builder, as it is tailored for OpenShift"
+
+### Layer 3: Black-box Testing (RHAS CI - PITCREW-275)
+This is the downstream integration testing, split into two phases:
+
+**Phase 1:** Install the builder and run build, flash, and workspaces tests
+against the ROSA dev cluster, using a CI Jumpstarter account on all board types.
+
+**Phase 2:** Install a Jumpstarter instance with boards set up and perform
+testing using that instance.
+
+Additionally: run the same upstream E2E tests on OpenShift to ensure they work
+on the target platform (not just kind).
+
+### Cadence Decision (Open)
+- Large volume of commits suggests **nightly** runs
+- But nightly makes it harder to identify the offending commit
+- No decision recorded yet
+
+### Key Takeaway
+The doc confirms the architecture: US tests run per-PR on kind, DS tests (when
+operational) will run the same tests + additional integration tests on real
+OpenShift with real boards. The kind-vs-OpenShift gap for Builder is explicitly
+acknowledged as a risk.
 
 ---
 
@@ -267,8 +309,9 @@ CTC GATING (Operational, rough)
    pipeline has been in development since March with persistent infra blockers.
 2. **QE Readiness epic is empty** - No plan, no owner, no test strategy. Target
    is Oct 27 but depends on Distribution (also not started).
-3. **Benny's testing knowledge not documented** - Single point of failure for
-   institutional knowledge about testing architecture and decisions.
+3. **Benny's testing doc is minimal** - The Google Doc exists but is only a few
+   paragraphs. Covers architecture (3 layers) but no specifics on test cases,
+   coverage, pass/fail criteria, or operational runbook. Needs expansion.
 
 ### High
 
@@ -293,9 +336,9 @@ CTC GATING (Operational, rough)
 
 ## 9. Recommendations
 
-1. **Get Benny to write the testing doc** - This is the most important near-term
-   action. It captures the architecture, decisions, and tribal knowledge before
-   it's lost. Follow up directly.
+1. **Get Benny to expand the testing doc** - The doc exists but is minimal (a
+   few paragraphs). Needs: specific test cases, coverage matrix, pass/fail
+   criteria, operational runbook, cadence decision (nightly vs per-PR for DS).
 2. **Assign QE Readiness (PITCREW-337)** - Needs an owner immediately. Without a
    QE plan, Tech Preview and GA dates are aspirational.
 3. **Unblock Evgeni's DS pipeline** - The DNS/IT blocker (UR0191597) needs
