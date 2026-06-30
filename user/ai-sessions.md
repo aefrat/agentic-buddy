@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-06-30 | Codebase documentation generation (docs/CODEBASE.md, Standard depth) | `fe81698e-4d74-4478-ac4a-122592170556` |
 | 2026-06-28 | ATC Slack channel scan (7 days, 18 channels) | `a268a101-97cd-4b33-bf84-41de0e332cdc` |
 | 2026-06-29 | Talent Architecture project + talent-development skill (agent-forge), Juanje development brief, QC dev feedback enrichment, team & program priorities integration (both skills), development briefs for all 10 directs (parallel agents), Bella Konflux fix, time-in-role from Workday | `f16bc08f-797a-42cf-9d15-e7333fa21c37` |
 | 2026-06-29 | QC report locations, Juanje ACP/articles evidence, LP status (cron), Rule 21 (no AI-tell chars), Juanje QC self-input integration, development feedback (IC progression matrices + Job Leveling Framework + Job Architecture), QC skill Step 12 update, Workday table conversion, Juanje career aspirations response | `cc9f821f-e173-4109-bbb9-0a573c938504` → `fe2aebb2-5501-4496-b462-5093f01a3446` |
