@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-06-30 | autosd.sig.centos.org certificate expiration diagnosis (cert-manager ACME HTTP-01 vs OpenShift pathType:Exact incompatibility) | `57cb8db8-bb04-4383-b8d8-40b5e3b449e2` |
 | 2026-06-30 | atc_llm_wiki consolidation (cron migration, self-healing clone, path genericization, LP status cron) | `a3ef5349-756c-4c29-a7b8-774be48421af` |
 | 2026-06-30 | CODEBASE.md re-verification #9 (codebase-documenter update mode, no changes needed) | (auto-reflect) |
 | 2026-06-30 | CODEBASE.md re-verification #8 (codebase-documenter update mode, no changes needed) | (auto-reflect) |

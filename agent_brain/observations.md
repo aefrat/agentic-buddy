@@ -1,6 +1,6 @@
 ---
 last_accessed: 2026-06-30
-access_count: 22
+access_count: 23
 created: 2026-06-01
 ---
 
@@ -91,6 +91,7 @@ Resolved observations are moved to the bottom.
   - 2026-06-23 (daily): Deferred — migration requires moving 8+ skills, updating all CLAUDE.md references, and adapting format. Permission constraints also blocked `.claude/skills/` writes from autonomous mode. Needs a dedicated interactive session. New skill `person-slack-lookup` created in `agent_brain/skills/` as fallback.
 
 - **2026-06-30:** "Same-day documentation drift" - parallel verification agents caught 4 categories of inaccuracy in docs generated hours earlier (skills miscounted, hook details incomplete, config claims wrong). The codebase was unchanged; the generation pass applied heuristics that produced plausible-but-wrong results. Pattern: verify generated documentation against primary sources even when same-day, because LLM generation applies counting/categorization heuristics that can silently drift from reality. Distinct from code-level staleness - this is generation-accuracy drift. (seen: 1)
+- **2026-06-30:** "Silent infrastructure incompatibility diagnosis" - cert-manager ACME HTTP-01 solver creates Ingress with `pathType: Exact`, which OpenShift's ingress-to-route controller silently drops (emits `IncompleteIngressToRouteRules` event but doesn't create the Route). The solver pod and service run fine, masking the problem. Diagnosis required checking 4 resource layers: CertificateRequest -> Order -> Challenge -> Ingress/Route/Events. The key diagnostic event (`IncompleteIngressToRouteRules`) was buried among unrelated cronjob events. Pattern: when a Kubernetes resource chain stops working, trace the full chain from top to bottom - each layer may report "healthy" while the handoff between layers fails silently. (seen: 1)
 
 ## Structure candidates (tools)
 
