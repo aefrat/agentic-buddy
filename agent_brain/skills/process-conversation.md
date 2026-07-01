@@ -1,7 +1,7 @@
 ---
-last_accessed: YYYY-MM-DD
-access_count: 0
-created: YYYY-MM-DD
+last_accessed: 2026-07-01
+access_count: 1
+created: 2025-05-01
 ---
 
 # Skill: Process conversation
