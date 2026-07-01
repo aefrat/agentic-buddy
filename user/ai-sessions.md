@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-07-01 | Hubert transition meeting prep: 30 Jira tickets to Google Doc with links, s3pi research (NotebookLM + Slack + Jira), llm-wiki service page, KT topics | `d8907533-54ee-40fe-8238-3b62e2f909fe` |
 | 2026-07-01 | Morning briefing (email/Slack/tasks), Hubert transition Slack drafts, cert fix resolution update, Manuel/Jeff scrum master trace | `4d480e64-739f-469f-b79b-88e288eb89e5` |
 | 2026-07-01 | LP status report (cron), report agent status check, cronjob audit | `021ccd22-09a4-43ff-9ae6-a5264a72ad50` |
 | 2026-06-30 | RHAS testing landscape report: multi-source (Slack/Jira/Docs/verbal), 354-line report, Google Doc created, risk assessment | `6b88fbbd-4c91-4085-b689-19729133a9d2` |
