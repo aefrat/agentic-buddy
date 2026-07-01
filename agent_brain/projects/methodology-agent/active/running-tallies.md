@@ -14,5 +14,11 @@ Example:
 
 ---
 
+2026-07-01|autonomous|reporting|morning-briefing-parallel-scan|high
+2026-07-01|autonomous|reporting|lp-status-cron-report|high
+2026-07-01|assisted|communication|hubert-transition-slack-drafts|high
+2026-07-01|enhanced|research|scrum-master-handoff-investigation|medium
+2026-07-01|autonomous|project-tracking|deferred-queue-cleanup|high
+2026-07-01|enhanced|research|autosd-cert-fix-rca-tracking|medium
 2026-06-30|assisted|documentation|codebase-documentation-generation|high
 
