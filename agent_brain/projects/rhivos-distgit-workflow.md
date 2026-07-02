@@ -130,8 +130,17 @@ Full knowledge article written to ATC LLM wiki:
 - [ ] Team: Create end-to-end workflow document (Google Doc) covering the gaps above
 - [ ] Resolve Max's open question about routine rebuild ticket requirements
 
+## Google Doc
+
+Technical discussion document for the alignment meeting:
+https://docs.google.com/document/d/1o7L4N3iesq6A3dZlqHhPOM8j1UnUNDlAX2PXvQr1Bu4/edit
+
+Professionally formatted with: TOC, branch model table, policy rules, package
+exceptions, build targets reference, kernel derivative rebuild workflow, errata
+advisory generation, open issues tracker, and action items.
+
 ## Draft Reply
 
 A reply was drafted (session Jul 2) acknowledging the gaps and proposing a
 documentation effort + alignment meeting. Needs updating to incorporate contyk's
-answers before posting.
+answers before posting. User decided not to reply - knowledge captured instead.
