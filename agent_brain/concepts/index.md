@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-06-30
-access_count: 5
+last_accessed: 2026-07-02
+access_count: 6
 created: 2026-06-18
 ---
 
@@ -23,6 +23,10 @@ Generalized knowledge, patterns, and lessons learned from project work.
 - [Self-input integration](self-input-integration.md) — auto-generated reports miss work without system traces (mentoring, cost optimization, AI tooling). Member self-input is essential for complete coverage. Read when generating QC or evaluation reports.
 - [Multi-source framework synthesis](multi-source-framework-synthesis.md) — combining IC progression matrix + JLF + competency proficiency + career architecture produces richer assessments than any single source. Read when doing talent assessments or development feedback.
 - [Career aspirations grounding](career-aspirations-grounding.md) — ground career aspiration responses in evidence from recent work, not generic advice. Read when preparing career conversation responses or 1:1 development discussions.
+
+## Release engineering
+
+- [Three-tier progressive criteria](three-tier-progressive-criteria.md) — release milestones as strict supersets (Monthly subset TP subset GA), with binary pass/fail conditions. Prevents disconnected GA criteria. Read when designing release criteria for multi-milestone products.
 
 ## Process patterns
 

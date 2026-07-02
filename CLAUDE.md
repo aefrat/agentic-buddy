@@ -59,9 +59,10 @@ Factual updates to Right now (changed dates, flipped statuses) are allowed mid-s
 
 - **CAT complete.** RHIVOS 2.0-Core CAT Jun 29-30 finished. RC3 CTC at 93% (3 tickets remaining). All errata at REL_PREP.
 - **CY26Q2 Quarterly Connection** — Accomplishments and Feedback & Development drafts ready in `~/Documents/`. Team member QC reports (RHAS + ATC) in `agent_brain/projects/qc-agent/active/Q2-2026/`. Juanje and Eitan drafts expanded with self-input. Development briefs for all 10 directs at `talent-architecture/active/`. May need supplementing with Jira/G-docs/1:1 data before Workday submission.
-- **Hubert Stefanski transition day 1 (Jul 1).** Farewell/welcome Slack messages drafted, user reviewing. Jeff Ligon takes scrum master from Manuel Sandino (no formal announcement yet). Knowledge transfer plan overdue. AutoSD CloudFront migration timeline needed since Hubert (fork maintainer) is leaving.
-- **Container vulnerability remediation deadline today (Jul 1).** VHCL-005/007/009 delegated (Eitan/Matt, Ozan/Matt, Ryan Smith). Follow up on status.
-- **Roderick Kieley** — 30 days into onboarding (started Jun 1). 1:1 biweekly, active. 30-day checkpoint conversation due.
+- **Hubert Stefanski transition day 2 (started Jul 1).** Jeff Ligon takes scrum master from Manuel Sandino (no formal announcement yet). Knowledge transfer plan overdue. AutoSD CloudFront migration timeline needed since Hubert (fork maintainer) is leaving.
+- **Container vulnerability remediation past deadline (was Jul 1).** VHCL-005/007/009 delegated (Eitan/Matt, Ozan/Matt, Ryan Smith). Follow up on status.
+- **Roderick Kieley** — 31 days into onboarding (started Jun 1). 1:1 biweekly, active. 30-day checkpoint conversation overdue (was due Jul 1).
+- **RHAS QE deliverables draft v1.0.** Test Strategy + Release Criteria HTMLs uploaded to Drive, emailed. User review needed before sharing with broader team. OCP QE outreach not initiated.
 
 ### Files
 
