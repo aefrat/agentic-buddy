@@ -10,5 +10,5 @@ created: 2026-07-02
 
 | Document | Drive File ID | Created |
 |----------|---------------|---------|
-| Test Strategy | `1yZ0VB7NcHqnjE9_1X0g4IXhEsnv8xr_6` | 2026-07-02 |
-| Release Criteria | `1v5bL1thE1lVHJzKoSGaQKjKUPHuq8apy` | 2026-07-02 |
+| Test Strategy | `1tLAguZTTa6CKif-GBA7mM1N1rDXw3IrrjKo3218Us4U` | 2026-07-02 |
+| Release Criteria | `13wceO7V-q44G9mn2yWN0zYlrAaJOnD7MQBCjPKQc4hM` | 2026-07-02 |
