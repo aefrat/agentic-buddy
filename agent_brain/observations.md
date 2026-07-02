@@ -1,6 +1,6 @@
 ---
 last_accessed: 2026-07-02
-access_count: 27
+access_count: 28
 created: 2026-06-01
 ---
 
@@ -97,6 +97,10 @@ Resolved observations are moved to the bottom.
 - **2026-06-30:** "Closed-as-unreproducible masks timing-dependent failures" - VROOM-39824 identified the exact root cause (pathType:Exact incompatibility) in April but was closed because "issue couldn't be replicated" after a manual fix. The underlying mechanism (cert-manager creating Ingress with wrong pathType every 90 days) was unchanged, guaranteeing recurrence. For infrastructure issues tied to periodic triggers (cert renewal, cron jobs, lease rotation), "can't reproduce now" doesn't mean "fixed" - the fix must be verified against the mechanism, not current state. The Jira ticket had the right diagnosis but the wrong closure criteria. Pattern: when closing infra tickets, verify the fix addresses the triggering mechanism, not just the current symptom. **Validated 2026-06-30:** incident recurred exactly as predicted. Now tracked for permanent fix via CloudFront migration. (seen: 1)
 
 - **2026-07-02:** "Multi-phase agent creation workflow" - building a complete agent (knowledge base + skills + deliverables) from a requirements brief in a single session. Pattern: (1) parallel research agents for external data (Jira, Slack, Google Docs, web), (2) four-store knowledge base scaffolding with index, (3) parallel agents for skill files + reference files, (4) parallel agents for HTML deliverables, (5) registration in CLAUDE.md + delivery (email, Drive). Spawned 6+ parallel agents across 5 phases. Could become a meta-skill ("create agent from requirements"). (seen: 1)
+
+- **2026-07-02:** "Manual step in automated pipeline guarantees staleness" - when a multi-step pipeline automates steps 1..N-1 but leaves step N manual, step N will be forgotten. update-docs.sh pulled repos and regenerated CODEBASE.md daily (automated) but required a human to run the wiki ingest (manual). Result: 11 days of stale repo-wiki/ files. The manual step wasn't hard or time-consuming - it was simply invisible to the person who needed to do it. Pattern: if a pipeline step depends on the output of an automated step, automate it too or accept it won't happen. Applied: automated wiki ingest + commit + push into update-docs.sh. (seen: 1)
+
+- **2026-07-02:** "Non-interactive claude -p requires --dangerously-skip-permissions" - when using `claude -p` in scripts/cron, write operations silently fail because Claude prompts for permission that can't be granted. The exit code doesn't reflect the permission denial - the session completes without error but without performing writes. Fix: add `--dangerously-skip-permissions` flag. This is a gotcha for anyone automating Claude Code in non-interactive mode. (seen: 1)
 
 - **2026-06-30:** "Multi-source landscape research" - combining Slack channels (4), Jira tickets (7+), Google Docs (1), verbal input (1), existing project files (3), and strategic context cache into a comprehensive landscape report with risk assessment. The pattern: (1) identify all data sources, (2) fan out parallel agents for real-time sources (Slack, Jira), (3) read local context synchronously, (4) integrate verbal input as-is with attribution, (5) synthesize into a structured report with risk ranking. Applied to RHAS testing landscape. Could generalize into a "landscape assessment" skill template. (seen: 1)
 
