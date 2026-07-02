@@ -79,10 +79,49 @@ No single document exists covering the end-to-end workflow:
 
 Related references:
 - Dist-git policy rules: https://pkgs.devel.redhat.com/rules.html (and stage equivalent)
+- Dist-git policy management docs: https://docs.engineering.redhat.com -> "Managing dist-git policy" (Confluence EXDSPRHELB space)
+- Defects/Blockers/Exceptions process: https://spaces.redhat.com/display/Automotive/Defects,+Blockers,+and+Exceptions+Process
 - Gator (advisory generation): https://gitlab.cee.redhat.com/automotive/fences/gating/gator
 - errata_doc_approver: https://gitlab.cee.redhat.com/gnecasov/docs-errata-approver
 - OSCI errata-automation: https://gitlab.cee.redhat.com/osci/errata-automation
 - VROOM workflow diagram: https://docs.google.com/drawings/d/1A0jxGj5TG6ObPGOzmUbWYxuYlE-wbaJT4ZVSpuvVh0M/edit
+- RHELBLD-18043: Original RHIVOS dist-git policy exception request
+
+## contyk's Build Guide (April 2026, #automotive-release-readiness)
+
+Key reference for build targets and ticket requirements per release:
+
+**Building for GA (e.g., 2.0):**
+- Branch: `rhivos-2.0` (or `rhivos-1.0.0` for 1.x)
+- Target: `--target rhivos-2.0-candidate`
+- Requires: Approved blocker/exception Jira ticket
+- Builds NOT auto-promoted; reach out to contyk/toolchain team
+
+**Building for z-stream (e.g., 2.0.z):**
+- Branch: same `rhivos-2.0`
+- Target: `--target rhivos-2.0-z-candidate` (note the Z)
+- Requires: VROOM ticket with z-stream fixVersion
+
+**Building for next release (e.g., 2.1):**
+- Branch: `rhivos-2-main`
+- Target: `--target rhivos-2.1-candidate`
+- No dist-git restrictions, but "make sure you have a product work Jira
+  issue filed for future errata references"
+
+## Current Dist-Git Policies (from pkgs.devel.redhat.com/rules.html)
+
+Fetched Jul 2, 2026:
+- `rhivos-1-main`: Anything Goes
+- `rhivos-2-main`: Anything Goes
+- `rhivos-2.0` (default): Strict VROOM ticket + fixVersion + blocker approval
+- `rhivos-2.0` exceptions (Anything Goes): kernel-automotive, kernel-ivos-qualcomm,
+  downstream-dtbs, qcom-scmi
+- **Missing exception:** kernel-ivos-nxp-extra-modules
+
+## Wiki Article
+
+Full knowledge article written to ATC LLM wiki:
+`atc_llm_wiki/repo-wiki/concepts/distgit-policy-and-errata-workflow.md`
 
 ## Action Items
 
