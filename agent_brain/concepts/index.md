@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-07-02
-access_count: 6
+last_accessed: 2026-07-05
+access_count: 7
 created: 2026-06-18
 ---
 
@@ -27,6 +27,10 @@ Generalized knowledge, patterns, and lessons learned from project work.
 ## Release engineering
 
 - [Three-tier progressive criteria](three-tier-progressive-criteria.md) — release milestones as strict supersets (Monthly subset TP subset GA), with binary pass/fail conditions. Prevents disconnected GA criteria. Read when designing release criteria for multi-milestone products.
+
+## Google Workspace patterns
+
+- [Google Docs as rendering proxy](google-docs-rendering-proxy.md) — upload HTML with mimeType in request body to convert to native Docs format. Enables permanent-URL live dashboards. Key: mimeType in `--json`, not `--params`. Read when uploading HTML reports to Drive or troubleshooting conversion.
 
 ## Process patterns
 

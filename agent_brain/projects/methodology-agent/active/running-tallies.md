@@ -22,5 +22,6 @@ Example:
 2026-07-01|enhanced|research|autosd-cert-fix-rca-tracking|medium
 2026-07-02|assisted|communication|sbi-feedback-kanitha-lp-priority|high
 2026-07-02|assisted|tool-building|rhas-qe-expert-lead-agent-creation|high
+2026-07-05|assisted|evaluation|qc-self-eval-career-aspirations-draft|high
 2026-06-30|assisted|documentation|codebase-documentation-generation|high
 
