@@ -88,6 +88,17 @@ Projects:
 
 > *[Not yet received - only placeholder came through. Awaiting paste.]*
 
+### Q4: Career aspirations (short-term and long-term)
+
+**Short-term (1-2 years):**
+- Become a proficient contributor to RHAS, as a technical lead within a subject area
+- Provide real value to real users and expand skillset to continue growing as an engineer
+- Contribute significant, well-implemented features
+
+**Long-term (3-5 years):**
+- Hard to describe given recent team changes and uncertainty in how they'll shape up over the coming months
+- Current plan: continue growing professionally as a software engineer, expanding skillset, improving ability to execute on requirements, and working toward satisfying quarterly goals and higher-level promotion plans
+
 ### Q3: Feedback received and key takeaways (strengths and development areas)
 
 **STRENGTHS:**
