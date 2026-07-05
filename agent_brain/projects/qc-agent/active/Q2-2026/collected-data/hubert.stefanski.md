@@ -88,6 +88,10 @@ Projects:
 
 > *[Not yet received - only placeholder came through. Awaiting paste.]*
 
+### Q5: Support needed from manager
+
+> "I believe my manager knows best how to support his associates, he's been able to do, and continues to be in ways in which I wouldn't even be able to communicate."
+
 ### Q4: Career aspirations (short-term and long-term)
 
 **Short-term (1-2 years):**
