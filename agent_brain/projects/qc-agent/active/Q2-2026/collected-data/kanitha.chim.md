@@ -80,6 +80,18 @@ member: Kanitha Chim
 - Long-term: senior technical leadership, architecture influence over Toolchain pipelines and infrastructure, owning long-term technical planning
 - Career trajectory: IC technical leadership path, not management
 
+### Q5: Manager Support
+
+> I would appreciate regular feedback on my roles as PO and engineer to ensure I am growing effectively and performing my role as expected.
+>
+> I also need support in reinforcing the team to align with planning, ensuring the PO and I can successfully carve out time for these tasks in the sprint backlog. I would also appreciate help in identifying opportunities where I can stretch my skills, whether through technical training resources or any projects to amplify my career.
+
+**Key themes from support needs:**
+- Regular feedback on dual PO/engineer role performance
+- Manager reinforcement for team alignment with planning processes
+- Protected time in sprint backlog for PO + planning tasks
+- Stretch opportunities: technical training, career-amplifying projects
+
 ## Stats
 
 - **Jira tickets resolved:** 18 (15 VROOM + 3 cross-project)
