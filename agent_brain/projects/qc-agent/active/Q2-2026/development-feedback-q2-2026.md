@@ -396,9 +396,9 @@ Conclusion: Not yet ready for promotion. Juanje is on a clear trajectory from Le
 
 **Dimension assessment (Professional Track - QE):**
 
-- Scope [Level 4-5]: Works independently to set and achieve objectives (Test Console platform, CTC pipeline, AI analysis). Proposes new techniques (AI-powered test analysis, Gemini transitions, packages.redhat.com PoC) with impact within the function. Coordinates CTC activities for RC1-RC3 as functional team lead. 199 mentions by others - acts as expert resource. Approaching Level 5 "drives vision and innovation with cross-functional impact" through Test Console's central role.
-- Complexity [Level 4, trending 5]: Independent judgment on complex, non-routine issues (3 Gemini model transitions, fallback mechanisms, long-standing Blocker-level security fix). Recognized as expert within team - primary Test Console owner. Productive relationships within function (QE automotive, testing-farm, PitCrew). Leading cooperative efforts across QE teams. Approaching "subject matter expert advising on strategy" (Level 5).
-- Impact [Level 4, trending 5]: Contributes to functional goals through operational direction of testing infrastructure. Decisions impact program objectives (CTC certification timeline, release readiness). Serves as de facto project lead for Test Console and CTC pipeline. Approaching Level 5 "directly impacts function's medium-to-long-term results" - Test Console IS the testing infrastructure strategy.
+- Scope [Level 4-5]: Works independently to set and achieve objectives (Test Console platform, CTC pipeline, AI analysis). Proposes new techniques (AI-powered test analysis, Gemini transitions, packages.redhat.com PoC) with impact within the function. Coordinates CTC activities for RC1-RC3 as functional team lead. 199 mentions by others - acts as expert resource. Cross-team feedback from Yariv (BOA team) explicitly recognizes Roni as a "vital collaborative anchor" across Toolchain, Jumpstarter, and BoA, with Multiplier behaviors at the Advanced level. Willing to mentor and assist others to begin contributing to Test Console. Approaching Level 5 "drives vision and innovation with cross-functional impact" through Test Console's central role and cross-team enablement.
+- Complexity [Level 4, trending 5]: Independent judgment on complex, non-routine issues (3 Gemini model transitions, fallback mechanisms, long-standing Blocker-level security fix). Recognized as expert within team - primary Test Console owner. Productive relationships within function (QE automotive, testing-farm, PitCrew). Leading cooperative efforts across QE teams. BOA team feedback confirms cross-team expert recognition beyond immediate team. Approaching "subject matter expert advising on strategy" (Level 5).
+- Impact [Level 4, trending 5]: Contributes to functional goals through operational direction of testing infrastructure. Decisions impact program objectives (CTC certification timeline, release readiness). Serves as de facto project lead for Test Console and CTC pipeline. Through Test Console, scales individual Multiplier behaviors to elevate multiple teams (Yariv: "scales these behaviors to elevate the effectiveness of multiple teams integrated under one product"). Approaching Level 5 "directly impacts function's medium-to-long-term results" - Test Console IS the testing infrastructure strategy.
 
 **Current level fit (QE Level 4):** Exceeds expectations. Highest individual output (32 tickets, 43 MRs). Owns the Test Console platform end-to-end. Leads test automation framework design, coordinates team activities for CTC delivery, and applies creative problem-solving (AI-powered test analysis, Gemini model transitions).
 
@@ -406,13 +406,14 @@ Conclusion: Not yet ready for promotion. Juanje is on a clear trajectory from Le
 - *Test automation frameworks:* Test Console IS the automation framework. Roni designs, builds, and maintains it. Fully meets "lead the design and development of complex test automation frameworks"
 - *Team coordination:* Configured TC for RC1/RC2/RC3, prepared reduced test plans, scheduled weekend CTC runs. Meets "coordinate the activities of a team of engineers to ensure successful test delivery"
 - *Creative problem-solving:* AI-powered test analysis with 3 Gemini model transitions, fallback mechanisms. Exceeds "apply creative problem-solving to resolve complex bugs"
-- *Mentoring:* Introduced Test Console MCP server to colleagues with examples. Some mentoring but could be more structured
+- *Mentoring:* Introduced Test Console MCP server to colleagues with examples. Yariv (BOA team) confirms willingness to mentor and assist others to begin contributing to Test Console. Mentoring is present but could be more structured and formalized
 - *CI/CD:* Designs and manages Test Console CI/CD pipeline. Meets Level 4
 
 **Already demonstrating at QE Level 5:**
 - *Platform ownership:* Test Console is the central testing platform for RHIVOS. Owning it is effectively "setting mid-term strategic direction of quality assurance activities"
 - *AI innovation:* Navigated 3 Gemini model transitions and built intelligent fallback mechanisms. This approaches Level 5 "leverage AI technologies to streamline workflows"
-- *Cross-team enablement:* 199 mentions by others - confirms he's a central enabler. Level 5 "subject matter expert" behavior
+- *Cross-team enablement:* 199 mentions by others - confirms he's a central enabler. Level 5 "subject matter expert" behavior. Cross-team feedback from Yariv (BOA) rates Roni at Advanced Multiplier level, recognizing him as a "vital collaborative anchor" who scales behaviors to elevate Toolchain, Jumpstarter, and BoA through the Test Console platform
+- *Mentoring and onboarding:* Willing to mentor and assist others to begin contributing to Test Console (Yariv feedback), lowering barriers for cross-team engagement. This is Level 5 "coaches and mentors" behavior extending through platform enablement
 - *Business impact:* Kept CTC pipeline operational across all three release candidates. Explored new distribution channels (packages.redhat.com PoC). This is strategic QA impact
 
 **Growth areas for QE Level 5:**
@@ -428,7 +429,7 @@ Conclusion: Not yet ready for promotion. Juanje is on a clear trajectory from Le
 2. **Position Test Console as enterprise reference** - the platform is mature enough to be a reference architecture. Document it, present it at internal forums, offer it as a pattern for other products
 3. **Present externally** - the AI-powered test analysis story (3 model transitions, fallback mechanisms) is a compelling conference talk for DevConf or testing conferences
 4. **Expand stakeholder engagement** - engage more with product management and customers on quality metrics. Translate testing results into business language
-5. **Formalize mentoring** - structure mentoring of QE practices for team members. Help Bella with her CTC reporting work as a natural extension
+5. **Formalize mentoring** - Yariv's feedback confirms Roni's willingness to mentor others into Test Console. Structure this into regular mentoring sessions for cross-team contributors. Help Bella with her CTC reporting work as a natural extension
 6. **Develop business acumen** - understand how quality metrics connect to product release decisions, customer satisfaction, and revenue impact
 
 ---
@@ -446,7 +447,7 @@ Conclusion: Not yet ready for promotion. Juanje is on a clear trajectory from Le
 - Benny [Level 4] - Scope: 4 / Complexity: 4, trending 5 / Impact: 4. Strongest: Complexity (connective hub, community expert). Biggest gap: Impact - tactical breadth, needs strategic direction-setting.
 - Roderick [Level 4] - Scope: Too early / Complexity: Too early / Impact: Too early. Strongest: N/A (onboarding). Biggest gap: Domain depth - establish Level 4 baseline first.
 - Matt [Level 4] - Scope: 4 (building) / Complexity: 3-4 / Impact: 3. Strongest: Scope (initiative to propose improvements). Biggest gap: Complexity + Impact - domain expertise and delivery cadence still ramping.
-- Roni [Level 4] - Scope: 4-5 / Complexity: 4, trending 5 / Impact: 4, trending 5. Strongest: Impact (Test Console decisions directly affect CTC/release). Biggest gap: Complexity - needs to be recognized as SME advising functional leaders.
+- Roni [Level 4] - Scope: 4-5 / Complexity: 4, trending 5 / Impact: 4, trending 5. Strongest: Impact (Test Console decisions directly affect CTC/release) and cross-team multiplier effect (Yariv/BOA: Advanced-level Multiplier through platform enablement). Biggest gap: Complexity - needs to be recognized as SME advising functional leaders; strategic direction articulation.
 
 ### Common themes
 
