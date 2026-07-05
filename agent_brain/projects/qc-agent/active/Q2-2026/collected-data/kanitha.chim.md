@@ -24,6 +24,21 @@ member: Kanitha Chim
 - QC Layered Product: mapped the path for RHIVOS LP for Qualcomm, drafted approach based on RHEL docs
 - AI/automation adoption: set up agent for Errata/distribution to reduce repetitive process work
 
+### Q2: Top Priorities for Next Quarter
+
+> For this quarter, my priorities are to:
+>
+> - drive the completion of CAIB integration
+> - onboarding RHIVOS on Gitlab - providing infrastructure support and process mechanism
+> - preparation for RHIVOS-2.0-z RHIVOS-2.0-Core-z release
+> - onboarding new associate to distribution focus area
+
+**Key themes from priorities:**
+- CAIB integration completion: driving cross-team technical initiative
+- GitLab migration: infrastructure and process support for RHIVOS onboarding
+- Z-stream release prep: continuing release ownership for Core and main RHIVOS
+- Team growth: onboarding new associate into distribution area (mentorship/knowledge transfer)
+
 ## Stats
 
 - **Jira tickets resolved:** 18 (15 VROOM + 3 cross-project)
