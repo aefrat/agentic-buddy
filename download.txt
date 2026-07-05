@@ -1,0 +1,109 @@
+﻿PitCrew / RHAS - Daily Sprint Status
+June 29, 2026 - Release: RHAS-0626 - Sprint 13
+	ON TRACK
+	Executive Summary
+________________
+Overall: On Track. Sprint 13 velocity jumped to 75% (21/28 closed, up from 64% yesterday). Major milestone: Jumpstarter 0.9.0 release (PITCREW-440) closed along with three critical blocking bugs (PITCREW-435, -436, -437) - all resolved by majopela. The beforeLease/endLease hook issues that had been stuck in Review are now fully resolved and the lab has been updated to 0.9.0 (PITCREW-438 closed).
+Three items remain in Review: PITCREW-417 (Python bump to 3.12-3.14), PITCREW-393 (e2e downstream testing prerequisites), and PITCREW-119 (Konflux onboarding). Two new sprint items: PITCREW-450 (lab TI board boot failure) and PITCREW-449 (sdwire driver verification).
+________________
+Changes Since Last Report
+________________
+Jun 28 -> Jun 29
+
+
+	PITCREW-440 (jumpstarter: release 0.9.0): In Progress -> Closed - 0.9.0 released, lab updated, operator PRs merged. Major delivery milestone.
+	
+
+
+
+	PITCREW-435 (beforeLease hook endLease stuck): Review -> Closed - Hook failure no longer leaves exporter stuck in BeforeLeaseHookFailed.
+	
+
+
+
+	PITCREW-438 (Update lab to Jumpstarter 0.9.0): New -> Closed - Lab infrastructure updated to 0.9.0 post-release.
+	Sprint Movement
+Metric
+	Jun 28
+	Jun 29
+	Delta
+	Closed
+	18
+	21
+	+3
+	In Progress
+	4
+	2
+	-2
+	Review
+	3
+	3
+	0
+	New
+	3
+	2
+	-1
+	% Complete
+	64%
+	75%
+	+11pp
+	Epic Movement
+No epic status changes since Jun 28. All 10 In Progress and 17 New epics unchanged.
+________________
+Sprint 13 - Current Status
+________________
+
+
+Closed: 21
+	IP: 2
+	Rev: 3
+	New: 2
+	Open Sprint Items (7)
+Key
+	Summary
+	Status
+	Assignee
+	PITCREW-416
+	C2 Recovery: add Automotive Operator to ArgoCD
+	In Progress
+	Mohamad Abo Ras
+	PITCREW-227
+	Runbook for service rebuild from zero
+	In Progress
+	Miguel Angel Ajo Pelayo
+	PITCREW-417
+	Bump Python to [3.12-3.14]
+	Review
+	Jeff Ligon
+	PITCREW-393
+	e2e downstream testing: acquire prerequisites and credentials
+	Review
+	Evgeni Vakhonin
+	PITCREW-119
+	productization: onboard builder upstream project to Konflux
+	Review
+	Bella Khizgiyaev
+	PITCREW-450
+	[Lab] ti-jacinto-j784s4xevm-06: ukiboot "Unable to find active slot" boot failure
+	New
+	Shawn Doherty
+	PITCREW-449
+	Verify sdwire driver changes do not regress on Linux
+	New
+	-
+	Recently Closed (since last report)
+Key
+	Summary
+	Assignee
+	PITCREW-440
+	jumpstarter: release 0.9.0
+	Miguel Angel Ajo Pelayo
+	PITCREW-435
+	beforeLease hook with onFailure endLease stuck
+	Miguel Angel Ajo Pelayo
+	PITCREW-438
+	Update lab to Jumpstarter 0.9.0 after release
+	Miguel Angel Ajo Pelayo
+	________________
+PitCrew / RHAS Daily Report - Generated June 29, 2026 - Data sources: Jira (PITCREW)
+Previous report: Jun 28, 2026 (full) - Next scheduled: Jun 30, 2026

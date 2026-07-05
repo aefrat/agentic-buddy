@@ -23,7 +23,6 @@
       "Bash(whoami)",
       "Bash(hostname)",
       "Bash(uname:*)",
-
       "Bash(grep:*)",
       "Bash(awk:*)",
       "Bash(sed:*)",
@@ -36,9 +35,7 @@
       "Bash(tee:*)",
       "Bash(paste:*)",
       "Bash(column:*)",
-
       "Bash(git:*)",
-
       "Bash(python3:*)",
       "Bash(python:*)",
       "Bash(pip:*)",
@@ -47,7 +44,6 @@
       "Bash(npm:*)",
       "Bash(npx:*)",
       "Bash(node:*)",
-
       "Bash(jira:*)",
       "Bash(jira-mcp-cli:*)",
       "Bash(gws:*)",
@@ -63,7 +59,6 @@
       "Bash(rpm:*)",
       "Bash(crontab:*)",
       "Bash(gh:*)",
-
       "Bash(mkdir:*)",
       "Bash(cp:*)",
       "Bash(mv:*)",
@@ -71,17 +66,14 @@
       "Bash(chmod:*)",
       "Bash(tar:*)",
       "Bash(unzip:*)",
-
       "Bash(timeout:*)",
       "Bash(time:*)",
       "Bash(xdg-open:*)",
       "Bash(sudo dnf:*)",
-
       "Read(//home/aefrat/**)",
       "Read(//tmp/**)",
       "Read(//etc/**)",
       "Read(//usr/bin/**)",
-
       "WebSearch",
       "WebFetch(domain:docs.google.com)",
       "WebFetch(domain:github.com)",
@@ -94,12 +86,12 @@
       "WebFetch(domain:sigs.centos.org)",
       "WebFetch(domain:rhivos.auto-toolchain.redhat.com)",
       "WebFetch(domain:one.redhat.com)",
-
       "mcp__notebooklm-mcp__notebook_list",
       "mcp__notebooklm-mcp__notebook_create",
       "mcp__notebooklm-mcp__refresh_auth",
       "mcp__notebooklm-mcp__source_add",
-      "mcp__notebooklm-mcp__source_delete"
+      "mcp__notebooklm-mcp__source_delete",
+      "WebFetch(domain:redhat.atlassian.net)"
     ]
   },
   "hooks": {
@@ -140,5 +132,8 @@
         ]
       }
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "slack-mcp"
+  ]
 }
