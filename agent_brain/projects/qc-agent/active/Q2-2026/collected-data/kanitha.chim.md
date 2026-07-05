@@ -39,6 +39,29 @@ member: Kanitha Chim
 - Z-stream release prep: continuing release ownership for Core and main RHIVOS
 - Team growth: onboarding new associate into distribution area (mentorship/knowledge transfer)
 
+### Q3: Feedback and Development
+
+> **Top Strengths**
+>
+> - Strong team player, communication, technical execution and ownership of my tasks
+> - Consistently delivering expected tasks
+>
+> **Opportunities for Development**
+>
+> - Onboarding & Knowledge Sharing: I plan to act as an onboarding buddy for our new associate by guiding them through our development setup. Additionally, I will organize continue on technical knowledge sharing with existing team members to spread domain expertise across the team.
+> - Product Owner Collaboration: I will maximize our existing weekly meetings with the PO to proactively flag technical roadblocks earlier and better align our technical debt tasks with the upcoming product roadmap
+>
+> **Personal and Skill Growth:**
+>
+> - Developing my leadership and mentorship skills by guiding newer engineers
+> - Improving my communication efficiency by proactively aligning technical debt with the product roadmap
+
+**Key themes from feedback:**
+- Strengths: teamwork, communication, technical execution, ownership, reliable delivery
+- Development focus: mentorship (onboarding buddy for new associate), knowledge sharing across the team
+- PO collaboration: proactive roadblock flagging, aligning tech debt with product roadmap
+- Growth direction: leadership/mentorship skills, communication efficiency
+
 ## Stats
 
 - **Jira tickets resolved:** 18 (15 VROOM + 3 cross-project)
