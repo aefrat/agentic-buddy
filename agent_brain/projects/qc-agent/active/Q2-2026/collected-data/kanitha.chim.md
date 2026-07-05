@@ -62,6 +62,24 @@ member: Kanitha Chim
 - PO collaboration: proactive roadblock flagging, aligning tech debt with product roadmap
 - Growth direction: leadership/mentorship skills, communication efficiency
 
+### Q4: Career Aspirations
+
+> **Short term**
+>
+> - mentoring and onboarding new engineer and the team toward distribution area to make sure that we have enough members understanding this area in Toolchain
+> - working and gaining more knowledge outside of RHIVOS, especially RHEL to shape the work on RHIVOS on Gitlab and Konflux
+> - become a key technical partner for the PO, helping shape features early during refinement and translating complex technical requirements into action plans for the team
+>
+> **Long-Term**
+>
+> - progress into a senior technical leadership role where I can influence the architecture plan of the work that Toolchain owns such as pipeline and infrastructure
+> - design and own the long-term technical plan for the team, making sure that we're ready to support production demanding
+
+**Key themes from aspirations:**
+- Short-term: knowledge multiplication (distribution area), broadening beyond RHIVOS into RHEL/GitLab/Konflux, becoming a technical partner to PO in refinement
+- Long-term: senior technical leadership, architecture influence over Toolchain pipelines and infrastructure, owning long-term technical planning
+- Career trajectory: IC technical leadership path, not management
+
 ## Stats
 
 - **Jira tickets resolved:** 18 (15 VROOM + 3 cross-project)
