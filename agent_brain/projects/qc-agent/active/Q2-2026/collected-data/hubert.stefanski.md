@@ -81,3 +81,31 @@ Projects:
 - **Gating alert responder** — 71 messages in alerts-package-level-gating
 - **Cross-team connector** — active in team-pitcrew-automotive (10), forum-jumpstarter (17), automotive-cat-collaboration (15)
 - **Follow-on activities ownership** — 26 messages in team-auto-follow-on-activities
+
+## Self-Assessment Input (Replay)
+
+### Q1: Accomplishments most proud of (WHAT and HOW)
+
+> *[Not yet received - only placeholder came through. Awaiting paste.]*
+
+### Q2: Top priorities for next quarter (Q3 2026)
+
+1. **RHAS Transition and CAIB Integration**
+   - Continue development of automotive-dev-operator S3 handler and CAIB integration work begun in late June
+   - Ramp up on Jumpstarter, pac-jobs, and RHAS-specific workflows
+   - Establish productive working relationships with RHAS team members (Paul, Jeff, Miguel)
+   - Complete any remaining ATC handoff activities to Eitan
+
+2. **Complete In-Flight ATC Commitments**
+   - Close out remaining open tickets (VROOM-31789 cert-manager route issue, VROOM-42212 webserver decommission follow-up)
+   - Support Eitan through any gating or infrastructure questions as "consultant" capacity
+   - Ensure layered product gating planning (AUTOBU-1076) has clear next steps and ownership
+
+3. **Build RHAS Technical Depth**
+   - Gain proficiency in OpenShift/Kubernetes operators, CRC local development, and Tekton
+   - Understand RHAS architecture, testing frameworks, and delivery pipelines
+   - Identify high-impact contribution opportunities in the RHAS roadmap
+
+4. **Maintain Operational Excellence**
+   - Continue same-day/next-day response to critical incidents
+   - Stay current with automotive and RHAS program priorities through program calls and syncs
