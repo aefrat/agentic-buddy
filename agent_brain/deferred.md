@@ -13,11 +13,9 @@ Sources: `daily`, `weekly`, `monthly`, `user`.
 
 ---
 
-- **reminder** (2026-07-12, daily): **Container vulnerability remediation - 1 of 3 resolved.** VHCL-009 closed (Eitan Raviv, Jul 12). VHCL-005 (Eitan/Matt - auto-toolchain-dashboard) and VHCL-007 (Ryan Smith - contcert) still open past Jul 1 deadline. Follow up on status.
-- **reminder** (2026-06-30, daily): **Hubert Stefanski transition to RHAS/PitCrew starts Jul 1.** Discuss remaining knowledge transfer and onboarding plan.
-- **info** (2026-06-14, daily): PITCREW-291 is overdue (was target RHAS-0526). Still In Progress — may need escalation or re-targeting.
-- **review** (2026-06-23, daily): Hubert's knowledge transfer plan was due ~Jun 17 — overdue. Follow up on status. Also: discuss transition timelines (from Jun 18 meeting).
-- **reminder** (2026-07-02, daily): **Roddie Kieley 30-day checkpoint overdue.** Day 31 (started Jun 1). Biweekly 1:1 cadence active, but 30-day checkpoint conversation was due Jul 1.
-- **info** (2026-07-01, daily): **Workday evaluations still open.** Juanje Ojeda and Eitan Raviv QC manager evaluations pending - user discussing with them today (Jul 1). Hubert transfer approval and Bella time/HR approvals also pending.
-- **info** (2026-06-24, daily): VROOM-42116 CDN path MR #149 submitted by Matt Goldman — monitor for merge. LP total tasks now 18 (was 16, +2 new compose tickets).
-- **review** (2026-07-02, daily): **RHAS QE deliverables draft v1.0 need review.** Test Strategy (1,083 lines, 14 sections) + Release Criteria (799 lines, 9 sections) HTMLs uploaded to Drive and emailed. Review before sharing with broader team. OCP QE outreach (start with Cameron Meadors) not initiated.
+- **reminder** (2026-07-12, weekly): **Container vulnerability remediation - 2 of 3 still open.** VHCL-009 closed (Eitan, Jul 12). VHCL-005 (Eitan/Matt) and VHCL-007 (Ryan Smith/contcert) past Jul 1 deadline. Follow up.
+- **reminder** (2026-07-12, weekly): **Hubert transition day 12, KT plan still overdue.** Was due ~Jun 17. CloudFront migration timeline needed (Hubert is the fork maintainer). Jeff Ligon scrum master handoff not formally announced.
+- **reminder** (2026-07-12, weekly): **Roderick 30-day checkpoint 12 days overdue.** Day 41 (started Jun 1). Schedule the conversation.
+- **reminder** (2026-07-12, weekly): **Workday QC manager evaluations pending.** Juanje, Eitan, and remaining team members. QC deadline July 10 may have passed for some.
+- **review** (2026-07-02, daily): **RHAS QE deliverables draft v1.0 need review.** Test Strategy + Release Criteria HTMLs on Drive and emailed. Review before broader sharing. OCP QE outreach not initiated.
+- **info** (2026-06-14, daily): PITCREW-291 overdue (was target RHAS-0526). Still In Progress. One month in deferred - escalate or re-target.

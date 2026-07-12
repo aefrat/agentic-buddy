@@ -1,0 +1,73 @@
+{
+  "period": "weekly",
+  "generated": "2026-07-12T08:29:56.610241",
+  "date_range": {
+    "start": "2026-07-12",
+    "end": "2026-07-12"
+  },
+  "total_tasks": 3,
+  "distribution": {
+    "autonomous": {
+      "count": 3,
+      "percentage": 100.0
+    },
+    "assisted": {
+      "count": 0,
+      "percentage": 0.0
+    },
+    "enhanced": {
+      "count": 0,
+      "percentage": 0.0
+    },
+    "human-only": {
+      "count": 0,
+      "percentage": 0.0
+    }
+  },
+  "domains": {
+    "reporting": {
+      "total": 2,
+      "categories": {
+        "autonomous": 2
+      }
+    },
+    "project-tracking": {
+      "total": 1,
+      "categories": {
+        "autonomous": 1
+      }
+    }
+  },
+  "trends": {
+    "autonomous": {
+      "current_pct": 100.0,
+      "previous_pct": 30.0,
+      "delta": 70.0,
+      "direction": "up"
+    },
+    "assisted": {
+      "current_pct": 0.0,
+      "previous_pct": 50.0,
+      "delta": -50.0,
+      "direction": "down"
+    },
+    "enhanced": {
+      "current_pct": 0.0,
+      "previous_pct": 20.0,
+      "delta": -20.0,
+      "direction": "down"
+    },
+    "human-only": {
+      "current_pct": 0.0,
+      "previous_pct": 0.0,
+      "delta": 0.0,
+      "direction": "flat"
+    }
+  },
+  "confidence": {
+    "high": {
+      "count": 3,
+      "percentage": 100.0
+    }
+  }
+}
