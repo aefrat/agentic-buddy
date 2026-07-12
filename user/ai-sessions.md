@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-07-12 | Talent cycle July 2026: Tashana's guidance (competency retirement, HiPo flag, QE-to-SE), per-member action plans, development planning | `d52a90bd-91b0-44c8-951c-9c99a6237f59` |
 | 2026-07-12 | PTO catch-up (4 parallel scans: ATC/PitCrew Slack + Gmail + @mentions), both weekly reports (ATC weekend + PitCrew weekly), Monday punch list | `27105ca9-3adc-40ea-bc5a-503fc7a4e069` |
 | 2026-07-05 | Hubert Stefanski QC self-assessment ingestion (Q1-Q5) + manager Q3/Q4 response drafts | `0c9ec31c-caab-4cc1-b532-25d48d831791` |
 | 2026-07-05 | QC: Roni cross-team feedback (Yariv/BOA), full doc revision (draft, dev feedback, both HTMLs) | `86a9366c-5a51-430c-a89d-11026756013e` |
