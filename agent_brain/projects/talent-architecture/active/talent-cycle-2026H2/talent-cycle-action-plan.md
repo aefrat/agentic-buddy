@@ -177,24 +177,34 @@ Per Tashana's guidance, use this talent cycle to check QE interest in developing
 #### Kanitha Chim - Senior SE (IC-3), targeting IC-4
 
 **Workday ratings:**
-- What: 2 (Meets expectations) - Distribution specialist, broadest reach (25 channels, 4 Jira projects). Cross-team coordination for product listing and CDN. Some Level 4 signals but not consistently surpassing.
-- How: 3 (Surpasses expectations) - De facto cross-team coordinator, proactive stakeholder communication, surfaced stale product listing issues independently
+- What: 2 (Meets expectations) - Distribution specialist, broadest reach (25 channels, 4 Jira projects). Cross-team coordination for product listing and CDN. QMS audit SME contribution (see cross-team note below). Some Level 4 signals but not consistently surpassing.
+- How: 3 (Surpasses expectations) - De facto cross-team coordinator, proactive stakeholder communication, surfaced stale product listing issues independently. QMS cross-team work significantly strengthens this score: volunteered as SME for an org-wide certification initiative outside her core distribution role, coordinating with QMS lead (Shir Fishbain), Rachel Sibley, contyk, and others across multiple RHIVOS teams.
 - Combined: **Successful Performer (5)**
 
-**High Potential:** Not at this time. Strong trajectory but needs to demonstrate sustained cross-component design leadership.
+**Cross-team contribution: QMS ISO 26262 audit SME**
+Kanitha served as Subject Matter Expert for the RHIVOS QMS ISO 26262 Part 8 certification audit (TUV SUD), covering:
+- **Configuration Management** - presented slides (slides 24-25), prepared audit materials, responded to auditor (Daniel/dgj) clarification requests on version analysis and CMDB configuration
+- **Confidence in Tools** - co-owned tooling certification evidence
+- Attended TUV SUD audit remotely (Jun 23-24, 2026), skipping regular ATC sync and toolchain team meetings to prepare
+- Active in #forum-qms channel; currently addressing 4 open items from TUV SUD protocol review (Configuration Management: whether version analysis can be handled centrally vs CMDB relying on application URLs)
+- Cross-team coordination with: Shir Fishbain (QMS lead), Rachel Sibley, contyk, rpaccapeli, priyverm, Sharon Metzger, Jaime Flynn
+
+This work is beyond her core distribution role and demonstrates IC-4 signals: cross-org coordination on a critical program initiative, technical ownership of audit-facing materials, and proactive commitment (skipping team meetings to prioritize QMS preparation).
+
+**High Potential:** Not at this time. Strong trajectory but needs to demonstrate sustained cross-component design leadership. QMS work is a positive signal for engagement and cross-team capability.
 
 **Movement readiness:** Continue growing in current role
 - Promotion readiness (IC-3 to IC-4): at the boundary but not ready for nomination this cycle
 - Gaps: needs to lead a technical design initiative (not just coordinate), formalize mentoring, produce durable knowledge artifacts
-- Strengths trending IC-4: cross-component scope, cross-team coordination, stakeholder communication
+- Strengths trending IC-4: cross-component scope, cross-team coordination, stakeholder communication, QMS cross-org engagement
 
 **Talent actions (next 6 months):**
 - Rewards: Standard merit (Successful Performer)
 - Development (3 Es):
-  - Experience: Own CDN/Errata design for 2.0.z release - lead from requirements to design doc to implementation
-  - Exposure: Follow through on AI advisory workflow spike to concrete proposal. Mentor one person on release engineering
+  - Experience: Own CDN/Errata design for 2.0.z release - lead from requirements to design doc to implementation. Continue QMS SME role through certification completion
+  - Exposure: Follow through on AI advisory workflow spike to concrete proposal. Mentor one person on release engineering. Leverage QMS cross-team network for broader org visibility
   - Education: N/A
-- Growth: Write one internal design document on RHIVOS distribution pipeline. Position for IC-4 nomination next cycle
+- Growth: Write one internal design document on RHIVOS distribution pipeline. Position for IC-4 nomination next cycle. Document QMS Configuration Management approach as reusable process reference
 
 **Promotion timeline:** Q1-Q2 2027
 
@@ -384,7 +394,7 @@ Note: Evolving rating reflects onboarding phase, not underperformance. Internal 
 |--------|------|-----|----------|------|--------------------|-------------|
 | Juanje Ojeda | 3 | 3 | High Impact (6) | YES | Continue growing | HiPo dev actions, IC-5 promotion plan |
 | Roni Eliezer | 3 | 3 | High Impact (6) | YES | Continue growing | HiPo dev actions, QE-to-SE check, IC-5 plan |
-| Kanitha Chim | 2 | 3 | Successful (5) | No | Continue growing | IC-4 development plan |
+| Kanitha Chim | 2 | 3 | Successful (5) | No | Continue growing | IC-4 dev plan, QMS audit SME |
 | Eitan Raviv | 3 | 2 | Successful (5) | No | Continue growing | IC-4 plan (visibility focus) |
 | Hubert Stefanski | 3 | 2 | Successful (5) | N/A | Not well placed | Knowledge transfer, transition handoff |
 | Matt Goldman | 1 | 2 | Evolving (3) | Too early | Continue growing | 6-month milestone (Oct 2026) |

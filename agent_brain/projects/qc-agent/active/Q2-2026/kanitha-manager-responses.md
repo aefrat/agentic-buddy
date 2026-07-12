@@ -78,3 +78,18 @@ I appreciate the specific asks here - they give me clear things to work on.
 **Identifying stretch opportunities:** This connects directly to your career aspirations. I will actively look for projects where you can practice architecture-level thinking and cross-team leadership. The CAIB integration, GitLab migration, and QC Layered Product work are all natural candidates. I also want to look at conference or presentation opportunities - your distribution expertise and AI agent work are both topics worth sharing more broadly.
 
 I want you to know that your growth into a senior technical leadership role is something I am actively invested in, not just acknowledging. Let's make it a regular 1:1 topic and track progress quarter by quarter.
+
+---
+
+## Addendum: QMS Cross-Team Contribution (added 2026-07-12)
+
+**Not captured in original Q2 QC responses.** Kanitha's QMS work spans Q2-Q3 2026 and represents significant cross-team contribution beyond her core distribution role.
+
+Kanitha served as Subject Matter Expert for the RHIVOS QMS ISO 26262 Part 8 certification audit (TUV SUD), covering **Configuration Management** and **Confidence in Tools**. Key activities:
+
+- Prepared and presented audit slides (slides 24-25) for the TUV SUD dry-run and actual audit
+- Attended the QMS audit remotely (Jun 23-24, 2026), skipping regular ATC sync and toolchain team meetings to prepare
+- Currently addressing 4 open items from TUV SUD protocol review, specifically Configuration Management: whether version analysis can be handled centrally vs CMDB relying on application URLs
+- Active in #forum-qms channel coordinating with Shir Fishbain (QMS lead), Rachel Sibley, contyk, rpaccapeli, priyverm, Sharon Metzger, and Jaime Flynn across the RHIVOS organization
+
+**Impact on assessment:** This work strengthens the How score (cross-team coordination beyond core role, proactive commitment) and provides additional evidence of IC-4 trending behavior (cross-org coordination on a critical program initiative, technical ownership of audit-facing materials). Should be referenced in Q1 (Accomplishments) and Q3 (Feedback and Development) responses for completeness.
