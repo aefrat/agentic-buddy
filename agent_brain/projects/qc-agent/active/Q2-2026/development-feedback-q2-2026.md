@@ -162,31 +162,33 @@ For each team member:
 
 **Dimension assessment (Professional Track):**
 
-- Scope [Level 3-4 boundary]: Works independently on complex distribution workflows. Broadest channel reach on team (25 channels). Cross-team coordination spanning 4 Jira projects (VROOM, RHELDST, RHELWF, PSSECAUT) - this exceeds Level 3's "within discipline" scope. The distribution/release work is functional-level, not just team-level.
-- Complexity [Level 3, trending 4]: Resolves moderately complex issues (errata, CDN propagation failures, product listing). Cross-team relationships are productive and extend well beyond own team. Not yet at "recognized expert leading cooperative efforts" formally, but acts as the de facto distribution expert.
-- Impact [Level 3-4 boundary]: Distribution work contributes directly to release readiness - customer-facing impact. Product listing and CDN decisions affect whether customers can download RHIVOS. This touches "customer, operational, or program objectives" (Level 4).
+- Scope [Level 3-4 boundary, strong]: Works independently on complex distribution workflows. Broadest channel reach on team (25 channels). Cross-team coordination spanning 4 Jira projects (VROOM, RHELDST, RHELWF, PSSECAUT) - this exceeds Level 3's "within discipline" scope. The distribution/release work is functional-level, not just team-level. Additionally serves as ATC Technical Product Owner (TPO) - setting 6-month team priorities, leading focus area brainstorms, and representing ATC on program calls alongside Area PO Petr Sabata.
+- Complexity [Level 3, trending 4]: Resolves moderately complex issues (errata, CDN propagation failures, product listing). Cross-team relationships are productive and extend well beyond own team. QMS ISO 26262 Part 8 audit SME work (Configuration Management, Confidence in Tools) demonstrates capacity for cross-org responsibility in an unfamiliar domain. Acts as de facto distribution expert and TPO - team independently named the role.
+- Impact [Level 3-4 boundary, strong]: Distribution work contributes directly to release readiness - customer-facing impact. Product listing and CDN decisions affect whether customers can download RHIVOS. TPO role directly shapes team direction and program alignment. QMS audit work impacts organizational certification. This touches "customer, operational, or program objectives" (Level 4).
 
-**Current level fit:** Strong. Broadest Slack reach on the team (25 channels). Distribution and release readiness specialist. Strong cross-organizational coordination.
+**Current level fit:** Strong, approaching IC-4. Broadest Slack reach on the team (25 channels). Distribution and release readiness specialist. ATC Technical Product Owner (TPO). QMS ISO 26262 audit SME. Strong cross-organizational coordination.
 
 **Already demonstrating at IC Level 4:**
 - *Cross-component scope:* Distribution work inherently spans errata, CDN, product listing, compose, and advisory systems - multiple subsystems, Level 4 scope
 - *Cross-team coordination:* Drove cross-team fix when product IDs failed to propagate, spanning VROOM, RHELDST, RHELWF, PSSECAUT. This is Level 4 collaboration
 - *Communication with stakeholders:* Proactively clarified RC3 trigger conditions, surfaced stale product listing issues - leadership-level communication
 - *Process understanding:* Deep understanding of release engineering processes and where they break
+- *TPO leadership (added 2026-07-12):* Bridges RHIVOS program priorities to ATC team execution. Sets 6-month team priorities, leads focus area brainstorms, represents ATC on program calls. Manager defers prioritization to "kchim and contyk (The POs)." Team members independently recognized and named the TPO role. This is a leadership function beyond IC-3 SE job description
+- *QMS cross-org coordination (added 2026-07-12):* Voluntarily served as SME for TUV SUD certification audit outside core role. Prepared and presented audit materials, coordinated with 6+ stakeholders across RHIVOS teams. Demonstrates cross-org ownership on a critical program initiative
 
 **Growth areas for IC Level 4:**
-- *Technical design leadership:* Level 4 expects "leads the design and development of software solutions." Kanitha excels at process execution and coordination but needs to lead a technical design initiative
-- *Mentoring:* Level 4 expects "across teams, coaches and mentors senior engineers." No mentoring evidence
+- *Technical design leadership:* Level 4 expects "leads the design and development of software solutions." Kanitha excels at process execution, coordination, and TPO-level prioritization but needs to lead a formal technical design initiative (design doc, architectural decisions)
+- *Mentoring:* Level 4 expects "across teams, coaches and mentors senior engineers." Mentoring opportunity exists with new team member joining distribution
 - *AI tools:* The "Agentic AI for advisory workflow" spike is promising but needs follow-through. Level 4 expects "evaluates and introduces new AI-driven methodologies"
-- *Knowledge sharing:* Level 4 expects "blog posts, design documents, presents at conferences." No formal writing or presentations
+- *Knowledge sharing:* Level 4 expects "blog posts, design documents, presents at conferences." No formal writing or presentations yet - distribution expertise is currently held in Slack threads and tribal knowledge
 - *SDLC ownership:* Level 4 expects "leads the definition and implementation of the SDLC for complex multi-component systems." She follows release processes expertly but hasn't led their definition
 
 **Recommended development path:**
-1. **Lead a design initiative** - the QC LP distribution workflow spike and the AI advisory workflow spike are both natural candidates. Pick one and drive it from spike to design document to implementation
+1. **Lead a design initiative** - the QC LP distribution workflow spike and the AI advisory workflow spike are both natural candidates. Pick one and drive it from spike to design document to implementation. The 2.0.z CDN/Errata design is the strongest option given her TPO role
 2. **Document the release pipeline** - Kanitha has the deepest knowledge of RHIVOS distribution. A formal design document of the release workflow (errata, CDN, product listing, gating) would be high-value and demonstrate Level 4 knowledge sharing
 3. **Follow through on AI for advisories** - the spike shows initiative. Develop it into a concrete proposal, evaluate tools, and present findings to the team
-4. **Mentor someone** on release engineering - her unique expertise makes her the natural mentor for anyone touching distribution
-5. **Propose process improvements** - move from executing release processes to improving them. Identify a release bottleneck and propose a systematic fix
+4. **Formalize distribution mentoring** - with new team member joining distribution area, structure knowledge transfer sessions. Her unique expertise makes her the natural mentor
+5. **Propose process improvements** - move from executing release processes to improving them. Leverage TPO perspective to identify and drive systematic fixes to release bottlenecks
 
 ---
 
@@ -451,7 +453,7 @@ Conclusion: Not yet ready for promotion. Juanje is on a clear trajectory from Le
 - Bella [Level 3, trending 4] - Scope: 3, trending 4 / Complexity: 3, trending 4 / Impact: 3-4. Strongest: Impact (CTC + Konflux affect release certification and RHAS GA). Already showing Level 4 signals across all dimensions. Biggest gap: Visibility (self-identified), knowledge sharing.
 - Eitan [Level 3, with L4 signals] - Scope: 3, with L4 signals (runner consolidation, AI tooling) / Complexity: 3, trending 4 / Impact: 3, with L4 data points (budget savings). Strongest: Business impact (runner consolidation), AI methodology (claude-code skills). Biggest gap: Knowledge sharing, community leadership.
 - Hubert [Level 3] - Scope: 3, trending 4 / Complexity: 3-4 boundary / Impact: 3, trending 4. Strongest: Complexity (gating expertise + cross-team relationships). Biggest gap: Impact - needs to own a strategic initiative with functional-level accountability.
-- Kanitha [Level 3] - Scope: 3-4 boundary / Complexity: 3, trending 4 / Impact: 3-4 boundary. Strongest: Scope (25 channels, 4 Jira projects, broadest reach). Biggest gap: Complexity - needs formal recognition as expert and team lead role.
+- Kanitha [Level 3, approaching 4] - Scope: 3-4 boundary, strong (TPO + distribution) / Complexity: 3, trending 4 (QMS audit SME) / Impact: 3-4 boundary, strong (TPO shapes team direction). Strongest: Scope (25 channels, 4 Jira projects, TPO, broadest reach). Biggest gap: technical design artifacts (design docs, architecture decisions).
 - Muhamad [Level 3, with L4 signals] - Scope: 3, with L4 signals / Complexity: 3 / Impact: 3, trending 4. Strongest: Scope (production-grade e2e platform architecture, cross-repo reviews, high execution consistency 10/12 PRs). Biggest gap: Visibility (38 Slack messages, lowest on team) and knowledge sharing.
 - Juanje [Level 4] - Scope: 4-5 / Complexity: 4-5 / Impact: 4, trending 5. Strongest: Scope (cross-functional vision + innovation, approaching Level 5). Biggest gap: Impact - needs to consistently serve as organizational-level SME and project lead.
 - Benny [Level 4] - Scope: 4 / Complexity: 4, trending 5 / Impact: 4. Strongest: Complexity (connective hub, community expert). Biggest gap: Impact - tactical breadth, needs strategic direction-setting.
