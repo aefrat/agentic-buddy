@@ -191,9 +191,28 @@ Per Tashana's guidance, use this talent cycle to check QE interest in developing
 #### Kanitha Chim - Senior SE (IC-3), targeting IC-4
 
 **Workday ratings:**
-- What: 2 (Meets expectations) - Distribution specialist, broadest reach (25 channels, 4 Jira projects). Cross-team coordination for product listing and CDN. QMS audit SME contribution (see cross-team note below). Some Level 4 signals but not consistently surpassing.
-- How: 3 (Surpasses expectations) - De facto cross-team coordinator, proactive stakeholder communication, surfaced stale product listing issues independently. QMS cross-team work significantly strengthens this score: volunteered as SME for an org-wide certification initiative outside her core distribution role, coordinating with QMS lead (Shir Fishbain), Rachel Sibley, contyk, and others across multiple RHIVOS teams.
+- What: 2 (Meets expectations) - Distribution specialist, broadest reach (25 channels, 4 Jira projects). Serves as the ATC team's Technical/Team Product Owner (TPO) - connecting RHIVOS program priorities from the Area PO (Petr Sabata/contyk) to the team. QMS audit SME contribution (see cross-team notes below). Multiple Level 4 signals, but formal design ownership not yet demonstrated.
+- How: 3 (Surpasses expectations) - De facto cross-team coordinator, proactive stakeholder communication, surfaced stale product listing issues independently. TPO coordination work bridges program and team priorities - Avi defers prioritization decisions to Kanitha and Petr ("I defer the decision to kchim and contyk - the POs"). QMS cross-team SME work further strengthens this score.
 - Combined: **Successful Performer (5)**
+
+**Additional responsibility: ATC Technical Product Owner (TPO)**
+Kanitha serves as the ATC team's TPO alongside Petr Sabata (contyk) as Area PO from PDR (Product Feature and Release). Key responsibilities:
+- Bridges RHIVOS program priorities to ATC team execution - manages backlog, initiative organization, and sprint planning inputs
+- Recognized as the "source of truth" for the team (per Avi's 5-year anniversary recognition, #team-toolchain-automotive)
+- Co-decision maker with Petr on work prioritization: "I'm not the one prioritizing work but kchim and contyk" (Avi, multiple occasions)
+- Completes ATC planning updates for PDR extended staff meetings, reviewed by Petr
+- Balances "deep technical weeds with high-level strategy that keeps leadership happy" (Avi's characterization)
+- Attends PO Feature Area Portfolio/Roadmap planning meetings representing ATC perspective
+
+Supporting feedback:
+- Avi (manager): "As our ToolChain TPO, Kanitha has become the 'source of truth' for everything in the team...she's played such a massive role in getting RHIVOS 1.X and 2.0 Core TP out the door, all while balancing the deep technical weeds with the high-level strategy...bridging program and team priorities" (#team-toolchain-automotive, 5-year anniversary)
+- Sabine Vogel (peer manager): "I appreciate what and how you wrote about Kanitha's 5 year anniversary. I read great respect and value for her and her work"
+- Avi consistently defers priority decisions to "kchim and contyk" across multiple channels (leads-toolchain-auto, mpdm groups, team-toolchain-automotive)
+- Hubert Stefanski and Eitan Raviv (peers): "Maybe have a tech PO (TPO?) as Kanitha to push back" - team members independently recognized and named the TPO role (ATC Team meeting, Mar 10, 2026)
+- ATC Team meeting notes show Kanitha setting 6-month team priorities ([kchim] "Priority for the next 6 months or more" - CAIB, Gating/Konflux, Pulp, Infra, Pipeline/release, Distribution, Test Console), 2-week sprint priorities, and leading focus area brainstorms ("[kchim] focus area priority - brainstorm from Toolchain side first as the program priority discussion will be set later on")
+- Avi asks Paul to "backup Kanitha on the Program call" when she is on PTO - confirming she is the default ATC representative on program-level calls
+
+This TPO role is a distinct leadership responsibility on top of her core SE distribution work and directly demonstrates IC-4 expectations: cross-team coordination as primary responsibility, stakeholder management, and functional-level impact on team direction.
 
 **Cross-team contribution: QMS ISO 26262 audit SME**
 Kanitha served as Subject Matter Expert for the RHIVOS QMS ISO 26262 Part 8 certification audit (TUV SUD), covering:

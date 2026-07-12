@@ -93,3 +93,25 @@ Kanitha served as Subject Matter Expert for the RHIVOS QMS ISO 26262 Part 8 cert
 - Active in #forum-qms channel coordinating with Shir Fishbain (QMS lead), Rachel Sibley, contyk, rpaccapeli, priyverm, Sharon Metzger, and Jaime Flynn across the RHIVOS organization
 
 **Impact on assessment:** This work strengthens the How score (cross-team coordination beyond core role, proactive commitment) and provides additional evidence of IC-4 trending behavior (cross-org coordination on a critical program initiative, technical ownership of audit-facing materials). Should be referenced in Q1 (Accomplishments) and Q3 (Feedback and Development) responses for completeness.
+
+---
+
+## Addendum: ATC Technical Product Owner (TPO) Role (added 2026-07-12)
+
+**Not fully captured in original Q2 QC responses.** Kanitha's TPO role is an ongoing leadership responsibility on top of her core SE distribution work.
+
+Kanitha serves as the ATC team's Technical/Team Product Owner (TPO) alongside Petr Sabata (contyk) as Area PO from PDR (Product Feature and Release). In this role, she:
+
+- Bridges RHIVOS program priorities to ATC team execution - manages backlog, initiative organization, and sprint planning inputs
+- Sets 6-month team priorities (CAIB, Gating/Konflux, Pulp, Infrastructure, Pipeline/release, Distribution, Test Console) and 2-week sprint priorities
+- Leads focus area brainstorms ("brainstorm from Toolchain side first as the program priority discussion will be set later on")
+- Represents ATC on program-level calls (Avi asks others to backup Kanitha when she is on PTO)
+- Co-decision maker with Petr on work prioritization
+
+**Supporting feedback:**
+- Avi (manager): "As our ToolChain TPO, Kanitha has become the 'source of truth' for everything in the team...she's played such a massive role in getting RHIVOS 1.X and 2.0 Core TP out the door, all while balancing the deep technical weeds with the high-level strategy...bridging program and team priorities" (#team-toolchain-automotive, 5-year anniversary)
+- Avi consistently defers prioritization: "I'm not the one prioritizing work but kchim and contyk", "I defer the decision to kchim and contyk (The POs)"
+- Hubert Stefanski and Eitan Raviv (peers): "Maybe have a tech PO (TPO?) as Kanitha to push back" - team independently recognized and named the role
+- Sabine Vogel (peer manager): "I appreciate what and how you wrote about Kanitha's 5 year anniversary. I read great respect and value for her and her work"
+
+**Impact on assessment:** This TPO role strengthens both What (functional-level impact beyond individual contributor scope) and How (cross-team coordination as primary responsibility, stakeholder management). It directly demonstrates IC-4 expectations and should be referenced in Q1 (Accomplishments), Q2 (Priorities), Q4 (Career Aspirations), and Q5 (Manager Support) responses. The Q5 response already references "dual PO/engineer role" but the full TPO context was not captured.
