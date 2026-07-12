@@ -10,7 +10,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 |------|-------------|------------|
 | 2026-07-12 | QC self-input integration (Muhamad E2E testing + Bella Konflux/CTC/demos), full artifact regeneration (HTMLs, dev feedback, Google Docs) | `92571f0c-3b27-4a10-b497-83e092ef2055` |
 | 2026-07-12 | Talent cycle July 2026: Tashana's guidance, Workday framework (all 10 members), Kanitha QMS + TPO evidence, Talent Actions Guide, HiPo high-touch activities, Kanitha bumped to High Impact (6) + HiPo | `d52a90bd-91b0-44c8-951c-9c99a6237f59` |
-| 2026-07-12 | Monday prep: task list review, AutoSD nightly deep dive (5 Slack threads), VROOM-46088 blocker investigation (ethel thread), talent cycle marked done | `86919105-f816-4563-b05f-6f96b49e168a` |
+| 2026-07-12 | Monday prep: task list review, AutoSD nightly deep dive (5 Slack threads), VROOM-46088 blocker investigation, talent cycle marked done, MPP quota UR0204887 + FoA runner disk space investigation | `86919105-f816-4563-b05f-6f96b49e168a` |
 | 2026-07-12 | PTO catch-up (4 parallel scans: ATC/PitCrew Slack + Gmail + @mentions), both weekly reports (ATC weekend + PitCrew weekly), Monday punch list | `27105ca9-3adc-40ea-bc5a-503fc7a4e069` |
 | 2026-07-05 | Hubert Stefanski QC self-assessment ingestion (Q1-Q5) + manager Q3/Q4 response drafts | `0c9ec31c-caab-4cc1-b532-25d48d831791` |
 | 2026-07-05 | QC: Roni cross-team feedback (Yariv/BOA), full doc revision (draft, dev feedback, both HTMLs) | `86a9366c-5a51-430c-a89d-11026756013e` |
