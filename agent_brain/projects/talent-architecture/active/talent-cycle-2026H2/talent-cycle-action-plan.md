@@ -7,14 +7,49 @@ created: 2026-07-12
 # Talent Cycle Action Plan - H2 2026
 
 **Cycle:** July 2026 Talent Cycle
-**Guidance source:** Tashana's email "Upcoming Talent Cycle Guidance" (July 8, 2026)
+**Guidance source:** Tashana's email "Upcoming Talent Cycle Guidance" (July 8, 2026); Talent Management for People Managers (The Source, 6 tabs)
 **Data sources:** Q2 2026 QC reports, development feedback briefs (June 29, 2026), Skill Progression Matrices
+**Reference:** [Talent Management for Managers](../../reference/talent-management-for-managers.md) - full Workday process, rating scales, HiPo descriptors, calibration
 
 ## Framework changes applied
 
 1. **Engineering Competencies retired** - All assessments below use the Skill Progression Matrices (Job Descriptions) and Radford dimensions (Scope, Complexity, Impact) only. Prior competency tables (Red Hat Multiplier, Strategic, etc.) are treated as supplementary context.
 2. **High Potential Flag** - Top 15%, long-term potential, commitment to growth. Candidates identified below.
 3. **QE-to-SE transition** - Applicable to Roni Eliezer (only QE on team).
+
+## Workday rating framework (quick reference)
+
+### Performance (What + How, each 0-3)
+
+| Score | Rating | Combined |
+|-------|--------|----------|
+| 3+3=6 | High Impact Performer | Consistently surpassing all expectations |
+| 4-5 | Successful Performer | Consistently meeting, sometimes surpassing |
+| 2-3 | Evolving Performer | Meeting some but not all expectations |
+| 0-1 | Low Performer | Significant gaps |
+
+Distribution guidance: 10-20% High Impact, 60-80% Successful, 5-15% Evolving, 2-5% Low.
+
+### HiPo descriptors (ALL four required)
+
+| Descriptor | Key question |
+|-----------|-------------|
+| Aspiration | Clear desire to advance to leadership or more impactful roles? |
+| Capability | Observable skills suggesting capacity for greater responsibilities? |
+| Engagement | Highly committed to Red Hat's mission, going above and beyond? |
+| Agility | Adapts quickly, learns from experience, leads through ambiguity? |
+
+Eligibility: rated in last 2 cycles, typically High Impact, not on PIP.
+
+### Movement readiness (within 6 months)
+
+| Rating | When to use |
+|--------|------------|
+| Continue growing in current role | Default - in-role development |
+| Ready now to be promoted (upcoming cycle) | High Impact, 12-18 months at level, business need, expanded scope |
+| Ready for lateral move outside current role | Successful+, 12+ months, meets Internal Mobility Guidance |
+| Ready for promotion outside current role | Ready but no business need within current team |
+| Not well placed | Not thriving, role realignment needed |
 
 ---
 
@@ -77,142 +112,162 @@ Per Tashana's guidance, use this talent cycle to check QE interest in developing
 
 #### Juanje Ojeda - Principal SE (IC-4), targeting IC-5
 
-**Performance assessment (against SE Progression Matrix, IC-4):**
-Exceeds expectations. 28 tickets (6 Blockers), 39 MRs, 711 Slack messages. Agent Forge, pipelines-debugger, execopen pipeline. Published articles on Red Hat Source. Meets or exceeds every IC-4 responsibility area in the SE Progression Matrix.
+**Workday ratings:**
+- What: 3 (Surpasses expectations) - 28 tickets (6 Blockers), 39 MRs. Agent Forge, pipelines-debugger, execopen pipeline. Published articles.
+- How: 3 (Surpasses expectations) - 711 Slack messages, transparent public-first communication, cross-team enablement, mentoring Matt Goldman
+- Combined: **High Impact Performer (6)**
 
-**High Potential:** YES (see above)
+**High Potential assessment (4 descriptors):**
+- Aspiration: YES - pursues increased scope (Agent Forge cross-team adoption), seeks visibility (published articles, demos), mentors others
+- Capability: YES - strategic thinking (agent methodology), problem-solving (6 Blockers resolved), interpersonal (5+ cross-team relationships)
+- Engagement: YES - goes above and beyond (built reusable tooling beyond requirements), volunteered energy on AI innovation outside core role
+- Agility: YES - adapted quickly to AI tools, led through ambiguity (pipeline debugging with no playbook)
+- **HiPo designation: YES**
 
-**Promotion readiness (IC-4 to IC-5):** Not yet. 1-2 quarters with deliberate action.
-- Gaps per SE Progression Matrix IC-5: organizational-level strategy positioning, external conference presentations, cross-org formal networks, customer-impact articulation
+**Movement readiness:** Continue growing in current role
+- Promotion readiness (IC-4 to IC-5): not yet. 1-2 quarters. Must reach High Impact for 2 consecutive cycles.
+- Gaps per SE Matrix IC-5: organizational-level strategy positioning, external conferences, cross-org networks, customer-impact articulation
 - Strengths already at IC-5: AI innovation leadership, cross-team enablement, technical strategy, knowledge sharing
 
-**Development plan (this cycle):**
-1. Write a strategic proposal positioning Agent Forge as engineering methodology for the org (IC-5: "drives technical strategy across multiple subsystems")
-2. Submit an external conference proposal (DevConf.cz or Red Hat Summit)
-3. Establish 1-2 cross-org consulting relationships outside Automotive
-4. Articulate customer-facing impact of infrastructure work
+**Talent actions (next 6 months):**
+- Rewards: Merit increase warranted (High Impact). Consider equity for role criticality + future capability
+- Development (3 Es):
+  - Experience: Lead a cross-BU initiative (agent-driven pipeline diagnosis as reference architecture)
+  - Exposure: Present to P&GE leadership beyond Automotive; submit external conference proposal (DevConf.cz / Summit)
+  - Education: N/A (self-directed learning already strong)
+- Growth: Write strategic proposal positioning Agent Forge as engineering methodology. Establish 1-2 cross-org consulting relationships. Articulate customer-facing impact
 
-**Promotion timeline:** Q4 2026 or Q1 2027 if gaps addressed consistently.
-
-**Workday actions:**
-- Talent Rating: review against IC-4 SE matrix
-- High Potential Flag: YES
-- Talent Action: Document promotion development plan
+**Promotion timeline:** Q4 2026 or Q1 2027. Movement readiness will shift to "Ready now to be promoted" when: (a) second consecutive High Impact rating, (b) business need documented, (c) expanded scope per IC-5 SE matrix demonstrated
 
 ---
 
 #### Roni Eliezer - Principal QE (IC-4), targeting IC-5
 
-**Performance assessment (against QE Progression Matrix, IC-4):**
-Exceeds expectations. 32 tickets, 43 MRs, 497 Slack messages. Owns Test Console platform. De facto CTC project lead. AI innovation with Gemini transitions. Cross-team multiplier confirmed by BOA feedback.
+**Workday ratings:**
+- What: 3 (Surpasses expectations) - 32 tickets, 43 MRs. Owns Test Console. De facto CTC project lead across RC1-RC3. AI innovation (3 Gemini transitions).
+- How: 3 (Surpasses expectations) - 497 Slack msgs, 199 mentions by others. Cross-team multiplier confirmed by BOA team (Advanced level). Mentoring through platform enablement.
+- Combined: **High Impact Performer (6)**
 
-**High Potential:** YES (see above)
+**High Potential assessment (4 descriptors):**
+- Aspiration: YES - pursues increased scope (Test Console as platform, not just a tool), seeks influence (cross-team enablement), mentors others into platform
+- Capability: YES - strategic thinking (AI-powered test analysis), problem-solving (3 model transitions with fallback), interpersonal (BOA team feedback confirms cross-team anchor role)
+- Engagement: YES - goes above and beyond (weekend CTC runs, packages.redhat.com PoC), emotional commitment to quality infrastructure
+- Agility: YES - navigated 3 Gemini model transitions (external change), built fallback mechanisms, adapted testing approach for each release candidate
+- **HiPo designation: YES**
 
-**QE-to-SE transition:** Discuss in next 1:1 (see section above)
+**QE-to-SE transition:** Discuss in next 1:1 (see section above). Note interest in Talent Action if applicable.
 
-**Promotion readiness (IC-4 to IC-5):** Not yet. 1-2 quarters.
-- Gaps per QE Progression Matrix IC-5: published mid-term QE strategy, stakeholder management beyond engineering, business acumen articulation, external presentations
-- Strengths already at IC-5: platform ownership, AI innovation, cross-team enablement, mentoring through platform
+**Movement readiness:** Continue growing in current role
+- Promotion readiness (IC-4 to IC-5): not yet. 1-2 quarters.
+- Gaps per QE Matrix IC-5: published mid-term QE strategy, stakeholder management beyond engineering, business acumen, external presentations
+- Strengths already at IC-5: platform ownership, AI innovation, cross-team enablement
 
-**Development plan (this cycle):**
-1. Write a 12-month Test Console / RHIVOS QE strategy document
-2. Present AI-in-QE story externally (testing conference or DevConf)
-3. Engage product management on quality metrics translation
-4. Formalize mentoring for cross-team Test Console contributors
+**Talent actions (next 6 months):**
+- Rewards: Merit increase warranted (High Impact). Consider equity for platform criticality (Test Console = RHIVOS testing infrastructure)
+- Development (3 Es):
+  - Experience: Own 12-month QE strategy document. Formalize mentoring for cross-team Test Console contributors
+  - Exposure: Present AI-in-QE externally (testing conference or DevConf). Engage product management on quality metrics
+  - Education: Consider QE-to-SE path if interested (Tashana can coordinate training resources)
+- Growth: Write Test Console strategy doc. Develop business acumen (connect quality to release/revenue impact). Stakeholder management beyond engineering
 
-**Promotion timeline:** Q4 2026 or Q1 2027 if gaps addressed.
-
-**Workday actions:**
-- Talent Rating: review against IC-4 QE matrix
-- High Potential Flag: YES
-- Talent Action: Document promotion plan + QE-to-SE interest (if applicable)
+**Promotion timeline:** Q4 2026 or Q1 2027
 
 ---
 
 #### Kanitha Chim - Senior SE (IC-3), targeting IC-4
 
-**Performance assessment (against SE Progression Matrix, IC-3):**
-Meets expectations with Level 4 signals. Broadest reach (25 Slack channels, 4 Jira projects). De facto distribution specialist. Cross-team coordination for product listing and CDN propagation.
+**Workday ratings:**
+- What: 2 (Meets expectations) - Distribution specialist, broadest reach (25 channels, 4 Jira projects). Cross-team coordination for product listing and CDN. Some Level 4 signals but not consistently surpassing.
+- How: 3 (Surpasses expectations) - De facto cross-team coordinator, proactive stakeholder communication, surfaced stale product listing issues independently
+- Combined: **Successful Performer (5)**
 
-**High Potential:** Not at this time. Strong trajectory but needs to demonstrate sustained cross-component design leadership before the flag is appropriate. Reassess in 6 months.
+**High Potential:** Not at this time. Strong trajectory but needs to demonstrate sustained cross-component design leadership.
 
-**Promotion readiness (IC-3 to IC-4):** At the boundary. Key gaps:
-- Per SE Matrix IC-4: needs to lead a technical design initiative (not just execute/coordinate), formalize mentoring, produce durable knowledge artifacts (design docs, blog posts)
+**Movement readiness:** Continue growing in current role
+- Promotion readiness (IC-3 to IC-4): at the boundary but not ready for nomination this cycle
+- Gaps: needs to lead a technical design initiative (not just coordinate), formalize mentoring, produce durable knowledge artifacts
 - Strengths trending IC-4: cross-component scope, cross-team coordination, stakeholder communication
 
-**Development plan (this cycle):**
-1. Own the CDN/Errata design for the 2.0.z release cycle - lead it from requirements to design doc to implementation
-2. Follow through on the AI advisory workflow spike - bring it from spike to concrete proposal
-3. Mentor one person on release engineering (distribution, errata, CDN patterns)
-4. Write one internal design document on the RHIVOS distribution pipeline
+**Talent actions (next 6 months):**
+- Rewards: Standard merit (Successful Performer)
+- Development (3 Es):
+  - Experience: Own CDN/Errata design for 2.0.z release - lead from requirements to design doc to implementation
+  - Exposure: Follow through on AI advisory workflow spike to concrete proposal. Mentor one person on release engineering
+  - Education: N/A
+- Growth: Write one internal design document on RHIVOS distribution pipeline. Position for IC-4 nomination next cycle
 
-**Promotion timeline:** Q1-Q2 2027 if design leadership and knowledge sharing materialize.
-
-**Workday actions:**
-- Talent Rating: review against IC-3 SE matrix (meeting expectations, trending IC-4)
-- Talent Action: Document development plan for IC-4 readiness
+**Promotion timeline:** Q1-Q2 2027
 
 ---
 
 #### Eitan Raviv - Senior SE (IC-3), targeting IC-4
 
-**Performance assessment (against SE Progression Matrix, IC-3):**
-Meets expectations with targeted IC-4 signals. Highest MR count (28 merged). GitLab runner consolidation delivered measurable cost savings. AI tooling pioneer (claude-code hooks/skills). Infrastructure and security specialist.
+**Workday ratings:**
+- What: 3 (Surpasses expectations) - Highest MR count (28 merged). GitLab runner consolidation with measurable cost savings. AI tooling pioneer (claude-code hooks/skills). Container vulnerability remediation (VHCL-009 closed). Infrastructure and security specialist.
+- How: 2 (Meets expectations) - Technical depth is strong but visibility is significantly low (76 Slack messages). Cross-org navigation skills present (Brew permissions, external teams) but not communicated broadly.
+- Combined: **Successful Performer (5)**
 
-**High Potential:** Not at this time. Strong technical depth but visibility gap needs to close first. The potential is there, but IC-4 signals need to be sustained and visible before flagging. Reassess in 6 months.
+**High Potential:** Not at this time. Strong technical depth but visibility gap needs to close first. Reassess in 6 months.
 
-**Promotion readiness (IC-3 to IC-4):** Addressable gap.
-- Per SE Matrix IC-4: needs visibility (76 Slack messages is very low for someone doing IC-4 quality work), documented knowledge sharing, community leadership
-- Technical contributions are already at IC-4 quality (runner consolidation, AI tooling, cross-org navigation)
-- Self-assessment alignment: "go deep into an area to enhance it" - channel this toward documented, shared impact
+**Movement readiness:** Continue growing in current role
+- Promotion readiness (IC-3 to IC-4): addressable gap. Technical contributions already at IC-4 quality but visibility and knowledge sharing must catch up.
+- Gaps per SE Matrix IC-4: documented knowledge sharing, community leadership, broader communication
+- Strengths already at IC-4: runner consolidation, AI tooling, cross-org navigation, infrastructure architecture
 
-**Development plan (this cycle):**
-1. Formalize and share AI tooling work - document claude-code hooks/skills, propose team adoption (IC-4: "evaluates and introduces new AI-driven methodologies")
-2. Write a design doc on runner consolidation (cost savings story, architecture, lessons)
-3. Increase Slack visibility - share work proactively, post in broader channels
-4. Mentor Matt Goldman and/or Hubert's replacement on infrastructure patterns
+**Talent actions (next 6 months):**
+- Rewards: Standard merit (Successful Performer). Note: What score alone would warrant higher consideration - visibility is the constraint.
+- Development (3 Es):
+  - Experience: Formalize AI tooling work - document claude-code hooks/skills, propose team adoption (IC-4: "evaluates and introduces new AI-driven methodologies")
+  - Exposure: Increase Slack visibility - share work proactively in broader channels. Mentor Matt Goldman and/or Hubert's replacement on infrastructure patterns
+  - Education: N/A
+- Growth: Write design doc on runner consolidation (cost savings, architecture, lessons). Channel "go deep to enhance" into documented, shared impact
 
-**Promotion timeline:** Q1 2027 if visibility and knowledge sharing gaps addressed.
-
-**Workday actions:**
-- Talent Rating: review against IC-3 SE matrix
-- Talent Action: Document development plan for visibility and IC-4 readiness
+**Promotion timeline:** Q1 2027 if visibility and knowledge sharing gaps addressed
 
 ---
 
 #### Hubert Stefanski - Senior SE (IC-3) -- TRANSITIONING OUT
 
-**Note:** Hubert's last day is approaching (transition started July 1). Talent cycle actions are limited.
+**Note:** Hubert's last day is approaching (transition started July 1, day 12). Talent cycle actions are limited.
 
-**Performance assessment (against SE Progression Matrix, IC-3):**
-Met expectations with Level 4 signals. Infrastructure and gating innovation. 29 MRs (tied highest). Strong cross-team relationships.
+**Workday ratings:**
+- What: 3 (Surpasses expectations) - 29 MRs (tied highest). Infrastructure and gating innovation. AutoSD CloudFront, CentOS CI maintenance. Strong delivery until transition.
+- How: 2 (Meets expectations) - Strong cross-team relationships, but knowledge was concentrated (KT risk now materialized)
+- Combined: **Successful Performer (5)**
 
-**Talent cycle action:** Focus on knowledge transfer completion rather than development planning. Ensure gating knowledge is documented before departure. No HiPo flag (departing). If Hubert is transferring within Red Hat (not leaving the company), coordinate with receiving manager on talent assessment handoff.
+**High Potential:** N/A (transitioning out)
 
-**Workday actions:**
-- Talent Rating: review against IC-3 SE matrix (meets/exceeds)
-- Note transition status
+**Movement readiness:** Not well placed
+- Transitioning out of role. If transferring within Red Hat, coordinate with receiving manager on talent assessment handoff.
+
+**Talent actions (next 6 months):**
+- Rewards: N/A (departing)
+- Development: N/A
+- Growth: Focus on knowledge transfer completion. Ensure gating knowledge, AutoSD CloudFront migration plan, and fork maintenance are documented before departure
 
 ---
 
 #### Matt Goldman - Principal SRE (IC-4), ramping
 
-**Performance assessment (against SRE Progression Matrix, IC-4):**
-Building toward expectations (2.5 months in role, new hire). Positive ramp signals. 7 MRs, 148 Slack messages, 15 channels. Investigation spikes show initiative.
+**Workday ratings:**
+- What: 1 (Meets some expectations) - Building toward expectations (2.5 months in role, new hire). 7 MRs, investigation spikes show initiative. Not yet delivering at full IC-4 scope - expected for ramp phase.
+- How: 2 (Meets expectations) - 148 Slack messages, 15 channels. Positive engagement, asking good questions, building relationships. Appropriate for onboarding.
+- Combined: **Evolving Performer (3)**
+
+Note: Evolving rating reflects ramp-up phase, not underperformance. New hires under 6 months are expected here. Communicate clearly that this is a ramp assessment, not a deficit.
 
 **High Potential:** Too early to assess. Revisit at 6-month mark (October 2026).
 
-**Promotion readiness:** Not applicable - establishing IC-4 baseline.
+**Movement readiness:** Continue growing in current role
+- Establishing IC-4 baseline. No promotion or lateral considerations applicable.
 
-**Development plan (this cycle):**
-1. Deepen domain expertise - own custom-images or another major infrastructure component end-to-end
-2. Lead one reliability improvement initiative
-3. Build cross-team relationships with Eitan, Juanje, Roni
-4. Start documenting infrastructure patterns (jinja2 investigation, Review Apps)
-
-**Workday actions:**
-- Talent Rating: review against IC-4 SRE matrix (building/developing - new hire)
-- Talent Action: 6-month assessment milestone (October 2026)
+**Talent actions (next 6 months):**
+- Rewards: Standard new-hire compensation. No merit action this cycle.
+- Development (3 Es):
+  - Experience: Own custom-images or another major infrastructure component end-to-end. Lead one reliability improvement initiative
+  - Exposure: Build cross-team relationships with Eitan, Juanje, Roni. Join container vulnerability remediation efforts with Eitan (VHCL-005/007)
+  - Education: Domain ramp - RHIVOS architecture, CentOS CI, Gator pipelines
+- Growth: Start documenting infrastructure patterns (jinja2 investigation, Review Apps). 6-month assessment milestone: October 2026
 
 ---
 
@@ -220,117 +275,129 @@ Building toward expectations (2.5 months in role, new hire). Positive ramp signa
 
 #### Benny Zlotnik - Principal SE (IC-4), targeting IC-5
 
-**Performance assessment (against SE Progression Matrix, IC-4):**
-Meets/exceeds expectations. Highest ticket throughput (30 closed), broadest community connector (897 Slack messages, 17 channels). De facto jumpstarter community first responder.
+**Workday ratings:**
+- What: 3 (Surpasses expectations) - Highest ticket throughput (30 closed), broadest community connector (897 Slack messages, 17 channels). De facto jumpstarter community first responder.
+- How: 2 (Meets expectations) - Strong community leadership and breadth, but all reactive. No articulated technical vision or strategic direction-setting. Community engagement is broad but not yet shaping direction.
+- Combined: **Successful Performer (5)**
 
-**High Potential:** Consider but not recommended at this time. Benny has strong IC-5 signals on community leadership and breadth, but the strategic gap (no articulated technical vision, all reactive) needs to close before HiPo commitment is appropriate. The flag requires commitment to provide "exposure to higher-level roles" - Benny needs to first demonstrate appetite for strategic direction-setting, not just broader scope of the same work. Reassess at next cycle.
+**High Potential:** Consider but not recommended at this time. Strong IC-5 signals on community leadership and breadth, but the strategic gap (no articulated technical vision, all reactive) needs to close before HiPo commitment is appropriate. Reassess at next cycle.
 
-**Promotion readiness (IC-4 to IC-5):** Not yet. 2-3 quarters.
-- Per SE Matrix IC-5: missing technical strategy/vision document, architectural roadmap, external presentations, formal mentoring, AI leadership
-- Strengths at IC-5: community leadership, technical breadth, knowledge hub role
+**Movement readiness:** Continue growing in current role
+- Promotion readiness (IC-4 to IC-5): 2-3 quarters away
+- Gaps per SE Matrix IC-5: technical strategy/vision document, architectural roadmap, external presentations, formal mentoring, AI leadership
+- Strengths already at IC-5: community leadership, technical breadth, knowledge hub role
 
-**Development plan (this cycle):**
-1. Write a 6-month technical strategy/roadmap for jumpstarter evolution (this is the single most important step)
-2. Convert Slack expertise into one blog post or design document
-3. Submit a conference proposal (jumpstarter community, DevConf)
-4. Shift from reactive to directive - identify top 3 architectural improvements and drive them proactively
-5. Explore AI tooling strategy for PitCrew workflows
+**Talent actions (next 6 months):**
+- Rewards: Standard merit (Successful Performer). Consider equity for community role criticality (jumpstarter ecosystem anchor).
+- Development (3 Es):
+  - Experience: Write 6-month technical strategy/roadmap for jumpstarter evolution (single most important step). Shift from reactive to directive - identify top 3 architectural improvements and drive proactively
+  - Exposure: Submit conference proposal (jumpstarter community, DevConf). Convert Slack expertise into one blog post or design document
+  - Education: Explore AI tooling strategy for PitCrew workflows
+- Growth: Position for IC-5 nomination by demonstrating strategic direction-setting, not just broader scope of same work
 
-**Promotion timeline:** Q2 2027 if strategic direction and knowledge formalization materialize.
-
-**Workday actions:**
-- Talent Rating: review against IC-4 SE matrix (meets/exceeds)
-- Talent Action: Document development plan for IC-5 readiness
+**Promotion timeline:** Q2 2027 if strategic direction and knowledge formalization materialize
 
 ---
 
 #### Bella Khizgiyaev - Senior SE (IC-3), targeting IC-4
 
-**Performance assessment (against SE Progression Matrix, IC-3):**
-Solid Level 3 with early Level 4 signals. CTC specialization (4 of 8 closed tickets CTC-related). OIDC cross-subsystem work. Konflux integration contributions.
+**Workday ratings:**
+- What: 2 (Meets expectations) - Solid Level 3. CTC specialization (4 of 8 closed tickets CTC-related). OIDC cross-subsystem work. Konflux integration contributions. Consistent delivery at expected scope.
+- How: 2 (Meets expectations) - Reliable team contributor. Cross-component OIDC work shows initiative. Not yet demonstrating cross-team coordination as a primary pattern.
+- Combined: **Successful Performer (4)**
 
-**High Potential:** No. Solid performer developing well but not in the top 15% trajectory for long-term potential at this time.
+**High Potential:** No. Solid performer developing well but not in the top 15% trajectory.
 
-**Promotion readiness (IC-3 to IC-4):** 2-3 quarters away.
-- Per SE Matrix IC-4: needs cross-team coordination as primary responsibility, mentoring, knowledge sharing artifacts, AI tool adoption, SDLC leadership
+**Movement readiness:** Continue growing in current role
+- Promotion readiness (IC-3 to IC-4): 2-3 quarters away
+- Gaps per SE Matrix IC-4: cross-team coordination as primary responsibility, mentoring, knowledge sharing artifacts, AI tool adoption, SDLC leadership
 - Strengths trending IC-4: cross-component OIDC work, CTC impact on release certification
 
-**Development plan (this cycle):**
-1. Take on a feature requiring explicit cross-team coordination (PitCrew + ATC or upstream jumpstarter)
-2. Start mentoring one junior/mid-level engineer (Muhamad is a natural fit)
-3. Write one internal article on CTC reporting patterns or OIDC certificate architecture
-4. Explore AI tooling for testing or debugging
-5. Propose a specific SDLC improvement for PitCrew's CTC workflow
+**Talent actions (next 6 months):**
+- Rewards: Standard merit (Successful Performer)
+- Development (3 Es):
+  - Experience: Take on a feature requiring explicit cross-team coordination (PitCrew + ATC or upstream jumpstarter). Propose a specific SDLC improvement for PitCrew's CTC workflow
+  - Exposure: Start mentoring one engineer (Muhamad is a natural fit). Write one internal article on CTC reporting patterns or OIDC certificate architecture
+  - Education: Explore AI tooling for testing or debugging
+- Growth: Build cross-team coordination pattern. Position for IC-4 nomination Q2 2027
 
-**Promotion timeline:** Q2 2027.
-
-**Workday actions:**
-- Talent Rating: review against IC-3 SE matrix (meets expectations)
-- Talent Action: Document development plan
+**Promotion timeline:** Q2 2027
 
 ---
 
 #### Muhamad Abo Ras - Senior SE (IC-3), developing
 
-**Performance assessment (against SE Progression Matrix, IC-3):**
-Developing Level 3. Solid technical execution (5 Stories, all substantive E2E testing work) but significantly below expectations on visibility (38 Slack messages, 7 channels - lowest on team).
+**Workday ratings:**
+- What: 2 (Meets expectations) - Solid technical execution (5 Stories, all substantive E2E testing work). Delivers reliably on assigned scope.
+- How: 1 (Meets some expectations) - Significantly below expectations on visibility (38 Slack messages, 7 channels - lowest on team). IC-3 expects proactive collaboration, "enhances existing processes," and "provides guidance" - these are not present.
+- Combined: **Evolving Performer (3)**
+
+Note: This is borderline. The visibility gap is significant for IC-3, but the technical delivery is solid and the gap may be cultural/comfort rather than capability. Per Tashana's guidance: don't wait to address concerns, and document feedback. **Direct conversation needed, not formal underperformance documentation yet.**
 
 **High Potential:** No.
 
-**Not meeting expectations?** This is borderline. The visibility gap is significant for IC-3, which expects "works independently with minimal instruction" AND "enhances existing processes" AND "provides guidance." The technical delivery is fine, but IC-3 also expects proactive collaboration and visibility that isn't present. **This is worth a direct conversation, not formal underperformance documentation yet** - the technical work is good, and the gap may be cultural/comfort rather than capability. But per Tashana's guidance: don't wait to address concerns, and document feedback.
+**Movement readiness:** Continue growing in current role
+- Not meeting full IC-3 expectations on collaboration/visibility dimension
+- Requires focused development plan with 90-day checkpoint
 
-**Recommendation:** Have a direct conversation about visibility expectations. Frame it positively ("your technical work is solid - to grow and be recognized at this level, you need to share it more broadly"). Document the conversation and agreed actions in Workday and email.
+**Talent actions (next 6 months):**
+- Rewards: Standard merit (lower end of Successful range due to How score). Frame positively - technical work merits recognition, How dimension is the growth area.
+- Development (3 Es):
+  - Experience: Expand scope beyond builder testing - look for testing needs across PitCrew. Document the e2e testing framework (design doc)
+  - Exposure: **Increase visibility** (highest priority) - target 15+ channels, share decisions/findings/status proactively. Join broader channels (#forum-jumpstarter, #forum-qe-automotive). Start contributing to team discussions more actively
+  - Education: N/A
+- Growth: Close visibility gap. Reassess in 90 days.
 
-**Development plan (this cycle):**
-1. **Increase visibility** (highest priority) - target 15+ channels, share decisions/findings/status proactively
-2. Expand scope beyond builder testing - look for testing needs across PitCrew
-3. Document the e2e testing framework (design doc)
-4. Join broader channels (#forum-jumpstarter, #forum-qe-automotive)
-5. Start contributing to team discussions more actively
-
-**Workday actions:**
-- Talent Rating: review against IC-3 SE matrix (developing - visibility gap)
-- Talent Action: Document visibility improvement plan and timeline
-- Follow-up: Reassess visibility in 90 days
+**Manager action:** Have a direct conversation about visibility expectations. Frame positively ("your technical work is solid - to grow and be recognized at this level, you need to share it more broadly"). Document the conversation and agreed actions in Workday and via email per Tashana's underperformance documentation guidance
 
 ---
 
 #### Roderick Kieley - Principal SE (IC-4), onboarding
 
-**Performance assessment (against SE Progression Matrix, IC-4):**
-Too early to assess (joined June 1, 41 days). First code contribution landed. Positive early signals in AI/agent community engagement.
+**Workday ratings:**
+- What: 1 (Meets some expectations) - Too early to fully assess (joined June 1, 41 days). First code contribution landed. Positive early signals in AI/agent community engagement. Not yet delivering at full IC-4 scope - expected for onboarding.
+- How: 2 (Meets expectations) - Engaging appropriately, building relationships, contributing to discussions. 10.5 years at Red Hat provides strong cultural alignment.
+- Combined: **Evolving Performer (3)**
 
-**High Potential:** Too early. Revisit at 6-month mark (December 2026). His 10.5 years at Red Hat and AI/agent expertise suggest strong long-term potential - the question is whether that translates to PitCrew domain delivery.
+Note: Evolving rating reflects onboarding phase, not underperformance. Internal transfers ramping into new domain are expected here. Communicate clearly that this is an onboarding assessment.
 
-**Development plan (this cycle):**
-1. Build PitCrew domain depth - 3-5 Jira tickets across different workstreams
-2. Establish PITCREW-161 (AIB prototyping) as his project lead role
-3. Leverage AI/agent expertise on PitCrew-relevant problems
-4. Pair with Benny for domain knowledge transfer
-5. Document onboarding observations
+**High Potential:** Too early. Revisit at 6-month mark (December 2026). AI/agent expertise suggests strong long-term potential - the question is delivery in PitCrew domain.
 
-**30-day checkpoint:** Overdue (was due July 1). Complete this week.
+**Movement readiness:** Continue growing in current role
+- Establishing IC-4 baseline in new domain. No movement considerations applicable.
 
-**Workday actions:**
-- Talent Rating: review against IC-4 SE matrix (onboarding - deferred assessment)
-- Talent Action: 6-month assessment milestone (December 2026)
+**Talent actions (next 6 months):**
+- Rewards: No merit action this cycle (recent transfer).
+- Development (3 Es):
+  - Experience: Build PitCrew domain depth - 3-5 Jira tickets across different workstreams. Establish PITCREW-161 (AIB prototyping) as project lead role
+  - Exposure: Pair with Benny for domain knowledge transfer. Leverage AI/agent expertise on PitCrew-relevant problems
+  - Education: PitCrew domain ramp - jumpstarter ecosystem, RHAS architecture, team workflows
+- Growth: Document onboarding observations. 6-month assessment milestone: December 2026
+
+**30-day checkpoint:** Overdue (was due July 1). Complete this week
 
 ---
 
 ## Summary: Talent cycle Workday actions
 
-| Member | Rating basis | HiPo flag | Key Workday actions |
-|--------|-------------|-----------|-------------------|
-| Juanje Ojeda | IC-4 SE matrix - exceeds | YES | Promotion plan, HiPo development actions |
-| Roni Eliezer | IC-4 QE matrix - exceeds | YES | Promotion plan, HiPo actions, QE-to-SE interest check |
-| Kanitha Chim | IC-3 SE matrix - meets/trending 4 | No | IC-4 development plan |
-| Eitan Raviv | IC-3 SE matrix - meets with L4 signals | No | IC-4 development plan (visibility focus) |
-| Hubert Stefanski | IC-3 SE matrix - meets/exceeds | N/A (transitioning) | Knowledge transfer, transition handoff |
-| Matt Goldman | IC-4 SRE matrix - building (new hire) | Too early | 6-month milestone (Oct 2026) |
-| Benny Zlotnik | IC-4 SE matrix - meets/exceeds | Not yet | IC-5 development plan (strategy focus) |
-| Bella Khizgiyaev | IC-3 SE matrix - meets | No | IC-4 development plan |
-| Muhamad Abo Ras | IC-3 SE matrix - developing | No | Visibility improvement plan, 90-day check |
-| Roderick Kieley | IC-4 SE matrix - deferred (onboarding) | Too early | 30-day checkpoint (overdue), 6-month milestone |
+| Member | What | How | Combined | HiPo | Movement readiness | Key actions |
+|--------|------|-----|----------|------|--------------------|-------------|
+| Juanje Ojeda | 3 | 3 | High Impact (6) | YES | Continue growing | HiPo dev actions, IC-5 promotion plan |
+| Roni Eliezer | 3 | 3 | High Impact (6) | YES | Continue growing | HiPo dev actions, QE-to-SE check, IC-5 plan |
+| Kanitha Chim | 2 | 3 | Successful (5) | No | Continue growing | IC-4 development plan |
+| Eitan Raviv | 3 | 2 | Successful (5) | No | Continue growing | IC-4 plan (visibility focus) |
+| Hubert Stefanski | 3 | 2 | Successful (5) | N/A | Not well placed | Knowledge transfer, transition handoff |
+| Matt Goldman | 1 | 2 | Evolving (3) | Too early | Continue growing | 6-month milestone (Oct 2026) |
+| Benny Zlotnik | 3 | 2 | Successful (5) | Not yet | Continue growing | IC-5 plan (strategy focus) |
+| Bella Khizgiyaev | 2 | 2 | Successful (4) | No | Continue growing | IC-4 development plan |
+| Muhamad Abo Ras | 2 | 1 | Evolving (3) | No | Continue growing | Visibility plan, 90-day check |
+| Roderick Kieley | 1 | 2 | Evolving (3) | Too early | Continue growing | 30-day checkpoint, 6-month milestone |
+
+### Distribution check (team of 10)
+- High Impact (6): 2 (20%) - within 10-20% guidance
+- Successful (4-5): 5 (50%) - slightly below 60-80% guidance (small team variance acceptable)
+- Evolving (2-3): 3 (30%) - above 5-15% guidance, but 2 of 3 are onboarding/ramping (expected)
+- Low (0-1): 0 - within 2-5% guidance
 
 ## Tashana's checklist completion
 

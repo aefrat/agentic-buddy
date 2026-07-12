@@ -124,12 +124,49 @@
   }
 
   .badge-hipo { background: #fef3c7; color: #92400e; }
-  .badge-exceeds { background: #d1fae5; color: #065f46; }
-  .badge-meets { background: #dbeafe; color: #1e40af; }
+  .badge-high-impact { background: #d1fae5; color: #065f46; }
+  .badge-successful { background: #dbeafe; color: #1e40af; }
+  .badge-evolving { background: #fef3c7; color: #92400e; }
   .badge-developing { background: #fee2e2; color: #991b1b; }
   .badge-ramping { background: #e0e7ff; color: #3730a3; }
   .badge-transition { background: #f3f4f6; color: #4b5563; }
   .badge-qe-se { background: #ede9fe; color: #5b21b6; }
+
+  .ratings-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .rating-box {
+    flex: 1;
+    min-width: 160px;
+    background: var(--bg-light);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+  }
+
+  .rating-box strong {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 3px;
+    letter-spacing: 0.04em;
+  }
+
+  .rating-box .score {
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+
+  .rating-box .rationale {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
 
   .assessment-row {
     display: flex;
@@ -156,11 +193,27 @@
     letter-spacing: 0.04em;
   }
 
-  .dev-plan {
+  .hipo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .hipo-item {
+    background: var(--bg-light);
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+  }
+
+  .hipo-item .check { color: #059669; font-weight: 700; }
+
+  .talent-actions {
     margin-top: 12px;
   }
 
-  .dev-plan h4 {
+  .talent-actions h4 {
     font-size: 0.85rem;
     font-weight: 600;
     text-transform: uppercase;
@@ -169,13 +222,27 @@
     letter-spacing: 0.04em;
   }
 
-  .dev-plan ol {
-    padding-left: 20px;
-    font-size: 0.9rem;
+  .three-es {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
   }
 
-  .dev-plan li {
-    margin-bottom: 4px;
+  .three-es .e-box {
+    background: var(--bg-light);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+  }
+
+  .three-es .e-box strong {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 3px;
+    letter-spacing: 0.04em;
   }
 
   .workday-actions {
@@ -242,25 +309,61 @@
     width: 100%;
     border-collapse: collapse;
     margin-top: 16px;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
   }
 
   .summary-table th {
     background: var(--text-primary);
     color: white;
-    padding: 10px 12px;
+    padding: 10px 8px;
     text-align: left;
     font-weight: 600;
   }
 
   .summary-table td {
-    padding: 10px 12px;
+    padding: 10px 8px;
     border-bottom: 1px solid var(--border-light);
   }
 
   .summary-table tr:nth-child(even) {
     background: var(--bg-light);
   }
+
+  .distribution-check {
+    margin-top: 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 0.85rem;
+  }
+
+  .distribution-check h4 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .dist-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .dist-item {
+    flex: 1;
+    min-width: 120px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-align: center;
+  }
+
+  .dist-item .pct { font-size: 1.2rem; font-weight: 700; }
+  .dist-item .label { font-size: 0.75rem; color: var(--text-secondary); }
+  .dist-item .target { font-size: 0.7rem; color: var(--text-secondary); font-style: italic; }
 
   .checklist {
     list-style: none;
@@ -293,6 +396,12 @@
     margin-top: 4px;
   }
 
+  @media (max-width: 768px) {
+    .three-es { grid-template-columns: 1fr; }
+    .hipo-grid { grid-template-columns: 1fr; }
+    .ratings-row { flex-direction: column; }
+  }
+
   @media print {
     body { padding: 12px; }
     .member-card { break-inside: avoid; page-break-inside: avoid; }
@@ -303,26 +412,34 @@
 
 <h1>Talent Cycle Action Plan - H2 2026</h1>
 <p class="subtitle">
-  Cycle: July 2026 | Source: Tashana's "Upcoming Talent Cycle Guidance" (Jul 8) |
+  Cycle: July 2026 | Source: Tashana's guidance (Jul 8) + Talent Management for Managers (The Source) |
   Data: Q2 2026 QC reports, development briefs (Jun 29), Skill Progression Matrices
 </p>
 
 <div class="framework-banner">
-  <strong>Framework change:</strong> Engineering Competencies retired for SE, QE, EM, PM-Technical.
-  All assessments below use <strong>Skill Progression Matrices</strong> (Job Descriptions) and Radford dimensions (Scope, Complexity, Impact) only.
-  Prior competency tables are supplementary context.
+  <strong>Framework changes:</strong> Engineering Competencies retired for SE, QE, EM, PM-Technical.
+  All assessments use <strong>Skill Progression Matrices</strong> and Radford dimensions only.
+  Performance ratings: What (0-3) + How (0-3) = Combined (0-6).
+  HiPo Flag replaces "Future Talent" - top 15%, 4 descriptors required.
 </div>
 
 <!-- HIGH POTENTIAL -->
 <h2 class="section-header">High Potential Flag Recommendations (Top 15%)</h2>
 <p style="font-size: 0.9rem; margin-bottom: 16px; color: var(--text-secondary);">
-  Long-term potential, not current high performance. Selecting someone is a commitment to their growth:
-  exposure to higher-level roles, wider scope, more complex responsibilities.
+  Long-term potential, not current high performance. Requires all 4 descriptors: Aspiration, Capability, Engagement, Agility.
+  Selecting someone is a commitment: exposure to higher-level roles, wider scope, more complex responsibilities.
+  Not visible to associates in Workday.
 </p>
 
 <div class="special-section" style="border-left: 4px solid var(--hipo-color);">
   <h3>Juanje Ojeda <span class="badge badge-hipo">HiPo Recommended</span></h3>
-  <p>Clearest trajectory to IC-5 with Level 5 behaviors already evident: Agent Forge (cross-team adoption), published articles on Red Hat Source, strategic technical thinking. Long-term potential extends to Distinguished Engineer - he builds reusable methodology, not just solutions.</p>
+  <p>Clearest trajectory to IC-5 with Level 5 behaviors already evident: Agent Forge (cross-team adoption), published articles, strategic technical thinking. Long-term potential extends to Distinguished Engineer - he builds reusable methodology, not just solutions.</p>
+  <div class="hipo-grid" style="margin-top: 12px;">
+    <div class="hipo-item"><span class="check">&#10003;</span> <strong>Aspiration:</strong> Pursues increased scope (Agent Forge cross-team adoption), seeks visibility (published articles, demos), mentors others</div>
+    <div class="hipo-item"><span class="check">&#10003;</span> <strong>Capability:</strong> Strategic thinking (agent methodology), problem-solving (6 Blockers resolved), interpersonal (5+ cross-team relationships)</div>
+    <div class="hipo-item"><span class="check">&#10003;</span> <strong>Engagement:</strong> Goes above and beyond (built reusable tooling beyond requirements), volunteered energy on AI innovation outside core role</div>
+    <div class="hipo-item"><span class="check">&#10003;</span> <strong>Agility:</strong> Adapted quickly to AI tools, led through ambiguity (pipeline debugging with no playbook)</div>
+  </div>
   <h4 style="font-size: 0.85rem; margin-top: 12px; color: var(--text-secondary);">Required development actions:</h4>
   <ul>
     <li>Present agent practice as engineering methodology to P&GE leadership (beyond Automotive)</li>
@@ -334,6 +451,12 @@
 <div class="special-section" style="border-left: 4px solid var(--hipo-color);">
   <h3>Roni Eliezer <span class="badge badge-hipo">HiPo Recommended</span> <span class="badge badge-qe-se">QE-to-SE Candidate</span></h3>
   <p>Owns Test Console platform end-to-end - the testing infrastructure strategy for RHIVOS. Highest individual output (32 tickets, 43 MRs). AI innovation in QE (3 Gemini model transitions) that few QEs in the org match. Long-term potential to define how QE works across the organization.</p>
+  <div class="hipo-grid" style="margin-top: 12px;">
+    <div class="hipo-item"><span class="check">&#10003;</span> <strong>Aspiration:</strong> Pursues increased scope (Test Console as platform), seeks influence (cross-team enablement), mentors others into platform</div>
+    <div class="hipo-item"><span class="check">&#10003;</span> <strong>Capability:</strong> Strategic thinking (AI-powered test analysis), problem-solving (3 model transitions with fallback), interpersonal (BOA team confirms anchor role)</div>
+    <div class="hipo-item"><span class="check">&#10003;</span> <strong>Engagement:</strong> Goes above and beyond (weekend CTC runs, packages.redhat.com PoC), emotional commitment to quality infrastructure</div>
+    <div class="hipo-item"><span class="check">&#10003;</span> <strong>Agility:</strong> Navigated 3 Gemini model transitions (external change), built fallback mechanisms, adapted testing approach per release candidate</div>
+  </div>
   <h4 style="font-size: 0.85rem; margin-top: 12px; color: var(--text-secondary);">Required development actions:</h4>
   <ul>
     <li>Present Test Console as enterprise QE reference architecture to other product QE teams</li>
@@ -355,414 +478,474 @@
 <h2 class="team-header team-atc">ATC - Auto ToolChain</h2>
 
 <div class="member-card hipo">
-  <div class="member-name">Juanje Ojeda <span class="badge badge-exceeds">Exceeds</span> <span class="badge badge-hipo">HiPo</span></div>
+  <div class="member-name">Juanje Ojeda <span class="badge badge-high-impact">High Impact (6)</span> <span class="badge badge-hipo">HiPo</span></div>
   <div class="member-title">Principal Software Engineer (IC-4), targeting IC-5</div>
-  <div class="assessment-row">
-    <div class="assessment-item">
-      <strong>Performance</strong>
-      28 tickets (6 Blockers), 39 MRs, 711 Slack msgs. Agent Forge, pipelines-debugger, execopen. Published articles. Meets/exceeds every IC-4 area.
+  <div class="ratings-row">
+    <div class="rating-box">
+      <strong>What</strong>
+      <span class="score">3</span> Surpasses expectations
+      <div class="rationale">28 tickets (6 Blockers), 39 MRs. Agent Forge, pipelines-debugger, execopen. Published articles.</div>
     </div>
-    <div class="assessment-item">
-      <strong>Promotion readiness</strong>
-      Not yet. 1-2 quarters. Gaps: org-level strategy positioning, external conferences, cross-org networks, customer-impact articulation.
+    <div class="rating-box">
+      <strong>How</strong>
+      <span class="score">3</span> Surpasses expectations
+      <div class="rationale">711 Slack msgs, transparent public-first communication, cross-team enablement, mentoring Matt Goldman</div>
+    </div>
+    <div class="rating-box">
+      <strong>Movement readiness</strong>
+      Continue growing in current role
+      <div class="rationale">IC-5 promotion: 1-2 quarters. Gaps: org-level strategy, external conferences, cross-org networks, customer-impact</div>
     </div>
   </div>
-  <div class="dev-plan">
-    <h4>Development plan (this cycle)</h4>
-    <ol>
-      <li>Write strategic proposal positioning Agent Forge as engineering methodology for the org</li>
-      <li>Submit external conference proposal (DevConf.cz or Red Hat Summit)</li>
-      <li>Establish 1-2 cross-org consulting relationships outside Automotive</li>
-      <li>Articulate customer-facing impact of infrastructure work</li>
-    </ol>
+  <div class="talent-actions">
+    <h4>Talent Actions (3 Es)</h4>
+    <div class="three-es">
+      <div class="e-box"><strong>Experience</strong>Lead a cross-BU initiative (agent-driven pipeline diagnosis as reference architecture)</div>
+      <div class="e-box"><strong>Exposure</strong>Present to P&GE leadership beyond Automotive. Submit external conference proposal (DevConf.cz / Summit)</div>
+      <div class="e-box"><strong>Growth</strong>Write strategic proposal positioning Agent Forge as engineering methodology. Establish 1-2 cross-org consulting relationships</div>
+    </div>
   </div>
-  <p class="promotion-timeline">Promotion timeline: Q4 2026 or Q1 2027</p>
-  <div class="workday-actions">
-    <strong>Workday actions</strong>
-    <ul>
-      <li>Talent Rating: review against IC-4 SE matrix</li>
-      <li>High Potential Flag: YES</li>
-      <li>Talent Action: Document promotion development plan</li>
-    </ul>
-  </div>
+  <p class="promotion-timeline">Promotion timeline: Q4 2026 or Q1 2027. Rewards: merit increase + equity consideration for role criticality + future capability.</p>
 </div>
 
 <div class="member-card hipo">
-  <div class="member-name">Roni Eliezer <span class="badge badge-exceeds">Exceeds</span> <span class="badge badge-hipo">HiPo</span> <span class="badge badge-qe-se">QE-to-SE</span></div>
+  <div class="member-name">Roni Eliezer <span class="badge badge-high-impact">High Impact (6)</span> <span class="badge badge-hipo">HiPo</span> <span class="badge badge-qe-se">QE-to-SE</span></div>
   <div class="member-title">Principal Software Quality Engineer (IC-4), targeting IC-5</div>
-  <div class="assessment-row">
-    <div class="assessment-item">
-      <strong>Performance</strong>
-      32 tickets, 43 MRs, 497 Slack msgs. Owns Test Console. De facto CTC project lead. AI innovation (3 Gemini transitions). Cross-team multiplier confirmed by BOA.
+  <div class="ratings-row">
+    <div class="rating-box">
+      <strong>What</strong>
+      <span class="score">3</span> Surpasses expectations
+      <div class="rationale">32 tickets, 43 MRs. Owns Test Console. De facto CTC project lead. AI innovation (3 Gemini transitions).</div>
     </div>
-    <div class="assessment-item">
-      <strong>Promotion readiness</strong>
-      Not yet. 1-2 quarters. Gaps: published QE strategy, stakeholder management beyond engineering, business acumen, external presentations.
+    <div class="rating-box">
+      <strong>How</strong>
+      <span class="score">3</span> Surpasses expectations
+      <div class="rationale">497 Slack msgs, 199 mentions. Cross-team multiplier confirmed by BOA. Mentoring through platform enablement.</div>
+    </div>
+    <div class="rating-box">
+      <strong>Movement readiness</strong>
+      Continue growing in current role
+      <div class="rationale">IC-5 promotion: 1-2 quarters. Gaps: published QE strategy, stakeholder management beyond engineering, business acumen</div>
     </div>
   </div>
-  <div class="dev-plan">
-    <h4>Development plan (this cycle)</h4>
-    <ol>
-      <li>Write 12-month Test Console / RHIVOS QE strategy document</li>
-      <li>Present AI-in-QE story externally (testing conference or DevConf)</li>
-      <li>Engage product management on quality metrics translation</li>
-      <li>Formalize mentoring for cross-team Test Console contributors</li>
-    </ol>
+  <div class="talent-actions">
+    <h4>Talent Actions (3 Es)</h4>
+    <div class="three-es">
+      <div class="e-box"><strong>Experience</strong>Own 12-month QE strategy document. Formalize mentoring for cross-team Test Console contributors</div>
+      <div class="e-box"><strong>Exposure</strong>Present AI-in-QE externally (testing conference or DevConf). Engage product management on quality metrics</div>
+      <div class="e-box"><strong>Growth</strong>Develop business acumen (connect quality to release/revenue impact). Consider QE-to-SE path if interested</div>
+    </div>
   </div>
-  <p class="promotion-timeline">Promotion timeline: Q4 2026 or Q1 2027</p>
-  <div class="workday-actions">
-    <strong>Workday actions</strong>
-    <ul>
-      <li>Talent Rating: review against IC-4 QE matrix</li>
-      <li>High Potential Flag: YES</li>
-      <li>Talent Action: Promotion plan + QE-to-SE interest check</li>
-    </ul>
-  </div>
+  <p class="promotion-timeline">Promotion timeline: Q4 2026 or Q1 2027. Rewards: merit increase + equity for platform criticality (Test Console = RHIVOS testing infrastructure).</p>
 </div>
 
 <div class="member-card">
-  <div class="member-name">Kanitha Chim <span class="badge badge-meets">Meets / Trending IC-4</span></div>
+  <div class="member-name">Kanitha Chim <span class="badge badge-successful">Successful (5)</span></div>
   <div class="member-title">Senior Software Engineer (IC-3), targeting IC-4</div>
-  <div class="assessment-row">
-    <div class="assessment-item">
-      <strong>Performance</strong>
-      Broadest reach (25 Slack channels, 4 Jira projects). De facto distribution specialist. Cross-team coordination for product listing and CDN.
+  <div class="ratings-row">
+    <div class="rating-box">
+      <strong>What</strong>
+      <span class="score">2</span> Meets expectations
+      <div class="rationale">Distribution specialist, broadest reach (25 channels, 4 Jira projects). Cross-team coordination for product listing and CDN. Some L4 signals but not consistently surpassing.</div>
     </div>
-    <div class="assessment-item">
-      <strong>Promotion readiness</strong>
-      At the boundary. Needs: lead a technical design initiative (not just coordinate), formalize mentoring, produce durable knowledge artifacts.
+    <div class="rating-box">
+      <strong>How</strong>
+      <span class="score">3</span> Surpasses expectations
+      <div class="rationale">De facto cross-team coordinator, proactive stakeholder communication, surfaced stale product listing issues independently</div>
+    </div>
+    <div class="rating-box">
+      <strong>Movement readiness</strong>
+      Continue growing in current role
+      <div class="rationale">IC-4 at boundary but not ready for nomination this cycle. Needs design leadership, not just coordination.</div>
     </div>
   </div>
-  <div class="dev-plan">
-    <h4>Development plan (this cycle)</h4>
-    <ol>
-      <li>Own CDN/Errata design for 2.0.z release - requirements to design doc to implementation</li>
-      <li>Follow through on AI advisory workflow spike to concrete proposal</li>
-      <li>Mentor one person on release engineering (distribution, errata, CDN patterns)</li>
-      <li>Write one internal design document on RHIVOS distribution pipeline</li>
-    </ol>
+  <div class="talent-actions">
+    <h4>Talent Actions (3 Es)</h4>
+    <div class="three-es">
+      <div class="e-box"><strong>Experience</strong>Own CDN/Errata design for 2.0.z release - lead from requirements to design doc to implementation</div>
+      <div class="e-box"><strong>Exposure</strong>Follow through on AI advisory workflow spike. Mentor one person on release engineering</div>
+      <div class="e-box"><strong>Growth</strong>Write one internal design document on RHIVOS distribution pipeline. Position for IC-4 nomination next cycle</div>
+    </div>
   </div>
-  <p class="promotion-timeline">Promotion timeline: Q1-Q2 2027. HiPo: Not at this time. Reassess in 6 months.</p>
-  <div class="workday-actions">
-    <strong>Workday actions</strong>
-    <ul>
-      <li>Talent Rating: review against IC-3 SE matrix (meeting expectations, trending IC-4)</li>
-      <li>Talent Action: Document IC-4 development plan</li>
-    </ul>
-  </div>
+  <p class="promotion-timeline">Promotion timeline: Q1-Q2 2027. HiPo: Not at this time. Reassess in 6 months. Rewards: standard merit (Successful).</p>
 </div>
 
 <div class="member-card">
-  <div class="member-name">Eitan Raviv <span class="badge badge-meets">Meets with IC-4 Signals</span></div>
+  <div class="member-name">Eitan Raviv <span class="badge badge-successful">Successful (5)</span></div>
   <div class="member-title">Senior Software Engineer (IC-3), targeting IC-4</div>
-  <div class="assessment-row">
-    <div class="assessment-item">
-      <strong>Performance</strong>
-      Highest MR count (28 merged). Runner consolidation delivered cost savings. AI tooling pioneer (claude-code hooks/skills). Infrastructure and security specialist.
+  <div class="ratings-row">
+    <div class="rating-box">
+      <strong>What</strong>
+      <span class="score">3</span> Surpasses expectations
+      <div class="rationale">Highest MR count (28 merged). Runner consolidation with cost savings. AI tooling pioneer. Container vulnerability remediation (VHCL-009 closed).</div>
     </div>
-    <div class="assessment-item">
-      <strong>Promotion readiness</strong>
-      Addressable gap. IC-4 quality work but low visibility (76 Slack msgs). Needs documented knowledge sharing and community leadership.
+    <div class="rating-box">
+      <strong>How</strong>
+      <span class="score">2</span> Meets expectations
+      <div class="rationale">Strong technical depth but visibility significantly low (76 Slack msgs). Cross-org navigation present but not communicated broadly.</div>
+    </div>
+    <div class="rating-box">
+      <strong>Movement readiness</strong>
+      Continue growing in current role
+      <div class="rationale">IC-4 addressable gap. Technical contributions already at IC-4 quality but visibility and knowledge sharing must catch up.</div>
     </div>
   </div>
-  <div class="dev-plan">
-    <h4>Development plan (this cycle)</h4>
-    <ol>
-      <li>Formalize and share AI tooling work - document claude-code hooks/skills, propose team adoption</li>
-      <li>Write design doc on runner consolidation (cost savings, architecture, lessons)</li>
-      <li>Increase Slack visibility - share work proactively, post in broader channels</li>
-      <li>Mentor Matt Goldman and/or Hubert's replacement on infrastructure patterns</li>
-    </ol>
+  <div class="talent-actions">
+    <h4>Talent Actions (3 Es)</h4>
+    <div class="three-es">
+      <div class="e-box"><strong>Experience</strong>Formalize AI tooling work - document claude-code hooks/skills, propose team adoption</div>
+      <div class="e-box"><strong>Exposure</strong>Increase Slack visibility - share work proactively. Mentor Matt Goldman and/or Hubert's replacement on infrastructure patterns</div>
+      <div class="e-box"><strong>Growth</strong>Write design doc on runner consolidation (cost savings, architecture, lessons). Channel "go deep to enhance" into documented, shared impact</div>
+    </div>
   </div>
-  <p class="promotion-timeline">Promotion timeline: Q1 2027. HiPo: Not at this time. Reassess in 6 months.</p>
-  <div class="workday-actions">
-    <strong>Workday actions</strong>
-    <ul>
-      <li>Talent Rating: review against IC-3 SE matrix</li>
-      <li>Talent Action: Document visibility + IC-4 development plan</li>
-    </ul>
-  </div>
+  <p class="promotion-timeline">Promotion timeline: Q1 2027. HiPo: Not at this time. Rewards: standard merit; note What score alone would warrant higher - visibility is the constraint.</p>
 </div>
 
 <div class="member-card transitioning">
-  <div class="member-name">Hubert Stefanski <span class="badge badge-transition">Transitioning Out</span></div>
-  <div class="member-title">Senior Software Engineer (IC-3) - transition started July 1</div>
-  <div class="assessment-row">
-    <div class="assessment-item">
-      <strong>Performance</strong>
-      Met expectations with Level 4 signals. Infrastructure and gating innovation. 29 MRs (tied highest). Strong cross-team relationships.
+  <div class="member-name">Hubert Stefanski <span class="badge badge-successful">Successful (5)</span> <span class="badge badge-transition">Transitioning Out</span></div>
+  <div class="member-title">Senior Software Engineer (IC-3) - transition started July 1, day 12</div>
+  <div class="ratings-row">
+    <div class="rating-box">
+      <strong>What</strong>
+      <span class="score">3</span> Surpasses expectations
+      <div class="rationale">29 MRs (tied highest). Infrastructure and gating innovation. AutoSD CloudFront, CentOS CI maintenance. Strong delivery until transition.</div>
     </div>
-    <div class="assessment-item">
-      <strong>Talent cycle action</strong>
-      Focus on knowledge transfer completion. Ensure gating knowledge documented before departure. If transferring within Red Hat, coordinate assessment handoff.
+    <div class="rating-box">
+      <strong>How</strong>
+      <span class="score">2</span> Meets expectations
+      <div class="rationale">Strong cross-team relationships, but knowledge was concentrated (KT risk now materialized)</div>
+    </div>
+    <div class="rating-box">
+      <strong>Movement readiness</strong>
+      Not well placed
+      <div class="rationale">Transitioning out of role. If transferring within Red Hat, coordinate assessment handoff with receiving manager.</div>
     </div>
   </div>
   <div class="workday-actions">
-    <strong>Workday actions</strong>
+    <strong>Talent actions</strong>
     <ul>
-      <li>Talent Rating: review against IC-3 SE matrix (meets/exceeds)</li>
-      <li>Note transition status</li>
+      <li>Focus on knowledge transfer completion. Ensure gating knowledge, AutoSD CloudFront migration plan, and fork maintenance documented before departure</li>
+      <li>HiPo: N/A (departing). No development plan - focus on KT.</li>
     </ul>
   </div>
 </div>
 
 <div class="member-card ramping">
-  <div class="member-name">Matt Goldman <span class="badge badge-ramping">Ramping (2.5 months)</span></div>
+  <div class="member-name">Matt Goldman <span class="badge badge-evolving">Evolving (3)</span> <span class="badge badge-ramping">Ramping (2.5 months)</span></div>
   <div class="member-title">Principal SRE (IC-4), building toward expectations</div>
-  <div class="assessment-row">
-    <div class="assessment-item">
-      <strong>Performance</strong>
-      New hire, positive ramp. 7 MRs, 148 Slack msgs, 15 channels. Investigation spikes (jinja2, Review Apps) show initiative.
+  <div class="ratings-row">
+    <div class="rating-box">
+      <strong>What</strong>
+      <span class="score">1</span> Meets some expectations
+      <div class="rationale">Building toward expectations (new hire). 7 MRs, investigation spikes show initiative. Not yet delivering at full IC-4 scope - expected for ramp.</div>
     </div>
-    <div class="assessment-item">
-      <strong>Assessment</strong>
-      Too early for HiPo. Gaps are domain ramp, not skill gaps. 6-month follow-up assessment at October 2026.
+    <div class="rating-box">
+      <strong>How</strong>
+      <span class="score">2</span> Meets expectations
+      <div class="rationale">148 Slack msgs, 15 channels. Positive engagement, asking good questions, building relationships. Appropriate for onboarding.</div>
+    </div>
+    <div class="rating-box">
+      <strong>Movement readiness</strong>
+      Continue growing in current role
+      <div class="rationale">Establishing IC-4 baseline. Evolving rating reflects ramp-up phase, not underperformance. Communicate clearly.</div>
     </div>
   </div>
-  <div class="dev-plan">
-    <h4>Development plan (this cycle)</h4>
-    <ol>
-      <li>Deepen domain expertise - own a major infrastructure component end-to-end</li>
-      <li>Lead one reliability improvement initiative</li>
-      <li>Build cross-team relationships with Eitan, Juanje, Roni</li>
-      <li>Document infrastructure patterns (jinja2, Review Apps)</li>
-    </ol>
+  <div class="talent-actions">
+    <h4>Talent Actions (3 Es)</h4>
+    <div class="three-es">
+      <div class="e-box"><strong>Experience</strong>Own a major infrastructure component end-to-end. Lead one reliability improvement initiative</div>
+      <div class="e-box"><strong>Exposure</strong>Build cross-team relationships (Eitan, Juanje, Roni). Join container vulnerability remediation (VHCL-005/007)</div>
+      <div class="e-box"><strong>Education</strong>Domain ramp - RHIVOS architecture, CentOS CI, Gator pipelines</div>
+    </div>
   </div>
-  <div class="workday-actions">
-    <strong>Workday actions</strong>
-    <ul>
-      <li>Talent Rating: review against IC-4 SRE matrix (building/developing - new hire)</li>
-      <li>Talent Action: 6-month milestone (October 2026)</li>
-    </ul>
-  </div>
+  <p class="promotion-timeline">HiPo: Too early (October 2026). No merit action this cycle (new hire). 6-month assessment milestone: October 2026.</p>
 </div>
 
 <!-- PITCREW TEAM -->
 <h2 class="team-header team-pitcrew">PitCrew - RHAS</h2>
 
 <div class="member-card">
-  <div class="member-name">Benny Zlotnik <span class="badge badge-exceeds">Meets/Exceeds</span></div>
+  <div class="member-name">Benny Zlotnik <span class="badge badge-successful">Successful (5)</span></div>
   <div class="member-title">Principal Software Engineer (IC-4), targeting IC-5</div>
-  <div class="assessment-row">
-    <div class="assessment-item">
-      <strong>Performance</strong>
-      Highest ticket throughput (30 closed), broadest community connector (897 Slack msgs, 17 channels). De facto jumpstarter community first responder.
+  <div class="ratings-row">
+    <div class="rating-box">
+      <strong>What</strong>
+      <span class="score">3</span> Surpasses expectations
+      <div class="rationale">Highest ticket throughput (30 closed), broadest community connector (897 Slack msgs, 17 channels). De facto jumpstarter community first responder.</div>
     </div>
-    <div class="assessment-item">
-      <strong>Promotion readiness</strong>
-      Not yet. 2-3 quarters. Missing: technical strategy/vision document, architectural roadmap, external presentations, formal mentoring.
+    <div class="rating-box">
+      <strong>How</strong>
+      <span class="score">2</span> Meets expectations
+      <div class="rationale">Strong community leadership and breadth, but all reactive. No articulated technical vision or strategic direction-setting.</div>
+    </div>
+    <div class="rating-box">
+      <strong>Movement readiness</strong>
+      Continue growing in current role
+      <div class="rationale">IC-5: 2-3 quarters. Gaps: technical strategy/vision, architectural roadmap, external presentations, formal mentoring, AI leadership.</div>
     </div>
   </div>
-  <div class="dev-plan">
-    <h4>Development plan (this cycle)</h4>
-    <ol>
-      <li>Write 6-month technical strategy/roadmap for jumpstarter evolution (highest priority)</li>
-      <li>Convert Slack expertise into one blog post or design document</li>
-      <li>Submit conference proposal (jumpstarter community, DevConf)</li>
-      <li>Shift from reactive to directive - identify top 3 architectural improvements, drive proactively</li>
-      <li>Explore AI tooling strategy for PitCrew workflows</li>
-    </ol>
+  <div class="talent-actions">
+    <h4>Talent Actions (3 Es)</h4>
+    <div class="three-es">
+      <div class="e-box"><strong>Experience</strong>Write 6-month technical strategy/roadmap for jumpstarter evolution (highest priority). Shift from reactive to directive</div>
+      <div class="e-box"><strong>Exposure</strong>Submit conference proposal (jumpstarter community, DevConf). Convert Slack expertise into blog post or design document</div>
+      <div class="e-box"><strong>Education</strong>Explore AI tooling strategy for PitCrew workflows</div>
+    </div>
   </div>
-  <p class="promotion-timeline">Promotion timeline: Q2 2027. HiPo: Not yet - strategic gap needs closing first. Reassess next cycle.</p>
-  <div class="workday-actions">
-    <strong>Workday actions</strong>
-    <ul>
-      <li>Talent Rating: review against IC-4 SE matrix (meets/exceeds)</li>
-      <li>Talent Action: Document IC-5 development plan (strategy focus)</li>
-    </ul>
-  </div>
+  <p class="promotion-timeline">Promotion timeline: Q2 2027. HiPo: Not yet - strategic gap needs closing. Rewards: standard merit + equity consideration for community role criticality.</p>
 </div>
 
 <div class="member-card">
-  <div class="member-name">Bella Khizgiyaev <span class="badge badge-meets">Meets</span></div>
+  <div class="member-name">Bella Khizgiyaev <span class="badge badge-successful">Successful (4)</span></div>
   <div class="member-title">Senior Software Engineer (IC-3), targeting IC-4</div>
-  <div class="assessment-row">
-    <div class="assessment-item">
-      <strong>Performance</strong>
-      Solid Level 3 with early Level 4 signals. CTC specialization (4/8 tickets CTC-related). OIDC cross-subsystem work. Konflux integration.
+  <div class="ratings-row">
+    <div class="rating-box">
+      <strong>What</strong>
+      <span class="score">2</span> Meets expectations
+      <div class="rationale">Solid Level 3. CTC specialization (4/8 tickets CTC-related). OIDC cross-subsystem work. Konflux integration. Consistent delivery at expected scope.</div>
     </div>
-    <div class="assessment-item">
-      <strong>Promotion readiness</strong>
-      2-3 quarters. Needs: cross-team coordination as primary responsibility, mentoring, knowledge sharing artifacts, AI tool adoption.
+    <div class="rating-box">
+      <strong>How</strong>
+      <span class="score">2</span> Meets expectations
+      <div class="rationale">Reliable team contributor. Cross-component OIDC work shows initiative. Not yet demonstrating cross-team coordination as primary pattern.</div>
+    </div>
+    <div class="rating-box">
+      <strong>Movement readiness</strong>
+      Continue growing in current role
+      <div class="rationale">IC-4: 2-3 quarters. Needs cross-team coordination as primary responsibility, mentoring, knowledge sharing, AI adoption.</div>
     </div>
   </div>
-  <div class="dev-plan">
-    <h4>Development plan (this cycle)</h4>
-    <ol>
-      <li>Take on a feature requiring explicit cross-team coordination (PitCrew + ATC or upstream)</li>
-      <li>Start mentoring one junior/mid-level engineer (Muhamad is a natural fit)</li>
-      <li>Write one internal article on CTC reporting patterns or OIDC architecture</li>
-      <li>Explore AI tooling for testing or debugging</li>
-      <li>Propose a specific SDLC improvement for PitCrew's CTC workflow</li>
-    </ol>
+  <div class="talent-actions">
+    <h4>Talent Actions (3 Es)</h4>
+    <div class="three-es">
+      <div class="e-box"><strong>Experience</strong>Take on feature requiring cross-team coordination (PitCrew + ATC or upstream). Propose SDLC improvement for CTC workflow</div>
+      <div class="e-box"><strong>Exposure</strong>Start mentoring one engineer (Muhamad is natural fit). Write internal article on CTC reporting or OIDC architecture</div>
+      <div class="e-box"><strong>Education</strong>Explore AI tooling for testing or debugging</div>
+    </div>
   </div>
-  <p class="promotion-timeline">Promotion timeline: Q2 2027. HiPo: No.</p>
-  <div class="workday-actions">
-    <strong>Workday actions</strong>
-    <ul>
-      <li>Talent Rating: review against IC-3 SE matrix (meets expectations)</li>
-      <li>Talent Action: Document IC-4 development plan</li>
-    </ul>
-  </div>
+  <p class="promotion-timeline">Promotion timeline: Q2 2027. HiPo: No. Rewards: standard merit (Successful).</p>
 </div>
 
 <div class="member-card alert">
-  <div class="member-name">Muhamad Abo Ras <span class="badge badge-developing">Developing</span></div>
-  <div class="member-title">Senior Software Engineer (IC-3), visibility gap</div>
-  <div class="assessment-row">
-    <div class="assessment-item">
-      <strong>Performance</strong>
-      Solid technical execution (5 Stories, substantive E2E testing). But 38 Slack messages across 7 channels - lowest on team. Visibility significantly below IC-3 expectations.
+  <div class="member-name">Muhamad Abo Ras <span class="badge badge-evolving">Evolving (3)</span> <span class="badge badge-developing">Visibility Gap</span></div>
+  <div class="member-title">Senior Software Engineer (IC-3), visibility concern</div>
+  <div class="ratings-row">
+    <div class="rating-box">
+      <strong>What</strong>
+      <span class="score">2</span> Meets expectations
+      <div class="rationale">Solid technical execution (5 Stories, all substantive E2E testing work). Delivers reliably on assigned scope.</div>
     </div>
-    <div class="assessment-item">
-      <strong>Action needed</strong>
-      Direct conversation about visibility expectations. Frame positively: "technical work is solid - to grow and be recognized, share it more broadly." Document in Workday + email per Tashana's guidance.
+    <div class="rating-box">
+      <strong>How</strong>
+      <span class="score">1</span> Meets some expectations
+      <div class="rationale">38 Slack msgs, 7 channels - lowest on team. IC-3 expects proactive collaboration, "enhances existing processes," "provides guidance" - not present.</div>
+    </div>
+    <div class="rating-box">
+      <strong>Movement readiness</strong>
+      Continue growing in current role
+      <div class="rationale">Not meeting full IC-3 expectations on collaboration/visibility. 90-day checkpoint required.</div>
     </div>
   </div>
-  <div class="dev-plan">
-    <h4>Development plan (this cycle)</h4>
-    <ol>
-      <li><strong>Increase visibility</strong> (highest priority) - target 15+ channels, share proactively</li>
-      <li>Expand scope beyond builder testing - look for testing needs across PitCrew</li>
-      <li>Document e2e testing framework (design doc)</li>
-      <li>Join broader channels (#forum-jumpstarter, #forum-qe-automotive)</li>
-      <li>Contribute more actively to team discussions</li>
-    </ol>
+  <div style="background: #fef2f2; padding: 10px 14px; border-radius: 6px; margin-bottom: 12px; font-size: 0.85rem;">
+    <strong style="color: var(--alert-color);">Manager action required:</strong> Direct conversation about visibility expectations. Frame positively: "your technical work is solid - to grow and be recognized at this level, you need to share it more broadly." Document conversation and agreed actions in Workday and via email per Tashana's underperformance documentation guidance. Not formal PIP - the gap may be cultural/comfort rather than capability.
   </div>
-  <p class="promotion-timeline">Not formal underperformance - direct conversation first. Reassess visibility in 90 days.</p>
-  <div class="workday-actions">
-    <strong>Workday actions</strong>
-    <ul>
-      <li>Talent Rating: review against IC-3 SE matrix (developing - visibility gap)</li>
-      <li>Talent Action: Document visibility improvement plan and timeline</li>
-      <li>Follow-up: 90-day reassessment</li>
-    </ul>
+  <div class="talent-actions">
+    <h4>Talent Actions (3 Es)</h4>
+    <div class="three-es">
+      <div class="e-box"><strong>Experience</strong>Expand scope beyond builder testing - find testing needs across PitCrew. Document e2e testing framework (design doc)</div>
+      <div class="e-box"><strong>Exposure</strong><strong>Increase visibility</strong> (highest priority) - target 15+ channels. Join broader channels (#forum-jumpstarter, #forum-qe-automotive). Share proactively</div>
+      <div class="e-box"><strong>Growth</strong>Close visibility gap. Reassess in 90 days. Contribute more actively to team discussions</div>
+    </div>
   </div>
+  <p class="promotion-timeline">HiPo: No. Rewards: standard merit (lower end of Successful range due to How score). 90-day reassessment.</p>
 </div>
 
 <div class="member-card ramping">
-  <div class="member-name">Roderick Kieley <span class="badge badge-ramping">Onboarding (41 days)</span></div>
+  <div class="member-name">Roderick Kieley <span class="badge badge-evolving">Evolving (3)</span> <span class="badge badge-ramping">Onboarding (41 days)</span></div>
   <div class="member-title">Principal Software Engineer (IC-4), building domain depth</div>
-  <div class="assessment-row">
-    <div class="assessment-item">
-      <strong>Performance</strong>
-      Too early to assess (joined Jun 1). First code contribution landed. Positive signals: AI/agent community engagement, 10.5 years at Red Hat.
+  <div class="ratings-row">
+    <div class="rating-box">
+      <strong>What</strong>
+      <span class="score">1</span> Meets some expectations
+      <div class="rationale">Too early to fully assess (joined Jun 1, 41 days). First code contribution landed. Positive early signals in AI/agent community engagement.</div>
     </div>
-    <div class="assessment-item">
-      <strong>Immediate action</strong>
-      <strong style="color: var(--alert-color);">30-day checkpoint overdue (was due Jul 1).</strong> Complete this week.
+    <div class="rating-box">
+      <strong>How</strong>
+      <span class="score">2</span> Meets expectations
+      <div class="rationale">Engaging appropriately, building relationships, contributing to discussions. 10.5 years at Red Hat provides strong cultural alignment.</div>
+    </div>
+    <div class="rating-box">
+      <strong>Movement readiness</strong>
+      Continue growing in current role
+      <div class="rationale">Establishing IC-4 baseline in new domain. Evolving rating reflects onboarding phase, not underperformance.</div>
     </div>
   </div>
-  <div class="dev-plan">
-    <h4>Development plan (this cycle)</h4>
-    <ol>
-      <li>Build PitCrew domain depth - 3-5 Jira tickets across different workstreams</li>
-      <li>Establish PITCREW-161 (AIB prototyping) as project lead role</li>
-      <li>Leverage AI/agent expertise on PitCrew-relevant problems</li>
-      <li>Pair with Benny for domain knowledge transfer</li>
-      <li>Document onboarding observations</li>
-    </ol>
+  <div style="background: #fef2f2; padding: 10px 14px; border-radius: 6px; margin-bottom: 12px; font-size: 0.85rem;">
+    <strong style="color: var(--alert-color);">30-day checkpoint overdue</strong> (was due July 1). Complete this week.
   </div>
-  <p class="promotion-timeline">HiPo: Too early. Revisit at 6-month mark (December 2026).</p>
-  <div class="workday-actions">
-    <strong>Workday actions</strong>
-    <ul>
-      <li>Talent Rating: review against IC-4 SE matrix (deferred - onboarding)</li>
-      <li>Talent Action: 30-day checkpoint (overdue), 6-month milestone (December 2026)</li>
-    </ul>
+  <div class="talent-actions">
+    <h4>Talent Actions (3 Es)</h4>
+    <div class="three-es">
+      <div class="e-box"><strong>Experience</strong>Build PitCrew domain depth - 3-5 Jira tickets across workstreams. Establish PITCREW-161 (AIB prototyping) as project lead role</div>
+      <div class="e-box"><strong>Exposure</strong>Pair with Benny for domain knowledge transfer. Leverage AI/agent expertise on PitCrew-relevant problems</div>
+      <div class="e-box"><strong>Education</strong>PitCrew domain ramp - jumpstarter ecosystem, RHAS architecture, team workflows</div>
+    </div>
   </div>
+  <p class="promotion-timeline">HiPo: Too early (December 2026). No merit action this cycle (recent transfer). 6-month assessment: December 2026.</p>
 </div>
 
 <!-- SUMMARY TABLE -->
-<h2 class="section-header">Summary: Workday Actions</h2>
+<h2 class="section-header">Summary: Workday Ratings and Actions</h2>
 
 <table class="summary-table">
   <thead>
     <tr>
       <th>Member</th>
-      <th>Rating Basis</th>
+      <th>What</th>
+      <th>How</th>
+      <th>Combined</th>
       <th>HiPo</th>
-      <th>Key Workday Actions</th>
+      <th>Movement</th>
+      <th>Key Actions</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><strong>Juanje Ojeda</strong></td>
-      <td>IC-4 SE - exceeds</td>
+      <td>3</td>
+      <td>3</td>
+      <td style="color: #065f46; font-weight: 700;">High Impact (6)</td>
       <td style="color: var(--hipo-color); font-weight: 700;">YES</td>
-      <td>Promotion plan, HiPo development actions</td>
+      <td>Continue growing</td>
+      <td>HiPo dev actions, IC-5 promotion plan</td>
     </tr>
     <tr>
       <td><strong>Roni Eliezer</strong></td>
-      <td>IC-4 QE - exceeds</td>
+      <td>3</td>
+      <td>3</td>
+      <td style="color: #065f46; font-weight: 700;">High Impact (6)</td>
       <td style="color: var(--hipo-color); font-weight: 700;">YES</td>
-      <td>Promotion plan, HiPo actions, QE-to-SE interest check</td>
+      <td>Continue growing</td>
+      <td>HiPo dev actions, QE-to-SE check, IC-5 plan</td>
     </tr>
     <tr>
       <td><strong>Kanitha Chim</strong></td>
-      <td>IC-3 SE - meets/trending 4</td>
+      <td>2</td>
+      <td>3</td>
+      <td style="color: #1e40af;">Successful (5)</td>
       <td>No</td>
+      <td>Continue growing</td>
       <td>IC-4 development plan</td>
     </tr>
     <tr>
       <td><strong>Eitan Raviv</strong></td>
-      <td>IC-3 SE - meets with L4 signals</td>
+      <td>3</td>
+      <td>2</td>
+      <td style="color: #1e40af;">Successful (5)</td>
       <td>No</td>
-      <td>IC-4 development plan (visibility focus)</td>
+      <td>Continue growing</td>
+      <td>IC-4 plan (visibility focus)</td>
     </tr>
     <tr>
       <td><strong>Hubert Stefanski</strong></td>
-      <td>IC-3 SE - meets/exceeds</td>
+      <td>3</td>
+      <td>2</td>
+      <td style="color: #1e40af;">Successful (5)</td>
       <td>N/A</td>
+      <td>Not well placed</td>
       <td>Knowledge transfer, transition handoff</td>
     </tr>
     <tr>
       <td><strong>Matt Goldman</strong></td>
-      <td>IC-4 SRE - building</td>
+      <td>1</td>
+      <td>2</td>
+      <td style="color: #92400e;">Evolving (3)</td>
       <td>Too early</td>
+      <td>Continue growing</td>
       <td>6-month milestone (Oct 2026)</td>
     </tr>
     <tr>
       <td><strong>Benny Zlotnik</strong></td>
-      <td>IC-4 SE - meets/exceeds</td>
+      <td>3</td>
+      <td>2</td>
+      <td style="color: #1e40af;">Successful (5)</td>
       <td>Not yet</td>
-      <td>IC-5 development plan (strategy focus)</td>
+      <td>Continue growing</td>
+      <td>IC-5 plan (strategy focus)</td>
     </tr>
     <tr>
       <td><strong>Bella Khizgiyaev</strong></td>
-      <td>IC-3 SE - meets</td>
+      <td>2</td>
+      <td>2</td>
+      <td style="color: #1e40af;">Successful (4)</td>
       <td>No</td>
+      <td>Continue growing</td>
       <td>IC-4 development plan</td>
     </tr>
     <tr>
       <td><strong>Muhamad Abo Ras</strong></td>
-      <td>IC-3 SE - developing</td>
+      <td>2</td>
+      <td>1</td>
+      <td style="color: #92400e;">Evolving (3)</td>
       <td>No</td>
-      <td>Visibility improvement plan, 90-day check</td>
+      <td>Continue growing</td>
+      <td>Visibility plan, 90-day check</td>
     </tr>
     <tr>
       <td><strong>Roderick Kieley</strong></td>
-      <td>IC-4 SE - deferred</td>
+      <td>1</td>
+      <td>2</td>
+      <td style="color: #92400e;">Evolving (3)</td>
       <td>Too early</td>
-      <td>30-day checkpoint (overdue), 6-month milestone</td>
+      <td>Continue growing</td>
+      <td>30-day checkpoint, 6-month milestone</td>
     </tr>
   </tbody>
 </table>
+
+<div class="distribution-check">
+  <h4>Distribution check (team of 10)</h4>
+  <div class="dist-row">
+    <div class="dist-item" style="background: #d1fae5;">
+      <div class="pct">20%</div>
+      <div class="label">High Impact (2)</div>
+      <div class="target">Target: 10-20%</div>
+    </div>
+    <div class="dist-item" style="background: #dbeafe;">
+      <div class="pct">50%</div>
+      <div class="label">Successful (5)</div>
+      <div class="target">Target: 60-80%</div>
+    </div>
+    <div class="dist-item" style="background: #fef3c7;">
+      <div class="pct">30%</div>
+      <div class="label">Evolving (3)</div>
+      <div class="target">Target: 5-15%</div>
+    </div>
+    <div class="dist-item" style="background: #fee2e2;">
+      <div class="pct">0%</div>
+      <div class="label">Low (0)</div>
+      <div class="target">Target: 2-5%</div>
+    </div>
+  </div>
+  <p class="note" style="margin-top: 8px;">Evolving above target because 2 of 3 are onboarding/ramping (expected). Small team variance acceptable per Workday guidance.</p>
+</div>
 
 <!-- CHECKLIST -->
 <h2 class="section-header">Tashana's Checklist</h2>
 
 <ul class="checklist">
   <li class="done">Assess against Job Descriptions / Skill Progression Matrices (not retired Engineering Competencies)</li>
+  <li class="done">Apply Workday performance ratings (What + How + Combined) for all 10 members</li>
   <li class="todo">High Potential Flag decisions - Juanje and Roni recommended (needs your approval)</li>
   <li class="todo">Underperformance documentation - Muhamad visibility gap (conversation needed)</li>
   <li class="todo">QE-to-SE transition conversation - Roni (schedule in next 1:1)</li>
   <li class="todo">Promotion requirements clarification - discuss with Juanje, Roni, Benny, Kanitha, Eitan, Bella</li>
   <li class="todo">Enter ratings and actions in Workday</li>
+  <li class="todo">Prepare for calibration (examples for each rating, review distribution)</li>
 </ul>
 
 <p class="note" style="margin-top: 24px; text-align: center;">
-  Generated July 12, 2026. Based on Q2 2026 QC reports and development feedback briefs.
+  Generated July 12, 2026. Based on Q2 2026 QC reports, development feedback briefs (Jun 29), and Talent Management for Managers (The Source).
 </p>
 
 </body>
