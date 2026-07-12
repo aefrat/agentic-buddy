@@ -35,13 +35,15 @@ These are the detailed level-by-level skill progression matrices broken down by 
 - UX Design, Manager
 - UX Research, Individual Contributor
 
-## Engineering Competencies (Distinguished Engineer level)
+## Engineering Competencies (IC-6 only)
 
-The Engineering Competencies remain the primary framework for the highest technical levels:
+**As of July 2026, Engineering Competencies have been retired** for Software Engineering, Quality Engineering, Engineering Managers, and Project Management - Technical. Assess these roles against their **Job Descriptions (Skill Progression Matrices)** above.
+
+Engineering Competencies remain active only for:
 - Distinguished Engineer (IC-6)
-- Engineering Competencies cover IC-6 through Sr. Distinguished Engineer
+- Sr. Distinguished Engineer
 
-These are a separate framework from the IC-1 through IC-5 progression matrices above.
+See [talent-cycle-july-2026.md](talent-cycle-july-2026.md) for full guidance.
 
 ## Job Architecture
 
@@ -71,5 +73,7 @@ Additional resources for managers of Global Engineering associates are available
 1. **Identify the member's job family** (Software Engineering, Quality Engineering, SRE, etc.)
 2. **Find their progression matrix** in the list above - click the link to access the Google Sheet
 3. **Cross-reference with the Job Leveling Framework** (see [job-leveling-framework.md](job-leveling-framework.md)) for the generic Scope/Complexity/Impact descriptors
-4. **Check competency proficiency expectations** (see [competency-proficiency-levels.md](competency-proficiency-levels.md)) for their IC or manager level
+4. **Review the current talent cycle guidance** (see [talent-cycle-july-2026.md](talent-cycle-july-2026.md)) for High Potential flags, QE-to-SE transitions, and underperformance documentation
 5. For IC-6 (Distinguished Engineer), use the Engineering Competencies framework instead of the standard progression matrices
+
+**Note (July 2026):** The Competency Proficiency Levels document ([competency-proficiency-levels.md](competency-proficiency-levels.md)) is retained as historical context but is no longer the formal assessment framework for SE, QE, EM, or PM-Technical roles. Use the Skill Progression Matrices as the primary assessment tool.

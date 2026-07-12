@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-06-29
-access_count: 1
+last_accessed: 2026-07-12
+access_count: 2
 created: 2026-06-29
 ---
 
@@ -22,7 +22,9 @@ Navigate by topic. Load only what you need for the task at hand.
 
 - [Engineering Manager Progression](reference/engineering-manager-progression.md) - Manager Levels 2-6 (Associate Manager through Senior Director): job descriptions, core responsibilities, job skills. **Read when:** assessing manager-track development, preparing for a manager's own career conversation, understanding management expectations.
 
-- [Talent Architecture Hub](reference/talent-architecture-hub.md) - Overview of Red Hat's Global Engineering Talent Architecture page: where to find each job family's progression matrix, Engineering Competencies (IC-6), promotion process, manager resources. **Read when:** navigating to a specific job family matrix not already extracted, or finding source links.
+- [Talent Architecture Hub](reference/talent-architecture-hub.md) - Overview of Red Hat's Global Engineering Talent Architecture page: where to find each job family's progression matrix, Engineering Competencies (IC-6 only), promotion process, manager resources. **Read when:** navigating to a specific job family matrix not already extracted, or finding source links.
+
+- [Talent Cycle Guidance - July 2026](reference/talent-cycle-july-2026.md) - Current talent cycle guidance from Tashana (July 8, 2026): Engineering Competencies retired (use Skill Progression Matrices), High Potential Flag (replaces Future Talent, top 15%), underperformance documentation requirements, QE-to-SE transition path, promotion requirements. **Read when:** running talent cycle, assessing High Potential candidates, planning QE career paths, or documenting underperformance.
 
 ## Related knowledge bases
 
