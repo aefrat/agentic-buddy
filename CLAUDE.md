@@ -60,7 +60,9 @@ Factual updates to Right now (changed dates, flipped statuses) are allowed mid-s
 - **CAT complete.** RHIVOS 2.0-Core CAT Jun 29-30 finished. RC3 CTC at 93% (3 tickets remaining). All errata at REL_PREP.
 - **CY26Q2 Quarterly Connection** — Accomplishments and Feedback & Development drafts ready in `~/Documents/`. Team member QC reports (RHAS + ATC) in `agent_brain/projects/qc-agent/active/Q2-2026/`. Juanje and Eitan drafts expanded with self-input. Development briefs for all 10 directs at `talent-architecture/active/`. May need supplementing with Jira/G-docs/1:1 data before Workday submission.
 - **Hubert Stefanski transition day 12 (started Jul 1).** Jeff Ligon takes scrum master from Manuel Sandino (no formal announcement yet). Knowledge transfer plan overdue. AutoSD CloudFront migration timeline needed since Hubert (fork maintainer) is leaving.
-- **Container vulnerability remediation past deadline (was Jul 1).** VHCL-009 closed (Eitan Raviv, Jul 12). VHCL-005/007 still open (Eitan/Matt, Ozan/Matt). Follow up on remaining 2.
+- **Container vulnerability remediation complete.** All three VHCLs closed: VHCL-009 (Eitan Raviv, Jul 12), VHCL-005 (Matt Goldman, VROOM-45569/45568/41383), VHCL-007 (already closed). Archive this item next daily cycle.
+- **Aman Vishwakarma onboarding starts Jul 18.** Intern conversion to ATC (RHIVOS Toolchain). Christine Freitas (manager) OOO until Jul 27 - user designated as primary onboarding contact. Aman needs badge and laptop.
+- **Talent Cycle July 2026 opened.** Engineering Competencies retired for SE/QE/EM/PM-Tech. New High Potential Flag (top 15%) replaces Future Talent. Skill Progression Matrices are the new framework. Action plan with What/How ratings at `talent-architecture/active/talent-cycle-2026H2/`.
 - **Roderick Kieley** — 41 days into onboarding (started Jun 1). 1:1 biweekly, active. 30-day checkpoint conversation overdue (was due Jul 1).
 - **RHAS QE deliverables draft v1.0.** Test Strategy + Release Criteria HTMLs uploaded to Drive, emailed. User review needed before sharing with broader team. OCP QE outreach not initiated.
 
