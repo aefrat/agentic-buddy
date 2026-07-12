@@ -58,7 +58,7 @@ Factual updates to Right now (changed dates, flipped statuses) are allowed mid-s
 ### Right now
 
 - **CAT complete.** RHIVOS 2.0-Core CAT Jun 29-30 finished. RC3 CTC at 93% (3 tickets remaining). All errata at REL_PREP.
-- **CY26Q2 Quarterly Connection** — Accomplishments and Feedback & Development drafts ready in `~/Documents/`. Team member QC reports (RHAS + ATC) in `agent_brain/projects/qc-agent/active/Q2-2026/`. Juanje and Eitan drafts expanded with self-input. Development briefs for all 10 directs at `talent-architecture/active/`. May need supplementing with Jira/G-docs/1:1 data before Workday submission.
+- **CY26Q2 Quarterly Connection** — Accomplishments and Feedback & Development drafts ready in `~/Documents/`. Team member QC reports (RHAS + ATC) in `agent_brain/projects/qc-agent/active/Q2-2026/`. Juanje, Eitan, Kanitha, Muhamad, and Bella drafts expanded with self-input. Development briefs for all 10 directs at `talent-architecture/active/`. May need supplementing with Jira/G-docs/1:1 data before Workday submission.
 - **Hubert Stefanski transition day 12 (started Jul 1).** Jeff Ligon takes scrum master from Manuel Sandino (no formal announcement yet). Knowledge transfer plan overdue. AutoSD CloudFront migration timeline needed since Hubert (fork maintainer) is leaving.
 - **Container vulnerability remediation complete.** All three VHCLs closed: VHCL-009 (Eitan Raviv, Jul 12), VHCL-005 (Matt Goldman, VROOM-45569/45568/41383), VHCL-007 (already closed). Archive this item next daily cycle.
 - **Aman Vishwakarma onboarding starts Jul 18.** Intern conversion to ATC (RHIVOS Toolchain). Christine Freitas (manager) OOO until Jul 27 - user designated as primary onboarding contact. Aman needs badge and laptop.
