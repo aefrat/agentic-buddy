@@ -24,4 +24,7 @@ Example:
 2026-07-02|assisted|tool-building|rhas-qe-expert-lead-agent-creation|high
 2026-07-05|assisted|evaluation|qc-self-eval-career-aspirations-draft|high
 2026-06-30|assisted|documentation|codebase-documentation-generation|high
+2026-07-12|autonomous|reporting|atc-slack-channel-scan-10ch|high
+2026-07-12|autonomous|reporting|stakeholder-slack-activity-lookup-4ppl|high
+2026-07-12|autonomous|project-tracking|vhcl-009-closure-tracking|high
 
