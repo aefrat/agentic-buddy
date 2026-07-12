@@ -396,19 +396,90 @@
     margin-top: 4px;
   }
 
+  .jump-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--text-primary);
+    margin: 0 -24px 24px -24px;
+    padding: 8px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 2px;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+
+  .jump-nav .nav-label {
+    color: #8899aa;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-right: 8px;
+  }
+
+  .jump-nav a {
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 12px;
+    transition: background 0.15s;
+  }
+
+  .jump-nav a:hover {
+    background: rgba(255,255,255,0.15);
+  }
+
+  .jump-nav a.nav-hipo { background: rgba(184,134,11,0.35); }
+  .jump-nav a.nav-alert { background: rgba(192,57,43,0.3); }
+  .jump-nav a.nav-ramp { background: rgba(52,152,219,0.3); }
+  .jump-nav a.nav-transition { background: rgba(149,165,166,0.3); }
+
+  .jump-nav .nav-sep {
+    width: 1px;
+    height: 18px;
+    background: rgba(255,255,255,0.2);
+    margin: 0 6px;
+  }
+
   @media (max-width: 768px) {
     .three-es { grid-template-columns: 1fr; }
     .hipo-grid { grid-template-columns: 1fr; }
     .ratings-row { flex-direction: column; }
+    .jump-nav { margin: 0 -24px 16px -24px; padding: 6px 12px; }
+    .jump-nav a { font-size: 0.72rem; padding: 2px 8px; }
   }
 
   @media print {
     body { padding: 12px; }
     .member-card { break-inside: avoid; page-break-inside: avoid; }
+    .jump-nav { display: none; }
   }
 </style>
 </head>
 <body>
+
+<nav class="jump-nav">
+  <span class="nav-label">Jump to:</span>
+  <a href="#juanje" class="nav-hipo">Juanje</a>
+  <a href="#roni" class="nav-hipo">Roni</a>
+  <a href="#kanitha">Kanitha</a>
+  <a href="#eitan">Eitan</a>
+  <a href="#hubert" class="nav-transition">Hubert</a>
+  <a href="#matt" class="nav-ramp">Matt</a>
+  <span class="nav-sep"></span>
+  <a href="#benny">Benny</a>
+  <a href="#bella">Bella</a>
+  <a href="#muhamad" class="nav-alert">Muhamad</a>
+  <a href="#roderick" class="nav-ramp">Roderick</a>
+  <span class="nav-sep"></span>
+  <a href="#summary">Summary</a>
+  <a href="#checklist">Checklist</a>
+</nav>
 
 <h1>Talent Cycle Action Plan - H2 2026</h1>
 <p class="subtitle">
@@ -477,7 +548,7 @@
 <!-- ATC TEAM -->
 <h2 class="team-header team-atc">ATC - Auto ToolChain</h2>
 
-<div class="member-card hipo">
+<div class="member-card hipo" id="juanje">
   <div class="member-name">Juanje Ojeda <span class="badge badge-high-impact">High Impact (6)</span> <span class="badge badge-hipo">HiPo</span></div>
   <div class="member-title">Principal Software Engineer (IC-4), targeting IC-5</div>
   <div class="ratings-row">
@@ -508,7 +579,7 @@
   <p class="promotion-timeline">Promotion timeline: Q4 2026 or Q1 2027. Rewards: merit increase + equity consideration for role criticality + future capability.</p>
 </div>
 
-<div class="member-card hipo">
+<div class="member-card hipo" id="roni">
   <div class="member-name">Roni Eliezer <span class="badge badge-high-impact">High Impact (6)</span> <span class="badge badge-hipo">HiPo</span> <span class="badge badge-qe-se">QE-to-SE</span></div>
   <div class="member-title">Principal Software Quality Engineer (IC-4), targeting IC-5</div>
   <div class="ratings-row">
@@ -539,7 +610,7 @@
   <p class="promotion-timeline">Promotion timeline: Q4 2026 or Q1 2027. Rewards: merit increase + equity for platform criticality (Test Console = RHIVOS testing infrastructure).</p>
 </div>
 
-<div class="member-card">
+<div class="member-card" id="kanitha">
   <div class="member-name">Kanitha Chim <span class="badge badge-successful">Successful (5)</span></div>
   <div class="member-title">Senior Software Engineer (IC-3), targeting IC-4</div>
   <div class="ratings-row">
@@ -570,7 +641,7 @@
   <p class="promotion-timeline">Promotion timeline: Q1-Q2 2027. HiPo: Not at this time. Reassess in 6 months. Rewards: standard merit (Successful).</p>
 </div>
 
-<div class="member-card">
+<div class="member-card" id="eitan">
   <div class="member-name">Eitan Raviv <span class="badge badge-successful">Successful (5)</span></div>
   <div class="member-title">Senior Software Engineer (IC-3), targeting IC-4</div>
   <div class="ratings-row">
@@ -601,7 +672,7 @@
   <p class="promotion-timeline">Promotion timeline: Q1 2027. HiPo: Not at this time. Rewards: standard merit; note What score alone would warrant higher - visibility is the constraint.</p>
 </div>
 
-<div class="member-card transitioning">
+<div class="member-card transitioning" id="hubert">
   <div class="member-name">Hubert Stefanski <span class="badge badge-successful">Successful (5)</span> <span class="badge badge-transition">Transitioning Out</span></div>
   <div class="member-title">Senior Software Engineer (IC-3) - transition started July 1, day 12</div>
   <div class="ratings-row">
@@ -630,7 +701,7 @@
   </div>
 </div>
 
-<div class="member-card ramping">
+<div class="member-card ramping" id="matt">
   <div class="member-name">Matt Goldman <span class="badge badge-evolving">Evolving (3)</span> <span class="badge badge-ramping">Ramping (2.5 months)</span></div>
   <div class="member-title">Principal SRE (IC-4), building toward expectations</div>
   <div class="ratings-row">
@@ -664,7 +735,7 @@
 <!-- PITCREW TEAM -->
 <h2 class="team-header team-pitcrew">PitCrew - RHAS</h2>
 
-<div class="member-card">
+<div class="member-card" id="benny">
   <div class="member-name">Benny Zlotnik <span class="badge badge-successful">Successful (5)</span></div>
   <div class="member-title">Principal Software Engineer (IC-4), targeting IC-5</div>
   <div class="ratings-row">
@@ -695,7 +766,7 @@
   <p class="promotion-timeline">Promotion timeline: Q2 2027. HiPo: Not yet - strategic gap needs closing. Rewards: standard merit + equity consideration for community role criticality.</p>
 </div>
 
-<div class="member-card">
+<div class="member-card" id="bella">
   <div class="member-name">Bella Khizgiyaev <span class="badge badge-successful">Successful (4)</span></div>
   <div class="member-title">Senior Software Engineer (IC-3), targeting IC-4</div>
   <div class="ratings-row">
@@ -726,7 +797,7 @@
   <p class="promotion-timeline">Promotion timeline: Q2 2027. HiPo: No. Rewards: standard merit (Successful).</p>
 </div>
 
-<div class="member-card alert">
+<div class="member-card alert" id="muhamad">
   <div class="member-name">Muhamad Abo Ras <span class="badge badge-evolving">Evolving (3)</span> <span class="badge badge-developing">Visibility Gap</span></div>
   <div class="member-title">Senior Software Engineer (IC-3), visibility concern</div>
   <div class="ratings-row">
@@ -760,7 +831,7 @@
   <p class="promotion-timeline">HiPo: No. Rewards: standard merit (lower end of Successful range due to How score). 90-day reassessment.</p>
 </div>
 
-<div class="member-card ramping">
+<div class="member-card ramping" id="roderick">
   <div class="member-name">Roderick Kieley <span class="badge badge-evolving">Evolving (3)</span> <span class="badge badge-ramping">Onboarding (41 days)</span></div>
   <div class="member-title">Principal Software Engineer (IC-4), building domain depth</div>
   <div class="ratings-row">
@@ -795,7 +866,7 @@
 </div>
 
 <!-- SUMMARY TABLE -->
-<h2 class="section-header">Summary: Workday Ratings and Actions</h2>
+<h2 class="section-header" id="summary">Summary: Workday Ratings and Actions</h2>
 
 <table class="summary-table">
   <thead>
@@ -931,7 +1002,7 @@
 </div>
 
 <!-- CHECKLIST -->
-<h2 class="section-header">Tashana's Checklist</h2>
+<h2 class="section-header" id="checklist">Tashana's Checklist</h2>
 
 <ul class="checklist">
   <li class="done">Assess against Job Descriptions / Skill Progression Matrices (not retired Engineering Competencies)</li>
