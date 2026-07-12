@@ -191,9 +191,9 @@ Per Tashana's guidance, use this talent cycle to check QE interest in developing
 #### Kanitha Chim - Senior SE (IC-3), targeting IC-4
 
 **Workday ratings:**
-- What: 2 (Meets expectations) - Distribution specialist, broadest reach (25 channels, 4 Jira projects). Serves as the ATC team's Technical/Team Product Owner (TPO) - connecting RHIVOS program priorities from the Area PO (Petr Sabata/contyk) to the team. QMS audit SME contribution (see cross-team notes below). Multiple Level 4 signals, but formal design ownership not yet demonstrated.
-- How: 3 (Surpasses expectations) - De facto cross-team coordinator, proactive stakeholder communication, surfaced stale product listing issues independently. TPO coordination work bridges program and team priorities - Avi defers prioritization decisions to Kanitha and Petr ("I defer the decision to kchim and contyk - the POs"). QMS cross-team SME work further strengthens this score.
-- Combined: **Successful Performer (5)**
+- What: 3 (Surpasses expectations) - Distribution specialist, broadest reach (25 channels, 4 Jira projects). Serves as the ATC team's Technical/Team Product Owner (TPO) - connecting RHIVOS program priorities from the Area PO (Petr Sabata/contyk) to the team, setting 6-month priorities, leading focus area brainstorms, and representing ATC on program calls. QMS audit SME (ISO 26262 Part 8) outside core role. 18 tickets across 4 Jira projects including 5 Major-priority. TPO + QMS combined demonstrate work well beyond IC-3 SE expectations.
+- How: 3 (Surpasses expectations) - De facto cross-team coordinator, proactive stakeholder communication, surfaced stale product listing issues independently. TPO coordination work bridges program and team priorities - Avi defers prioritization decisions to Kanitha and Petr ("I defer the decision to kchim and contyk - the POs"). QMS cross-team SME work further strengthens this score. Reward Zone recognition from ET team (Lu Zhang).
+- Combined: **High Impact Performer (6)**
 
 **Additional responsibility: ATC Technical Product Owner (TPO)**
 Kanitha serves as the ATC team's TPO alongside Petr Sabata (contyk) as Area PO from PDR (Product Feature and Release). Key responsibilities:
@@ -224,22 +224,41 @@ Kanitha served as Subject Matter Expert for the RHIVOS QMS ISO 26262 Part 8 cert
 
 This work is beyond her core distribution role and demonstrates IC-4 signals: cross-org coordination on a critical program initiative, technical ownership of audit-facing materials, and proactive commitment (skipping team meetings to prioritize QMS preparation).
 
-**High Potential:** Not at this time. Strong trajectory but needs to demonstrate sustained cross-component design leadership. QMS work is a positive signal for engagement and cross-team capability.
+**High Potential assessment (4 descriptors):**
+- Aspiration: YES - career goal is senior technical leadership; actively seeking to shape architecture and influence team direction; wants to progress from "execution partner" to "shaping partner" with the PO
+- Capability: YES - TPO role demonstrates strategic thinking and cross-team coordination as primary function; QMS audit ownership shows capacity for cross-org responsibility; problem-solving across 4 Jira projects
+- Engagement: YES - voluntarily took on QMS audit SME outside core role (skipped team meetings to prepare); TPO is extra leadership responsibility beyond SE job description; Reward Zone recognition from ET team validates going above and beyond
+- Agility: YES - organically grew into TPO role; adapted to QMS audit domain with no prior certification experience; AI spike exploration (VROOM-40319); navigates ambiguity across distribution, gating, and program coordination
+- **HiPo designation: YES**
+
+**Development actions (required with HiPo flag):**
+
+Per Talent Actions Guide: must provide increased scope/complexity/impact within 12 months, refine 1-2 high-value skills, and select minimum 2 high-touch activities.
+
+- Exposure to higher-level roles: Have Kanitha present the RHIVOS release distribution architecture to other product teams. Position her TPO work as a model for how IC engineers can bridge program and team priorities
+- Wider scope of influence: Formalize her distribution expertise into reusable process documentation that serves teams beyond ATC
+- More complex responsibilities: Own the end-to-end CDN/Errata design for 2.0.z as a formal design initiative (requirements to design doc to implementation)
+
+**High-touch activities (minimum 2 required):**
+1. Cross-functional project leadership - Lead 2.0.z release pipeline design as a cross-team initiative spanning ATC, ET, and program stakeholders. Tests leadership in ambiguity, demonstrates business impact
+2. External/internal mentorship - Formalize distribution mentoring with incoming team member. Knowledge transfer, diverse perspectives, career guidance
+
+**Communication:** Inform Kanitha she is identified as High Potential. Discuss the development plan and the commitment it represents. Connect HiPo activities to her stated career aspiration of senior technical leadership.
 
 **Movement readiness:** Continue growing in current role
-- Promotion readiness (IC-3 to IC-4): at the boundary but not ready for nomination this cycle
-- Gaps: needs to lead a technical design initiative (not just coordinate), formalize mentoring, produce durable knowledge artifacts
-- Strengths trending IC-4: cross-component scope, cross-team coordination, stakeholder communication, QMS cross-org engagement
+- Promotion readiness (IC-3 to IC-4): strong trajectory, approaching readiness. TPO and QMS evidence narrow the gap to primarily technical design artifacts
+- Gaps: needs to lead a formal technical design initiative (design doc, architectural decisions), formalize mentoring, produce durable knowledge artifacts
+- Strengths already at IC-4: cross-component scope, cross-team coordination as primary function (TPO), stakeholder management, QMS cross-org engagement, program-level representation
 
 **Talent actions (next 6 months):**
-- Rewards: Standard merit (Successful Performer)
+- Rewards: Greater rewards warranted (High Impact). Consider equity for role criticality (TPO + distribution = two critical functions) and future capability (HiPo). May progress through salary range at accelerated rate per HiPo guidance
 - Development (3 Es):
-  - Experience: Own CDN/Errata design for 2.0.z release - lead from requirements to design doc to implementation. Continue QMS SME role through certification completion
-  - Exposure: Follow through on AI advisory workflow spike to concrete proposal. Mentor one person on release engineering. Leverage QMS cross-team network for broader org visibility
+  - Experience: Own CDN/Errata design for 2.0.z release - lead from requirements to design doc to implementation. Continue QMS SME role through certification completion. Lead 2.0.z release pipeline as cross-team design initiative
+  - Exposure: Formalize distribution mentoring with new team member. Present release distribution architecture to other product teams. Leverage QMS and TPO cross-team networks for broader org visibility
   - Education: N/A
-- Growth: Write one internal design document on RHIVOS distribution pipeline. Position for IC-4 nomination next cycle. Document QMS Configuration Management approach as reusable process reference
+- Growth: Write one internal design document on RHIVOS distribution pipeline (Level 4 Knowledge Sharing differentiator). Document QMS Configuration Management approach as reusable process reference. Position for IC-4 nomination next cycle
 
-**Promotion timeline:** Q1-Q2 2027
+**Promotion timeline:** Q1 2027
 
 ---
 
@@ -427,7 +446,7 @@ Note: Evolving rating reflects onboarding phase, not underperformance. Internal 
 |--------|------|-----|----------|------|--------------------|-------------|
 | Juanje Ojeda | 3 | 3 | High Impact (6) | YES | Continue growing | HiPo dev actions, IC-5 promotion plan |
 | Roni Eliezer | 3 | 3 | High Impact (6) | YES | Continue growing | HiPo dev actions, QE-to-SE check, IC-5 plan |
-| Kanitha Chim | 2 | 3 | Successful (5) | No | Continue growing | IC-4 dev plan, QMS audit SME |
+| Kanitha Chim | 3 | 3 | High Impact (6) | YES | Continue growing | HiPo dev actions, IC-4 promotion plan, TPO + QMS |
 | Eitan Raviv | 3 | 2 | Successful (5) | No | Continue growing | IC-4 plan (visibility focus) |
 | Hubert Stefanski | 3 | 2 | Successful (5) | N/A | Not well placed | Knowledge transfer, transition handoff |
 | Matt Goldman | 1 | 2 | Evolving (3) | Too early | Continue growing | 6-month milestone (Oct 2026) |
@@ -437,15 +456,15 @@ Note: Evolving rating reflects onboarding phase, not underperformance. Internal 
 | Roderick Kieley | 1 | 2 | Evolving (3) | Too early | Continue growing | 30-day checkpoint, 6-month milestone |
 
 ### Distribution check (team of 10)
-- High Impact (6): 2 (20%) - within 10-20% guidance
-- Successful (4-5): 5 (50%) - slightly below 60-80% guidance (small team variance acceptable)
+- High Impact (6): 3 (30%) - above 10-20% guidance (small team variance; all three have strong evidence)
+- Successful (4-5): 4 (40%) - below 60-80% guidance (small team variance; 3 High Impact + 3 Evolving compress the middle)
 - Evolving (2-3): 3 (30%) - above 5-15% guidance, but 2 of 3 are onboarding/ramping (expected)
 - Low (0-1): 0 - within 2-5% guidance
 
 ## Tashana's checklist completion
 
 - [x] Assess against Job Descriptions / Skill Progression Matrices (not retired Engineering Competencies)
-- [ ] High Potential Flag decisions - Juanje and Roni recommended (needs your approval)
+- [ ] High Potential Flag decisions - Juanje, Roni, and Kanitha recommended (needs your approval)
 - [ ] Underperformance documentation - Muhamad visibility gap (conversation needed, not formal PIP)
 - [ ] QE-to-SE transition conversation - Roni (schedule in next 1:1)
 - [ ] Promotion requirements clarification - discuss with Juanje, Roni, Benny, Kanitha, Eitan, Bella
