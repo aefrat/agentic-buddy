@@ -53,33 +53,38 @@ For each team member:
 
 ### Bella Khizgiyaev - Senior Software Engineer, PitCrew
 
+*Updated 2026-07-12 with self-assessment input. Bella's stated growth area: increasing visibility ("speaking up more in team meetings, planning sessions, community meetings, presenting more during sprint demos"). Self-identified strengths: ownership, collaboration, supporting the team. Career aspiration: grow into senior technical leadership role (long-term 3-5 years).*
+
 **Dimension assessment (Professional Track):**
 
-- Scope [Level 3]: Works independently with minimal instruction. Delivers on enhanced processes (CTC reporting, OIDC hardening). Provides guidance within PitCrew. Occasional cross-subsystem reach (OIDC to jumpstarter) nudges toward Level 4.
-- Complexity [Level 3]: Good judgment on moderately complex issues (CTC pipeline failures, certificate handling). Recognized as experienced within PitCrew. Relationships mostly within discipline. Not yet at "recognized expert leading cooperative efforts among teams" (Level 4).
-- Impact [Level 3, trending 4]: CTC reporting directly impacts release certification - this touches program objectives (Level 4 territory). But scope of operational direction is still primarily within PitCrew.
+- Scope [Level 3, trending 4]: Works independently with minimal instruction. Delivers on enhanced processes (CTC reporting, OIDC hardening, Konflux onboarding). Provides guidance within PitCrew. Cross-subsystem reach is becoming a pattern, not occasional: OIDC certificates extended to jumpstarter, Konflux onboarding requires coordination with Release Engineering, demo environment required cross-team hardware negotiation. Helped with Jumpstarter 0.9.0 release (release notes, reviews). Nudging toward Level 4 scope.
+- Complexity [Level 3, trending 4]: Good judgment on moderately complex issues (CTC pipeline failures, certificate handling, Konflux productization pipeline adaptation). Recognized as experienced within PitCrew. Konflux onboarding required learning a new system end-to-end and adapting build pipelines - creative problem-solving on non-routine issues. Relationships extending beyond discipline through hardware negotiations, Konflux/RelEng coordination. Approaching Level 4.
+- Impact [Level 3-4]: CTC reporting directly impacts release certification - program objectives (Level 4). Konflux onboarding is foundational to RHAS GA - this is business-facing impact. Demo environment enabled customer-facing engagements (Ford, Summit, CES). Operational direction expanding beyond PitCrew scope.
 
-**Current level fit:** Solid. Meeting Level 3 expectations across all responsibility areas. Independently designs and develops solutions (CTC reporting, OIDC patterns), owns quality of her code, provides guidance to teammates, and contributes to upstream communities.
+**Current level fit:** Strong. Meeting Level 3 expectations and showing clear Level 4 signals. Independently designs and develops solutions (CTC reporting, OIDC patterns, Konflux pipeline adaptation), owns quality of her code, provides guidance to teammates, contributes to upstream communities, and increasingly takes on cross-component and customer-facing initiatives.
 
 **Already demonstrating at IC Level 4:**
-- *Technical Impact (cross-component):* Extended OIDC certificate pattern from builder to jumpstarter - this crosses subsystem boundaries, a Level 4 trait
-- *Quality (multi-component):* CTC reporting work touches pipeline integration, JUnit generation, and report aggregation across multiple components
-- *Collaboration (cross-functional):* Opened Ford demo coordination thread bridging PitCrew with external stakeholders
+- *Technical Impact (cross-component):* Extended OIDC certificate pattern from builder to jumpstarter - crosses subsystem boundaries. Konflux onboarding spans upstream project, GitOps resources, and Red Hat Release Engineering - multiple components and teams
+- *Quality (multi-component):* CTC reporting work touches 9 items spanning pipeline integration, JUnit generation, artifact handling, lease handling, and report aggregation
+- *Collaboration (cross-functional):* Opened Ford demo coordination thread bridging PitCrew with external stakeholders. Negotiated hardware loans from kernel-hw team. Koordinated Konflux pipeline with Release Engineering
+- *End-to-end ownership:* Demo environment from hardware procurement through configuration to demo readiness. Konflux onboarding from staging experimentation through GitOps setup to pipeline adaptation
+- *Release support:* Helped ship Jumpstarter 0.9.0 - release notes, change reviews, general support
 
 **Growth areas for IC Level 4:**
-- *Technical strategy across teams:* Most work stays within PitCrew scope. Level 4 expects "leading design of features that cross multiple subsystems or components" as a pattern, not just occasional reach
+- *Visibility (self-identified):* Bella recognizes this as a growth area and is actively working on it - speaking up more in team meetings, planning sessions, and community meetings, presenting more during sprint demos. Continue this trajectory
 - *Mentoring:* Level 4 expects "across teams, coaches and mentors senior engineers." Currently collaborates well within PitCrew but no evidence of coaching others outside the team
-- *Business impact visibility:* Level 4 expects "owns and delivers technical initiatives with visible business impact." CTC work has impact but she hasn't articulated or positioned it as a business-facing initiative
+- *Business impact articulation:* Level 4 expects "owns and delivers technical initiatives with visible business impact." Konflux and CTC work have significant business impact (RHAS GA, release certification) but she hasn't explicitly positioned them as business-facing initiatives
 - *AI tools:* Level 4 expects "evaluates and introduces new AI-driven methodologies." No AI tooling evidence in Q2
-- *Knowledge sharing:* Level 4 expects "blog posts, design documents, presents at conferences." No writing or presentation evidence this quarter
-- *SDLC leadership:* Level 4 expects "leads the definition and implementation of the SDLC for complex multi-component systems." No evidence of defining or refining team processes
+- *Knowledge sharing:* Level 4 expects "blog posts, design documents, presents at conferences." Sprint demo presentations are a good start - expand to written artifacts
+- *SDLC leadership:* Level 4 expects "leads the definition and implementation of the SDLC for complex multi-component systems." The Konflux productization pipeline work is adjacent to this - formalize it
 
 **Recommended development path:**
-1. **Expand technical scope** - take on a feature that explicitly requires coordination across PitCrew and another team (ATC, QE, or upstream jumpstarter). The OIDC pattern shows she can do this - do it as a primary responsibility, not a side effect
-2. **Start mentoring** - pick one junior/mid-level engineer (Muhamad could be a natural fit on the same team) and establish a regular technical mentorship
-3. **Write one internal article or present at a team meeting** on a topic she owns (CTC reporting patterns, OIDC certificate architecture)
-4. **Explore AI tooling** - try using AI agents or code-generation tools for testing or debugging work and share findings with the team
-5. **Own a process improvement** - propose a specific SDLC improvement for PitCrew's CTC workflow and drive its adoption
+1. **Continue increasing visibility** (self-identified priority) - the sprint demo presentations and team meeting participation are the right approach. Next step: present a technical topic to a broader audience (community meeting, cross-team forum) - the Konflux onboarding experience or CTC pipeline architecture would be strong topics
+2. **Position Konflux and CTC as business-facing initiatives** - the impact is there but not articulated. Frame Konflux onboarding as "enabling RHAS GA through productization infrastructure" when presenting to leadership
+3. **Start mentoring** - pick one junior/mid-level engineer (Muhamad could be a natural fit on the same team) and establish a regular technical mentorship. Share Konflux knowledge with teammates as the pipeline matures
+4. **Write one internal article or design document** on a topic she owns (Konflux onboarding journey, CTC reporting architecture). This makes her expertise durable and visible
+5. **Explore AI tooling** - try using AI agents or code-generation tools for testing or debugging work and share findings with the team
+6. **Formalize the Konflux pipeline work as SDLC leadership** - document the build pipeline standards and productization requirements as a process that others can follow
 
 ---
 
@@ -187,34 +192,39 @@ For each team member:
 
 ### Muhamad Abo Ras - Senior Software Engineer, PitCrew
 
+*Updated 2026-07-12 with self-assessment input. Muhamad's self-identified strengths: execution consistency (10/12 PRs merged), end-to-end ownership (filing issues to closing the loop), cross-team collaboration (reviewing jumpstarter core alongside operator work).*
+
 **Dimension assessment (Professional Track):**
 
-- Scope [Level 3]: Works independently on testing infrastructure. Delivers on enhanced processes (e2e rebuild, PR-triggered test tiers). Scope stays within builder testing domain. No evidence of coordinating others or mentoring. Needs to expand reach beyond own area.
-- Complexity [Level 3]: Good judgment on moderately complex issues (OIDC e2e, Kind-to-CRC migration). Productive relationships within own team. 38 Slack messages across 7 channels is the lowest visibility - relationships largely "within own team" (Level 2-3 boundary on this sub-dimension).
-- Impact [Level 3]: Contributes to team goals through completion of testing tasks. Decisions impact team's testing quality. Not yet at "operational direction" or "customer/program objectives" (Level 4).
+- Scope [Level 3, with Level 4 signals]: Works independently on testing infrastructure. Delivers on enhanced processes (production-grade e2e architecture, smoke lane, composite GH Actions). Self-input reveals broader scope than initially captured: active code reviewer across two repos (automotive-dev-operator + jumpstarter core), cross-team review contribution. ArgoCD/GitOps work expands beyond testing domain. The e2e testing architecture is effectively a platform initiative (lane architecture, log collection, CI observability) - approaching "proposes new methods" (Level 4).
+- Complexity [Level 3]: Good judgment on moderately complex issues (OIDC e2e, Kind-to-CRC migration, multi-lane test architecture design). Productive relationships within own team + jumpstarter core reviewers. 38 Slack messages across 7 channels remains the lowest visibility, though GitHub-based cross-team activity (jumpstarter core reviews) is more significant than Slack alone suggests. Approaching "recognized as experienced" but needs broader relationship network.
+- Impact [Level 3, trending 4]: Contributes to team goals through completion of testing tasks. Self-input reveals greater impact than initially assessed: production-grade e2e suite reduced contributor friction (shortening PR feedback loops), eliminated test coverage blind spots in auth and bootc paths, made CI failures significantly easier to diagnose. The smoke lane as default PR gate directly impacts developer productivity across the project. High execution quality (10/12 PRs merged) demonstrates consistent delivery impact.
 
-**Current level fit:** Meeting expectations. Solid engineering work on testing infrastructure. Independently designs and implements testing solutions.
+**Current level fit:** Meeting expectations and showing emerging Level 4 signals. Solid engineering work on testing infrastructure with strong execution consistency. Self-input reveals a more complete picture: end-to-end ownership pattern, cross-team review activity, and CI/CD engineering skills (composite GH Actions, log collection, observability) that go beyond testing into platform engineering.
 
 **Already demonstrating at IC Level 4:**
-- *Quality ownership:* E2E testing infrastructure rebuild, PR-triggered test tiers, OIDC e2e tests - demonstrates quality system thinking beyond individual features
-- *Technical design:* Restructuring e2e/lanes workflow to eliminate duplication shows design judgment
+- *Quality ownership:* Production-grade e2e testing infrastructure - multi-lane architecture, smoke PR gate, centralized log collection, OIDC e2e tests - demonstrates quality system thinking well beyond individual features
+- *Technical design:* Lane architecture (operator, bootc, auth), composite GitHub Actions (setup, collect-logs, cleanup), centralized observability - this is platform design, not just test writing
+- *Cross-team contribution:* Active reviewer on jumpstarter core PRs alongside operator work. End-to-end ownership from filing issues (#322) to writing fixes (#323) to closing the loop
+- *CI/CD engineering:* Extracted reusable CI patterns, built downloadable diagnostic artifacts, implemented PR-triggered test tiers - Level 4 "proposes new methods based on business context"
 
 **Growth areas for IC Level 4:**
-- *Cross-component scope:* Level 4 expects "features that cross multiple subsystems or components." Most work is within the builder testing domain. Needs broader technical reach
-- *Visibility and communication:* 38 Slack messages across 7 channels is the lowest on either team. Level 4 expects "effectively communicates with leadership and stakeholders." Need significantly more visibility
+- *Visibility and communication:* 38 Slack messages across 7 channels remains the lowest on either team. Level 4 expects "effectively communicates with leadership and stakeholders." The technical work is strong - but if people don't know about it, it can't influence decisions or inspire adoption. Need significantly more visibility
+- *Cross-component scope beyond reviews:* Jumpstarter core code reviews are a good signal but Level 4 expects "leading design of features that cross multiple subsystems or components" as a primary contribution, not just review participation
 - *Mentoring:* Level 4 expects "across teams, coaches and mentors senior engineers." No mentoring evidence. Room to grow in "initiating broader design discussions" (noted in QC)
 - *Community engagement:* Level 4 expects "key representative and leader within the community." Very limited Slack presence outside immediate team
 - *AI tools:* Level 4 expects "evaluates and introduces new AI-driven methodologies." No AI tooling evidence
-- *Knowledge sharing:* No blog posts, design documents, or presentations
-- *Business impact:* Level 4 expects "technical initiatives with visible business impact." Testing work is important but not positioned as business-facing
+- *Knowledge sharing:* No blog posts, design documents, or presentations. The e2e testing architecture is exactly the kind of work that deserves a design doc
+- *Business impact articulation:* The testing work has real business impact (contributor productivity, CI reliability, coverage gaps eliminated) but hasn't been articulated or positioned as business-facing
 
 **Recommended development path:**
-1. **Increase visibility** - this is the highest-priority growth area. Post more proactively in team channels: share design decisions, debugging findings, status updates. Move from 7 to 15+ channels
-2. **Expand scope beyond builder testing** - look for testing needs across PitCrew. The ArgoCD/C2 disaster recovery work is a good start - position it as a cross-cutting initiative
-3. **Document testing architecture** - write a design document for the e2e testing framework. This serves triple duty: knowledge sharing, design thinking, and a promotable artifact
-4. **Start mentoring** - help onboard someone on PitCrew's testing infrastructure or share testing patterns with ATC
-5. **Engage in broader channels** - join #forum-jumpstarter, #forum-qe-automotive, and contribute to discussions. Level 4 expects community engagement
-6. **Explore AI tools** for test generation, test result analysis, or CI optimization
+1. **Increase visibility** - this remains the highest-priority growth area. The self-input reveals impressive technical work that deserves more visibility. Post more proactively in team channels: share design decisions, debugging findings, testing architecture improvements. Present the e2e lane architecture at a sprint demo or team meeting
+2. **Document the e2e testing architecture** - write a design document for the production-grade e2e framework (lane architecture, smoke gate, composite actions, log collection). This is the single highest-leverage action: it makes the work visible, shareable, and promotable. It also enables mentoring (others can learn from the document)
+3. **Position testing work as business impact** - frame the e2e infrastructure as "reduced contributor friction by X%, eliminated auth/bootc blind spots, cut CI debugging time" when presenting to leadership. The self-input has the right language - use it
+4. **Expand scope beyond builder testing** - the ArgoCD/GitOps work is a good start. Look for testing needs across PitCrew that require coordination with other teams. Position the composite GitHub Actions as reusable across repos
+5. **Start mentoring** - the testing architecture documentation (point 2) is a natural mentoring vehicle. Help onboard someone on PitCrew's testing infrastructure or share testing patterns with ATC
+6. **Engage in broader channels** - join #forum-jumpstarter, #forum-qe-automotive, and contribute to discussions. Level 4 expects community engagement
+7. **Explore AI tools** for test generation, test result analysis, or CI optimization
 
 ---
 
@@ -438,11 +448,11 @@ Conclusion: Not yet ready for promotion. Juanje is on a clear trajectory from Le
 
 ### Where the team sits on Scope / Complexity / Impact
 
-- Bella [Level 3] - Scope: 3 / Complexity: 3 / Impact: 3, trending 4. Strongest: Impact (CTC affects release certification). Biggest gap: Scope - needs cross-team coordination as primary responsibility.
+- Bella [Level 3, trending 4] - Scope: 3, trending 4 / Complexity: 3, trending 4 / Impact: 3-4. Strongest: Impact (CTC + Konflux affect release certification and RHAS GA). Already showing Level 4 signals across all dimensions. Biggest gap: Visibility (self-identified), knowledge sharing.
 - Eitan [Level 3, with L4 signals] - Scope: 3, with L4 signals (runner consolidation, AI tooling) / Complexity: 3, trending 4 / Impact: 3, with L4 data points (budget savings). Strongest: Business impact (runner consolidation), AI methodology (claude-code skills). Biggest gap: Knowledge sharing, community leadership.
 - Hubert [Level 3] - Scope: 3, trending 4 / Complexity: 3-4 boundary / Impact: 3, trending 4. Strongest: Complexity (gating expertise + cross-team relationships). Biggest gap: Impact - needs to own a strategic initiative with functional-level accountability.
 - Kanitha [Level 3] - Scope: 3-4 boundary / Complexity: 3, trending 4 / Impact: 3-4 boundary. Strongest: Scope (25 channels, 4 Jira projects, broadest reach). Biggest gap: Complexity - needs formal recognition as expert and team lead role.
-- Muhamad [Level 3] - Scope: 3 / Complexity: 3 / Impact: 3. Strongest: Scope (independent, well-structured testing work). Biggest gap: Complexity - low visibility, needs broader relationships.
+- Muhamad [Level 3, with L4 signals] - Scope: 3, with L4 signals / Complexity: 3 / Impact: 3, trending 4. Strongest: Scope (production-grade e2e platform architecture, cross-repo reviews, high execution consistency 10/12 PRs). Biggest gap: Visibility (38 Slack messages, lowest on team) and knowledge sharing.
 - Juanje [Level 4] - Scope: 4-5 / Complexity: 4-5 / Impact: 4, trending 5. Strongest: Scope (cross-functional vision + innovation, approaching Level 5). Biggest gap: Impact - needs to consistently serve as organizational-level SME and project lead.
 - Benny [Level 4] - Scope: 4 / Complexity: 4, trending 5 / Impact: 4. Strongest: Complexity (connective hub, community expert). Biggest gap: Impact - tactical breadth, needs strategic direction-setting.
 - Roderick [Level 4] - Scope: Too early / Complexity: Too early / Impact: Too early. Strongest: N/A (onboarding). Biggest gap: Domain depth - establish Level 4 baseline first.
@@ -457,5 +467,5 @@ Conclusion: Not yet ready for promotion. Juanje is on a clear trajectory from Le
 - External presentations - Who: Juanje, Benny, Roni. Dimension: Complexity (industry recognition). Action: Submit conference talks; internal demos are a stepping stone.
 - Business impact articulation - Who: All. Dimension: Impact (strategy contribution). Action: Frame technical work in terms of business value when presenting to leadership.
 - Strategic thinking (roadmaps) - Who: Benny, Kanitha, Roni. Dimension: Impact (medium-to-long-term direction). Action: Write one forward-looking strategy/architecture document per half.
-- Visibility and communication - Who: Muhamad. Dimension: Complexity (broader relationships). Action: Increase Slack engagement, share work proactively, join 8+ more channels.
+- Visibility and communication - Who: Muhamad, Bella. Dimension: Complexity (broader relationships). Action: Increase Slack engagement, present at sprint demos and team meetings, share work proactively. (Both self-identified this as a growth area.)
 - Cross-team coordination - Who: Bella, Eitan, Muhamad. Dimension: Scope (functional-level reach). Action: Lead at least one initiative requiring coordination with another team.
