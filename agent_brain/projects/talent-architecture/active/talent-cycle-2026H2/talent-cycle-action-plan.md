@@ -9,7 +9,7 @@ created: 2026-07-12
 **Cycle:** July 2026 Talent Cycle
 **Guidance source:** Tashana's email "Upcoming Talent Cycle Guidance" (July 8, 2026); Talent Management for People Managers (The Source, 6 tabs)
 **Data sources:** Q2 2026 QC reports, development feedback briefs (June 29, 2026), Skill Progression Matrices
-**Reference:** [Talent Management for Managers](../../reference/talent-management-for-managers.md) - full Workday process, rating scales, HiPo descriptors, calibration
+**Reference:** [Talent Management for Managers](../../reference/talent-management-for-managers.md) - full Workday process, rating scales, HiPo descriptors, calibration | [Talent Actions Guide](https://docs.google.com/presentation/d/1aZLXZbT5cmmbk_UWRmF6KfLC5BG3ZyBszs1xCGgd8Bc/) - rewards guidance, development actions by tier, HiPo high-touch requirements, movement eligibility matrix
 
 ## Framework changes applied
 
@@ -64,9 +64,16 @@ The flag is for **long-term potential**, not current high performance. Reserved 
 **Why:** Juanje demonstrates the clearest trajectory to the next level (IC-5) with multiple Level 5 behaviors already in evidence: AI innovation leadership that others adopt organically (Agent Forge), cross-team enablement through tooling, published articles, and strategic technical thinking. His long-term potential extends to Distinguished Engineer territory - he builds reusable methodology, not just solutions.
 
 **Development actions (required with HiPo flag):**
+
+Per Talent Actions Guide: must provide increased scope/complexity/impact within 12 months, refine 1-2 high-value skills, and select minimum 2 high-touch activities.
+
 - Exposure to higher-level roles: Have Juanje present the agent practice as engineering methodology to P&GE leadership (beyond Automotive). This positions him for organizational-level influence
 - Wider scope of influence: Establish a cross-org consulting relationship with 1-2 teams outside Automotive exploring AI agents
 - More complex responsibilities: Assign Juanje as technical lead for a cross-BU initiative (e.g., agent-driven pipeline diagnosis as a reference architecture for RHEL or Ansible)
+
+**High-touch activities (minimum 2 required):**
+1. External/internal speaking engagement - Submit conference proposal (DevConf.cz / Summit) on agent methodology. Elevates personal brand, refines executive polish
+2. Cross-functional project leadership - Lead cross-BU agent-driven pipeline diagnosis initiative. Tests leadership in ambiguity, demonstrates business impact
 
 **Communication:** Inform Juanje he is identified as High Potential. Discuss the development plan and the commitment it represents.
 
@@ -75,9 +82,16 @@ The flag is for **long-term potential**, not current high performance. Reserved 
 **Why:** Roni owns the Test Console platform end-to-end - a platform that IS the testing infrastructure strategy for RHIVOS. Highest individual output (32 tickets, 43 MRs), cross-team multiplier effect confirmed by BOA team feedback (Advanced-level Multiplier). His trajectory toward IC-5 is clear, with AI innovation in QE (3 Gemini model transitions) that few QEs in the org can match. Long-term potential to define how QE works across the organization, not just within Automotive.
 
 **Development actions (required with HiPo flag):**
+
+Per Talent Actions Guide: must provide increased scope/complexity/impact within 12 months, refine 1-2 high-value skills, and select minimum 2 high-touch activities.
+
 - Exposure to higher-level roles: Have Roni present Test Console as an enterprise QE reference architecture to other product QE teams
 - Wider scope of influence: Engage with QE leaders across P&GE to share AI-powered test analysis patterns
 - More complex responsibilities: Assign ownership of a 12-month QE strategy document for RHIVOS (roadmap, AI maturity, coverage targets)
+
+**High-touch activities (minimum 2 required):**
+1. External/internal speaking engagement - Present AI-in-QE at a testing conference or DevConf. Elevates personal brand, expands professional network
+2. Senior leader networking and exposure - Engage product management and QE leaders across P&GE on quality metrics and AI-powered test analysis. Builds reputation and realistic view of senior-level expectations
 
 **Communication:** Inform Roni he is identified as High Potential. Discuss the development plan. Also discuss the QE-to-SE transition opportunity (see below).
 
