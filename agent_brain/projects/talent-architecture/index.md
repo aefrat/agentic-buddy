@@ -26,10 +26,18 @@ Navigate by topic. Load only what you need for the task at hand.
 
 - [Talent Cycle Guidance - July 2026](reference/talent-cycle-july-2026.md) - Current talent cycle guidance from Tashana (July 8, 2026): Engineering Competencies retired (use Skill Progression Matrices), High Potential Flag (replaces Future Talent, top 15%), underperformance documentation requirements, QE-to-SE transition path, promotion requirements. **Read when:** running talent cycle, assessing High Potential candidates, planning QE career paths, or documenting underperformance.
 
+- [Talent Management for People Managers](reference/talent-management-for-managers.md) - Complete Workday talent assessment process: performance rating scale (What + How, 0-3 each, combined 0-6), HiPo 4 descriptors (Aspiration/Capability/Engagement/Agility), movement readiness definitions (5 levels), promotion decision tree + justification, talent actions (Rewards/Development/Growth), calibration process, visibility rules (what associates can/cannot see), distribution guidance. **Read when:** filling in Workday talent assessment, preparing for calibration, understanding rating definitions, or checking what's visible to associates.
+
 ## Related knowledge bases
 
 - [QC Agent IC Progression Sources](../qc-agent/reference/ic-progression-sources.md) - Extracted IC progression matrices for Software Engineer, SRE, and Quality Engineer with key level differentiators. The primary reference for IC-specific assessment.
 - [QC Agent Multiplier Competencies](../qc-agent/reference/multiplier-competencies.md) - Red Hat Multiplier behaviors with proficiency levels and evidence signals. Used in QC Section B.
+
+## Retention tracking
+
+`active/retention/` - Active retention risk cases with signal history, root causes, and action items.
+
+- [Kanitha Chim](active/retention/kanitha-chim.md) - Exploring internal mobility (Jul 2026). TPO role dissatisfaction, career uncertainty.
 
 ## Episodic store
 
