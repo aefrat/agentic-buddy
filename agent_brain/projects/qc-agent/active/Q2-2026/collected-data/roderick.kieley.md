@@ -51,3 +51,24 @@ No tickets resolved during the collection period. This is expected for the first
 - 21 days into onboarding — still in learning/ramping phase
 - Expected to have minimal ticket throughput during this period
 - First GitHub contribution is a strong positive signal
+
+## Self-Input (collected 2026-07-13)
+
+**Question:** How do you see yourself continuing to make an impact at Red Hat? What are your career aspirations, both short term (1-2 years) and long term (3-5 years)?
+
+**Answer:** Over the last 10 years he has made a positive impact at Red Hat - perhaps not in the most public way, but his track record speaks well. Has continued to grow technically while taking on responsibilities outside his role. After being moved from what seemed like a sensible plan to soon be senior manager to now being a principal software engineer in an area he has been wanting to work in for some time, seems like a good time to regroup and solidify a new plan.
+
+Areas he sees as needing attention once available:
+
+- **Gaming Development Community of Practice**
+  - arcade.redhat.com and potential prep/execution for We Are Red Hat Week
+  - O3DE - been investing for years but recently only a small amount. Should it be increased?
+
+- **Fedora SIG-Robotics and the business case for industrial edge expansion**
+  - O3DE as robotics simulation platform
+
+Having only been "on the ground" in this team for just over a month, he likely only has an outline.
+
+**Career aspirations:**
+- **Short-term (1-2 years):** Continue to grow and earn the SPSE (Senior Principal Software Engineer) title. Technically come up to speed and make a visible impact after successful onboarding.
+- **Long-term (3-5 years):** Help grow RHAS into a successful product with a solid backlog of customer requests from a number of large, medium, and smaller customers.
