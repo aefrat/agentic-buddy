@@ -132,9 +132,49 @@ These are existing assets that can be leveraged - not things to build from scrat
 
 ## Gaps to address
 
-1. **RHAS domain depth.** 6 weeks in. No substitute for time here - he needs to build technical credibility in the automotive/RHIVOS domain before he can drive strategy for it. Target: 6-12 months of delivery before the strategic framing becomes credible.
+### 1. RHAS domain depth
 
-2. **Cross-functional influence with outcomes.** Participating in community channels is L4. Producing outcomes through those communities (a design adopted by another team, a business case that redirects investment, a standard that multiple groups follow) is L5.
+6 weeks in. No substitute for time here - he needs to build technical credibility in the automotive/RHIVOS domain before he can drive strategy for it. Target: 6-12 months of delivery before the strategic framing becomes credible.
+
+Roderick can't credibly drive technical strategy for RHAS if he doesn't yet deeply understand how it works - the build systems, CI/CD pipelines, image composition, automotive-specific tooling, customer deployment patterns, the RHIVOS release process, how Hatchi fits in, what the productization challenges actually are.
+
+He's 6 weeks in, he's experienced, he landed his first PR in 3 weeks - all great signals. But knowing a domain well enough to **propose architecture**, **challenge existing approaches**, and **advise leadership on strategy** (all L5 expectations) takes time working in the trenches. There's no shortcut for having debugged a failing compose build at 2am, or having traced a customer issue through the full stack, or knowing which subsystem decisions were made 2 years ago and why.
+
+**Why this matters for the SPSE case:** The L5 Complexity dimension says "recognized as a subject matter expert, applies broad technical knowledge across disciplines to advise functional leaders and customers on strategy." If Roderick builds an SPSE case in 12 months but has only been in the RHAS domain for 18 months total, reviewers will ask: "Is he actually the SME, or is he still ramping?"
+
+**What "no substitute for time" does NOT mean - it doesn't mean "wait passively."** It means:
+- Take on the hard tickets, not just the ones in his comfort zone (AI/agent tooling)
+- Own an end-to-end delivery cycle - from design through release through customer feedback
+- Pair with the domain experts on the team (Bella on builder/OIDC, Muhamad on testing infra) - absorb their context deliberately
+- Build opinions about what should change in the architecture, grounded in firsthand experience, not just observation
+
+**1:1 framing:** "The SPSE case needs you to be the person people consult on RHAS technical direction. That credibility comes from shipping real work in this domain - not just once, but enough times that your instincts about what works and what doesn't are trusted. Your AI/agent and community expertise is yours already. The RHAS domain depth is the piece that only time and delivery can build. So the first 6-12 months is about going deep here - that's the foundation everything else builds on."
+
+### 2. Cross-functional influence with outcomes
+
+Participating in community channels is L4. Producing outcomes through those communities (a design adopted by another team, a business case that redirects investment, a standard that multiple groups follow) is L5.
+
+**The L4 to L5 shift in influence:**
+
+At Level 4, cross-functional influence looks like: "Productive working relationships within function, leads cooperative efforts among teams." You participate in cross-team conversations, you help coordinate, you show up in channels and contribute. Roderick is already doing this well - 5+ community channels, deep thread engagement, bridging efforts like connecting Guy Ziv's agentic evaluation framework work in ecosystem engineering (surfaced in #wg-agent-eval-harness during Q2) to the PitCrew team.
+
+At Level 5, the bar shifts to: "Formal networks across Red Hat to influence priorities and objectives both internally and with customers; consistently reinforces 'One Red Hat' mindset." The key word is **influence priorities**. It's not about being present in conversations - it's about those conversations changing what people or teams do.
+
+**What L5 cross-functional influence looks like for Roderick - concrete examples:**
+
+1. **O3DE + SIG-Robotics producing a business case.** Right now O3DE and SIG-Robotics are investments Roderick cares about. L5 looks like: Roderick writes a business case connecting O3DE as a robotics simulation platform to Red Hat's industrial edge strategy, presents it to leadership, and it informs product investment decisions. The community work produced an organizational outcome.
+
+2. **Gaming CoP driving engineering decisions.** Instead of running arcade.redhat.com as a side project, L5 looks like: the Gaming CoP surfaces a technical pattern (e.g., GPU scheduling, latency optimization) that gets adopted by another team because Roderick connected the dots and advocated for it with the right stakeholders.
+
+3. **AI/agent expertise shaping PitCrew direction.** Roderick noticed Guy Ziv's parallel effort on agentic evaluation. L5 would be: Roderick proposes a consolidated approach, gets both teams to align on it, and the resulting framework becomes the standard. He didn't just surface the connection - he drove the convergence.
+
+4. **Cross-team technical proposals that get adopted.** Roderick identifies that RHAS tooling could benefit another product team (or vice versa). He writes the proposal, socializes it through his network, and it gets picked up. The proposal changes resource allocation or priority for a team outside PitCrew.
+
+5. **Being pulled into other teams' decisions.** A strong signal of L5 influence: other engineering managers or architects invite Roderick to technical reviews or strategy discussions because his perspective changes the outcome, not just because he's a stakeholder.
+
+**The pattern across all of these:** L4 participates and connects. L5 drives outcomes through those connections. The test for any cross-functional activity: "Did this change what anyone outside my team decided to do?" If yes, that's L5 influence. If it was a good conversation but nothing changed, that's still L4.
+
+**1:1 framing:** "Pick one or two of your community investments - Gaming CoP, O3DE, SIG-Robotics - and set a goal for each: what organizational outcome do you want it to produce in the next 6-12 months? Not just 'keep contributing' but 'by Q2 2027, I want [X decision/adoption/standard] to have happened because of this work.'"
 
 3. **Conference and external visibility.** L5 SE matrix specifically calls out "frequently presents at conferences, often to larger audiences." What's Roderick's conference pipeline? O3DE and SIG-Robotics are potentially strong talk topics.
 
