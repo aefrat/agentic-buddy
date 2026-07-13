@@ -27,4 +27,9 @@ Example:
 2026-07-12|autonomous|reporting|atc-slack-channel-scan-10ch|high
 2026-07-12|autonomous|reporting|stakeholder-slack-activity-lookup-4ppl|high
 2026-07-12|autonomous|project-tracking|vhcl-009-closure-tracking|high
+2026-07-13|assisted|evaluation|roderick-spse-l5-gap-analysis|high
+2026-07-13|autonomous|evaluation|qc-self-input-roderick-career|high
+2026-07-13|assisted|people-management|kanitha-retention-conversation-prep|high
+2026-07-13|assisted|people-management|kanitha-1on1-transcript-analysis-summary|high
+2026-07-13|assisted|communication|kanitha-slack-draft-jamie|high
 

@@ -60,16 +60,17 @@ Factual updates to Right now (changed dates, flipped statuses) are allowed mid-s
 - **CAT complete.** RHIVOS 2.0-Core CAT Jun 29-30 finished. RC3 CTC at 93% (3 tickets remaining). All errata at REL_PREP.
 - **CY26Q2 Quarterly Connection** — Accomplishments and Feedback & Development drafts ready in `~/Documents/`. Team member QC reports (RHAS + ATC) in `agent_brain/projects/qc-agent/active/Q2-2026/`. Juanje, Eitan, Kanitha, Muhamad, and Bella drafts expanded with self-input. Development briefs for all 10 directs at `talent-architecture/active/`. May need supplementing with Jira/G-docs/1:1 data before Workday submission.
 - **Hubert Stefanski transition day 12 (started Jul 1).** Jeff Ligon takes scrum master from Manuel Sandino (no formal announcement yet). Knowledge transfer plan overdue. AutoSD CloudFront migration timeline needed since Hubert (fork maintainer) is leaving.
-- **Container vulnerability remediation complete.** All three VHCLs closed: VHCL-009 (Eitan Raviv, Jul 12), VHCL-005 (Matt Goldman, VROOM-45569/45568/41383), VHCL-007 (already closed). Archive this item next daily cycle.
-- **Kanitha Chim retention - active.** Exploring internal mobility (informed Jul 13). 1:1 same day produced Toolchain Architect trial role, TPO reduction, distribution offloading plan. Assessment: structural (role composition), not fundamental (environment). Avi action items: Jamie sync this week, mentor search (2 wk), Christine/Ozan distribution offload, absorb operational tasks. Tracking at `talent-architecture/active/retention/kanitha-chim.md`.
+- **Kanitha Chim retention - active.** Exploring internal mobility (informed Jul 13). 1:1 same day produced Toolchain Architect trial role, TPO reduction, distribution offloading plan. Assessment: structural (role composition), not fundamental (environment). Avi action items this week: Jamie sync, Ozan distribution offload discussion, absorb TPO personally. Longer-term: mentor search (2 wk), Christine connection (after Jul 21 PTO). Tracking at `talent-architecture/active/retention/kanitha-chim.md`.
 - **Aman Vishwakarma onboarding starts Jul 18.** Intern conversion to ATC (RHIVOS Toolchain). Christine Freitas (manager) OOO until Jul 27 - user designated as primary onboarding contact. Aman needs badge and laptop. Also key for Kanitha distribution offloading.
 - **Talent Cycle July 2026 opened.** Engineering Competencies retired for SE/QE/EM/PM-Tech. New High Potential Flag (top 15%) replaces Future Talent. Skill Progression Matrices are the new framework. Action plan with What/How ratings at `talent-architecture/active/talent-cycle-2026H2/`.
-- **Roderick Kieley** — 41 days into onboarding (started Jun 1). 1:1 biweekly, active. 30-day checkpoint conversation overdue (was due Jul 1).
+- **Roderick Kieley** — 43 days into onboarding (started Jun 1). 30-day checkpoint overdue (was due Jul 1). SPSE (L5) development profile ready at `talent-architecture/active/roderick.kieley/` - use as conversation framework for checkpoint.
 - **RHAS QE deliverables draft v1.0.** Test Strategy + Release Criteria HTMLs uploaded to Drive, emailed. User review needed before sharing with broader team. OCP QE outreach not initiated.
 
 ### Files
 
 Promotion is gradual — files climb through layers of visibility based on sustained use, not jumps. Structural context (team, primary project) lives in `USER.md`, not here. Most knowledge is reachable through directory indexes in "Where to find things." Only files that are genuinely hot from current work need to be here.
+
+- [Talent Architecture](agent_brain/projects/talent-architecture/index.md) — Radford dimensions, SE/QE progression matrices, competency proficiency levels. Read when assessing career levels, preparing 1:1 development conversations, or evaluating promotion readiness.
 
 ## Where to find things
 
