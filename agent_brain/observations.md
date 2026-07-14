@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-07-13
-access_count: 32
+last_accessed: 2026-07-14
+access_count: 33
 created: 2026-06-01
 ---
 
@@ -113,6 +113,8 @@ Resolved observations are moved to the bottom.
 
 - **2026-07-13:** "Follow-through gap as retention risk multiplier" - when a manager gives empathetic, specific commitments in a career development conversation but doesn't close the loop on action items, the gap between words and actions amplifies the original dissatisfaction. The employee internalizes "heard but not actioned" which is worse than "not heard" because it erodes trust in future commitments. Kanitha's 4-month gap between March promises and July mobility signal is a clean example. Generalizable to any manager retention conversation. (seen: 1)
 - **2026-07-13:** "Organic role creation from structured career conversation" - asking "what would your ideal role look like?" in a prepared conversation (with data on the person's trajectory and team needs) can surface solutions neither party had articulated. The Toolchain Architect role emerged because Kanitha described her interests (architecture, coding, cross-service design) and Avi recognized the team's existing need for cross-cutting architectural work. Pattern: right question + prepared context = emergent solutions. (seen: 1)
+- **2026-07-14:** "Architecture proposal as retention tool" - designing a technical architecture proposal that simultaneously anchors a new role. The RoG migration proposal's RACI explicitly places Kanitha (Toolchain Architect trial) as Responsible for most execution activities, giving the role concrete scope on day one. The role and the project emerged together (Jul 13 career conversation -> Jul 14 architecture proposal). Pattern: when creating a new role, attach it to a real deliverable immediately - a role without a project is abstract, a role with a proposal is concrete. (seen: 1)
+- **2026-07-14:** "Draft build as pre-merge quality gate" - the RoG draft build model inverts the traditional build-then-gate pattern. Instead of building real artifacts and gating them afterward (creating waste on failure), it builds draft artifacts before merge (discarding on failure). Conceptually similar to feature flags and preview deployments. Generalizable: any "build then validate" pipeline can potentially be restructured as "draft build, validate, then promote." The key insight is that the artifact is provisional until explicitly promoted - waste is eliminated because failed artifacts never enter the real supply chain. (seen: 1)
 
 ## Structure candidates (tools)
 
