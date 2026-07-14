@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-07-01
-access_count: 7
+last_accessed: 2026-07-14
+access_count: 8
 created: 2026-06-23
 ---
 
@@ -33,6 +33,24 @@ Full chain required: new EngIDs → new SKU → gated content sets → CDN repos
 1. Onboarding RHIVOS to GitLab (like RHEL on GitLab) — toolchain provides mechanism/infrastructure workflow
 2. CAIB integration
 3. Konflux
+
+## Decision: Single LP confirmed (Jul 14, 2026)
+
+**Source:** Petr/Avihai 1:1 (Jul 14)
+
+Milan left Red Hat before driving the multi-vs-single LP decision. In a
+subsequent meeting it was decided: proceed with a **single layered product
+containing all components** until further clarity (which may take months).
+
+Key implications (per Petr):
+- Rachel is back this week - naming conventions for Qualcomm package forks
+  still need to be decided with her team
+- Parallel tagging structure needed in Brew to hold LP packages
+- Additional composes required from those tags to represent the LP (may have
+  multiple repos - pending decision)
+- Distribution via Anitom
+- LP is confirmed as required - Qualcomm cannot do this themselves
+- This is a Q3 2026 deliverable
 
 ---
 

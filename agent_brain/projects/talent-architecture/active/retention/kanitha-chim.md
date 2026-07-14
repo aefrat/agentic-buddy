@@ -53,6 +53,11 @@ depth that has been building since March.
    existing candidate. Avi as backup.
 4. **Mentorship** - Specific mentor with architectural/upstream experience.
    Not randomized program. Avi has Napster candidate, will consult Jamie.
+   Petr asked to think about potential mentors (Jul 14). Petr shared the
+   "Together" platform (https://app.togetherplatform.com/user/programs) and
+   the "Link up" program (informal monthly 1:1 matching - Petr has used it
+   for 3 years to expand his network). Petr also mentioned Core Platform
+   mentorship program (opens every 6 months, just launched).
 5. **Gating redesign** - Complete redesign, first Architect role project.
    Collaborate with Matt, consult Hubert/Nathan for history.
 6. **Career development as permanent 1:1 topic**
