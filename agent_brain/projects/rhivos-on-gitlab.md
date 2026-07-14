@@ -172,6 +172,16 @@ Related:
 5. Can RHIVOS "shift left" some testing into RHEL's own CI/gating? (Donald
    Zickus raised this - future conversation, not current scope)
 
+## Architecture Proposal
+
+Full migration architecture proposal (Jul 14, 2026):
+[user/documents/rhivos-rog-migration-proposal.html](../../user/documents/rhivos-rog-migration-proposal.html)
+
+Covers: current vs target state diagrams, Brew tag restructuring, MR workflow
+design, Test Console integration, Gator transition plan, 4-phase migration
+schedule (Jul 2026 - Feb 2027), risk register, RACI matrix, and 7 open
+stakeholder decisions.
+
 ## Related Files
 
 - [RHIVOS Dist-Git Workflow](rhivos-distgit-workflow.md) - current dist-git

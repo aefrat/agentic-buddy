@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RHIVOS on GitLab (RoG) - Migration Architecture Proposal</title>
+<style>
+  body {
+    font-family: 'Segoe UI', 'Liberation Sans', Arial, sans-serif;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.6;
+    color: #1a1a1a;
+    background: #fff;
+  }
+  h1 { color: #c00; border-bottom: 3px solid #c00; padding-bottom: 0.5rem; font-size: 1.8rem; }
+  h2 { color: #333; border-bottom: 1px solid #ccc; padding-bottom: 0.3rem; margin-top: 2.5rem; font-size: 1.4rem; }
+  h3 { color: #555; margin-top: 1.5rem; font-size: 1.1rem; }
+  .meta { color: #666; font-size: 0.9rem; margin-bottom: 2rem; }
+  .meta strong { color: #333; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: 0.9rem; }
+  th, td { border: 1px solid #ddd; padding: 0.5rem 0.75rem; text-align: left; vertical-align: top; }
+  th { background: #f5f5f5; font-weight: 600; }
+  tr:nth-child(even) { background: #fafafa; }
+  pre {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 1rem;
+    overflow-x: auto;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    font-family: 'JetBrains Mono', 'Cascadia Code', 'Consolas', monospace;
+  }
+  code { font-family: 'JetBrains Mono', 'Cascadia Code', 'Consolas', monospace; font-size: 0.9em; }
+  .tag-replaced { color: #c00; font-weight: 600; }
+  .tag-survives { color: #070; font-weight: 600; }
+  .tag-high { color: #c00; font-weight: 600; }
+  .tag-medium { color: #d68a00; font-weight: 600; }
+  .tag-low { color: #070; font-weight: 600; }
+  .callout {
+    background: #fff8e1;
+    border-left: 4px solid #ffc107;
+    padding: 0.75rem 1rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+  .callout-info {
+    background: #e8f4fd;
+    border-left: 4px solid #2196f3;
+    padding: 0.75rem 1rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+  a { color: #0066cc; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .phase-header { background: #f0f0f0; padding: 0.5rem 1rem; border-radius: 4px; margin-top: 1.5rem; }
+  ul, ol { margin: 0.5rem 0; }
+  li { margin-bottom: 0.3rem; }
+  .toc { background: #f9f9f9; border: 1px solid #ddd; padding: 1rem 1.5rem; border-radius: 4px; margin-bottom: 2rem; }
+  .toc ul { list-style: none; padding-left: 0; }
+  .toc li { margin-bottom: 0.2rem; }
+  .toc a { color: #0066cc; }
+</style>
+</head>
+<body>
+
+<h1>RHIVOS on GitLab (RoG) - Migration Architecture Proposal</h1>
+
+<div class="meta">
+  <strong>Initiative:</strong> <a href="https://redhat.atlassian.net/browse/AUTOBU-1105">AUTOBU-1105</a> |
+  <strong>Execution Epic:</strong> <a href="https://redhat.atlassian.net/browse/VROOM-41188">VROOM-41188</a> |
+  <strong>OSCI Ticket:</strong> <a href="https://redhat.atlassian.net/browse/OSCI-9642">OSCI-9642</a><br>
+  <strong>Date:</strong> July 14, 2026<br>
+  <strong>Author:</strong> Avihai Efrat, ATC Engineering Manager<br>
+  <strong>Audience:</strong> Petr Sabata (PO), Kanitha Chim (Execution Lead), Jamie Flynn (Director)
+</div>
+
+<div class="toc">
+  <strong>Contents</strong>
+  <ul>
+    <li><a href="#executive-summary">1. Executive Summary</a></li>
+    <li><a href="#architecture-comparison">2. Architecture Comparison</a></li>
+    <li><a href="#target-state-design">3. Target State Design</a></li>
+    <li><a href="#migration-phases">4. Migration Phases</a></li>
+    <li><a href="#risk-register">5. Risk Register</a></li>
+    <li><a href="#open-decisions">6. Open Decisions</a></li>
+    <li><a href="#timeline">7. Timeline</a></li>
+    <li><a href="#raci-matrix">8. RACI Matrix</a></li>
+    <li><a href="#structural-improvements">9. What This Solves Beyond the Migration</a></li>
+  </ul>
+</div>
+
+<!-- ================================================================== -->
+<h2 id="executive-summary">1. Executive Summary</h2>
+
+<p>
+This proposal describes how RHIVOS will migrate from its current custom gating stack
+(Gator + Greenwave + ResultsDB + WaiverDB) to the same GitLab-based merge request
+workflow that RHEL uses, known as RHEL on GitLab (RoG). The migration replaces direct
+dist-git pushes with merge-request-driven development, replaces post-build gating with
+pre-merge draft builds, and replaces Gator's test orchestration with OSCI GitLab CI
+pipelines. This is the right time because: (a) the OSCI team is decommissioning the
+gating-bot that Gator depends on
+(<a href="https://redhat.atlassian.net/browse/OSCI-8454">OSCI-8454</a>),
+(b) Conflux integration -- a stated Q3 priority -- requires GitLab-native workflows as
+a hard dependency, (c) the RC3 release process exposed 6 process gaps in the current
+tagging workflow that RoG structurally eliminates, and (d) Kanitha Chim's new Toolchain
+Architect role positions gating redesign as her first architectural project. The
+migration covers 21 RHIVOS-specific packages across 4 phases, targeting completion by
+end of Q1 2027.
+</p>
+
+<!-- ================================================================== -->
+<h2 id="architecture-comparison">2. Architecture Comparison</h2>
+
+<h3>2.1 Current State ("As-Is")</h3>
+
+<pre>
+Developer
+    |
+    | git push (direct to dist-git branch)
+    | [gitbzverify server-side hook: Jira ticket validation]
+    |
+    v
+dist-git branch (rhivos-2-main or rhivos-2.0)
+    |
+    | rhpkg build --target &lt;target&gt;
+    |
+    v
+Brew Build
+    |
+    | build lands in -gate tag (or -candidate for dev branches)
+    |
+    v
++-----------+    +------------+    +-----------+
+| -gate tag |    | RHEL       |    |           |
+| (RHIVOS   |---&gt;| -pending   |---&gt;|  Gator    |
+|  builds)  |    | (inherited)|    | evaluate  |
++-----------+    +------------+    +-----------+
+                                        |
+                    Queries Greenwave ---+
+                    Queries ResultsDB ---+
+                    Triggers Test Console +
+                    Triggers Contcert ----+
+                                        |
+                         +--------------+-----------+
+                         |                          |
+                    [PASS]                     [FAIL]
+                         |                          |
+                    auto-promote              Slack notification
+                    -gate -&gt; -candidate       with WaiverDB links
+                         |
+                         v
+                  DPAC Pipeline (git tag trigger)
+                  generate-compose (ODCS)
+                  check-repoclosure
+                  build-*-image (per board)
+                  smoke-tests-* (Test Console)
+                  promote-packages-in-brew (Gator)
+                         |
+                         v
+                  -candidate -&gt; -pending
+                  Gator generate-advisories (Errata Tool)
+</pre>
+
+<p><strong>Key pain points in current state:</strong></p>
+<ul>
+  <li>No audit trail on code changes (direct pushes, no reviewer required)</li>
+  <li>Builds happen AFTER code merges -- failed gates mean wasted build effort</li>
+  <li>No grouped build capability (STAG proposed but not implemented)</li>
+  <li>Tagging into -gate is undocumented, depends on 2 people (Sameera, Ozan)</li>
+  <li>11 external service integrations with fragile coupling</li>
+  <li>Gator is stateless and single-threaded (one package at a time through gate)</li>
+</ul>
+
+<h3>2.2 Target State ("To-Be")</h3>
+
+<pre>
+Developer
+    |
+    | Opens Merge Request in GitLab Private Namespace
+    | [branch: rhivos-2-main or rhivos-2.0]
+    |
+    v
+MR Pipeline (GitLab CI, OSCI-managed)
+    |
+    +---&gt; OSCI creates draft build (Brew -draft target)
+    |         rhivos-2.1-candidate-pesign-draft
+    |
+    +---&gt; Draft build lands in -draft tag (sandbox)
+    |
+    +---&gt; OSCI CI tests run against draft build:
+    |         - RPM-level tests (rpminspect, rpmdiff)
+    |         - RHIVOS-specific tests (GitLab CI calling Test Console)
+    |         - Contcert continuous certification
+    |
+    +---&gt; Results posted to MR as CI status
+    |
+    v
+MR Review + Approval
+    |
+    +--- [APPROVE + MERGE]              [REJECT / CLOSE]
+    |         |                               |
+    |    Draft build promoted            Draft build discarded
+    |    -draft -&gt; -candidate            No artifact remains
+    |         |
+    |         v
+    |    DPAC Pipeline (compose-level, largely unchanged)
+    |    generate-compose (ODCS, from -candidate)
+    |    check-repoclosure
+    |    build-*-image (per board)
+    |    smoke-tests-* (Test Console)
+    |         |
+    |         v
+    |    Promotion: -candidate -&gt; -pending
+    |    Advisory generation (Errata Tool)
+    |
+    v
+  CDN / Customer delivery
+</pre>
+
+<h3>2.3 Side-by-Side Comparison</h3>
+
+<table>
+  <tr>
+    <th>Concern</th>
+    <th>Current (Gator-based)</th>
+    <th>Target (RoG)</th>
+  </tr>
+  <tr>
+    <td>Code change entry</td>
+    <td>Direct push to dist-git</td>
+    <td>Merge Request with reviewer</td>
+  </tr>
+  <tr>
+    <td>Audit trail</td>
+    <td>gitbzverify hook only</td>
+    <td>Full MR history, approvals</td>
+  </tr>
+  <tr>
+    <td>When build happens</td>
+    <td>After code merges</td>
+    <td>Before merge (draft build)</td>
+  </tr>
+  <tr>
+    <td>Build artifact on fail</td>
+    <td>Real build in -gate</td>
+    <td>Draft discarded, no trace</td>
+  </tr>
+  <tr>
+    <td>Test orchestration</td>
+    <td>Gator -&gt; Test Console</td>
+    <td>GitLab CI -&gt; Test Console</td>
+  </tr>
+  <tr>
+    <td>Gating evaluation</td>
+    <td>Greenwave + ResultsDB</td>
+    <td>MR pipeline CI status</td>
+  </tr>
+  <tr>
+    <td>Package promotion</td>
+    <td>Gator evaluate (auto)</td>
+    <td>MR merge (auto)</td>
+  </tr>
+  <tr>
+    <td>Grouped builds</td>
+    <td>Not supported</td>
+    <td>Side tags (native)</td>
+  </tr>
+  <tr>
+    <td>Compose-level testing</td>
+    <td>DPAC pipeline</td>
+    <td>DPAC pipeline (unchanged)</td>
+  </tr>
+  <tr>
+    <td>Advisory generation</td>
+    <td>Gator generate-advisories</td>
+    <td>Triggered post-compose</td>
+  </tr>
+  <tr>
+    <td>Branch model</td>
+    <td>rhivos-2-main, rhivos-2.0</td>
+    <td>Same (with naming adapter)</td>
+  </tr>
+  <tr>
+    <td>FDA no-manual-tagging</td>
+    <td>Partially enforced</td>
+    <td>Structurally enforced</td>
+  </tr>
+</table>
+
+<!-- ================================================================== -->
+<h2 id="target-state-design">3. Target State Design</h2>
+
+<h3>3.1 New Brew Tag Structure</h3>
+
+<p>
+RHEL's RoG model uses <code>-draft</code> build targets that create sandbox builds.
+RHIVOS needs equivalent targets created for each release stream.
+</p>
+
+<p><strong>Required new build targets
+(<a href="https://redhat.atlassian.net/browse/VROOM-40774">VROOM-40774</a>):</strong></p>
+
+<pre>
+Per release stream X.Y:
+
+  Existing:                          New (RoG):
+  --------                           ---------
+  rhivos-X.Y-build                   (unchanged - buildroot)
+  rhivos-X.Y-gate     ----+
+  rhivos-X.Y-candidate    |          rhivos-X.Y-candidate-pesign-draft
+  rhivos-X.Y-pending      |          (draft builds land here)
+                           |
+                           +------&gt; DEPRECATED after full migration
+                                     (gate tag no longer needed)
+
+For z-stream:
+  rhivos-X.Y-z-candidate-pesign-draft
+</pre>
+
+<p><strong>Tag lifecycle in RoG:</strong></p>
+<ol>
+  <li>Draft build target produces a draft build in the -draft tag</li>
+  <li>-draft tag inherits from -build (same buildroot as today)</li>
+  <li>On MR merge: draft build is promoted to -candidate (real build)</li>
+  <li>On MR reject: draft build is untagged/discarded</li>
+  <li>-candidate -&gt; -pending promotion continues as today (compose-driven)</li>
+</ol>
+
+<div class="callout-info">
+<strong>QC Layered Product:</strong> LP Brew tags (VROOM-44911, per the single-LP decision of Jul 14)
+will need their own -draft variants when LP work resumes. The RoG infrastructure should be designed
+to be LP-aware (parameterized by product/tag-set) from the start, but LP onboarding does not block
+Phases 0-3. LP becomes a Phase 5 activity.
+</div>
+
+<h3>3.2 MR Workflow Design</h3>
+
+<p><strong>Developer experience (target state):</strong></p>
+<ol>
+  <li>Developer creates feature branch from <code>rhivos-2-main</code> (or <code>rhivos-2.0</code>)</li>
+  <li>Developer opens MR in GitLab Private Namespace</li>
+  <li>OSCI pipeline automatically:
+    <ul>
+      <li>Creates draft build in Brew using -draft target</li>
+      <li>Runs rpminspect/rpmdiff checks</li>
+      <li>Triggers RHIVOS-specific tests via Test Console</li>
+      <li>Posts results to MR as CI job status (green/red)</li>
+    </ul>
+  </li>
+  <li>Reviewer reviews code + test results</li>
+  <li>On approval + merge:
+    <ul>
+      <li>Draft build promoted to -candidate (automatic)</li>
+      <li>DPAC compose pipeline can be triggered normally</li>
+    </ul>
+  </li>
+  <li>On rejection:
+    <ul>
+      <li>Draft build discarded (no cleanup needed)</li>
+      <li>Developer iterates on the branch, opens new MR</li>
+    </ul>
+  </li>
+</ol>
+
+<p><strong>Branch naming adapter:</strong> Patrick Talbert has already implemented a fix in
+osci-pipelines (MR !870) similar to what was done for Voyager/RHEL4NV. This adapter maps RHIVOS
+branch names (<code>rhivos-2-main</code>, <code>rhivos-2.0</code>) to the corresponding Brew
+targets and OSCI pipeline configuration.</p>
+
+<p><strong>Policy enforcement by branch type:</strong></p>
+<table>
+  <tr><th>Branch</th><th>Dist-git policy today</th><th>RoG policy</th></tr>
+  <tr>
+    <td>rhivos-2-main</td>
+    <td>Anything Goes</td>
+    <td>MR required, reviewer required, Jira ticket encouraged</td>
+  </tr>
+  <tr>
+    <td>rhivos-2.0</td>
+    <td>Strict (blocker/exception + fixVersion)</td>
+    <td>MR required, reviewer required, Jira ticket enforced in MR template</td>
+  </tr>
+  <tr>
+    <td>Package exceptions (kernel-automotive, etc.)</td>
+    <td>Anything Goes on release branches</td>
+    <td>MR required, reviewer required, Jira ticket optional</td>
+  </tr>
+</table>
+
+<div class="callout">
+<strong>Key shift:</strong> Even "Anything Goes" branches now require an MR with a reviewer. This
+addresses the kernel team's concern that Petr flagged -- "they are really unhappy that RHIVOS does
+not have this yet."
+</div>
+
+<h3>3.3 Test Console Integration in MR Pipeline</h3>
+
+<p>
+Test Console currently pushes results directly to ResultsDB via HTTP API (confirmed by Roni
+Eliezer's implementation, VROOM-29833). This direct integration is an advantage for the RoG
+migration because Test Console does not depend on the UMB/Greenwave chain that Gator uses.
+</p>
+
+<pre>
+MR Pipeline (GitLab CI)
+    |
+    +---&gt; RPM-level tests (rpminspect, rpmdiff)     [OSCI-managed]
+    |
+    +---&gt; RHIVOS-specific tests                      [RHIVOS-managed GitLab CI job]
+    |         |
+    |         +---&gt; GitLab CI job calls Test Console API
+    |         |     (same API Gator uses via run_test)
+    |         |
+    |         +---&gt; Test Console runs tests on:
+    |         |     - QEMU (VM smoke)
+    |         |     - SA8650 (Qualcomm board)
+    |         |     - SA8775 (Qualcomm board)
+    |         |
+    |         +---&gt; Results reported back to GitLab CI
+    |               (exit code + artifact upload)
+    |
+    +---&gt; Contcert continuous certification           [Contcert-managed]
+              |
+              +---&gt; Results pushed to ResultsDB
+                    (unchanged from today)
+</pre>
+
+<p><strong>Key design decisions:</strong></p>
+<ol>
+  <li><strong>Test scope for MR pipeline:</strong> Only package-level tests (not full
+    compose/board smoke). The MR tests answer "does this package build and pass its own test
+    suite?" Full compose and board-level smoke tests remain in the DPAC pipeline (post-merge).</li>
+  <li><strong>Hardware test budget:</strong> Running full hardware tests on every MR is expensive
+    (board time, power, provisioning). Proposal: run VM (QEMU) tests on every MR, hardware board
+    tests on demand (triggered by a label or comment on the MR, e.g., <code>/test-hardware</code>).
+    <em>(Decision D1 - needs stakeholder input.)</em></li>
+  <li><strong>Test Console API contract:</strong> The existing <code>tc-cli rhivos base-image
+    is-complete</code> interface (used by Gator's <code>run_test</code> command) can be wrapped
+    in a GitLab CI job script. Roni Eliezer
+    (<a href="https://redhat.atlassian.net/browse/VROOM-32012">VROOM-32012</a> spike) should
+    design this API contract.</li>
+  <li><strong>ResultsDB continuity:</strong> Test Console and Contcert continue pushing results to
+    ResultsDB -- those integrations are unchanged. What changes is that Greenwave policy evaluation
+    is no longer the gating mechanism. The GitLab CI job status replaces it.</li>
+</ol>
+
+<h3>3.4 Compose-Level and Board-Level Testing</h3>
+
+<p>
+The DPAC pipeline (compose-level testing) is <strong>largely unchanged</strong> by the RoG
+migration. It continues to be triggered by git tags in rhivos.git, run ODCS composes from
+-candidate, check repoclosure, build images per board, run smoke tests via Test Console, and
+promote packages from -candidate to -pending.
+</p>
+
+<p>
+The only change is the input: today, -candidate is populated by Gator's auto-promotion from -gate.
+In the target state, -candidate is populated by MR merges promoting draft builds. The tag
+contents are identical either way -- ODCS does not care how builds got there.
+</p>
+
+<p>
+<strong>CTC testing</strong> for release candidates continues as today. CTC is a release milestone
+activity, not a per-package gate. It runs against full compose images, not individual draft builds.
+</p>
+
+<h3>3.5 Gator Transition Plan</h3>
+
+<p>Gator has 5 major functions. Each has a specific transition plan:</p>
+
+<table>
+  <tr><th>Gator Function</th><th>Disposition</th><th>Details</th></tr>
+  <tr>
+    <td><code>evaluate</code></td>
+    <td><span class="tag-replaced">REPLACED</span></td>
+    <td>RoG MR pipeline replaces Greenwave/ResultsDB evaluation. CI status on MR replaces pass/fail gating.</td>
+  </tr>
+  <tr>
+    <td><code>promote</code> (gate -&gt; candidate)</td>
+    <td><span class="tag-replaced">REPLACED</span></td>
+    <td>Draft build -&gt; candidate on MR merge is automatic in RoG. No manual tagging.</td>
+  </tr>
+  <tr>
+    <td><code>promote</code> (candidate -&gt; pending)</td>
+    <td><span class="tag-survives">SURVIVES</span></td>
+    <td>Post-compose promotion still needed. Triggered by DPAC pipeline stage. Could be a simple GitLab CI job or script (<code>brew tag-build</code>).</td>
+  </tr>
+  <tr>
+    <td><code>run_test</code></td>
+    <td><span class="tag-replaced">REPLACED</span></td>
+    <td>GitLab CI jobs call Test Console directly. Same API, different trigger mechanism.</td>
+  </tr>
+  <tr>
+    <td><code>generate_advisories</code></td>
+    <td><span class="tag-survives">SURVIVES</span></td>
+    <td>Errata advisory generation is not replaced by RoG. Still needed post-compose. Trigger moves from Gator CLI to a DPAC pipeline job or OSCI errata-automation integration. <em>(Decision D2.)</em></td>
+  </tr>
+  <tr>
+    <td><code>audit</code></td>
+    <td><span class="tag-replaced">REPLACED</span></td>
+    <td>GitLab native MR history + CI artifacts provide full audit trail. Custom audit reports can use GitLab API.</td>
+  </tr>
+</table>
+
+<p><strong>Advisory generation detail:</strong> Gator's <code>generate_advisories</code> command
+currently finds packages that passed gating, checks for existing advisories in NEW_FILES state,
+attaches builds to advisories, and links Jira tickets from commit messages. This logic must
+survive. Two options:</p>
+<ul>
+  <li><strong>Option A (recommended):</strong> Evaluate whether OSCI's
+    <code>errata-automation</code> project can handle RHIVOS directly, or with a thin wrapper.</li>
+  <li><strong>Option B:</strong> Extract the advisory-generation portion of Gator as a standalone
+    tool, stripped of evaluate/promote logic.</li>
+</ul>
+
+<p><strong>Kernel-automotive special handling:</strong> Today, Gator checks ReportPortal for
+kernel-automotive triage status (if all failures have BTS links, it auto-promotes). In the RoG
+model, this becomes a GitLab CI job that checks ReportPortal as a required CI gate on
+kernel-automotive MRs. Note: ReportPortal is being decommissioned by Sep 22, 2026, so this
+special path may be short-lived.</p>
+
+<h3>3.6 Errata Advisory Flow</h3>
+
+<pre>
+Current:
+  Gator generate_advisories
+    -&gt; scans -candidate tag
+    -&gt; matches builds to Jira tickets (fixVersion)
+    -&gt; creates/updates Errata advisories
+    -&gt; attaches builds
+    -&gt; advisory lifecycle: NEW_FILES -&gt; QE -&gt; REL_PREP -&gt; SHIPPED
+
+Target:
+  DPAC pipeline (post-compose stage)
+    -&gt; script/job scans -candidate tag (or compose manifest)
+    -&gt; matches builds to Jira tickets (fixVersion)
+    -&gt; creates/updates Errata advisories via ET API
+    -&gt; attaches builds
+    -&gt; advisory lifecycle: unchanged
+
+  OR: OSCI errata-automation handles this natively
+      (investigate OSCI-9642 scope)
+</pre>
+
+<p>The errata advisory flow does not fundamentally change. The trigger changes (from Gator CLI
+invocation to a pipeline stage), but the logic (scan tag, match Jira, create advisory) remains
+identical.</p>
+
+<h3>3.7 Grouped Builds / Side Tag Strategy</h3>
+
+<p><strong>Current problem (the STAG gap):</strong> When a library has an ABI break, dependent
+packages cannot be built against the new version until it completes full gating. Petr proposed a
+STAG (staging tag) solution, but it was never implemented because RHIVOS lacks the centpkg /
+Distrobaker / OSCI side-tag infrastructure.</p>
+
+<p><strong>RoG solution:</strong> RoG natively supports grouped builds via side tags:</p>
+<ol>
+  <li>Developer requests a side tag (or GitLab CI creates one for multi-package MRs)</li>
+  <li>All related packages are built into the side tag</li>
+  <li>The side tag inherits from -build (stable buildroot) plus the new builds</li>
+  <li>Tests run against the side tag content as a group</li>
+  <li>On MR merge: all builds in the side tag are promoted to -candidate together</li>
+  <li>On MR reject: the side tag and all its builds are discarded</li>
+</ol>
+
+<p>This directly solves the companion package problem (downstream-dtbs, qcom-scmi,
+kernel-ivos-nxp-extra-modules must be rebuilt together with each new kernel). Instead of manual
+sequential tagging through 2 people, a single MR with a side tag handles the entire group.</p>
+
+<p><strong>Kernel derivative workflow in RoG:</strong></p>
+<pre>
+kernel-ivos-qualcomm MR opened
+    |
+    +---&gt; Side tag created (inherits from -build)
+    |
+    +---&gt; kernel-ivos-qualcomm draft build in side tag
+    |
+    +---&gt; downstream-dtbs rebuilt in same side tag
+    +---&gt; qcom-scmi rebuilt in same side tag
+    +---&gt; kernel-ivos-nxp-extra-modules rebuilt in same side tag
+    |
+    +---&gt; All 4 packages tested together (grouped)
+    |
+    +---&gt; MR merge: all 4 promoted to -candidate together
+</pre>
+
+<!-- ================================================================== -->
+<h2 id="migration-phases">4. Migration Phases</h2>
+
+<div class="phase-header">
+  <strong>Phase 0: Prerequisites (Q3 2026, July - August)</strong>
+</div>
+
+<p><strong>Goal:</strong> Remove all blockers so that the first package can onboard.</p>
+
+<table>
+  <tr><th>Task</th><th>Owner</th><th>Jira</th><th>Status</th><th>Notes</th></tr>
+  <tr>
+    <td>Create -draft Brew build targets for RHIVOS</td>
+    <td>Ozan Unsal</td>
+    <td><a href="https://redhat.atlassian.net/browse/VROOM-40774">VROOM-40774</a></td>
+    <td>New</td>
+    <td>Blocks everything. Needs targets for 2.1 and 2.0-z streams minimum.</td>
+  </tr>
+  <tr>
+    <td>Branch naming fix in osci-pipelines</td>
+    <td>Patrick Talbert</td>
+    <td>(part of OSCI-9642)</td>
+    <td>MR !870 exists</td>
+    <td>Apply same adapter used for Voyager/RHEL4NV.</td>
+  </tr>
+  <tr>
+    <td>Enable RHIVOS branches in global-tasks.yml</td>
+    <td>Veronika Kabatova</td>
+    <td>(part of OSCI-9642)</td>
+    <td>Not started</td>
+    <td>Config change in dist-git-gating-tests repo.</td>
+  </tr>
+  <tr>
+    <td>Layered product support investigation</td>
+    <td>OSCI (Michal Srb)</td>
+    <td>File ARR ticket</td>
+    <td>Not started</td>
+    <td>Understand what "not straightforward" means concretely. Non-blocking for Phase 1.</td>
+  </tr>
+  <tr>
+    <td>Spike: Test Console in GitLab CI job</td>
+    <td>Roni Eliezer</td>
+    <td><a href="https://redhat.atlassian.net/browse/VROOM-32012">VROOM-32012</a></td>
+    <td>New</td>
+    <td>Design the API contract for calling Test Console from GitLab CI.</td>
+  </tr>
+  <tr>
+    <td>Document advisory generation extraction plan</td>
+    <td>Kanitha Chim</td>
+    <td>New ticket needed</td>
+    <td>Not started</td>
+    <td>Evaluate OSCI errata-automation vs. standalone extraction from Gator.</td>
+  </tr>
+  <tr>
+    <td>Hubert knowledge transfer (RoG context)</td>
+    <td>Kanitha Chim</td>
+    <td>Part of transition</td>
+    <td>Overdue</td>
+    <td>Hubert drove initial OSCI engagement. Capture contacts, design context, open threads.</td>
+  </tr>
+</table>
+
+<p><strong>Exit criteria:</strong></p>
+<ul>
+  <li>At least one -draft Brew target exists and is functional</li>
+  <li>OSCI pipeline can be triggered for a RHIVOS branch</li>
+  <li>Test Console GitLab CI job design is documented (spike complete)</li>
+  <li>Advisory generation approach is selected</li>
+</ul>
+
+<div class="phase-header">
+  <strong>Phase 1: Pilot Packages (Q3 2026, August - September)</strong>
+</div>
+
+<p><strong>Goal:</strong> Onboard 3-5 simple packages to validate the full workflow end-to-end.</p>
+
+<table>
+  <tr><th>Package</th><th>Why pilot</th><th>Risk level</th></tr>
+  <tr><td>bluechi</td><td>Simple, well-understood, active maintainer, no hardware deps</td><td>Low</td></tr>
+  <tr><td>qm</td><td>Simple, paired with bluechi, same team</td><td>Low</td></tr>
+  <tr><td>aboot-deploy</td><td>Small, focused scope</td><td>Low</td></tr>
+  <tr><td>auto-boot-check</td><td>Small, no external dependencies</td><td>Low</td></tr>
+  <tr><td>redhat-release-automotive</td><td>Config-only package, very low risk</td><td>Low</td></tr>
+</table>
+
+<p><strong>Phase 1 activities:</strong></p>
+<ol>
+  <li>First pilot package opens an MR using the new workflow</li>
+  <li>Validate: draft build creates correctly in Brew</li>
+  <li>Validate: OSCI pipeline runs RPM-level tests</li>
+  <li>Validate: RHIVOS-specific tests (at minimum rpminspect) execute</li>
+  <li>Validate: MR merge promotes draft to -candidate</li>
+  <li>Validate: DPAC pipeline consumes the -candidate build correctly</li>
+  <li>Document any gaps, iterate on CI configuration</li>
+  <li>Run pilot for 2-3 sprints (4-6 weeks) with dual-path: old workflow still available as fallback</li>
+</ol>
+
+<p><strong>Exit criteria:</strong></p>
+<ul>
+  <li>3+ packages have completed full end-to-end flow via MR</li>
+  <li>DPAC pipeline successfully consumed builds from the new path</li>
+  <li>No regressions in compose quality</li>
+  <li>Developer feedback collected and addressed</li>
+  <li>Runbook written for the new workflow</li>
+</ul>
+
+<div class="phase-header">
+  <strong>Phase 2: Kernel Packages (Q4 2026, October - November)</strong>
+</div>
+
+<p><strong>Goal:</strong> Onboard kernel-automotive and kernel-ivos-qualcomm with their companion
+packages, exercising grouped builds.</p>
+
+<p><strong>Why separate:</strong> Kernel packages have unique requirements: source-git workflow
+(dist-git policy exceptions), ReportPortal triage integration (being decommissioned Sep 22),
+companion package rebuilds, grouped build requirement, highest build frequency, and most complex
+test matrix.</p>
+
+<table>
+  <tr><th>Package</th><th>Special handling</th></tr>
+  <tr><td>kernel-automotive</td><td>ReportPortal (expiring), source-git, highest test matrix</td></tr>
+  <tr><td>kernel-ivos-qualcomm</td><td>Source-git, companion package trigger</td></tr>
+  <tr><td>downstream-dtbs</td><td>Companion rebuild, Anything Goes policy</td></tr>
+  <tr><td>qcom-scmi</td><td>Companion rebuild, Anything Goes policy</td></tr>
+  <tr><td>sysboot</td><td>Kernel-adjacent</td></tr>
+  <tr><td>fusa-gcc-plugin</td><td>FuSa toolchain, tightly coupled</td></tr>
+  <tr><td>fusa-gcc-plugin-data</td><td>FuSa toolchain, tightly coupled</td></tr>
+</table>
+
+<p><strong>Phase 2 activities:</strong></p>
+<ol>
+  <li>Validate side-tag/grouped build workflow with kernel + companions</li>
+  <li>Implement or deprecate ReportPortal integration (depends on decommission timeline)</li>
+  <li>Test hardware board tests triggered from MR pipeline (SA8650, SA8775)</li>
+  <li>Validate Jira ticket enforcement for kernel packages (source-git has different commit patterns)</li>
+  <li>Ensure companion package rebuild automation works via grouped MRs</li>
+</ol>
+
+<p><strong>Exit criteria:</strong></p>
+<ul>
+  <li>kernel-automotive + companions complete full MR -&gt; grouped build -&gt; compose flow</li>
+  <li>Hardware tests run from MR pipeline on at least one board type</li>
+  <li>Companion rebuild workflow documented and exercised by kernel team</li>
+</ul>
+
+<div class="phase-header">
+  <strong>Phase 3: Full Onboarding (Q4 2026 - Q1 2027, November - January)</strong>
+</div>
+
+<p><strong>Goal:</strong> Onboard remaining packages and declare RoG as the primary workflow.</p>
+
+<p><strong>Remaining packages (9):</strong> aboot-update, android-tools, automotive-image-builder,
+automotive-image-builder-policy, dracut-automotive, osbuild-auto, ukiboot, unzboot,
+util-linux-automotive</p>
+
+<p><strong>Phase 3 activities:</strong></p>
+<ol>
+  <li>Batch onboarding (3-4 packages per sprint)</li>
+  <li>Disable direct push access to dist-git for onboarded packages</li>
+  <li>Update developer documentation (rhpkg workflow -&gt; MR workflow)</li>
+  <li>Update FDA process docs ("no manual tagging" is now structurally enforced)</li>
+  <li>Train maintainers who have not yet used the MR workflow</li>
+</ol>
+
+<p><strong>Exit criteria:</strong></p>
+<ul>
+  <li>All 21 packages are onboarded</li>
+  <li>Direct push is disabled for all RHIVOS packages</li>
+  <li>Developer and FDA documentation updated</li>
+</ul>
+
+<div class="phase-header">
+  <strong>Phase 4: Gator Decommission (Q1 2027, January - February)</strong>
+</div>
+
+<p><strong>Goal:</strong> Retire Gator evaluate/promote/run_test functions. Transition advisory generation.</p>
+
+<p><strong>Phase 4 activities:</strong></p>
+<ol>
+  <li>Parallel running period: keep Gator available but not invoked for onboarded packages</li>
+  <li>Extract or replace advisory generation logic</li>
+  <li>Remove Gator triggers from DPAC pipeline</li>
+  <li>Archive Gator codebase (retain for reference)</li>
+  <li>Clean up -gate tags in Brew (mark as inactive, do not delete)</li>
+  <li>Remove Greenwave policies specific to RHIVOS packages</li>
+  <li>Update all documentation references to Gator</li>
+</ol>
+
+<p><strong>Exit criteria:</strong></p>
+<ul>
+  <li>Gator is not invoked in any RHIVOS pipeline</li>
+  <li>Advisory generation works through the new mechanism</li>
+  <li>-gate tags are deprecated</li>
+  <li>Greenwave RHIVOS policies are archived</li>
+  <li>Gator repository is archived</li>
+</ul>
+
+<!-- ================================================================== -->
+<h2 id="risk-register">5. Risk Register</h2>
+
+<table>
+  <tr><th>#</th><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Mitigation</th></tr>
+  <tr>
+    <td>R1</td>
+    <td>Ozan's -draft target creation stalls (VROOM-40774 has no activity since April)</td>
+    <td><span class="tag-high">High</span></td>
+    <td><span class="tag-high">Critical</span></td>
+    <td>Escalate through Petr. Set a 2-week deadline. If Brew team is bottleneck, engage RHELBLD directly.</td>
+  </tr>
+  <tr>
+    <td>R2</td>
+    <td>OSCI layered product support is harder than expected (Michal Srb's warning)</td>
+    <td><span class="tag-medium">Medium</span></td>
+    <td><span class="tag-high">High</span></td>
+    <td>File ARR ticket immediately. Get concrete requirements list from OSCI. Voyager/RHEL4NV precedent helps but is not identical.</td>
+  </tr>
+  <tr>
+    <td>R3</td>
+    <td>Hubert's departure loses institutional knowledge of RoG design</td>
+    <td><span class="tag-high">High</span></td>
+    <td><span class="tag-medium">Medium</span></td>
+    <td>Kanitha has the Toolchain Architect role and motivation. Schedule explicit KT session this week. Capture OSCI contacts and open threads.</td>
+  </tr>
+  <tr>
+    <td>R4</td>
+    <td>Test Console integration in GitLab CI is more complex than expected</td>
+    <td><span class="tag-medium">Medium</span></td>
+    <td><span class="tag-medium">Medium</span></td>
+    <td>Roni's spike (VROOM-32012) should surface complexity early. Test Console already pushes directly to ResultsDB (no UMB dependency).</td>
+  </tr>
+  <tr>
+    <td>R5</td>
+    <td>Kernel team resistance to MR workflow (source-git workflow friction)</td>
+    <td><span class="tag-medium">Medium</span></td>
+    <td><span class="tag-high">High</span></td>
+    <td>Engage Patrick Talbert and Scott Weaver early. The kernel team already uses MRs for RHEL -- RHIVOS is the outlier. Grouped builds solve their companion package pain.</td>
+  </tr>
+  <tr>
+    <td>R6</td>
+    <td>ReportPortal decommission (Sep 22) before Phase 2 reaches kernel</td>
+    <td><span class="tag-low">Low</span></td>
+    <td><span class="tag-medium">Medium</span></td>
+    <td>If decommissioned before Phase 2, the kernel MR pipeline simply omits the ReportPortal check. Already a special case, not the primary gating mechanism.</td>
+  </tr>
+  <tr>
+    <td>R7</td>
+    <td>DPAC pipeline breaks when -candidate is populated differently</td>
+    <td><span class="tag-low">Low</span></td>
+    <td><span class="tag-high">High</span></td>
+    <td>The -candidate tag contents are identical either way -- ODCS does not care how builds got there. Validate in Phase 1 explicitly.</td>
+  </tr>
+  <tr>
+    <td>R8</td>
+    <td>Conflux timeline pressure forces shortcuts</td>
+    <td><span class="tag-medium">Medium</span></td>
+    <td><span class="tag-medium">Medium</span></td>
+    <td>Conflux requires GitLab integration but does not require all 21 packages onboarded. Phase 1 pilot may satisfy Conflux minimum requirements. Confirm scope with Petr.</td>
+  </tr>
+  <tr>
+    <td>R9</td>
+    <td>Kanitha's internal mobility exploration leads to departure before migration completes</td>
+    <td><span class="tag-medium">Medium</span></td>
+    <td><span class="tag-high">High</span></td>
+    <td>Distribution offloading (Aman, Ozan) and Toolchain Architect role are active mitigations. If Kanitha leaves, Juanje (pipeline/gating expertise) or Ozan (Brew/target expertise) can carry the migration.</td>
+  </tr>
+  <tr>
+    <td>R10</td>
+    <td>FDA "no manual tagging" policy interpreted as "no workflow change"</td>
+    <td><span class="tag-low">Low</span></td>
+    <td><span class="tag-low">Low</span></td>
+    <td>RoG strengthens FDA's policy -- it structurally eliminates manual tagging. Frame as an improvement, not a disruption. Engage Martin Perina early.</td>
+  </tr>
+</table>
+
+<!-- ================================================================== -->
+<h2 id="open-decisions">6. Open Decisions</h2>
+
+<table>
+  <tr><th>#</th><th>Decision</th><th>Who decides</th><th>Options</th><th>Recommendation</th><th>Deadline</th></tr>
+  <tr>
+    <td>D1</td>
+    <td>Should MR-level tests include hardware board tests, or only VM/QEMU?</td>
+    <td>Petr + Rachel Sibley</td>
+    <td>(A) VM only in MR, hardware in compose pipeline. (B) VM default, hardware on-demand via label. (C) Always run hardware.</td>
+    <td><strong>Option B</strong> -- balances cost with coverage. Hardware on-demand for kernel packages.</td>
+    <td>Before Phase 1</td>
+  </tr>
+  <tr>
+    <td>D2</td>
+    <td>Should advisory generation use OSCI errata-automation or a standalone Gator extraction?</td>
+    <td>Kanitha + Petr</td>
+    <td>(A) OSCI errata-automation. (B) Extract from Gator. (C) New implementation.</td>
+    <td><strong>Option A</strong> if OSCI supports RHIVOS. Option B as fallback.</td>
+    <td>Before Phase 4</td>
+  </tr>
+  <tr>
+    <td>D3</td>
+    <td>What is the minimum Conflux integration scope that RoG must satisfy?</td>
+    <td>Petr</td>
+    <td>(A) All 21 packages. (B) Kernel + bluechi/qm only. (C) Any single package proving the path works.</td>
+    <td>Clarify with Petr -- this determines Phase 1 urgency.</td>
+    <td>Immediately</td>
+  </tr>
+  <tr>
+    <td>D4</td>
+    <td>Should rhivos-2-main (dev branch) enforce Jira ticket linking in MRs?</td>
+    <td>Petr</td>
+    <td>(A) Enforce. (B) Encouraged but not enforced. (C) No requirement.</td>
+    <td><strong>Option B</strong> -- encourage for errata traceability, do not block development velocity.</td>
+    <td>Before Phase 1</td>
+  </tr>
+  <tr>
+    <td>D5</td>
+    <td>Who reviews kernel-automotive MRs? (RHIVOS kernel team? RHEL kernel team?)</td>
+    <td>Patrick Talbert + Petr</td>
+    <td>(A) RHIVOS kernel team only. (B) Cross-review with RHEL kernel team.</td>
+    <td>Consult Patrick -- he has the most context on this boundary.</td>
+    <td>Before Phase 2</td>
+  </tr>
+  <tr>
+    <td>D6</td>
+    <td>Should the -gate tag be deprecated immediately or kept in parallel?</td>
+    <td>Petr</td>
+    <td>(A) Keep -gate active during migration (dual path). (B) Deprecate -gate per phase as packages onboard.</td>
+    <td><strong>Option A</strong> for Phase 1-2, <strong>Option B</strong> for Phase 3+.</td>
+    <td>Before Phase 1</td>
+  </tr>
+  <tr>
+    <td>D7</td>
+    <td>Is the STAG proposal still relevant, or does RoG side-tags fully replace it?</td>
+    <td>Petr</td>
+    <td>(A) STAG is subsumed by RoG side-tags. (B) STAG is still needed for non-RoG use cases.</td>
+    <td><strong>Option A</strong> -- RoG side-tags are the productized version of what STAG proposed.</td>
+    <td>Before Phase 2</td>
+  </tr>
+</table>
+
+<!-- ================================================================== -->
+<h2 id="timeline">7. Timeline</h2>
+
+<pre>
+2026
+  July         Phase 0 starts (prerequisites)
+  |            - VROOM-40774 (-draft targets) [CRITICAL PATH]
+  |            - Branch naming fix merged
+  |            - global-tasks.yml enabled
+  |            - Hubert KT session (this week)
+  |            - VROOM-32012 spike (Test Console in CI)
+  |
+  August       Phase 0 completes / Phase 1 starts
+  |            - First pilot MR (bluechi or qm)
+  |            - End-to-end validation
+  |
+  September    Phase 1 continues
+  |            - 3-5 packages validated
+  |            - ReportPortal decommissioned (Sep 22)
+  |            - Developer runbook published
+  |
+  October      Phase 2 starts (kernel packages)
+  |            - kernel-automotive + companions
+  |            - Grouped build validation
+  |            - Hardware test integration
+  |
+  November     Phase 2 completes / Phase 3 starts
+  |            - Remaining packages batch onboard
+  |
+  December     Phase 3 continues
+  |            - All 21 packages onboarded
+  |
+2027
+  January      Phase 3 completes / Phase 4 starts
+  |            - Direct push disabled
+  |            - Gator parallel run begins
+  |
+  February     Phase 4 completes
+               - Gator decommissioned
+               - -gate tags deprecated
+               - Migration complete
+
+Total duration: ~7 months (July 2026 - February 2027)
+Critical path: VROOM-40774 -&gt; Phase 1 pilot -&gt; Phase 2 kernel -&gt; Phase 3 batch -&gt; Phase 4 decommission
+</pre>
+
+<!-- ================================================================== -->
+<h2 id="raci-matrix">8. RACI Matrix</h2>
+
+<table>
+  <tr>
+    <th>Activity</th>
+    <th>Kanitha<br>(Exec)</th>
+    <th>Petr<br>(PO)</th>
+    <th>Ozan<br>(Brew)</th>
+    <th>Patrick<br>(OSCI)</th>
+    <th>Roni<br>(TC)</th>
+    <th>Avi<br>(Mgr)</th>
+  </tr>
+  <tr><td>Phase 0: -draft targets</td><td>C</td><td>A</td><td><strong>R</strong></td><td>I</td><td>I</td><td>I</td></tr>
+  <tr><td>Phase 0: Branch naming fix</td><td>I</td><td>I</td><td>I</td><td><strong>R</strong></td><td>I</td><td>I</td></tr>
+  <tr><td>Phase 0: global-tasks.yml</td><td>C</td><td>I</td><td>I</td><td><strong>R</strong></td><td>I</td><td>I</td></tr>
+  <tr><td>Phase 0: TC in CI spike</td><td>C</td><td>I</td><td>I</td><td>C</td><td><strong>R</strong></td><td>I</td></tr>
+  <tr><td>Phase 0: Advisory gen plan</td><td><strong>R</strong></td><td>A</td><td>I</td><td>C</td><td>I</td><td>I</td></tr>
+  <tr><td>Phase 0: Hubert KT</td><td><strong>R</strong></td><td>C</td><td>C</td><td>I</td><td>I</td><td>A</td></tr>
+  <tr><td>Phase 1: Pilot MR workflow</td><td><strong>R</strong></td><td>A</td><td>C</td><td>C</td><td>C</td><td>I</td></tr>
+  <tr><td>Phase 1: E2E validation</td><td><strong>R</strong></td><td>I</td><td>C</td><td>C</td><td>C</td><td>I</td></tr>
+  <tr><td>Phase 1: Developer runbook</td><td><strong>R</strong></td><td>A</td><td>C</td><td>I</td><td>I</td><td>I</td></tr>
+  <tr><td>Phase 2: Kernel onboarding</td><td><strong>R</strong></td><td>A</td><td>C</td><td><strong>R</strong></td><td>C</td><td>I</td></tr>
+  <tr><td>Phase 2: Grouped builds</td><td><strong>R</strong></td><td>A</td><td><strong>R</strong></td><td>C</td><td>I</td><td>I</td></tr>
+  <tr><td>Phase 2: HW test in MR</td><td>C</td><td>I</td><td>I</td><td>C</td><td><strong>R</strong></td><td>I</td></tr>
+  <tr><td>Phase 3: Batch onboarding</td><td><strong>R</strong></td><td>A</td><td>C</td><td>I</td><td>C</td><td>I</td></tr>
+  <tr><td>Phase 3: Disable direct push</td><td>C</td><td>A</td><td><strong>R</strong></td><td>I</td><td>I</td><td>I</td></tr>
+  <tr><td>Phase 4: Gator decommission</td><td><strong>R</strong></td><td>A</td><td>C</td><td>I</td><td>I</td><td>I</td></tr>
+  <tr><td>Phase 4: Advisory transition</td><td><strong>R</strong></td><td>A</td><td>I</td><td>C</td><td>I</td><td>I</td></tr>
+  <tr><td>Stakeholder communication</td><td>C</td><td>C</td><td>I</td><td>I</td><td>I</td><td><strong>R</strong></td></tr>
+  <tr><td>Risk escalation</td><td>C</td><td>C</td><td>I</td><td>I</td><td>I</td><td><strong>R</strong></td></tr>
+</table>
+
+<p style="font-size: 0.85rem; color: #666;"><strong>R</strong> = Responsible, <strong>A</strong> = Accountable, <strong>C</strong> = Consulted, <strong>I</strong> = Informed</p>
+
+<p><strong>Additional people (Consulted/Informed as needed):</strong></p>
+<ul>
+  <li>Adam Samalik (OSCI PO) -- Consulted on OSCI priorities and capacity</li>
+  <li>Veronika Kabatova (OSCI) -- Consulted on RHIVOS-specific pipeline configuration</li>
+  <li>Chris Kelley (OSCI) -- Informed on gating-bot decommission alignment</li>
+  <li>Rachel Sibley (QE) -- Consulted on test scope decisions (D1)</li>
+  <li>Michal Srb (OSCI) -- Consulted on layered product support (R2)</li>
+  <li>Scott Weaver / Patrick Talbert -- Consulted on kernel MR workflow (D5)</li>
+  <li>Martin Perina -- Informed on FDA policy alignment</li>
+</ul>
+
+<!-- ================================================================== -->
+<h2 id="structural-improvements">9. What This Solves Beyond the Migration</h2>
+
+<p>Migrating to RoG is not just a tooling change. It structurally addresses several pain
+points surfaced during RHIVOS 2.0 RC3:</p>
+
+<table>
+  <tr><th>#</th><th>Problem</th><th>How RoG solves it</th></tr>
+  <tr>
+    <td>1</td>
+    <td><strong>Tagging knowledge bottleneck</strong> -- only Petr + Ozan know release tagging</td>
+    <td>RoG automates draft-to-candidate promotion. No manual tagging knowledge needed for per-package gating.</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><strong>Companion package rebuild chaos</strong> -- daily Sameera requests from Eric Chanudet</td>
+    <td>Grouped builds via side tags handle kernel + companions as a unit.</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td><strong>Missing audit trail</strong> -- kernel team concern, no reviewer on code changes</td>
+    <td>Every code change has an MR with reviewer, test results, and approval history.</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td><strong>FDA "no manual tagging" partially enforced</strong></td>
+    <td>RoG makes it structurally impossible to manually tag packages into -candidate without going through the MR pipeline.</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td><strong>Undocumented pre-gate tagging workflow</strong> -- 6 gaps from RC3 audit</td>
+    <td>The -gate tag and its undocumented tagging process are eliminated entirely.</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td><strong>STAG proposal never implemented</strong></td>
+    <td>RoG side tags are the productized, supported version of what STAG proposed.</td>
+  </tr>
+</table>
+
+<!-- ================================================================== -->
+
+<h2>Dependencies and Sequencing</h2>
+
+<pre>
+External dependencies:
+  [OSCI-9642]  OSCI team supports RHIVOS components ----+
+  [VROOM-40774] -draft Brew targets exist ---------------+---&gt; Phase 0 exit
+  [MR !870]    Branch naming adapter merged -------------+
+  [OSCI-8454]  Gating-bot decommission timeline ---------+---&gt; Informs Phase 4
+  [ReportPortal Sep 22] Decommission --------------------+---&gt; Informs Phase 2
+
+Internal dependencies:
+  Phase 0 ---&gt; Phase 1 (prerequisites must be met)
+  Phase 1 ---&gt; Phase 2 (pilot validation informs kernel approach)
+  Phase 1 ---&gt; Phase 3 (pilot validation informs batch onboarding)
+  Phase 2 ---&gt; Phase 4 (kernel is most complex, must be stable before decommission)
+
+Parallel work (not blocking):
+  - QC Layered Product can resume independently
+  - CAIB integration is orthogonal
+  - Conflux integration benefits from but does not block RoG
+</pre>
+
+<hr>
+<p style="font-size: 0.85rem; color: #888;">
+  Generated July 14, 2026 | Avihai Efrat, ATC Engineering Manager |
+  Source data: Jira (AUTOBU-1105, VROOM-41188, OSCI-9642), Petr Sabata 1:1 (Jul 14),
+  Gator source analysis, DPAC pipeline review, RHIVOS dist-git workflow documentation
+</p>
+
+</body>
+</html>
