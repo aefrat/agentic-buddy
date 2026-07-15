@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-07-13
-access_count: 2
+last_accessed: 2026-07-15
+access_count: 3
 created: 2026-07-13
 ---
 
@@ -28,6 +28,11 @@ driven by dissatisfaction.
   All March open items addressed. Toolchain Architect role established on
   trial basis. TPO reduction and distribution offloading agreed. Mentorship
   approach defined. Career development added as permanent 1:1 topic.
+- **2026-07-15:** Avi/Jaime 1:1 - discussed Kanitha situation. **Jaime has
+  no objections to Toolchain Architect role change.** Mentor candidates
+  discussed: Alexander Larsson, Ian McLeod (more AI-related). Jan Onderka
+  critical for taking on LP and release distribution work - need word from
+  Meital Arki about his move. Avi to circle back with Meital Arki Jul 16.
 
 ## What Kanitha Wants (from Jul 13 conversation)
 
@@ -67,12 +72,14 @@ depth that has been building since March.
 
 | # | Action | Timeline | Status |
 |---|---|---|---|
-| 1 | Talk to Jamie about opportunities/mentoring | This week | Pending |
-| 2 | Identify architectural mentor (Napster candidate + Jamie names) | Within 2 weeks | Pending |
+| 1 | Talk to Jamie about opportunities/mentoring | This week | **Done (Jul 15)** - no objections to role change |
+| 2 | Identify architectural mentor (Alexander Larsson, Ian McLeod, + Jamie) | Within 2 weeks | In progress - candidates identified Jul 15 |
 | 3 | Connect with Christine re SP team knowledge sharing + Aman | Week of Jul 21+ (Christine OOO) | Pending |
 | 4 | Discuss distribution offloading with Ozan | This week | Pending |
 | 5 | Begin absorbing TPO/operational tasks personally | Immediately | Pending |
 | 6 | Seek additional team capacity for TPO/distribution | Ongoing | Pending |
+| 7 | Circle back with Meital Arki re Jan Onderka's move | Jul 16 | Pending |
+| 8 | Assess Jan Onderka for LP + release distribution work | After Meital response | Pending |
 
 ## Kanitha's Action Items
 
@@ -113,3 +120,4 @@ depth that has been building since March.
 - Meeting transcript (Jul 13): https://docs.google.com/document/d/1QVpfXr9fccPXH_vlqsa8E4fiImKcj5cTnr3B49XJbLw/edit
 - Meeting notes (Jul 13): https://docs.google.com/document/d/1GQqaK3hJr-mQERTT-CgsVhNKn0q5ewcFDMoAbqRjaRE/edit
 - 1:1 summary (Jul 13): https://docs.google.com/document/d/1_70S-eu9TsWJXE4b8UJdyunhUE55E8quR6Cteq8zrZg/edit
+- Avi/Jaime 1:1 (Jul 15): https://docs.google.com/document/d/15Mct3u5q9xrPYUpEy6XFUMRNwe7B2dtWTewjr2Y4440/edit
