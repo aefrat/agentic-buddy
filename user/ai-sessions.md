@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-07-15 | RHIVOS Jira Workflows LLM wiki: Confluence + diagram extraction, agentic-buddy KB (10 files), standalone wiki enrichment, GitLab push, NotebookLM notebook, README | `d1f725a5-63d0-4d29-a860-e13621543101` |
 | 2026-07-15 | Morning briefing: cross-source task consolidation (logs/Slack/G-docs), Jaime 1:1 outcomes (Kanitha approved, mentors, Jan Onderka), 13-task list built | `b9ee268a-518b-4587-8f23-750599524d7a` |
 | 2026-07-14 | Petr Sabata 1:1 processing (4 topics), RHIVOS on GitLab deep dive (draft builds, UMB-Notifier, Gator), RoG migration architecture proposal (HTML) | `f5561dab-d032-4d08-b32c-20f38afa8eb0` |
 | 2026-07-14 | QC self-evaluation review (all 6 sections), scope-refresh message draft for Jaime | (reflect-only) |
