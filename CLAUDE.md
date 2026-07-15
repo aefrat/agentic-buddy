@@ -97,6 +97,7 @@ Directories with an `index.md` have a content map — read it first to decide wh
 - [AI Methodology Agent](agent_brain/projects/methodology-agent/index.md) — AI workflow methodology evidence base: task classifications, computed statistics, accumulated patterns, shareable briefs. Read when running methodology captures/briefs or discussing AI adoption readiness.
 - [RHAS Testing Ownership](agent_brain/projects/rhas-testing-ownership/index.md) — RHAS testing ownership initiative: features requiring testing, candidate qualifications, testing domain analysis. Read when discussing RHAS QE staffing, testing strategy, or candidate evaluation.
 - [RHAS QE Agent](agent_brain/projects/rhas-qe-agent/index.md) — RHAS QE Expert Lead agent stores (test strategy, release criteria, testing status, OCP QE contacts, agentic testing tools). Read when running RHAS test strategy, release criteria, or test status reports.
+- [RHIVOS Jira Workflows](agent_brain/projects/rhivos-jira-workflows/index.md) — LLM-queryable knowledge base for RHIVOS Jira workflows: AUTOBU/VROOM projects, Feature/Initiative/Product/Task workflows with states/transitions/field requirements, issue type mapping, kernel component decision tree, RHEL mirroring automations, milestones, FAQ. Read when any Jira workflow question comes up.
 
 New directories inside `agent_brain/` or `user/` are created as needed. Add them to this list. Format: **what the directory contains** (content description) + **when to read it** (trigger). Don't describe how it's built or maintained — that belongs in the skill, not here.
 
