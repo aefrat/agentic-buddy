@@ -18,3 +18,5 @@ Log files: `logs/YYYY-MM-DD.md` (derive from the date in each entry).
 - 2026-07-05: active — CY26Q2 QC self-evaluation career aspirations draft
 - 2026-07-12: active — Container vulnerability remediation progress (VHCL-009 closed), ATC Slack activity synthesis, stakeholder Slack activity summary, **weekly W28 review**
 - 2026-07-13: active — Talent development (Roderick SPSE L5 path), retention management (Kanitha internal mobility + Toolchain Architect role creation)
+- 2026-07-14: active — QC self-evaluation review, scope-refresh draft, Petr 1:1 (single LP, RoG migration, tagging bottleneck), RoG architecture proposal
+- 2026-07-15: maintenance
