@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-07-15
-access_count: 34
+last_accessed: 2026-07-16
+access_count: 35
 created: 2026-06-01
 ---
 
@@ -15,8 +15,7 @@ Resolved observations are moved to the bottom.
 
 ## Skill candidates
 
-- **2026-06-10:** "Build LLM wiki from Confluence page" — fetch Confluence pages via v2 API (parent + children), convert HTML→markdown, scaffold Karpathy-style wiki with CLAUDE.md schema, run INGEST in rounds (concepts → workflows → processes → enrichment → onboarding), LINT, verify. Parameterizable by Confluence page ID and wiki domain. Used for RHIVOS workflows wiki. (seen: 1)
-  - 2026-07-15: Seen again - enriched the same wiki with diagram-accurate data from Google Drawing exports. The INGEST/ENRICH/LINT operation cycle works as designed. The standalone repo pattern (CLAUDE.md + wiki/ + raw/) confirmed to work for team sharing via GitLab. (seen: 2)
+- ~~**2026-06-10:** "Build LLM wiki from Confluence page"~~ → **resolved 2026-07-16:** created skill `agent_brain/skills/build-llm-wiki.md` (seen 2x)
 - ~~**2026-06-11:** "Scan Slack channel and generate project update"~~ → **resolved 2026-06-14:** created skill `agent_brain/skills/scan-slack-channel.md` (seen 3x, adapted to use Slack MCP tools per Rule 18)
 - **2026-06-11:** "Search Confluence for topic research" — use Confluence REST API (`wiki/rest/api/search?cql=...`) with .netrc auth to search across spaces, read full page content, extract and synthesize findings. Used to research OSCI CI Mediator across RHELPLAN, IVOS, and Red Hat Catalog spaces. Reusable for any Confluence research request. (seen: 1)
 - **2026-06-14:** "Check Slack activity inbox" — pull user's mentions and DMs, identify action items needing response, generate summary table. Complementary to channel scanning — channels show team activity, inbox shows what needs the user's attention. (seen: 1)
