@@ -1,6 +1,6 @@
 ---
 last_accessed: 2026-07-19
-access_count: 36
+access_count: 37
 created: 2026-06-01
 ---
 
@@ -35,7 +35,7 @@ Resolved observations are moved to the bottom.
 
 ## Concept candidates
 
-- **2026-06-10:** Confluence attachment downloads use different auth than API calls. The v2 pages API works with basic auth (.netrc), but `/download/attachments/` returns 401. May need cookie-based session or different token scope. (seen: 1)
+- **2026-06-10:** Confluence attachment downloads use different auth than API calls. **Update 2026-07-19:** Confluence API auth method depends on token type - Bearer vs Basic auth produce different results with the same PAT. The old CONFLUENCE_API_TOKEN worked with Bearer but had limited space access (4 spaces). The JIRA_API_TOKEN (with broader space access) only works with Basic auth on Confluence. Both are valid Atlassian PATs on the same instance. The v2 pages API works with basic auth (.netrc), but `/download/attachments/` returns 401. May need cookie-based session or different token scope. (seen: 1)
 - ~~**2026-06-11:** Cross-referencing Slack discussions against documented processes~~ → **resolved 2026-06-18:** created concept `agent_brain/concepts/cross-referencing-slack-vs-docs.md` (seen 3x)
 - **2026-06-11:** CI pipeline YAML files (`.gitlab-ci.yml`, stage includes, rules) are often the most authoritative source for understanding system architecture — more so than wikis or DETAILED.md docs. The Gator command orchestration (independent triggers vs sequential pipeline) was fully answered by reading `.gitlab/rules.yml` and the stage YAMLs, while DETAILED.md only showed the DPAC→Gator cross-project trigger. Pattern: "read the CI config to understand how components interact at runtime." (seen: 1)
 - ~~**2026-06-11:** Confluence REST API patterns~~ → **resolved 2026-06-18:** created concept `agent_brain/concepts/confluence-api-patterns.md` (seen 3x)

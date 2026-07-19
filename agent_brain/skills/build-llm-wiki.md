@@ -24,11 +24,11 @@ Fetch the root Confluence page and its children via the v2 REST API:
 ```bash
 # Root page
 curl -s -n "https://redhat.atlassian.net/wiki/api/v2/pages/${PAGE_ID}?body-format=atlas_doc_format" \
-  -H "Authorization: Bearer ${CONFLUENCE_API_TOKEN}"
+  -u "aefrat@redhat.com:${CONFLUENCE_API_TOKEN}"
 
 # Child pages
 curl -s -n "https://redhat.atlassian.net/wiki/api/v2/pages/${PAGE_ID}/children?body-format=atlas_doc_format&limit=100" \
-  -H "Authorization: Bearer ${CONFLUENCE_API_TOKEN}"
+  -u "aefrat@redhat.com:${CONFLUENCE_API_TOKEN}"
 ```
 
 Save raw responses to `raw/` directory for reference. Convert HTML/ADF
