@@ -13,7 +13,6 @@ Sources: `daily`, `weekly`, `monthly`, `user`.
 
 ---
 
-- **reminder** (2026-07-19, daily): **Atlassian API token expires TODAY (Jul 19).** Renew immediately or Jira queries from manager report and all skills will break.
 - **reminder** (2026-07-19, daily): **Aman Vishwakarma onboarding - day 2 (started Jul 18).** Christine Freitas OOO until Jul 27 - you are primary onboarding contact. Aman needs badge and laptop. Also key for Kanitha distribution offloading.
 - **reminder** (2026-07-19, daily): **Hubert Stefanski transition day 19 (started Jul 1), KT plan still overdue.** Was due ~Jun 17. CloudFront migration timeline needed (Hubert is fork maintainer). Jeff Ligon scrum master handoff not formally announced.
 - **reminder** (2026-07-19, daily): **Roderick 30-day checkpoint 19 days overdue.** Day 49 (started Jun 1). SPSE development profile ready at `talent-architecture/active/roderick.kieley/` - use as conversation framework. PITCREW-294 due Jul 28, Roderick PTO Jul 27-Aug 3 - needs wrap-up before leave.
