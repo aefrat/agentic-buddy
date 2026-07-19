@@ -1,8 +1,140 @@
 {
-  "computed_at": "2026-06-29",
-  "history_count": 2,
+  "computed_at": "2026-07-16",
+  "history_count": 4,
   "window": 4,
-  "modes": {},
+  "modes": {
+    "weekly": {
+      "sample_count": 1,
+      "date_range": "2026-06-28 to 2026-06-28",
+      "ATC": {
+        "sample_count": 1,
+        "metrics": {
+          "in_progress": {
+            "current": 10,
+            "rolling_avg": 10.0,
+            "delta": null
+          },
+          "closed": {
+            "current": 0,
+            "rolling_avg": 0.0,
+            "delta": null
+          },
+          "new": {
+            "current": 1,
+            "rolling_avg": 1.0,
+            "delta": null
+          },
+          "blocked": {
+            "current": 0,
+            "rolling_avg": 0.0,
+            "delta": null
+          },
+          "high_pri": {
+            "current": 0,
+            "rolling_avg": 0.0,
+            "delta": null
+          },
+          "state_changes": {
+            "current": 6,
+            "rolling_avg": 6.0,
+            "delta": null
+          },
+          "mrs": {
+            "current": 9,
+            "rolling_avg": 9.0,
+            "delta": null
+          }
+        },
+        "slack": {
+          "channels_active": {
+            "current": 21,
+            "rolling_avg": 21.0,
+            "delta": null
+          },
+          "total_messages": {
+            "current": 174,
+            "rolling_avg": 174.0,
+            "delta": null
+          },
+          "notable_threads": {
+            "current": 10,
+            "rolling_avg": 10.0,
+            "delta": null
+          }
+        },
+        "per_member_closed": {},
+        "anomalies": [],
+        "notes": []
+      },
+      "PitCrew": {
+        "sample_count": 1,
+        "metrics": {
+          "in_progress": {
+            "current": 7,
+            "rolling_avg": 7.0,
+            "delta": null
+          },
+          "closed": {
+            "current": 7,
+            "rolling_avg": 7.0,
+            "delta": null
+          },
+          "new": {
+            "current": 1,
+            "rolling_avg": 1.0,
+            "delta": null
+          },
+          "blocked": {
+            "current": 0,
+            "rolling_avg": 0.0,
+            "delta": null
+          },
+          "high_pri": {
+            "current": 0,
+            "rolling_avg": 0.0,
+            "delta": null
+          },
+          "state_changes": {
+            "current": 16,
+            "rolling_avg": 16.0,
+            "delta": null
+          },
+          "prs": {
+            "current": 14,
+            "rolling_avg": 14.0,
+            "delta": null
+          }
+        },
+        "slack": {
+          "channels_active": {
+            "current": 9,
+            "rolling_avg": 9.0,
+            "delta": null
+          },
+          "total_messages": {
+            "current": 125,
+            "rolling_avg": 125.0,
+            "delta": null
+          },
+          "notable_threads": {
+            "current": 10,
+            "rolling_avg": 10.0,
+            "delta": null
+          }
+        },
+        "per_member_closed": {
+          "Bella Khizgiyaev": 3,
+          "Miguel Angel Ajo Pelayo": 2,
+          "Mohamad Abo Ras": 1,
+          "Evgeni Vakhonin": 1
+        },
+        "anomalies": [],
+        "notes": [
+          "Top contributor: Bella Khizgiyaev (3 tickets)"
+        ]
+      }
+    }
+  },
   "has_anomalies": false,
   "anomaly_count": 0
 }

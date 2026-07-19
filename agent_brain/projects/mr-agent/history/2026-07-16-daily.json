@@ -1,0 +1,46 @@
+{
+  "generated_at": "2026-07-16T06:19:27Z",
+  "mode": "daily",
+  "days": 1,
+  "period": "last 1 day",
+  "metrics": {
+    "ATC": {
+      "in_progress": 0,
+      "closed": 0,
+      "new": 0,
+      "blocked": 0,
+      "high_pri": 0,
+      "state_changes": 0,
+      "mrs": 7
+    },
+    "PitCrew": {
+      "in_progress": 0,
+      "closed": 0,
+      "new": 0,
+      "blocked": 0,
+      "high_pri": 0,
+      "state_changes": 0,
+      "prs": 1
+    }
+  },
+  "slack": {
+    "ATC": {
+      "channels_active": 2,
+      "total_messages": 21,
+      "notable_threads": 2
+    },
+    "PitCrew": {
+      "channels_active": 2,
+      "total_messages": 11,
+      "notable_threads": 2
+    },
+    "Stakeholders": {
+      "Jaime Flynn": 0,
+      "Jeff Ligon": 1,
+      "Paul Wallrabe": 0,
+      "Petr Sabata": 0
+    }
+  },
+  "ATC": [],
+  "PitCrew": []
+}
