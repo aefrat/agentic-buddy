@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RHIVOS Release Build to Distribution Complete Flow</title>
+<style>
+  :root {
+    --rh-red: #EE0000;
+    --rh-red-dark: #A30000;
+    --rh-blue: #06C;
+    --rh-teal: #009596;
+    --rh-green: #3E8635;
+    --rh-orange: #F0AB00;
+    --rh-purple: #6753AC;
+    --rh-gray-100: #F5F5F5;
+    --rh-gray-200: #E0E0E0;
+    --rh-gray-300: #B8BBBE;
+    --rh-gray-600: #6A6E73;
+    --rh-gray-800: #292929;
+    --rh-white: #FFFFFF;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+    --radius: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Red Hat Display', 'Red Hat Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--rh-gray-100);
+    color: var(--rh-gray-800);
+    line-height: 1.5;
+  }
+
+  .header {
+    background: linear-gradient(135deg, var(--rh-gray-800) 0%, #3C3F42 100%);
+    color: var(--rh-white);
+    padding: 40px 48px;
+    border-bottom: 4px solid var(--rh-red);
+  }
+  .header h1 { font-size: 28px; font-weight: 600; margin-bottom: 8px; }
+  .header .subtitle { font-size: 15px; color: var(--rh-gray-300); font-weight: 400; }
+  .header .meta {
+    margin-top: 16px;
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+    color: var(--rh-gray-300);
+  }
+  .header .meta span { display: flex; align-items: center; gap: 6px; }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+
+  .overview-card {
+    background: var(--rh-white);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow-sm);
+    border-left: 4px solid var(--rh-blue);
+  }
+  .overview-card h2 { font-size: 18px; margin-bottom: 12px; color: var(--rh-gray-800); }
+  .overview-card p { font-size: 14px; color: var(--rh-gray-600); }
+
+  /* Flow diagram */
+  .flow-section {
+    background: var(--rh-white);
+    border-radius: var(--radius);
+    padding: 32px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow-md);
+  }
+  .flow-section h2 {
+    font-size: 20px;
+    margin-bottom: 4px;
+    color: var(--rh-gray-800);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .flow-section .section-desc {
+    font-size: 13px;
+    color: var(--rh-gray-600);
+    margin-bottom: 24px;
+  }
+
+  .phase-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    color: var(--rh-white);
+  }
+  .phase-badge.build { background: var(--rh-blue); }
+  .phase-badge.gate { background: var(--rh-orange); color: var(--rh-gray-800); }
+  .phase-badge.compose { background: var(--rh-teal); }
+  .phase-badge.test { background: var(--rh-purple); }
+  .phase-badge.dist { background: var(--rh-green); }
+  .phase-badge.cdn { background: var(--rh-red); }
+
+  /* Horizontal flow */
+  .flow-row {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .flow-step {
+    flex: 1;
+    background: var(--rh-white);
+    border: 2px solid var(--rh-gray-200);
+    border-radius: var(--radius);
+    padding: 16px 14px;
+    position: relative;
+    min-width: 0;
+    transition: box-shadow 0.2s;
+  }
+  .flow-step:hover { box-shadow: var(--shadow-md); }
+
+  .flow-step .step-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--rh-white);
+    background: var(--rh-gray-600);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+  .flow-step.build .step-num { background: var(--rh-blue); }
+  .flow-step.gate .step-num { background: var(--rh-orange); }
+  .flow-step.compose .step-num { background: var(--rh-teal); }
+  .flow-step.test .step-num { background: var(--rh-purple); }
+  .flow-step.dist .step-num { background: var(--rh-green); }
+  .flow-step.cdn .step-num { background: var(--rh-red); }
+
+  .flow-step h4 { font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--rh-gray-800); }
+  .flow-step p { font-size: 12px; color: var(--rh-gray-600); }
+  .flow-step .tool { font-size: 11px; color: var(--rh-blue); font-weight: 500; margin-top: 6px; }
+  .flow-step .owner { font-size: 11px; color: var(--rh-gray-600); font-style: italic; margin-top: 2px; }
+
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    min-width: 32px;
+    color: var(--rh-gray-300);
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  /* Vertical pipeline diagram */
+  .pipeline-diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0 20px;
+  }
+
+  .pipe-stage {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .pipe-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40px;
+    min-width: 40px;
+  }
+  .pipe-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 3px solid var(--rh-gray-300);
+    background: var(--rh-white);
+    z-index: 1;
+  }
+  .pipe-dot.build { border-color: var(--rh-blue); background: var(--rh-blue); }
+  .pipe-dot.gate { border-color: var(--rh-orange); background: var(--rh-orange); }
+  .pipe-dot.compose { border-color: var(--rh-teal); background: var(--rh-teal); }
+  .pipe-dot.test { border-color: var(--rh-purple); background: var(--rh-purple); }
+  .pipe-dot.dist { border-color: var(--rh-green); background: var(--rh-green); }
+  .pipe-dot.cdn { border-color: var(--rh-red); background: var(--rh-red); }
+
+  .pipe-line {
+    width: 3px;
+    flex: 1;
+    min-height: 24px;
+    background: var(--rh-gray-200);
+  }
+
+  .pipe-content {
+    background: var(--rh-white);
+    border: 1px solid var(--rh-gray-200);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    flex: 1;
+    margin-bottom: 8px;
+  }
+  .pipe-content h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .pipe-content p { font-size: 12px; color: var(--rh-gray-600); margin-bottom: 4px; }
+  .pipe-content .detail { font-size: 11px; color: var(--rh-gray-600); }
+  .pipe-content .tool-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    background: var(--rh-gray-100);
+    color: var(--rh-gray-600);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 4px;
+    margin-top: 4px;
+  }
+
+  /* Brew tag diagram */
+  .tag-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    padding: 20px 0;
+  }
+  .tag-box {
+    background: var(--rh-white);
+    border: 2px solid var(--rh-gray-200);
+    border-radius: 6px;
+    padding: 10px 16px;
+    text-align: center;
+    min-width: 140px;
+  }
+  .tag-box.active { border-color: var(--rh-blue); background: #EBF3FF; }
+  .tag-box.gate-tag { border-color: var(--rh-orange); background: #FFF8E1; }
+  .tag-box.candidate-tag { border-color: var(--rh-teal); background: #E6F7F7; }
+  .tag-box.pending-tag { border-color: var(--rh-green); background: #E8F5E9; }
+  .tag-box .tag-name { font-size: 12px; font-weight: 700; font-family: 'Courier New', monospace; }
+  .tag-box .tag-desc { font-size: 10px; color: var(--rh-gray-600); margin-top: 2px; }
+  .tag-arrow { font-size: 18px; color: var(--rh-gray-300); padding: 0 8px; font-weight: 700; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+  th {
+    background: var(--rh-gray-100);
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 2px solid var(--rh-gray-200);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: var(--rh-gray-600);
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--rh-gray-200);
+    vertical-align: top;
+  }
+  tr:hover td { background: var(--rh-gray-100); }
+  code {
+    font-family: 'Courier New', monospace;
+    background: var(--rh-gray-100);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 16px 0;
+    padding: 16px;
+    background: var(--rh-gray-100);
+    border-radius: var(--radius);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--rh-gray-600);
+  }
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  /* Parallel tracks */
+  .parallel-container {
+    display: flex;
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .parallel-track {
+    flex: 1;
+    border: 1px dashed var(--rh-gray-300);
+    border-radius: var(--radius);
+    padding: 16px;
+  }
+  .parallel-track h5 {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    color: var(--rh-gray-600);
+  }
+
+  /* Notes */
+  .note-box {
+    background: #FFF8E1;
+    border-left: 4px solid var(--rh-orange);
+    padding: 12px 16px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin: 12px 0;
+    font-size: 12px;
+    color: var(--rh-gray-800);
+  }
+  .note-box strong { color: var(--rh-gray-800); }
+
+  .gap-box {
+    background: #FFEBEE;
+    border-left: 4px solid var(--rh-red);
+    padding: 12px 16px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin: 12px 0;
+    font-size: 12px;
+  }
+
+  .decision-box {
+    background: #E8F5E9;
+    border-left: 4px solid var(--rh-green);
+    padding: 12px 16px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin: 12px 0;
+    font-size: 12px;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 12px;
+    color: var(--rh-gray-600);
+    border-top: 1px solid var(--rh-gray-200);
+    margin-top: 40px;
+  }
+
+  h3 { font-size: 16px; margin: 20px 0 10px; color: var(--rh-gray-800); }
+
+  ul { padding-left: 20px; font-size: 13px; }
+  li { margin-bottom: 4px; }
+
+  @media (max-width: 900px) {
+    .flow-row { flex-direction: column; gap: 8px; }
+    .flow-arrow { transform: rotate(90deg); width: auto; min-width: auto; height: 24px; }
+    .parallel-container { flex-direction: column; }
+    .header { padding: 24px; }
+    .container { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>RHIVOS Release Build to Distribution Complete Flow</h1>
+  <div class="subtitle">End-to-end pipeline from source code to customer CDN delivery</div>
+  <div class="meta">
+    <span>Based on: RHIVOS internal documentation, ATC LLM Wiki, Automotive Confluence</span>
+    <span>Date: July 2026</span>
+    <span>Status: Reference document</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Overview -->
+  <div class="overview-card">
+    <h2>Document Purpose</h2>
+    <p>This document visualizes the complete RHIVOS release build to distribution flow - from source code commit through Brew build, gating, compose generation, image building, testing, errata advisory creation, signing, and CDN delivery to customers. All content is derived exclusively from internal RHIVOS documentation: the ATC LLM Wiki (atc_llm_wiki), Automotive Confluence space, and RHIVOS strategy/project files.</p>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--rh-blue)"></div>Build</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--rh-orange)"></div>Gate / Evaluate</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--rh-teal)"></div>Compose / Image</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--rh-purple)"></div>Test</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--rh-green)"></div>Distribution / Errata</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--rh-red)"></div>CDN / Customer</div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 1: High-Level Flow -->
+  <!-- ============================================================ -->
+  <div class="flow-section">
+    <h2><span class="phase-badge build">Overview</span> End-to-End Pipeline (6 Phases)</h2>
+    <div class="section-desc">The RHIVOS release pipeline flows through six major phases. Each phase involves specific tools, Brew tags, and automation. The pipeline is largely automated via GitLab CI (downstream-pipelines-as-code) with Gator handling gating decisions.</div>
+
+    <div class="flow-row">
+      <div class="flow-step build">
+        <div class="step-num">1</div>
+        <h4>Source & Build</h4>
+        <p>Maintainer pushes to dist-git branch, triggers Brew (Koji) build targeting the correct release tag</p>
+        <div class="tool">rhpkg, Brew/Koji</div>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step gate">
+        <div class="step-num">2</div>
+        <h4>Gating</h4>
+        <p>Builds tagged into -gate, evaluated by Gator against Greenwave policies; promoted to -candidate on pass</p>
+        <div class="tool">Gator, Greenwave, WaiverDB</div>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step compose">
+        <div class="step-num">3</div>
+        <h4>Compose & Image Build</h4>
+        <p>ODCS generates RPM compose from -candidate tag; AIB builds OS images from compose repos</p>
+        <div class="tool">ODCS, AIB, create-osbuild</div>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step test">
+        <div class="step-num">4</div>
+        <h4>Testing</h4>
+        <p>Smoke tests on hardware (QC 8650/8775, Renesas, QEMU); CTC cycles for release candidates</p>
+        <div class="tool">Test Console, Testing Farm</div>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step dist">
+        <div class="step-num">5</div>
+        <h4>Errata & Signing</h4>
+        <p>Advisory creation, Jira linking, build attachment, PQC signing; push to CDN-stage</p>
+        <div class="tool">Gator, Errata Tool, PQC</div>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step cdn">
+        <div class="step-num">6</div>
+        <h4>CDN Delivery</h4>
+        <p>Errata advisory pushed to CDN; customer accesses via subscription-manager with entitled SKU</p>
+        <div class="tool">Pub, Akamai CDN, Candlepin</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 2: Detailed Pipeline -->
+  <!-- ============================================================ -->
+  <div class="flow-section">
+    <h2><span class="phase-badge compose">Detail</span> Detailed Pipeline Stages</h2>
+    <div class="section-desc">The downstream pipeline (downstream-pipelines-as-code) orchestrates 27 stages via GitLab CI. The three-layer inheritance model (upstream AutoSD base, enterprise overrides, release-specific config) enables one pipeline to serve multiple release streams.</div>
+
+    <div class="pipeline-diagram">
+
+      <!-- Stage 1: Source -->
+      <div class="pipe-stage">
+        <div class="pipe-connector">
+          <div class="pipe-dot build"></div>
+          <div class="pipe-line"></div>
+        </div>
+        <div class="pipe-content">
+          <h4>1. Source Code Commit</h4>
+          <p>Maintainer pushes to the appropriate dist-git branch. Dist-git server-side hook (gitbzverify) enforces Jira ticket references for GA-phase branches.</p>
+          <div class="detail">
+            <span class="tool-tag">dist-git</span>
+            <span class="tool-tag">pkgs.devel.redhat.com</span>
+          </div>
+          <table>
+            <tr><th>Branch</th><th>Release</th><th>Policy</th></tr>
+            <tr><td><code>rhivos-2-main</code></td><td>RHIVOS 2.1 (dev)</td><td>No restrictions</td></tr>
+            <tr><td><code>rhivos-2.0</code></td><td>RHIVOS 2.0 GA / 2.0.z</td><td>Strict: VROOM ticket + fixVersion + blocker approval</td></tr>
+          </table>
+          <div class="note-box"><strong>Exceptions:</strong> kernel-automotive, kernel-ivos-qualcomm, downstream-dtbs, qcom-scmi have "Anything Goes" on rhivos-2.0 (source-git workflow; gating happens upstream). kernel-ivos-nxp-extra-modules was missed and needs a RHELBLD ticket.</div>
+        </div>
+      </div>
+
+      <!-- Stage 2: Brew Build -->
+      <div class="pipe-stage">
+        <div class="pipe-connector">
+          <div class="pipe-dot build"></div>
+          <div class="pipe-line"></div>
+        </div>
+        <div class="pipe-content">
+          <h4>2. Brew (Koji) Build</h4>
+          <p>Maintainer triggers a build using <code>rhpkg build --target</code>. The build target determines which Brew tag the build lands in.</p>
+          <table>
+            <tr><th>Release</th><th>Target</th><th>Destination Tag</th></tr>
+            <tr><td>RHIVOS 2.0 GA</td><td><code>--target rhivos-2.0-candidate</code></td><td>rhivos-2.0-gate</td></tr>
+            <tr><td>RHIVOS 2.0.z</td><td><code>--target rhivos-2.0-z-candidate</code></td><td>rhivos-2.0-z-gate</td></tr>
+            <tr><td>RHIVOS 2.1</td><td><code>--target rhivos-2.1-candidate</code></td><td>rhivos-2.1-candidate</td></tr>
+          </table>
+          <div class="detail">
+            <span class="tool-tag">Brew/Koji</span>
+            <span class="tool-tag">rhpkg</span>
+            <span class="tool-tag">Kerberos</span>
+          </div>
+          <div class="note-box"><strong>Buildroot:</strong> Uses <code>rhivos-X.Y.Z-build</code> tag as the buildroot (stable, gated content). New builds land in <code>-gate</code>, not immediately visible to subsequent builds. The STAG proposal (not yet implemented) would allow lockstep builds of interdependent packages.</div>
+        </div>
+      </div>
+
+      <!-- Stage 3: Tagging into -gate -->
+      <div class="pipe-stage">
+        <div class="pipe-connector">
+          <div class="pipe-dot gate"></div>
+          <div class="pipe-line"></div>
+        </div>
+        <div class="pipe-content">
+          <h4>3. Tagging into -gate</h4>
+          <p>Builds are tagged into the <code>-gate</code> tag using <code>brew tag-build</code>. This is the entry point for Gator evaluation.</p>
+          <div class="detail">
+            <span class="tool-tag">brew tag-build</span>
+            <span class="tool-tag">rhivos-tagger permission</span>
+          </div>
+          <div class="gap-box"><strong>Known gap:</strong> Ownership for who tags packages into -gate is not formally documented. In practice: some maintainers request tagging via Sameera Kalgudi; for RC scenarios, Francisco da Rocha and Ozan Unsal do it ad-hoc. Kernel maintainers (Oleksii Baranov's team) lack <code>rhivos-tagger</code> Brew permission. RHELBLD-18777 and RHELBLD-18778 filed to extend permissions.</div>
+        </div>
+      </div>
+
+      <!-- Stage 4: Gator Evaluation -->
+      <div class="pipe-stage">
+        <div class="pipe-connector">
+          <div class="pipe-dot gate"></div>
+          <div class="pipe-line"></div>
+        </div>
+        <div class="pipe-content">
+          <h4>4. Gator Evaluation (Package Gating)</h4>
+          <p>Gator is a stateless Python CLI that automates RPM evaluation and promotion. It diffs source vs. target Brew tags, evaluates new packages against Greenwave policies, and checks ResultsDB for test results.</p>
+          <ul>
+            <li><strong>Pass:</strong> Auto-promotes to <code>-candidate</code> tag</li>
+            <li><strong>Fail:</strong> Posts Slack notification with WaiverDB links for manual waiver</li>
+            <li><strong>kernel-automotive special path:</strong> Checks ReportPortal for triage status; if all failures have BTS links, auto-promotes</li>
+          </ul>
+          <div class="detail">
+            <span class="tool-tag">Gator</span>
+            <span class="tool-tag">Greenwave</span>
+            <span class="tool-tag">ResultsDB</span>
+            <span class="tool-tag">WaiverDB</span>
+            <span class="tool-tag">ReportPortal</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 5: Release Config + Pipeline Trigger -->
+      <div class="pipe-stage">
+        <div class="pipe-connector">
+          <div class="pipe-dot compose"></div>
+          <div class="pipe-line"></div>
+        </div>
+        <div class="pipe-content">
+          <h4>5. Release Config & Pipeline Trigger</h4>
+          <p>A release config file (<code>.gitlab/release-configs/RHIVOS-X.Y.Z-RCn.yml</code>) is created in downstream-pipelines-as-code. A git tag on the rhivos repo triggers the GitLab CI pipeline.</p>
+          <p><strong>BUILD_BRANCH</strong> is the master switch. It loads the corresponding release config which sets STREAM, X_STREAM, Y_STREAM, compose URLs, Koji tags, and S3 paths.</p>
+          <div class="detail">
+            <span class="tool-tag">downstream-pipelines-as-code</span>
+            <span class="tool-tag">release-definitions</span>
+            <span class="tool-tag">GitLab CI</span>
+          </div>
+          <div class="note-box"><strong>Three-layer inheritance:</strong> Layer 1 (upstream AutoSD base) - Layer 2 (enterprise overrides + extensions) - Layer 3 (release-specific config loaded FIRST). Include order in .gitlab-ci.yml is critical: wrong order breaks variable resolution.</div>
+        </div>
+      </div>
+
+      <!-- Stage 6: ODCS Compose -->
+      <div class="pipe-stage">
+        <div class="pipe-connector">
+          <div class="pipe-dot compose"></div>
+          <div class="pipe-line"></div>
+        </div>
+        <div class="pipe-content">
+          <h4>6. ODCS Compose Generation (generate-compose)</h4>
+          <p>ODCS (On Demand Compose Service) generates an RPM repository from the Pungi config and the <code>-candidate</code> Brew tag. The compose defines the bill of materials for the RHIVOS release.</p>
+          <p>Duration: 10-30 minutes. Requires Kerberos auth via KEYTAB_ODCS. Packages must be signed; unsigned packages cause ODCS rejection.</p>
+          <div class="detail">
+            <span class="tool-tag">ODCS</span>
+            <span class="tool-tag">pac-jobs generate-compose</span>
+            <span class="tool-tag">Pungi</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 7: Repo Closure Check -->
+      <div class="pipe-stage">
+        <div class="pipe-connector">
+          <div class="pipe-dot compose"></div>
+          <div class="pipe-line"></div>
+        </div>
+        <div class="pipe-content">
+          <h4>7. Repository Closure Check (check-repoclosure)</h4>
+          <p>Validates that all RPM dependencies in the compose can be satisfied. Catches broken dependency chains before image builds start.</p>
+          <div class="detail">
+            <span class="tool-tag">pac-jobs</span>
+            <span class="tool-tag">repoclosure</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 8: Image Build -->
+      <div class="pipe-stage">
+        <div class="pipe-connector">
+          <div class="pipe-dot compose"></div>
+          <div class="pipe-line"></div>
+        </div>
+        <div class="pipe-content">
+          <h4>8. Image Build (build-*-image)</h4>
+          <p>Automotive Image Builder (AIB) builds OS images from the compose repos. Image recipes define how to assemble images per hardware target. The compose URL is passed as a repo source in the AIB manifest (<code>content.repos</code>).</p>
+          <p><strong>Thin executor pattern:</strong> pac-jobs pre-computes all build parameters (AIB_COMMAND, S3_UPLOAD_PREFIX, BUILD_FORMAT). create-osbuild executes inside a container, resolves manifests from custom-images repo, runs AIB/OSBuild, uploads artifacts to S3.</p>
+          <div class="detail">
+            <span class="tool-tag">AIB</span>
+            <span class="tool-tag">create-osbuild</span>
+            <span class="tool-tag">pac-jobs build-image</span>
+            <span class="tool-tag">Testing Farm</span>
+            <span class="tool-tag">AWS S3</span>
+          </div>
+          <table>
+            <tr><th>Format</th><th>Target</th></tr>
+            <tr><td>qcow2</td><td>QEMU / VM testing</td></tr>
+            <tr><td>aboot</td><td>Android Boot (Qualcomm boards)</td></tr>
+            <tr><td>simg</td><td>Sparse image (ebbr/TI/Renesas boards)</td></tr>
+            <tr><td>AMI</td><td>AWS cloud images</td></tr>
+          </table>
+          <div class="note-box"><strong>Key difference from RHEL-for-NVIDIA:</strong> RHIVOS builds images AFTER the compose (compose first, then AIB). RHEL-for-NVIDIA builds images DURING compose time (via Pungi/ODCS). This is an architectural incompatibility that makes Voyager's build tooling inapplicable to RHIVOS.</div>
+        </div>
+      </div>
+
+      <!-- Stage 9: Smoke Tests -->
+      <div class="pipe-stage">
+        <div class="pipe-connector">
+          <div class="pipe-dot test"></div>
+          <div class="pipe-line"></div>
+        </div>
+        <div class="pipe-content">
+          <h4>9. Smoke Tests (smoke-tests-*)</h4>
+          <p>Hardware smoke tests run on physical boards via Test Console. pac-jobs submits tests with deferred report uploads (disables TC upload jobs at submission; batch-enables after all pass to prevent partial uploads).</p>
+          <div class="detail">
+            <span class="tool-tag">Test Console</span>
+            <span class="tool-tag">pac-jobs run-smoke-tests-tc</span>
+            <span class="tool-tag">Jumpstarter</span>
+          </div>
+          <table>
+            <tr><th>Hardware Target</th><th>Board</th></tr>
+            <tr><td>Qualcomm</td><td>SA8650P (QDrive3), SA8775P (RideSX4)</td></tr>
+            <tr><td>Renesas</td><td>R-Car S4</td></tr>
+            <tr><td>Raspberry Pi</td><td>RPi4</td></tr>
+            <tr><td>Virtual</td><td>QEMU</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Stage 10: CTC -->
+      <div class="pipe-stage">
+        <div class="pipe-connector">
+          <div class="pipe-dot test"></div>
+          <div class="pipe-line"></div>
+        </div>
+        <div class="pipe-content">
+          <h4>10. Confidence Test Cycle (CTC)</h4>
+          <p>For release candidates: formal CTC runs with broader test coverage. Includes kernel gating, systemd, a-b-c tests, kselftests, LTP. Results feed into release go/no-go decision.</p>
+          <p>Two phases for RC builds: Reduced CTC (day 1 - smoke + kernel gating), Full CTC (weekend - ASIL-B + kernel debug for FuSa evidence).</p>
+          <div class="detail">
+            <span class="tool-tag">Test Console</span>
+            <span class="tool-tag">ResultsDB</span>
+            <span class="tool-tag">Polarion</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 11: Compose Promotion -->
+      <div class="pipe-stage">
+        <div class="pipe-connector">
+          <div class="pipe-dot dist"></div>
+          <div class="pipe-line"></div>
+        </div>
+        <div class="pipe-content">
+          <h4>11. Compose Promotion (promote-compose)</h4>
+          <p>After testing passes, the compose is promoted. pac-jobs runs promote-compose via SSH to the RCM host with Kerberos/GSSAPI auth. ComposeDB import registers the compose for downstream consumption.</p>
+          <p>Gator runs promote-packages-in-brew to move packages from <code>-candidate</code> to <code>-pending</code>.</p>
+          <div class="detail">
+            <span class="tool-tag">pac-jobs promote-compose</span>
+            <span class="tool-tag">RCM Host</span>
+            <span class="tool-tag">ComposeDB</span>
+            <span class="tool-tag">Gator promote</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 12: Errata Advisory -->
+      <div class="pipe-stage">
+        <div class="pipe-connector">
+          <div class="pipe-dot dist"></div>
+          <div class="pipe-line"></div>
+        </div>
+        <div class="pipe-content">
+          <h4>12. Errata Advisory Creation</h4>
+          <p>Gator's <code>generate-advisories</code> command scans passing packages, searches for matching VROOM Jira tickets, creates advisories in Errata Tool, and attaches builds. Separate FuSa and Core batches are maintained.</p>
+          <ul>
+            <li>Attaches only Stories and Bugs for RHIVOS packages</li>
+            <li>Jira tickets become customer-visible release notes</li>
+            <li>RHEL-derived advisories are cloned and adapted by Marcel (RHEL issue keys placed as URL references to avoid cross-project comments)</li>
+            <li>Multicomponent advisories can bundle kernel + derivatives</li>
+          </ul>
+          <div class="detail">
+            <span class="tool-tag">Gator generate-advisories</span>
+            <span class="tool-tag">Errata Tool</span>
+            <span class="tool-tag">Jira</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 13: Signing -->
+      <div class="pipe-stage">
+        <div class="pipe-connector">
+          <div class="pipe-dot dist"></div>
+          <div class="pipe-line"></div>
+        </div>
+        <div class="pipe-content">
+          <h4>13. Package Signing</h4>
+          <p>Signing happens automatically when builds are attached to errata advisories. The Errata Tool triggers PQC (Package Signing Certificate) signing on attachment. No manual signing step needed - but builds must be in <code>-candidate</code> tag first (gating must pass).</p>
+          <div class="detail">
+            <span class="tool-tag">Errata Tool</span>
+            <span class="tool-tag">PQC</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 14: CDN Push -->
+      <div class="pipe-stage">
+        <div class="pipe-connector">
+          <div class="pipe-dot cdn"></div>
+          <div class="pipe-line"></div>
+        </div>
+        <div class="pipe-content">
+          <h4>14. CDN Push (REL_PREP to Live)</h4>
+          <p>Errata advisory pushed to CDN-stage for validation, then to production CDN. RPMs via Errata Tool/Pub. ISOs/QCOW2 images via Pub separately. Nightly/latest builds promoted via CloudFront invalidation.</p>
+          <p>CDN paths follow the pattern: <code>/content/dist/rhivos2/2.0/$basearch/os</code></p>
+          <div class="detail">
+            <span class="tool-tag">Pub</span>
+            <span class="tool-tag">Akamai CDN</span>
+            <span class="tool-tag">AWS CloudFront</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 15: Customer Access -->
+      <div class="pipe-stage">
+        <div class="pipe-connector">
+          <div class="pipe-dot cdn"></div>
+        </div>
+        <div class="pipe-content">
+          <h4>15. Customer Access</h4>
+          <p>Customers access RHIVOS content via entitled subscriptions. The CDN Authorizer (edgejava/edgecert at Akamai edge) validates both the entitlement certificate (covers content set) and the Product ID certificate (installed product).</p>
+          <div class="detail">
+            <span class="tool-tag">subscription-manager</span>
+            <span class="tool-tag">Candlepin</span>
+            <span class="tool-tag">CDN Authorizer</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 3: Brew Tag Flow -->
+  <!-- ============================================================ -->
+  <div class="flow-section">
+    <h2><span class="phase-badge gate">Tags</span> Brew Tag Pipeline</h2>
+    <div class="section-desc">Packages flow through a series of Brew tags. Gator is the automated evaluator/promoter between tags. The tag pipeline implements the quality gate that ensures only tested, approved packages reach the compose.</div>
+
+    <div class="tag-flow">
+      <div class="tag-box">
+        <div class="tag-name">rhel-9.5.0-pending</div>
+        <div class="tag-desc">RHEL base packages</div>
+      </div>
+      <div class="tag-arrow">&darr;</div>
+    </div>
+
+    <div class="tag-flow">
+      <div class="tag-box">
+        <div class="tag-name">rhivos-X.Y.Z-build</div>
+        <div class="tag-desc">Buildroot (stable, gated)</div>
+      </div>
+      <div class="tag-arrow">&rarr;</div>
+      <div class="tag-box gate-tag">
+        <div class="tag-name">rhivos-X.Y.Z-gate</div>
+        <div class="tag-desc">New builds land here</div>
+      </div>
+      <div class="tag-arrow">&rarr;</div>
+      <div class="tag-box" style="border-color: var(--rh-orange); text-align: center; background: #FFF8E1; min-width: 200px;">
+        <div class="tag-name">Gator Evaluate</div>
+        <div class="tag-desc">Greenwave policy check + ResultsDB</div>
+      </div>
+      <div class="tag-arrow">&rarr;</div>
+      <div class="tag-box candidate-tag">
+        <div class="tag-name">rhivos-X.Y.Z-candidate</div>
+        <div class="tag-desc">Passed gating</div>
+      </div>
+      <div class="tag-arrow">&rarr;</div>
+      <div class="tag-box" style="border-color: var(--rh-teal); text-align: center; background: #E6F7F7; min-width: 120px;">
+        <div class="tag-name">ODCS Compose</div>
+        <div class="tag-desc">RPM repo generation</div>
+      </div>
+      <div class="tag-arrow">&rarr;</div>
+      <div class="tag-box" style="border-color: var(--rh-green); text-align: center; background: #E8F5E9; min-width: 120px;">
+        <div class="tag-name">Gator Promote</div>
+        <div class="tag-desc">Post-compose promotion</div>
+      </div>
+      <div class="tag-arrow">&rarr;</div>
+      <div class="tag-box pending-tag">
+        <div class="tag-name">rhivos-X.Y.Z-pending</div>
+        <div class="tag-desc">Ready for errata</div>
+      </div>
+    </div>
+
+    <h3>Brew Permissions (from hub_policy.conf)</h3>
+    <table>
+      <tr><th>Permission</th><th>RHELBLD Ticket</th><th>What It Allows</th></tr>
+      <tr><td><code>rhivos-tagger</code></td><td>RHELBLD-12926</td><td>Tag builds from RHEL release/candidate tags into any rhivos-* tag. Move builds between RHIVOS tags.</td></tr>
+      <tr><td><code>pkglist-rhivos</code></td><td>RHELBLD-12234</td><td>Whitelist packages in any rhivos-* tag (package list management).</td></tr>
+      <tr><td><code>auto-toolchain-service-brew</code></td><td>RHELBLD-17225</td><td>Service account: tag/untag Konflux-built packages in any rhivos-* tag.</td></tr>
+    </table>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 4: Nightly vs Release Pipeline -->
+  <!-- ============================================================ -->
+  <div class="flow-section">
+    <h2><span class="phase-badge compose">Streams</span> Nightly vs. Release Pipeline</h2>
+    <div class="section-desc">The same pipeline serves both nightly rolling builds and frozen release candidates. BUILD_BRANCH selects which release config to load.</div>
+
+    <div class="parallel-container">
+      <div class="parallel-track">
+        <h5>Nightly (Rolling)</h5>
+        <p><strong>Config:</strong> <code>latest-RHIVOS-2.0-Core</code>, <code>latest-RHIVOS-2.0</code></p>
+        <p>Triggered on schedule. Picks up whatever is in <code>-candidate</code> tag. Composes, builds images, runs smoke tests. Published to <code>rhivos.auto-toolchain.redhat.com</code>.</p>
+        <p><strong>Promotion:</strong> Nightly/latest builds promoted via CloudFront invalidation (STS AssumeRole).</p>
+      </div>
+      <div class="parallel-track">
+        <h5>Release Candidate (Frozen)</h5>
+        <p><strong>Config:</strong> <code>RHIVOS-2.0-Core-RC3</code>, <code>RHIVOS-2.0-RC3</code></p>
+        <p>Triggered by git tag on rhivos repo. Uses pinned package versions. Full CTC cycle. Results feed go/no-go decision.</p>
+        <p><strong>Promotion:</strong> Compose promoted via SSH to RCM host. ComposeDB import. Errata advisories pushed to CDN.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 5: Distribution Chain Detail -->
+  <!-- ============================================================ -->
+  <div class="flow-section">
+    <h2><span class="phase-badge dist">Distribution</span> Errata to CDN Chain</h2>
+    <div class="section-desc">The ATC Distribution pipeline handles everything from advisory creation to CDN delivery. Documented in the ATC Distribution FA wiki (Confluence page 402130012, 10+ pages).</div>
+
+    <div class="pipeline-diagram">
+      <div class="pipe-stage">
+        <div class="pipe-connector">
+          <div class="pipe-dot dist"></div>
+          <div class="pipe-line"></div>
+        </div>
+        <div class="pipe-content">
+          <h4>Advisory Creation</h4>
+          <p>Gator <code>generate-advisories</code> finds passing packages in <code>-candidate</code> tag, checks for existing advisories in NEW_FILES state, creates or updates advisories in Errata Tool with VROOM Jira issue links.</p>
+          <p>FuSa (batch 4254) and Core (batch 4576) batches are separate and must never be cross-contaminated.</p>
+        </div>
+      </div>
+
+      <div class="pipe-stage">
+        <div class="pipe-connector">
+          <div class="pipe-dot dist"></div>
+          <div class="pipe-line"></div>
+        </div>
+        <div class="pipe-content">
+          <h4>Build Attachment & Signing</h4>
+          <p>Builds attached to advisories via Gator. Errata Tool triggers PQC signing on attachment. Jenkins job syncs <code>-pending</code> Brew tags.</p>
+          <p>Verification via errata-distribution scripts: <code>fetch_batch_builds.py</code>, <code>compare_batch_compose_repos.py</code>, <code>sync_batch_compose_builds.py</code>.</p>
+        </div>
+      </div>
+
+      <div class="pipe-stage">
+        <div class="pipe-connector">
+          <div class="pipe-dot dist"></div>
+          <div class="pipe-line"></div>
+        </div>
+        <div class="pipe-content">
+          <h4>Product Listings</h4>
+          <p>Product listings map RPMs to Errata Tool products (which RPMs appear under which product version). Generated from compose via <code>pac-jobs create-product-listing</code> on the RCM host.</p>
+          <div class="note-box"><strong>Known issue:</strong> PLM auto-generates listings from Brew build contents, not compose trees. This causes ghost entries (e.g., cross-binutils debuginfo appearing for architectures not in the RHIVOS compose). Overrides needed per occurrence.</div>
+        </div>
+      </div>
+
+      <div class="pipe-stage">
+        <div class="pipe-connector">
+          <div class="pipe-dot cdn"></div>
+          <div class="pipe-line"></div>
+        </div>
+        <div class="pipe-content">
+          <h4>CDN Push</h4>
+          <p>Advisory transitions: QE &rarr; REL_PREP &rarr; PUSH_READY &rarr; IN_PUSH &rarr; SHIPPED_LIVE. RPMs pushed via Pub to CDN repos. Images (qcow2, ISO) pushed separately.</p>
+          <p>CDN repos: <code>/content/dist/rhivos2/2.0/$basearch/os</code> (Core), <code>/content/dist/rhivos2/2.0-core/$basearch/os</code></p>
+        </div>
+      </div>
+
+      <div class="pipe-stage">
+        <div class="pipe-connector">
+          <div class="pipe-dot cdn"></div>
+        </div>
+        <div class="pipe-content">
+          <h4>Jira Ticket Closure</h4>
+          <p>VROOM tickets in Release Pending transition to Closed automatically when content is pushed to CDN. No manual action needed.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 6: SKU to CDN Access Chain -->
+  <!-- ============================================================ -->
+  <div class="flow-section">
+    <h2><span class="phase-badge cdn">Access</span> SKU to Repository Access Chain</h2>
+    <div class="section-desc">How customers get access to RHIVOS content on CDN. The access control chain flows from SKU purchase through entitlement certificates to CDN authorization.</div>
+
+    <div class="flow-row">
+      <div class="flow-step cdn">
+        <div class="step-num">1</div>
+        <h4>SKU Purchase</h4>
+        <p>Customer buys RHIVOS subscription (SKU). SKU maps to entitlements in Candlepin.</p>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step cdn">
+        <div class="step-num">2</div>
+        <h4>Entitlement Cert</h4>
+        <p>Candlepin issues x.509 entitlement certificate listing authorized content sets. Installed at <code>/etc/pki/entitlement/</code></p>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step cdn">
+        <div class="step-num">3</div>
+        <h4>Product ID Cert</h4>
+        <p>Product ID cert installed on system at <code>/etc/pki/product/</code>. Contains "provides" tag (e.g., <code>rhivos-2</code>).</p>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step cdn">
+        <div class="step-num">4</div>
+        <h4>CDN Authorizer</h4>
+        <p>Akamai edge (edgejava/edgecert) checks: (1) entitlement cert covers content set, (2) Product ID cert provides required tag. Both must pass.</p>
+      </div>
+    </div>
+
+    <h3>RHIVOS Engineering Products</h3>
+    <table>
+      <tr><th>Eng ID</th><th>Product</th><th>Type</th></tr>
+      <tr><td>931</td><td>RHIVOS FuSa</td><td>Base</td></tr>
+      <tr><td>1031</td><td>RHIVOS Core</td><td>Base</td></tr>
+      <tr><td>1123</td><td>RHIVOS Core QC Layered Product</td><td>Layered (new)</td></tr>
+      <tr><td>1124</td><td>RHIVOS FuSa QC Layered Product</td><td>Layered (new)</td></tr>
+    </table>
+
+    <div class="decision-box"><strong>Decision (Jun 3, 2026):</strong> Whitney Chadwick approved new EngIDs for the QC Layered Product. The extension approach (like RHEL-for-NVIDIA/Voyager) was rejected - repo-level disable isn't strong enough for QC's requirement that only approved customers get QC bits. Full chain required: new EngIDs, new SKU, gated content sets, CDN repos, Errata configs.</div>
+
+    <div class="decision-box"><strong>Decision (Jul 14, 2026):</strong> Single LP confirmed. Proceed with a single layered product containing all components. Distribution via Anitom. Parallel tagging structure needed in Brew. Additional composes required. Q3 2026 deliverable.</div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 7: QC Layered Product Extension -->
+  <!-- ============================================================ -->
+  <div class="flow-section">
+    <h2><span class="phase-badge gate">LP</span> QC Layered Product Pipeline (Planned)</h2>
+    <div class="section-desc">The Qualcomm Layered Product will extend the base RHIVOS pipeline. Key architectural principle: build both RHIVOS and QC LP internally using the same pipeline infrastructure, separate only at the CDN distribution level.</div>
+
+    <div class="parallel-container">
+      <div class="parallel-track">
+        <h5>Base RHIVOS Pipeline</h5>
+        <ul>
+          <li>Brew tags: <code>rhivos-X.Y.Z-*</code></li>
+          <li>Compose: Single RHIVOS compose from -candidate tag</li>
+          <li>EngIDs: 931 (FuSa), 1031 (Core)</li>
+          <li>CDN: <code>/content/dist/rhivos2/...</code></li>
+          <li>Access: All RHIVOS subscribers</li>
+        </ul>
+      </div>
+      <div class="parallel-track">
+        <h5>QC Layered Product Extension</h5>
+        <ul>
+          <li>Brew tags: Parallel QC LP tag structure (new, VROOM-44911)</li>
+          <li>Compose: Additional QC LP compose (VROOM-44910), AIB manifest with QC LP repo URL in <code>content.repos</code></li>
+          <li>EngIDs: 1123 (Core QC LP), 1124 (FuSa QC LP)</li>
+          <li>CDN: Proposed <code>/content/dist/layered/rhivos2/...</code></li>
+          <li>Access: Only customers with QC LP SKU</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Pipeline Changes Required for QC LP</h3>
+    <table>
+      <tr><th>Area</th><th>Change</th><th>Ticket</th></tr>
+      <tr><td>Brew Tags</td><td>Create parallel QC LP Brew tags</td><td>VROOM-44911</td></tr>
+      <tr><td>Compose</td><td>Create QC variant for RHIVOS Core and FuSa LP</td><td>VROOM-44910</td></tr>
+      <tr><td>Release Config</td><td>New release config file with QC LP compose URLs, separate GATOR_CONF</td><td>-</td></tr>
+      <tr><td>AIB Manifest</td><td>New @ADD_QCOM_LP_REPO_*@ placeholder tokens in .aib.yml.in templates</td><td>-</td></tr>
+      <tr><td>Gating</td><td>Separate gator config, ResultsDB associations, WaiverDB subjects, Greenwave policies</td><td>VROOM-42050, VROOM-42184</td></tr>
+      <tr><td>CDN Repos</td><td>Create Pub/CDN repositories</td><td>VROOM-42114</td></tr>
+      <tr><td>Errata</td><td>Create Errata configs for QC LP product</td><td>VROOM-42113</td></tr>
+      <tr><td>Product IDs</td><td>Generate and push product IDs to CDN</td><td>VROOM-42120, VROOM-42121</td></tr>
+      <tr><td>Gator Advisory</td><td>Add Gator advisory automation for LP</td><td>VROOM-42119</td></tr>
+    </table>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 8: Pulp Migration -->
+  <!-- ============================================================ -->
+  <div class="flow-section">
+    <h2><span class="phase-badge compose">Migration</span> Pulp Migration (In Progress)</h2>
+    <div class="section-desc">Artifact management is transitioning from S3 + custom web servers to Pulp instances. Currently in dual-upload phase.</div>
+
+    <div class="flow-row">
+      <div class="flow-step compose">
+        <div class="step-num">A</div>
+        <h4>Current: S3 + Web Servers</h4>
+        <p>Compose RPMs and images stored on AWS S3. Custom web servers serve artifacts. rsync-based promotion is slow for directories with many small files.</p>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step compose">
+        <div class="step-num">B</div>
+        <h4>Dual-Upload (Now)</h4>
+        <p>Artifacts uploaded to both S3 and Pulp. Pipeline checks if Pulp is enabled before uploading. Existing URLs preserved.</p>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step compose">
+        <div class="step-num">C</div>
+        <h4>Target: Pulp Only</h4>
+        <p>Faster promotions (reference-based, not copy). Native OCI container support. Eliminates custom web servers. Reduces S3 costs.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 9: RoG Migration -->
+  <!-- ============================================================ -->
+  <div class="flow-section">
+    <h2><span class="phase-badge build">Future</span> RHIVOS on GitLab Migration (Planned)</h2>
+    <div class="section-desc">RHIVOS is being transitioned to GitLab (RHEL on GitLab / RoG pattern). This will change the build-to-gate flow significantly. AUTOBU-1105, top team priority alongside CAIB and Konflux.</div>
+
+    <div class="parallel-container">
+      <div class="parallel-track">
+        <h5>Current Flow</h5>
+        <ul>
+          <li>Direct pushes to dist-git branches</li>
+          <li>Branch gating via dist-git policy rules</li>
+          <li>Real builds land in -gate tag</li>
+          <li>Gator + ResultsDB + Greenwave for evaluation</li>
+          <li>One build at a time through gate</li>
+          <li>No formal audit trail</li>
+        </ul>
+      </div>
+      <div class="parallel-track">
+        <h5>Target Flow (GitLab)</h5>
+        <ul>
+          <li>Merge request workflows with reviews</li>
+          <li>MR-based gating via GitLab CI / OSCI pipelines</li>
+          <li>Draft builds in Brew (promoted to real on MR approval)</li>
+          <li>Grouped builds tested and promoted together</li>
+          <li>Full auditability (reviewer on every change)</li>
+          <li>Bypasses current -gate tag (draft builds go to -candidate)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note-box"><strong>Impact on current flow:</strong> The RoG draft tagging process bypasses the current -gate flow. Gator's role would be replaced by OSCI pipelines and a small GitLab job for -pending to -candidate promotion. 21 packages identified for onboarding. 4-phase migration planned Jul 2026 - Feb 2027.</div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 10: Key Repositories -->
+  <!-- ============================================================ -->
+  <div class="flow-section">
+    <h2><span class="phase-badge build">Repos</span> Repository Map</h2>
+    <div class="section-desc">All ATC repositories involved in the build-to-distribution pipeline and their roles.</div>
+
+    <table>
+      <tr><th>Repository</th><th>Type</th><th>Role in Pipeline</th></tr>
+      <tr><td><code>downstream-pipelines-as-code</code></td><td>Pipeline Config</td><td>Main RHIVOS pipeline - extends upstream AutoSD with enterprise services, hardware testing, formal release management</td></tr>
+      <tr><td><code>pipelines-as-code (upstream)</code></td><td>Pipeline Config</td><td>Base CI job definitions shared with upstream AutoSD</td></tr>
+      <tr><td><code>pac-jobs</code></td><td>Python CLI</td><td>Central execution layer - 25 stateless commands replacing inline shell scripts in CI jobs</td></tr>
+      <tr><td><code>create-osbuild</code></td><td>Shell executor</td><td>Thin executor for AIB image builds inside containers with S3 upload</td></tr>
+      <tr><td><code>custom-images</code></td><td>Config</td><td>Image manifest definitions for CI build and test jobs</td></tr>
+      <tr><td><code>rhivos</code></td><td>Pungi Config</td><td>Compose configuration - bill of materials for each RHIVOS release</td></tr>
+      <tr><td><code>release-definitions</code></td><td>Config</td><td>Release stream configs - single source of truth for what defines each stream</td></tr>
+      <tr><td><code>gator</code></td><td>Python CLI</td><td>Package evaluation, gating, and promotion via Greenwave policies</td></tr>
+      <tr><td><code>gator-config</code></td><td>Config</td><td>Evaluation context definitions (Greenwave policies, Koji tags, test configs)</td></tr>
+      <tr><td><code>gator-run-configs</code></td><td>Config</td><td>Per-instance/per-stream gating configuration overrides</td></tr>
+      <tr><td><code>tf-requests</code></td><td>Integration</td><td>Testing Farm API integration for image building and testing</td></tr>
+      <tr><td><code>certification-assembly</code></td><td>Tool</td><td>CMDB/Polarion metadata population for traceability</td></tr>
+      <tr><td><code>validator-report</code></td><td>Tool</td><td>ContCert/Conftest bulk validation</td></tr>
+      <tr><td><code>tacocat</code></td><td>Tool</td><td>CAT manifest generation for compliance</td></tr>
+      <tr><td><code>errata-distribution</code></td><td>Scripts</td><td>Advisory lifecycle, batch management, compose comparison</td></tr>
+      <tr><td><code>product-service-config-auto</code></td><td>Config</td><td>Product/EngID/content set definitions for CDN</td></tr>
+      <tr><td><code>cdn-utils</code></td><td>Tool</td><td>CDN directory layout management</td></tr>
+    </table>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 11: Known Gaps -->
+  <!-- ============================================================ -->
+  <div class="flow-section">
+    <h2><span class="phase-badge gate">Gaps</span> Documented Process Gaps</h2>
+    <div class="section-desc">These gaps have been identified through documentation audits and operational experience (as of July 2026).</div>
+
+    <table>
+      <tr><th>#</th><th>Gap</th><th>Impact</th><th>Status</th></tr>
+      <tr><td>1</td><td>Who tags packages INTO -gate is not documented</td><td>Ad-hoc tagging during RC scenarios; kernel maintainers lack permissions</td><td>RHELBLD-18777, RHELBLD-18778 filed</td></tr>
+      <tr><td>2</td><td>Companion package rebuild workflow (downstream-dtbs, qcom-scmi, nxp-extra-modules) undocumented</td><td>Only Eric Chanudet knows the workflow; no automation</td><td>Open</td></tr>
+      <tr><td>3</td><td>2.0 vs 2.0-z vs 2.1 tagging guidance not written down</td><td>Explained by Petr in Slack only</td><td>Open</td></tr>
+      <tr><td>4</td><td>kernel-ivos-nxp-extra-modules missing dist-git policy exception</td><td>Blocks builds - every commit needs VROOM ticket</td><td>RHELBLD ticket pending</td></tr>
+      <tr><td>5</td><td>STAG (side tag for lockstep builds) not implemented</td><td>No group-level buildroot isolation for interdependent packages</td><td>Petr's proposal exists, not built</td></tr>
+      <tr><td>6</td><td>RHIVOS maintenance/post-release process is a stub in developer-guide</td><td>Literally says "Placeholder waiting for info"</td><td>Open</td></tr>
+    </table>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- Sources -->
+  <!-- ============================================================ -->
+  <div class="flow-section">
+    <h2>Sources</h2>
+    <div class="section-desc">All content in this document is derived from the following internal RHIVOS documentation sources.</div>
+    <table>
+      <tr><th>Source</th><th>Content Used</th></tr>
+      <tr><td>ATC LLM Wiki (atc_llm_wiki)</td><td>Release management pattern, pipeline inheritance, downstream-pipelines-as-code, gator, pac-jobs, create-osbuild, custom-images, rhivos compose, release-definitions, gator-config, dist-git workflow</td></tr>
+      <tr><td>Automotive Confluence (Product Development and Release tree, 80+ pages)</td><td>RHEL & RHIVOS gating process, Release Checklist Template, Release Documentation, ATC Distribution FA wiki (10+ pages), Package Gating Design, Release configs matrix, package onboarding workflow, FDA release process</td></tr>
+      <tr><td>Automotive Confluence (RHELDST / RCMDOC / EXDSPRHELB spaces)</td><td>Layered Product ProductID policy, Accessing RHSM Content, Unified Brew Tagging Structure, Permissions in Brew, Bypassing OSCI gating</td></tr>
+      <tr><td>RHIVOS Release Approach (rhivos-release-approach.md)</td><td>Brew tag structure, STAG proposal, RHEL-for-NVIDIA comparison, May 20 meeting decisions</td></tr>
+      <tr><td>RHIVOS QC Layered Product (rhivos-qc-layered-product.md)</td><td>LP architecture, critical path, EngIDs, decisions, progress tracking</td></tr>
+      <tr><td>RHIVOS SKU/ProductID Research (rhivos-sku-productid-research.md)</td><td>SKU to repository access chain, Voyager comparison, CDN authorization mechanism</td></tr>
+      <tr><td>RHIVOS Dist-Git Workflow (rhivos-distgit-workflow.md)</td><td>Dist-git policies, branch model, build targets, kernel derivative workflow</td></tr>
+      <tr><td>RHIVOS Release Tagging (rhivos-release-tagging.md)</td><td>RHEL inheritance flag knowledge bottleneck</td></tr>
+      <tr><td>RHIVOS 2.0 RC3 (RHIVOS_2_0_release_RC3.md)</td><td>RC3 pipeline execution, tagging documentation audit (6 gaps), Brew permission analysis</td></tr>
+      <tr><td>RHIVOS on GitLab (rhivos-on-gitlab.md)</td><td>RoG migration plan, draft builds, OSCI integration</td></tr>
+      <tr><td>ATC LLM Wiki (atc-llm-wiki.md)</td><td>Pulp migration details, EngID creation process</td></tr>
+      <tr><td>brew-confs hub_policy.conf</td><td>Authoritative Brew tagging permission rules for RHIVOS</td></tr>
+    </table>
+  </div>
+
+  <div class="footer">
+    RHIVOS Release Build to Distribution Complete Flow - Internal Reference Document - July 2026<br>
+    Generated from RHIVOS strategy docs, ATC LLM Wiki, and Automotive Confluence
+  </div>
+
+</div>
+
+</body>
+</html>
