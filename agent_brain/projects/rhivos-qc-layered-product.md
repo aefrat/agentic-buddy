@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-07-14
-access_count: 8
+last_accessed: 2026-07-19
+access_count: 9
 created: 2026-06-23
 ---
 
@@ -65,7 +65,7 @@ Key implications (per Petr):
 
 ---
 
-## Progress (as of Jun 30, 2026)
+## Progress (as of Jul 19, 2026)
 
 ### Completed
 
@@ -99,8 +99,8 @@ Key implications (per Petr):
 
 | Ticket | Summary | Assignee |
 |--------|---------|----------|
-| VROOM-42050 | Generate Gator configs for LP | Hubert Stefanski |
-| VROOM-42184 | WaiverDB permission config for LP | Hubert Stefanski |
+| VROOM-42050 | Generate Gator configs for LP | Ozan Unsal |
+| VROOM-42184 | WaiverDB permission config for LP | Ozan Unsal |
 
 ### Not Started — Compose (new tickets, Jun 23)
 
@@ -183,7 +183,7 @@ Parallel: Compose variant + brew tags (VROOM-44910, 44911) — Ozan Unsal
 | Petr Sabata | contyk | Release/distribution, epic assignee | **Needs to approve CDN path** |
 | Claude Pariz | | SKU team | **Next: create QC-specific SKU** |
 | Matt Goldman | | Distribution — EngID/CDN tickets | Submitted MR #149 for CDN path (VROOM-42116 → Review) |
-| Hubert Stefanski | | Gating (transitioning to RHAS) | Owns VROOM-42050, 42184 |
+| Ozan Unsal | | Compose + gating (took over from Hubert) | Owns VROOM-44910, 44911, 42050, 42184 |
 | Gadi Glogowski | | PM — SKU coordination | Brought Claude Pariz in |
 | Leon Kang | lekang | SP RHEL Distribution consultant | Advised on EngID/content sets |
 | Archana Katarki | | SP RHEL Distribution (mgr) | Consulted on CDN issues |
