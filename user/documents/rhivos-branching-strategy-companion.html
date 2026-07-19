@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RHIVOS Branching Strategy - Companion Guide</title>
+<style>
+  body {
+    font-family: 'Red Hat Text', 'Segoe UI', 'Liberation Sans', Arial, sans-serif;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.6;
+    color: #1a1a1a;
+    background: #fff;
+  }
+  h1 { color: #c00; border-bottom: 3px solid #c00; padding-bottom: 0.5rem; font-size: 1.8rem; }
+  h2 { color: #333; border-bottom: 1px solid #ccc; padding-bottom: 0.3rem; margin-top: 2.5rem; font-size: 1.4rem; }
+  h3 { color: #555; margin-top: 1.5rem; font-size: 1.1rem; }
+  .meta { color: #666; font-size: 0.9rem; margin-bottom: 2rem; }
+  .meta strong { color: #333; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: 0.9rem; }
+  th, td { border: 1px solid #ddd; padding: 0.5rem 0.75rem; text-align: left; vertical-align: top; }
+  th { background: #f5f5f5; font-weight: 600; }
+  tr:nth-child(even) { background: #fafafa; }
+  pre, code {
+    font-family: 'JetBrains Mono', 'Cascadia Code', 'Consolas', monospace;
+    font-size: 0.85rem;
+  }
+  code { font-size: 0.9em; background: #f4f4f4; padding: 0.1rem 0.3rem; border-radius: 3px; }
+  .callout {
+    background: #fff8e1;
+    border-left: 4px solid #ffc107;
+    padding: 0.75rem 1rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+  .callout-info {
+    background: #e8f4fd;
+    border-left: 4px solid #2196f3;
+    padding: 0.75rem 1rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+  .callout-success {
+    background: #e7f4e4;
+    border-left: 4px solid #3e8635;
+    padding: 0.75rem 1rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+  a { color: #0066cc; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  ul, ol { margin: 0.5rem 0; }
+  li { margin-bottom: 0.3rem; }
+  .toc { background: #f9f9f9; border: 1px solid #ddd; padding: 1rem 1.5rem; border-radius: 4px; margin-bottom: 2rem; }
+  .toc ul { list-style: none; padding-left: 0; }
+  .toc li { margin-bottom: 0.2rem; }
+  .toc a { color: #0066cc; }
+  .tag { display: inline-block; background: #f0f0f0; border: 1px solid #ccc; padding: 0.1rem 0.4rem; border-radius: 3px; font-family: monospace; font-size: 0.85em; white-space: nowrap; }
+  .tag-rhel { background: #e8f4fd; border-color: #90caf9; }
+  .tag-rhivos { background: #fce8e6; border-color: #ef9a9a; }
+  .tag-new { background: #e7f4e4; border-color: #81c784; }
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 0.4rem 0; padding-left: 1.5rem; position: relative; }
+  .checklist li::before { content: "\2610"; position: absolute; left: 0; color: #666; }
+
+  /* Inheritance diagram */
+  .diagram { margin: 1.5rem 0; padding: 1.5rem; background: #fafafa; border: 1px solid #ddd; border-radius: 6px; overflow-x: auto; }
+  .diagram-title { font-weight: 600; color: #333; margin-bottom: 1rem; text-align: center; font-size: 1rem; }
+  .diagram-row { display: flex; align-items: center; margin: 0.3rem 0; flex-wrap: nowrap; }
+  .diagram-box { display: inline-block; padding: 0.3rem 0.6rem; border-radius: 4px; font-family: monospace; font-size: 0.8rem; white-space: nowrap; text-align: center; }
+  .diagram-box.rhivos { background: #fce8e6; border: 2px solid #c00; color: #333; }
+  .diagram-box.rhel { background: #e8f4fd; border: 2px solid #0066cc; color: #333; }
+  .diagram-box.special { background: #f3e8fd; border: 2px solid #6e3db5; color: #333; }
+  .diagram-arrow { color: #888; margin: 0 0.5rem; font-size: 1rem; }
+  .diagram-label { font-size: 0.75rem; color: #666; margin-left: 0.5rem; font-style: italic; }
+  .diagram-group { margin: 1rem 0; padding: 0.75rem; border-left: 3px solid #ddd; }
+  .diagram-group-title { font-weight: 600; font-size: 0.85rem; color: #555; margin-bottom: 0.5rem; }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 2rem; margin: 1.5rem 0; }
+  .timeline::before { content: ''; position: absolute; left: 0.5rem; top: 0; bottom: 0; width: 2px; background: #ccc; }
+  .timeline-item { position: relative; margin-bottom: 1.5rem; }
+  .timeline-item::before { content: ''; position: absolute; left: -1.75rem; top: 0.3rem; width: 10px; height: 10px; border-radius: 50%; background: #c00; border: 2px solid #fff; box-shadow: 0 0 0 2px #c00; }
+  .timeline-date { font-weight: 600; color: #c00; font-size: 0.9rem; }
+  .timeline-text { font-size: 0.9rem; color: #333; }
+
+  .comparison-table td:first-child { font-weight: 600; width: 30%; }
+  .highlight-row { background: #fff8e1 !important; }
+
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #ddd; color: #888; font-size: 0.8rem; }
+</style>
+</head>
+<body>
+
+<h1>RHIVOS Branching Strategy - Companion Guide</h1>
+
+<div class="meta">
+  <strong>Companion to:</strong> <a href="https://docs.google.com/document/d/1CSU4qFh2G7VXkUaYXIqOdVNa_oWpkDZWgMw_8Hk1lD8/edit">RHIVOS Branching Strategy v1.0 DRAFT</a> (Petr Sabata, May 2025)<br>
+  <strong>Date:</strong> July 19, 2026<br>
+  <strong>Author:</strong> Avihai Efrat, ATC Engineering Manager<br>
+  <strong>Audience:</strong> ATC Engineers, RHIVOS Program, Release Engineering
+</div>
+
+<div class="toc">
+  <strong>Contents</strong>
+  <ul>
+    <li><a href="#executive-summary">1. Executive Summary</a></li>
+    <li><a href="#version-mapping">2. RHEL-to-RHIVOS Version Mapping</a></li>
+    <li><a href="#naming-convention">3. Naming Convention Change (RHEL 9 vs RHEL 10)</a></li>
+    <li><a href="#tag-structure">4. Brew Tag Structure (RHIVOS 2.0 Example)</a></li>
+    <li><a href="#inheritance-diagram">5. Inheritance Chain Diagram</a></li>
+    <li><a href="#mid-cycle-switch">6. Mid-Cycle Switch Procedure</a></li>
+    <li><a href="#new-release-checklist">7. New Release Setup Checklist</a></li>
+    <li><a href="#z-stream-ops">8. Z-Stream Operations</a></li>
+    <li><a href="#references">9. References</a></li>
+  </ul>
+</div>
+
+<!-- ================================================================== -->
+<h2 id="executive-summary">1. Executive Summary</h2>
+
+<p>
+Tagging RHIVOS release packages with the correct RHEL tag inheritance has been a knowledge bottleneck -
+historically only two engineers (Ozan Unsal and Petr Sabata) held the complete procedural knowledge for
+configuring Brew tags, setting up inheritance chains between RHIVOS and RHEL, and performing the mid-cycle
+switches that keep the build pipeline sourcing from the right RHEL release.
+</p>
+
+<p>
+Petr Sabata documented this knowledge in the
+<a href="https://docs.google.com/document/d/1CSU4qFh2G7VXkUaYXIqOdVNa_oWpkDZWgMw_8Hk1lD8/edit">RHIVOS Branching Strategy</a>
+document (v1.0 DRAFT, May 2025). This companion guide makes that knowledge actionable by:
+</p>
+<ul>
+  <li>Mapping each RHIVOS release to its exact RHEL base version</li>
+  <li>Highlighting the naming convention change between RHIVOS 1.x (RHEL 9, X.Y.Z) and RHIVOS 2.x (RHEL 10, X.Y)</li>
+  <li>Providing a visual inheritance chain diagram</li>
+  <li>Documenting the mid-cycle switch procedure with a timeline</li>
+  <li>Providing a reusable checklist for setting up any future RHIVOS N.0 release</li>
+</ul>
+
+<div class="callout-info">
+  <strong>How to read this:</strong> This is a companion, not a replacement. Read this for the practical
+  "what to do and when" - read
+  <a href="https://docs.google.com/document/d/1CSU4qFh2G7VXkUaYXIqOdVNa_oWpkDZWgMw_8Hk1lD8/edit">Petr's original</a>
+  for the full rationale and edge cases.
+</div>
+
+<!-- ================================================================== -->
+<h2 id="version-mapping">2. RHEL-to-RHIVOS Version Mapping</h2>
+
+<p>
+Each RHIVOS Y-stream release spans two RHEL Y-stream releases (since RHIVOS releases annually and RHEL
+releases every six months). The gate tag sources builds from the first RHEL release, then switches mid-cycle
+to the second (the EUS release). The initial RHIVOS N.0 release may follow a simpler pattern.
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>RHIVOS</th>
+      <th>RHEL Base</th>
+      <th>Gate Sources From</th>
+      <th>%dist Tag</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>1.0</strong></td>
+      <td>RHEL 9.6 (EUS)</td>
+      <td><code>rhel-9.6.0-z-pending</code></td>
+      <td><code>.el9_6iv</code></td>
+      <td>Released</td>
+    </tr>
+    <tr>
+      <td><strong>1.1</strong></td>
+      <td>RHEL 9.7 then 9.8 (EUS)</td>
+      <td><code>rhel-9.7.0-z-pending</code> then <code>rhel-9.8.0-z-pending</code></td>
+      <td><code>.el9_8iv</code></td>
+      <td>In development</td>
+    </tr>
+    <tr>
+      <td><strong>1.2</strong></td>
+      <td>RHEL 9.9 then 9.10 (EUS)</td>
+      <td><code>rhel-9.9.0-z-pending</code> then <code>rhel-9.10.0-z-pending</code></td>
+      <td><code>.el9_10iv</code></td>
+      <td>Future</td>
+    </tr>
+    <tr class="highlight-row">
+      <td><strong>2.0</strong></td>
+      <td>RHEL 10.2 (EUS)</td>
+      <td><code>rhel-10.2-z-pending</code></td>
+      <td><code>.el10_2iv</code></td>
+      <td>RC3 (CTC at 93%)</td>
+    </tr>
+    <tr class="highlight-row">
+      <td><strong>2.0.z</strong></td>
+      <td>RHEL 10.2 (z-stream)</td>
+      <td><code>rhel-10.2-z-pending</code> (post-GA)</td>
+      <td><code>.el10_2iv</code></td>
+      <td>Post-GA</td>
+    </tr>
+    <tr class="highlight-row">
+      <td><strong>2.1</strong></td>
+      <td>RHEL 10.3 then 10.4 (EUS)</td>
+      <td><code>rhel-10.3-z-pending</code> then <code>rhel-10.4-z-pending</code></td>
+      <td><code>.el10_4iv</code> (projected)</td>
+      <td>Future</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <strong>Evidence for RHIVOS 2.0 = RHEL 10.2:</strong> All RC3 kernel packages use <code>el10_2iv</code>
+  dist tags (e.g. <code>kernel-automotive-6.12.0-211.20.1.el10_2iv</code>), and the gate tag inherited from
+  <code>rhel-10.2-pending</code> before Dev Complete freeze.
+</div>
+
+<!-- ================================================================== -->
+<h2 id="naming-convention">3. Naming Convention Change (RHEL 9 vs RHEL 10)</h2>
+
+<p>
+RHEL 10 dropped the third version segment from dist-git branch names and Brew tags. RHIVOS 2.x follows
+that convention. This affects every tag, target, and branch name.
+</p>
+
+<table class="comparison-table">
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>RHIVOS 1.x (RHEL 9 - X.Y.Z)</th>
+      <th>RHIVOS 2.x (RHEL 10 - X.Y)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Dist-git main branch</td>
+      <td><code>rhivos-1-main</code></td>
+      <td><code>rhivos-2-main</code></td>
+    </tr>
+    <tr>
+      <td>Stabilization branch</td>
+      <td><code>rhivos-1.0.0</code></td>
+      <td><code>rhivos-2.0</code></td>
+    </tr>
+    <tr>
+      <td>Release tag</td>
+      <td><code>rhivos-1.0.0</code></td>
+      <td><code>rhivos-2.0</code></td>
+    </tr>
+    <tr>
+      <td>Z-stream release tag</td>
+      <td><code>rhivos-1.0.0-z</code></td>
+      <td><code>rhivos-2.0-z</code></td>
+    </tr>
+    <tr>
+      <td>Gate tag</td>
+      <td><code>rhivos-1.0.0-gate</code></td>
+      <td><code>rhivos-2.0-gate</code></td>
+    </tr>
+    <tr>
+      <td>Build target</td>
+      <td><code>rhivos-1.0.0-candidate</code></td>
+      <td><code>rhivos-2.0-candidate</code></td>
+    </tr>
+    <tr>
+      <td>Build tag</td>
+      <td><code>rhivos-1.0.0-build</code></td>
+      <td><code>rhivos-2.0-build</code></td>
+    </tr>
+    <tr>
+      <td>Candidate tag</td>
+      <td><code>rhivos-1.0.0-candidate</code></td>
+      <td><code>rhivos-2.0-candidate</code></td>
+    </tr>
+    <tr>
+      <td>Pending tag</td>
+      <td><code>rhivos-1.0.0-pending</code></td>
+      <td><code>rhivos-2.0-pending</code></td>
+    </tr>
+    <tr>
+      <td>Override tag</td>
+      <td><code>rhivos-1.0.0-override</code></td>
+      <td><code>rhivos-2.0-override</code></td>
+    </tr>
+    <tr>
+      <td>Build-base tag</td>
+      <td><code>rhivos-1.0.0-build-base</code></td>
+      <td><code>rhivos-2.0-build-base</code></td>
+    </tr>
+    <tr>
+      <td>KWF pesign build</td>
+      <td><code>rhivos-1.0.0-candidate-pesign</code></td>
+      <td><code>rhivos-2.0-candidate-pesign</code></td>
+    </tr>
+    <tr>
+      <td>KWF test pesign</td>
+      <td><code>rhivos-1-newest-test-pesign</code></td>
+      <td><code>rhivos-2-newest-test-pesign</code></td>
+    </tr>
+    <tr>
+      <td>Build channel</td>
+      <td><code>rhel9-power10</code></td>
+      <td><code>rhel10</code></td>
+    </tr>
+    <tr>
+      <td>Build tools source</td>
+      <td><code>rhel-9-build-tools</code></td>
+      <td><code>rhel-10-build-tools</code></td>
+    </tr>
+    <tr>
+      <td>%dist macro (dev)</td>
+      <td><code>.el9iv</code></td>
+      <td><code>.el10iv</code></td>
+    </tr>
+    <tr>
+      <td>%dist macro (branched)</td>
+      <td><code>.el9_6iv</code></td>
+      <td><code>.el10_2iv</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <strong>Key difference:</strong> The trailing <code>.0</code> in RHEL 9 naming (e.g. <code>rhivos-1.0.0</code>)
+  is gone in RHEL 10. It is <code>rhivos-2.0</code>, not <code>rhivos-2.0.0</code>. This applies to all tags,
+  targets, and dist-git branches.
+</div>
+
+<!-- ================================================================== -->
+<h2 id="tag-structure">4. Brew Tag Structure (RHIVOS 2.0 Example)</h2>
+
+<p>
+Each RHIVOS release defines the following set of Brew tags. All exist in two variants: GA and Z-stream.
+Below is the complete set for RHIVOS 2.0:
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tag</th>
+      <th>GA Variant</th>
+      <th>Z-stream Variant</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Release</td>
+      <td><code>rhivos-2.0</code></td>
+      <td><code>rhivos-2.0-z</code></td>
+      <td>Fully released builds (GA or z-stream updates)</td>
+    </tr>
+    <tr>
+      <td>Build</td>
+      <td><code>rhivos-2.0-build</code></td>
+      <td><code>rhivos-2.0-z-build</code></td>
+      <td>Buildroot - inherits release + prev build + override</td>
+    </tr>
+    <tr>
+      <td>Pesign Build</td>
+      <td><code>rhivos-2.0-pesign-build</code></td>
+      <td><code>rhivos-2.0-z-pesign-build</code></td>
+      <td>KWF buildroot (identical to build)</td>
+    </tr>
+    <tr>
+      <td>Gate</td>
+      <td><code>rhivos-2.0-gate</code></td>
+      <td><code>rhivos-2.0-z-gate</code></td>
+      <td>Entry point for all builds - gating input</td>
+    </tr>
+    <tr>
+      <td>Candidate</td>
+      <td><code>rhivos-2.0-candidate</code></td>
+      <td><code>rhivos-2.0-z-candidate</code></td>
+      <td>Builds that passed gating - compose input</td>
+    </tr>
+    <tr>
+      <td>Pending</td>
+      <td><code>rhivos-2.0-pending</code></td>
+      <td><code>rhivos-2.0-z-pending</code></td>
+      <td>Builds scheduled for release</td>
+    </tr>
+    <tr>
+      <td>Override</td>
+      <td><code>rhivos-2.0-override</code></td>
+      <td><code>rhivos-2.0-z-override</code></td>
+      <td>Temporary tagging for dependency chains</td>
+    </tr>
+    <tr>
+      <td>Build-base</td>
+      <td colspan="2"><code>rhivos-2.0-build-base</code></td>
+      <td>Build groups (srpm-build, build) - one per release</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Build Targets</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Target Name</th>
+      <th>Buildroot</th>
+      <th>Destination</th>
+      <th>Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>rhivos-2.0-candidate</code></td>
+      <td><code>rhivos-2.0-build</code></td>
+      <td><code>rhivos-2.0-gate</code></td>
+      <td>Standard release builds</td>
+    </tr>
+    <tr>
+      <td><code>rhivos-2.0-candidate-pesign</code></td>
+      <td><code>rhivos-2.0-pesign-build</code></td>
+      <td><code>rhivos-2.0-gate</code></td>
+      <td>KWF builds</td>
+    </tr>
+    <tr>
+      <td><code>rhivos-2.0-test-pesign</code></td>
+      <td><code>rhivos-2.0-pesign-build</code></td>
+      <td><code>rhivos-2.0-gate</code></td>
+      <td>KWF builds (alias)</td>
+    </tr>
+    <tr>
+      <td><code>rhivos-2.0-z-candidate</code></td>
+      <td><code>rhivos-2.0-z-build</code></td>
+      <td><code>rhivos-2.0-z-gate</code></td>
+      <td>Z-stream builds (post-GA)</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ================================================================== -->
+<h2 id="inheritance-diagram">5. Inheritance Chain Diagram</h2>
+
+<p>
+This shows what each RHIVOS 2.0 tag inherits from. Arrows read as "inherits from" (left inherits right).
+The critical RHEL-to-RHIVOS connection points are highlighted.
+</p>
+
+<div class="diagram">
+  <div class="diagram-title">RHIVOS 2.0 Tag Inheritance (Pre-Dev Complete)</div>
+
+  <div class="diagram-group">
+    <div class="diagram-group-title">Gate Chain (entry point for all builds)</div>
+    <div class="diagram-row">
+      <span class="diagram-box rhivos">rhivos-2.0-gate</span>
+      <span class="diagram-arrow">&larr;</span>
+      <span class="diagram-box rhel">rhel-10.2-z-pending</span>
+      <span class="diagram-label">RHEL builds flow in here</span>
+    </div>
+    <div class="diagram-row">
+      <span class="diagram-box rhivos">rhivos-2.0-gate</span>
+      <span class="diagram-arrow">&larr;</span>
+      <span class="diagram-box rhivos">rhivos-2.0</span>
+      <span class="diagram-label">release tag (package lists + content)</span>
+    </div>
+  </div>
+
+  <div class="diagram-group">
+    <div class="diagram-group-title">Release Tag Chain</div>
+    <div class="diagram-row">
+      <span class="diagram-box rhivos">rhivos-2.0</span>
+      <span class="diagram-arrow">&larr;</span>
+      <span class="diagram-box rhel">rhel-10.2-z</span>
+      <span class="diagram-label">RHEL base builds + package lists</span>
+    </div>
+    <div class="diagram-row" style="margin-left: 2rem;">
+      <span class="diagram-label">(After Dev Complete: this inheritance is removed; RHEL packages explicitly listed)</span>
+    </div>
+  </div>
+
+  <div class="diagram-group">
+    <div class="diagram-group-title">Build Chain (buildroot)</div>
+    <div class="diagram-row">
+      <span class="diagram-box rhivos">rhivos-2.0-build</span>
+      <span class="diagram-arrow">&larr;</span>
+      <span class="diagram-box rhivos">rhivos-2.0</span>
+      <span class="diagram-label">release tag</span>
+    </div>
+    <div class="diagram-row">
+      <span class="diagram-box rhivos">rhivos-2.0-build</span>
+      <span class="diagram-arrow">&larr;</span>
+      <span class="diagram-box rhivos">rhivos-2.0-build-base</span>
+      <span class="diagram-label">build groups</span>
+    </div>
+    <div class="diagram-row" style="margin-left: 2rem;">
+      <span class="diagram-box rhivos">rhivos-2.0-build-base</span>
+      <span class="diagram-arrow">&larr;</span>
+      <span class="diagram-box rhel">rhel-10-build-tools</span>
+      <span class="diagram-label">Brew build utilities, base groups</span>
+    </div>
+  </div>
+
+  <div class="diagram-group">
+    <div class="diagram-group-title">Override Chain (feeds pending builds back to buildroot)</div>
+    <div class="diagram-row">
+      <span class="diagram-box rhivos">rhivos-2.0-override</span>
+      <span class="diagram-arrow">&larr;</span>
+      <span class="diagram-box rhivos">rhivos-2.0-pending</span>
+      <span class="diagram-arrow">&larr;</span>
+      <span class="diagram-box rhivos">rhivos-2.0</span>
+    </div>
+  </div>
+
+  <div class="diagram-group">
+    <div class="diagram-group-title">Candidate/Pending (gating output)</div>
+    <div class="diagram-row">
+      <span class="diagram-box rhivos">rhivos-2.0-candidate</span>
+      <span class="diagram-arrow">&larr;</span>
+      <span class="diagram-box rhivos">rhivos-2.0</span>
+      <span class="diagram-label">release tag (package lists + content)</span>
+    </div>
+    <div class="diagram-row">
+      <span class="diagram-box rhivos">rhivos-2.0-pending</span>
+      <span class="diagram-arrow">&larr;</span>
+      <span class="diagram-box rhivos">rhivos-2.0</span>
+      <span class="diagram-label">release tag (package lists + content)</span>
+    </div>
+  </div>
+</div>
+
+<div class="diagram">
+  <div class="diagram-title">Z-Stream Inheritance (RHIVOS 2.0.z, Post-GA)</div>
+
+  <div class="diagram-group">
+    <div class="diagram-group-title">Z-stream gate sources from both RHEL and previous RHIVOS release</div>
+    <div class="diagram-row">
+      <span class="diagram-box rhivos">rhivos-2.0-z-gate</span>
+      <span class="diagram-arrow">&larr;</span>
+      <span class="diagram-box rhel">rhel-10.2-z-pending</span>
+      <span class="diagram-label">RHEL z-stream builds</span>
+    </div>
+    <div class="diagram-row">
+      <span class="diagram-box rhivos">rhivos-2.0-z-gate</span>
+      <span class="diagram-arrow">&larr;</span>
+      <span class="diagram-box rhivos">rhivos-2.0-pending</span>
+      <span class="diagram-label">GA release pending builds</span>
+    </div>
+  </div>
+
+  <div class="diagram-group">
+    <div class="diagram-group-title">Z-stream release inherits from GA + RHEL</div>
+    <div class="diagram-row">
+      <span class="diagram-box rhivos">rhivos-2.0-z</span>
+      <span class="diagram-arrow">&larr;</span>
+      <span class="diagram-box rhel">rhel-10.2-z</span>
+      <span class="diagram-label">RHEL base</span>
+    </div>
+    <div class="diagram-row">
+      <span class="diagram-box rhivos">rhivos-2.0-z</span>
+      <span class="diagram-arrow">&larr;</span>
+      <span class="diagram-box rhivos">rhivos-2.0</span>
+      <span class="diagram-label">GA release</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================== -->
+<h2 id="mid-cycle-switch">6. Mid-Cycle Switch Procedure</h2>
+
+<p>
+When a RHIVOS Y-stream spans two RHEL releases (e.g. RHIVOS 2.1 spanning RHEL 10.3 and 10.4), the
+gate and release tag inheritance must be updated mid-cycle. This happens when the odd-numbered RHEL
+release branches for stabilization.
+</p>
+
+<div class="callout-info">
+  <strong>RHIVOS 2.0 note:</strong> As the initial major release based on RHEL 10.2, RHIVOS 2.0 may not
+  have needed a mid-cycle switch - it was based directly on RHEL 10.2 from the start.
+  The mid-cycle switch is more relevant for subsequent releases like RHIVOS 2.1.
+</div>
+
+<h3>RHIVOS 2.1 Example (Projected)</h3>
+
+<div class="timeline">
+  <div class="timeline-item">
+    <div class="timeline-date">RHEL 10.2 Branch Point (~Feb 2026)</div>
+    <div class="timeline-text">
+      RHIVOS 2.1 development window opens on <code>rhivos-2-main</code>.<br>
+      Gate initially sources from <code>rhel-10.3-z-pending</code>.
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-date">RHEL 10.3 Branch Point (~Aug 2026)</div>
+    <div class="timeline-text">
+      <strong>Mid-cycle switch:</strong><br>
+      1. Update gate inheritance: <code>rhel-10.3-z-pending</code> to <code>rhel-10.4-z-pending</code><br>
+      2. Update release tag inheritance: <code>rhel-10.3-z</code> to <code>rhel-10.4-z</code><br>
+      3. Update <code>%dist</code> macro in build tags: <code>.el10_4iv</code><br>
+      4. Do NOT create an intermediate <code>.el10_3iv</code> dist tag
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-date">RHIVOS 2.1 Dev Complete</div>
+    <div class="timeline-text">
+      <strong>Freeze:</strong><br>
+      1. Remove RHEL inheritance from <code>rhivos-2.1</code> release tag<br>
+      2. Explicitly list all RHEL packages in the release tag<br>
+      3. Gating stops auto-sourcing RHEL builds
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-date">RHIVOS 2.1 GA (~Jul 2027)</div>
+    <div class="timeline-text">
+      Switch from GA tags to Z-stream tags.<br>
+      All new work uses <code>rhivos-2.1-z-*</code> tags.
+    </div>
+  </div>
+</div>
+
+<h3>What to Switch</h3>
+<table>
+  <thead>
+    <tr>
+      <th>What</th>
+      <th>Before Switch</th>
+      <th>After Switch</th>
+      <th>When</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Gate tag RHEL source</td>
+      <td><code>rhel-10.3-z-pending</code></td>
+      <td><code>rhel-10.4-z-pending</code></td>
+      <td>RHEL 10.3 branch point</td>
+    </tr>
+    <tr>
+      <td>Release tag RHEL inheritance</td>
+      <td><code>rhel-10.3-z</code></td>
+      <td><code>rhel-10.4-z</code></td>
+      <td>RHEL 10.3 branch point</td>
+    </tr>
+    <tr>
+      <td>%dist macro</td>
+      <td><code>.el10iv</code></td>
+      <td><code>.el10_4iv</code></td>
+      <td>RHEL 10.3 branch point (skip 10.3)</td>
+    </tr>
+    <tr>
+      <td>RHEL inheritance on release tag</td>
+      <td>Active (auto-source)</td>
+      <td>Removed (explicit list)</td>
+      <td>Dev Complete</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ================================================================== -->
+<h2 id="new-release-checklist">7. New Release Setup Checklist</h2>
+
+<p>
+Generalized checklist for setting up any RHIVOS N.Y release. Replace placeholders with actual values.
+For RHEL 10-based releases, use X.Y naming (no trailing .0).
+</p>
+
+<div class="callout-success">
+  <strong>Template variables:</strong><br>
+  <code>{VER}</code> = RHIVOS version (e.g. <code>2.1</code>)<br>
+  <code>{PREV}</code> = previous release (e.g. <code>2.0</code>)<br>
+  <code>{RHEL_BASE}</code> = initial RHEL base (e.g. <code>10.3</code>)<br>
+  <code>{RHEL_EUS}</code> = target RHEL EUS release (e.g. <code>10.4</code>)<br>
+  <code>{RHEL_MAJOR}</code> = RHEL major version (e.g. <code>10</code>)
+</div>
+
+<h3>Brew Tags</h3>
+<ul class="checklist">
+  <li>Create GA tags: <code>rhivos-{VER}</code>, <code>rhivos-{VER}-build</code>, <code>rhivos-{VER}-pesign-build</code>, <code>rhivos-{VER}-gate</code>, <code>rhivos-{VER}-candidate</code>, <code>rhivos-{VER}-pending</code>, <code>rhivos-{VER}-override</code></li>
+  <li>Create Z-stream tags: same set with <code>-z-</code> inserted (e.g. <code>rhivos-{VER}-z</code>, <code>rhivos-{VER}-z-build</code>, ...)</li>
+  <li>Create <code>rhivos-{VER}-build-base</code> inheriting from <code>rhivos-{PREV}-build-base</code></li>
+  <li>Set build groups on <code>rhivos-{VER}-build-base</code>: duplicate RHEL groups, replace <code>redhat-release</code> with <code>redhat-release-automotive</code></li>
+</ul>
+
+<h3>Tag Inheritance</h3>
+<ul class="checklist">
+  <li>Set <code>rhivos-{VER}-gate</code> to inherit from <code>rhel-{RHEL_BASE}-z-pending</code></li>
+  <li>Set <code>rhivos-{VER}-gate</code> to inherit from <code>rhivos-{PREV}-z-pending</code></li>
+  <li>Set <code>rhivos-{VER}</code> release tag to inherit from <code>rhel-{RHEL_BASE}-z</code> and <code>rhivos-{PREV}-z</code> (in that order)</li>
+  <li>Set <code>rhivos-{VER}-build</code> to inherit from release tag + <code>rhivos-{PREV}-build</code></li>
+  <li>Set <code>rhivos-{VER}-build</code> to inherit from <code>rhivos-{VER}-build-base</code></li>
+</ul>
+
+<h3>Build Targets</h3>
+<ul class="checklist">
+  <li>Create target <code>rhivos-{VER}-candidate</code>: buildroot = <code>rhivos-{VER}-build</code>, destination = <code>rhivos-{VER}-gate</code></li>
+  <li>Create target <code>rhivos-{VER}-candidate-pesign</code>: buildroot = <code>rhivos-{VER}-pesign-build</code>, destination = <code>rhivos-{VER}-gate</code></li>
+  <li>Create target <code>rhivos-{VER}-test-pesign</code>: same as candidate-pesign</li>
+  <li>Update <code>rhivos-{RHEL_MAJOR}-newest-test-pesign</code> to point to the new <code>-test-pesign</code></li>
+  <li>Create Z-stream targets: same set with <code>-z-</code></li>
+</ul>
+
+<h3>Configuration</h3>
+<ul class="checklist">
+  <li>Set <code>%dist</code> macro in build tags to <code>.el{RHEL_MAJOR}iv</code> (or <code>.el{RHEL_MAJOR}_{RHEL_EUS}iv</code> after branch point)</li>
+  <li>Set Brew build channel to <code>rhel{RHEL_MAJOR}</code></li>
+  <li>Create dist-git branch <code>rhivos-{VER}</code> (stabilization branch, opens at RHEL branch point)</li>
+  <li>Configure dist-git gating policies for the new branch</li>
+</ul>
+
+<h3>Compose Configuration</h3>
+<ul class="checklist">
+  <li>Set up nightly compose <code>latest-RHIVOS-{VER}</code> sourcing from <code>rhivos-{VER}-candidate</code></li>
+  <li>Set up RC compose pipeline for post-Dev Complete stabilization</li>
+</ul>
+
+<h3>Errata Tool</h3>
+<ul class="checklist">
+  <li>Create product release <code>RHIVOS-{VER}</code> (GA)</li>
+  <li>Create product release <code>RHIVOS-{VER}.Z</code> (z-stream)</li>
+  <li>Configure functional safety validator gating on advisories</li>
+</ul>
+
+<!-- ================================================================== -->
+<h2 id="z-stream-ops">8. Z-Stream Operations</h2>
+
+<p>
+After a RHIVOS release reaches GA, all new work moves to the Z-stream variant of the tags.
+The dist-git branch stays the same (e.g. <code>rhivos-2.0</code> for both GA and z-stream).
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspect</th>
+      <th>GA Phase</th>
+      <th>Z-Stream Phase</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Build target</td>
+      <td><code>rhivos-2.0-candidate</code></td>
+      <td><code>rhivos-2.0-z-candidate</code></td>
+    </tr>
+    <tr>
+      <td>Dist-git branch</td>
+      <td><code>rhivos-2.0</code></td>
+      <td><code>rhivos-2.0</code> (same branch)</td>
+    </tr>
+    <tr>
+      <td>Nightly compose</td>
+      <td><code>latest-RHIVOS-2.0</code> from <code>-candidate</code></td>
+      <td><code>latest-RHIVOS-2.0</code> from <code>-z-candidate</code></td>
+    </tr>
+    <tr>
+      <td>Errata release</td>
+      <td><code>RHIVOS-2.0</code></td>
+      <td><code>RHIVOS-2.0.Z</code></td>
+    </tr>
+    <tr>
+      <td>RHEL inheritance</td>
+      <td>Removed at Dev Complete</td>
+      <td>Active from <code>rhel-10.2-z</code></td>
+    </tr>
+    <tr>
+      <td>Jira fixVersion</td>
+      <td><code>rhivos-2.0</code></td>
+      <td><code>rhivos-2.0.Xz</code> (quarterly batch)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Z-Stream Update Types</h3>
+<ul>
+  <li><strong>Quarterly batches</strong> - scheduled updates using Errata Tool batches (e.g. RHIVOS-2.0.1, RHIVOS-2.0.2)</li>
+  <li><strong>Asynchronous updates</strong> - individual advisories released outside the quarterly schedule</li>
+  <li><strong>EUS updates</strong> - no separate product or release needed; uses the same batch and async mechanisms</li>
+</ul>
+
+<!-- ================================================================== -->
+<h2 id="references">9. References</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Document</th>
+      <th>Location</th>
+      <th>Content</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>RHIVOS Branching Strategy</strong></td>
+      <td><a href="https://docs.google.com/document/d/1CSU4qFh2G7VXkUaYXIqOdVNa_oWpkDZWgMw_8Hk1lD8/edit">Google Doc</a></td>
+      <td>Original strategy document by Petr Sabata (v1.0 DRAFT, May 2025). Full rationale, edge cases, CDN layout.</td>
+    </tr>
+    <tr>
+      <td><strong>Creation of Brew Tags for RHIVOS</strong></td>
+      <td><a href="https://docs.google.com/document/d/1DYhswKrMapstVEGpJ-ej5bwbRlryH_NYmyvy_K8ozI0/edit">Google Doc</a></td>
+      <td>Companion document for Brew tag creation procedures.</td>
+    </tr>
+    <tr>
+      <td><strong>RHEL &amp; RHIVOS Gating Process</strong></td>
+      <td><a href="https://redhat.atlassian.net/wiki/spaces/Automotive/pages/387157013">Confluence</a></td>
+      <td>Gating workflow, tag inheritance details, dev phase vs blocker phase behavior.</td>
+    </tr>
+    <tr>
+      <td><strong>Release Configs Matrix</strong></td>
+      <td><a href="https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196275486">Confluence</a></td>
+      <td>Maps RHEL/RHIVOS versions to Brew tags, git branches, and Gator configs.</td>
+    </tr>
+    <tr>
+      <td><strong>Release Checklist Template</strong></td>
+      <td><a href="https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196276995">Confluence</a></td>
+      <td>Includes Task 260: "Create the new tag rhivos-x.y.z in Brew".</td>
+    </tr>
+    <tr>
+      <td><strong>Package Workflow (RHIVOS-only packages)</strong></td>
+      <td><a href="https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196270957">Confluence</a></td>
+      <td>End-to-end onboarding workflow including Brew tagging.</td>
+    </tr>
+    <tr>
+      <td><strong>Unified Brew Tagging Structure</strong></td>
+      <td><a href="https://redhat.atlassian.net/wiki/spaces/RCMDOC/pages/296845952">Confluence</a></td>
+      <td>Standard RHEL tag permission model (applicable to RHIVOS).</td>
+    </tr>
+  </tbody>
+</table>
+
+<footer>
+  Generated July 19, 2026. Companion to the RHIVOS Branching Strategy v1.0 DRAFT.
+  Data sources: Branching Strategy Google Doc, RHIVOS 2.0 RC3 tracking, dist-git workflow documentation.
+</footer>
+
+</body>
+</html>
