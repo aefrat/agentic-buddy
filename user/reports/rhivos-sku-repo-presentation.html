@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RHIVOS SKU/Repo Presentation Pipeline</title>
+<style>
+  :root {
+    --red-hat-red: #EE0000;
+    --dark-red: #A30000;
+    --green: #3e8635;
+    --light-green: #e7f4e4;
+    --amber: #f0ab00;
+    --light-amber: #fdf7e7;
+    --red: #c9190b;
+    --light-red: #fce8e6;
+    --blue: #0066cc;
+    --light-blue: #e7f1fa;
+    --purple: #6753ac;
+    --light-purple: #f0ecf7;
+    --teal: #009596;
+    --light-teal: #e0f5f5;
+    --bg: #f5f5f5;
+    --card: #ffffff;
+    --text: #1a1a1a;
+    --muted: #6a6e73;
+    --border: #d2d2d2;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Red Hat Text', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .header {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    color: #fff;
+    padding: 48px 40px 40px;
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .header .subtitle {
+    font-size: 15px;
+    color: #a0a0a0;
+    margin-bottom: 16px;
+  }
+  .header .origin {
+    display: inline-block;
+    background: rgba(238, 0, 0, 0.15);
+    border: 1px solid rgba(238, 0, 0, 0.3);
+    color: #ff6b6b;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .jump-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 10px 40px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .jump-nav a {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--text);
+    background: #f0f0f0;
+    transition: all 0.15s;
+  }
+  .jump-nav a:hover { background: var(--light-blue); color: var(--blue); }
+  .jump-nav a.phase-business { border-left: 3px solid var(--purple); }
+  .jump-nav a.phase-build { border-left: 3px solid var(--blue); }
+  .jump-nav a.phase-errata { border-left: 3px solid var(--amber); }
+  .jump-nav a.phase-compose { border-left: 3px solid var(--teal); }
+  .jump-nav a.phase-release { border-left: 3px solid var(--green); }
+  .jump-nav a.phase-verify { border-left: 3px solid var(--red-hat-red); }
+  .container { max-width: 1100px; margin: 0 auto; padding: 32px 40px; }
+  section { scroll-margin-top: 60px; }
+
+  /* Pipeline flow */
+  .pipeline {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 32px 0 40px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+  .pipeline-phase {
+    flex: 1;
+    min-width: 150px;
+    position: relative;
+    text-align: center;
+    padding: 0 4px;
+  }
+  .pipeline-box {
+    border-radius: 10px;
+    padding: 18px 12px 14px;
+    color: #fff;
+    min-height: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .pipeline-box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  }
+  .pipeline-box .phase-num {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.8;
+    margin-bottom: 4px;
+  }
+  .pipeline-box .phase-title {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .pipeline-box .phase-steps {
+    font-size: 11px;
+    opacity: 0.7;
+    margin-top: 6px;
+  }
+  .pipeline-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    color: #999;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .p-business { background: linear-gradient(135deg, var(--purple), #7b6bc4); }
+  .p-build { background: linear-gradient(135deg, var(--blue), #3388dd); }
+  .p-errata { background: linear-gradient(135deg, #c78d00, var(--amber)); }
+  .p-compose { background: linear-gradient(135deg, var(--teal), #00b3b4); }
+  .p-release { background: linear-gradient(135deg, var(--green), #4ea044); }
+  .p-verify { background: linear-gradient(135deg, var(--dark-red), var(--red-hat-red)); }
+
+  /* Phase cards */
+  .phase-card {
+    background: var(--card);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .phase-card-header {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .phase-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .phase-card-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+    flex: 1;
+  }
+  .phase-card-header .step-count {
+    background: #f0f0f0;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .phase-card-body { padding: 0; }
+  .step-row {
+    padding: 16px 24px;
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    gap: 14px;
+    align-items: start;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .step-row:last-child { border-bottom: none; }
+  .step-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-content h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .step-content p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .step-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .badge-owner { background: var(--light-blue); color: var(--blue); }
+  .badge-tool { background: #f0f0f0; color: #555; }
+  .badge-gap { background: var(--light-amber); color: #8a6400; }
+  .badge-doc { background: var(--light-green); color: var(--green); }
+
+  /* Gap analysis */
+  .gap-section {
+    background: var(--card);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .gap-header {
+    padding: 20px 24px;
+    background: linear-gradient(135deg, #fff8e1, #fff3cd);
+    border-bottom: 1px solid #f0d78a;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .gap-header h2 { font-size: 18px; font-weight: 600; }
+  .gap-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .gap-col {
+    padding: 20px 24px;
+  }
+  .gap-col:first-child {
+    border-right: 1px solid var(--border);
+  }
+  .gap-col h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .gap-col ul {
+    list-style: none;
+    padding: 0;
+  }
+  .gap-col li {
+    font-size: 13px;
+    padding: 5px 0;
+    color: var(--muted);
+    display: flex;
+    align-items: start;
+    gap: 8px;
+    line-height: 1.4;
+  }
+  .gap-col li::before {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .gap-documented li::before { content: "&#9679;"; color: var(--green); }
+  .gap-tribal li::before { content: "&#9675;"; color: var(--amber); }
+
+  /* Sources */
+  .sources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .source-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    transition: border-color 0.15s;
+  }
+  .source-card:hover { border-color: var(--blue); }
+  .source-card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .source-card h3 a {
+    color: var(--blue);
+    text-decoration: none;
+  }
+  .source-card h3 a:hover { text-decoration: underline; }
+  .source-card p {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .source-type {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+  }
+  .st-gdoc { background: #e8f0fe; color: #1a73e8; }
+  .st-confluence { background: #deebff; color: #0052cc; }
+  .st-repo { background: #f0ecf7; color: var(--purple); }
+  .st-wiki { background: var(--light-teal); color: #007070; }
+
+  .section-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .section-subtitle {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .footer {
+    text-align: center;
+    padding: 32px 40px;
+    color: var(--muted);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+    margin-top: 24px;
+  }
+
+  /* CDN layout diagram */
+  .cdn-diagram {
+    background: #1a1a1a;
+    border-radius: 8px;
+    padding: 20px 24px;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #ccc;
+    margin: 16px 0;
+    overflow-x: auto;
+  }
+  .cdn-diagram .dir { color: #6bafff; }
+  .cdn-diagram .comment { color: #6a9955; }
+
+  /* Brew tag diagram */
+  .brew-diagram {
+    background: #1a1a1a;
+    border-radius: 8px;
+    padding: 20px 24px;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 12px;
+    line-height: 1.8;
+    color: #ccc;
+    margin: 16px 0;
+    overflow-x: auto;
+  }
+  .brew-diagram .tag-release { color: #4ec9b0; }
+  .brew-diagram .tag-gate { color: #dcdcaa; }
+  .brew-diagram .tag-candidate { color: #6bafff; }
+  .brew-diagram .tag-pending { color: #ce9178; }
+  .brew-diagram .tag-build { color: #c586c0; }
+  .brew-diagram .arrow { color: #666; }
+
+  /* Entitlement chain */
+  .chain {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 20px 0;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+  .chain-node {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+    text-align: center;
+    min-width: 110px;
+    flex-shrink: 0;
+  }
+  .chain-node .cn-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .chain-node .cn-value {
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 2px;
+  }
+  .chain-arrow {
+    font-size: 18px;
+    color: #bbb;
+    padding: 0 4px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 768px) {
+    .container { padding: 20px; }
+    .header { padding: 32px 20px; }
+    .jump-nav { padding: 8px 20px; }
+    .pipeline { flex-direction: column; }
+    .pipeline-arrow { transform: rotate(90deg); min-height: 24px; }
+    .gap-grid { grid-template-columns: 1fr; }
+    .gap-col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+    .step-row { grid-template-columns: 36px 1fr; }
+    .step-meta { flex-direction: row; flex-wrap: wrap; align-items: center; grid-column: 2; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <span class="origin">RHIVOS 2.0 Retro Action Item</span>
+  <h1>SKU/Repo Presentation Pipeline</h1>
+  <p class="subtitle">End-to-end process for setting up RHIVOS products for CDN distribution - from SKU to customer access</p>
+</div>
+
+<nav class="jump-nav">
+  <a href="#overview" class="phase-business">Overview</a>
+  <a href="#phase1" class="phase-business">1. Identity</a>
+  <a href="#phase2" class="phase-build">2. Build Infra</a>
+  <a href="#phase3" class="phase-errata">3. Errata Tool</a>
+  <a href="#phase4" class="phase-compose">4. Compose</a>
+  <a href="#phase5" class="phase-release">5. Release</a>
+  <a href="#phase6" class="phase-verify">6. Verify</a>
+  <a href="#gaps">Gaps</a>
+  <a href="#sources">Sources</a>
+</nav>
+
+<div class="container">
+
+<!-- Overview -->
+<section id="overview">
+<h2 class="section-title">Pipeline Overview</h2>
+<p class="section-subtitle">Click any phase to jump to details. 6 phases, 20 steps from product definition to customer CDN access.</p>
+
+<div class="pipeline">
+  <div class="pipeline-phase">
+    <a href="#phase1" style="text-decoration:none">
+    <div class="pipeline-box p-business">
+      <div class="phase-num">Phase 1</div>
+      <div class="phase-title">Product Identity & Entitlements</div>
+      <div class="phase-steps">5 steps</div>
+    </div>
+    </a>
+  </div>
+  <div class="pipeline-arrow">&#10132;</div>
+  <div class="pipeline-phase">
+    <a href="#phase2" style="text-decoration:none">
+    <div class="pipeline-box p-build">
+      <div class="phase-num">Phase 2</div>
+      <div class="phase-title">Build Infrastructure</div>
+      <div class="phase-steps">4 steps</div>
+    </div>
+    </a>
+  </div>
+  <div class="pipeline-arrow">&#10132;</div>
+  <div class="pipeline-phase">
+    <a href="#phase3" style="text-decoration:none">
+    <div class="pipeline-box p-errata">
+      <div class="phase-num">Phase 3</div>
+      <div class="phase-title">Errata Tool Config</div>
+      <div class="phase-steps">3 steps</div>
+    </div>
+    </a>
+  </div>
+  <div class="pipeline-arrow">&#10132;</div>
+  <div class="pipeline-phase">
+    <a href="#phase4" style="text-decoration:none">
+    <div class="pipeline-box p-compose">
+      <div class="phase-num">Phase 4</div>
+      <div class="phase-title">Compose Pipeline</div>
+      <div class="phase-steps">3 steps</div>
+    </div>
+    </a>
+  </div>
+  <div class="pipeline-arrow">&#10132;</div>
+  <div class="pipeline-phase">
+    <a href="#phase5" style="text-decoration:none">
+    <div class="pipeline-box p-release">
+      <div class="phase-num">Phase 5</div>
+      <div class="phase-title">Release Execution</div>
+      <div class="phase-steps">4 steps</div>
+    </div>
+    </a>
+  </div>
+  <div class="pipeline-arrow">&#10132;</div>
+  <div class="pipeline-phase">
+    <a href="#phase6" style="text-decoration:none">
+    <div class="pipeline-box p-verify">
+      <div class="phase-num">Phase 6</div>
+      <div class="phase-title">Verification</div>
+      <div class="phase-steps">Checklist</div>
+    </div>
+    </a>
+  </div>
+</div>
+
+<!-- Entitlement Chain -->
+<h3 style="font-size: 15px; margin-bottom: 4px;">Entitlement Chain (Customer Access Path)</h3>
+<p style="font-size: 13px; color: var(--muted); margin-bottom: 8px;">How a customer's subscription maps to CDN content access</p>
+<div class="chain">
+  <div class="chain-node"><div class="cn-label">Business</div><div class="cn-value">SKU</div></div>
+  <div class="chain-arrow">&#10132;</div>
+  <div class="chain-node"><div class="cn-label">Entitlement</div><div class="cn-value">Candlepin</div></div>
+  <div class="chain-arrow">&#10132;</div>
+  <div class="chain-node"><div class="cn-label">Metadata</div><div class="cn-value">Content Set</div></div>
+  <div class="chain-arrow">&#10132;</div>
+  <div class="chain-node"><div class="cn-label">Internal</div><div class="cn-value">EngID</div></div>
+  <div class="chain-arrow">&#10132;</div>
+  <div class="chain-node"><div class="cn-label">Client</div><div class="cn-value">Product Cert</div></div>
+  <div class="chain-arrow">&#10132;</div>
+  <div class="chain-node"><div class="cn-label">Edge</div><div class="cn-value">CDN Auth</div></div>
+  <div class="chain-arrow">&#10132;</div>
+  <div class="chain-node" style="border-color: var(--green);"><div class="cn-label">Delivery</div><div class="cn-value" style="color: var(--green);">CDN Repos</div></div>
+</div>
+</section>
+
+<!-- Phase 1 -->
+<section id="phase1">
+<div class="phase-card">
+  <div class="phase-card-header">
+    <div class="phase-icon p-business">1</div>
+    <h2>Phase 1: Product Identity & Entitlements</h2>
+    <span class="step-count">5 steps</span>
+  </div>
+  <div class="phase-card-body">
+    <div class="step-row">
+      <div class="step-num" style="background: var(--purple);">1.1</div>
+      <div class="step-content">
+        <h3>Define SKU and Subscription</h3>
+        <p>Create the commercial subscription product (SKU) in the Red Hat subscription system. Maps to entitlements in Candlepin.</p>
+      </div>
+      <div class="step-meta">
+        <span class="badge badge-owner">PM + Business</span>
+        <span class="badge badge-gap">Tribal knowledge</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num" style="background: var(--purple);">1.2</div>
+      <div class="step-content">
+        <h3>Request Engineering ID (EngID)</h3>
+        <p>Add signing keys to cdn-definitions-private, DirectoryLayout to cdn-utils, code to psc-lib, product config to product-service-config-auto (preprod then prod). EngID created automatically after prod MR merges.</p>
+      </div>
+      <div class="step-meta">
+        <span class="badge badge-owner">Distribution + PSCA</span>
+        <span class="badge badge-tool">product-service-config-auto</span>
+        <span class="badge badge-doc">Documented</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num" style="background: var(--purple);">1.3</div>
+      <div class="step-content">
+        <h3>Configure Content Sets</h3>
+        <p>Define content sets in Product Service: label, download URL pattern, architecture, required tags. Flows through to Candlepin entitlement certificates.</p>
+      </div>
+      <div class="step-meta">
+        <span class="badge badge-owner">Distribution</span>
+        <span class="badge badge-tool">engproduct-cli</span>
+        <span class="badge badge-gap">Tribal knowledge</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num" style="background: var(--purple);">1.4</div>
+      <div class="step-content">
+        <h3>Create CDN Directory Layout</h3>
+        <p>Define CDN directory structure in cdn-utils.</p>
+        <div class="cdn-diagram">
+<span class="dir">dist/</span>
+  <span class="dir">rhivos1/</span>         <span class="comment">-- major version (RHIVOS 1.x)</span>
+    <span class="dir">1/</span>             <span class="comment">-- rolling: all 1.x content</span>
+    <span class="dir">1.0/</span>           <span class="comment">-- GA + all 1.0.z updates + EUS</span>
+    <span class="dir">1.1/</span>           <span class="comment">-- GA + all 1.1.z updates + EUS</span>
+  <span class="dir">rhivos2/</span>         <span class="comment">-- RHIVOS 2.x (same layout)</span>
+    <span class="dir">2/</span>
+    <span class="dir">2.0/</span>
+        </div>
+      </div>
+      <div class="step-meta">
+        <span class="badge badge-owner">Distribution</span>
+        <span class="badge badge-tool">cdn-utils</span>
+        <span class="badge badge-gap">Tribal knowledge</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num" style="background: var(--purple);">1.5</div>
+      <div class="step-content">
+        <h3>Create rhsm-pulp Repositories</h3>
+        <p>Use cdn-utils to create Pulp repos matching the content sets. Stage repos created first for validation. Cert/key in Bitwarden.</p>
+      </div>
+      <div class="step-meta">
+        <span class="badge badge-owner">Distribution</span>
+        <span class="badge badge-gap">Tribal knowledge</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Phase 2 -->
+<section id="phase2">
+<div class="phase-card">
+  <div class="phase-card-header">
+    <div class="phase-icon p-build">2</div>
+    <h2>Phase 2: Build Infrastructure</h2>
+    <span class="step-count">4 steps</span>
+  </div>
+  <div class="phase-card-body">
+    <div class="step-row">
+      <div class="step-num" style="background: var(--blue);">2.1</div>
+      <div class="step-content">
+        <h3>Create Brew Tags</h3>
+        <p>Set up the full tag hierarchy with inheritance. Each release needs 7+ tags (release, gate, candidate, pending, override, build, pesign-build, build-base) plus Z-stream variants.</p>
+        <div class="brew-diagram">
+<span class="tag-gate">*-gate</span> <span class="arrow">&lt;--</span> RHEL builds flow in (rhel-*-pending inheritance)
+  <span class="arrow">|</span>
+  <span class="arrow">v</span> Gator gating tests
+<span class="tag-candidate">*-candidate</span> <span class="arrow">&lt;--</span> Passed gating, feeds composes
+  <span class="arrow">|</span>
+  <span class="arrow">v</span> Scheduled for release
+<span class="tag-pending">*-pending</span> <span class="arrow">&lt;--</span> Feeds next release
+  <span class="arrow">|</span>
+  <span class="arrow">v</span> Published
+<span class="tag-release">*-release</span> <span class="arrow">&lt;--</span> Fully released builds
+
+<span class="tag-build">*-build</span> <span class="arrow">&lt;--</span> Buildroot (inherits release + pending via override)
+        </div>
+      </div>
+      <div class="step-meta">
+        <span class="badge badge-owner">Release Eng</span>
+        <span class="badge badge-tool">Brew (Koji)</span>
+        <span class="badge badge-doc">Documented</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num" style="background: var(--blue);">2.2</div>
+      <div class="step-content">
+        <h3>Create Build Targets</h3>
+        <p>Link buildroot to destination tags: *-candidate (standard), *-candidate-pesign (KWF), *-test-pesign (KWF test). Set %dist macro to ".elX_Yiv".</p>
+      </div>
+      <div class="step-meta">
+        <span class="badge badge-owner">Release Eng</span>
+        <span class="badge badge-doc">Documented</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num" style="background: var(--blue);">2.3</div>
+      <div class="step-content">
+        <h3>Create Dist-git Branches</h3>
+        <p>Create rhivos-X-main (development, open policy) and rhivos-X.Y.0 or rhivos-X.Y (release, strict gating with VROOM ticket requirement).</p>
+      </div>
+      <div class="step-meta">
+        <span class="badge badge-owner">Release Eng</span>
+        <span class="badge badge-doc">Documented</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num" style="background: var(--blue);">2.4</div>
+      <div class="step-content">
+        <h3>Configure Gator</h3>
+        <p>Set up gating rules: *-gate to *-candidate (pass) or discard (fail). Post-Dev-Complete: freeze RHEL tag inheritance, require blocker/exception for new builds.</p>
+      </div>
+      <div class="step-meta">
+        <span class="badge badge-owner">Release Eng</span>
+        <span class="badge badge-tool">Gator</span>
+        <span class="badge badge-doc">Documented</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Phase 3 -->
+<section id="phase3">
+<div class="phase-card">
+  <div class="phase-card-header">
+    <div class="phase-icon p-errata">3</div>
+    <h2>Phase 3: Errata Tool Configuration</h2>
+    <span class="step-count">3 steps</span>
+  </div>
+  <div class="phase-card-body">
+    <div class="step-row">
+      <div class="step-num" style="background: var(--amber); color: #1a1a1a;">3.1</div>
+      <div class="step-content">
+        <h3>Create Product / Release</h3>
+        <p>RHIVOS product (225). Create Product Version (PV) for each Y-stream. Define GA release + Z release for each. EUS uses same structure (no separate offering).</p>
+      </div>
+      <div class="step-meta">
+        <span class="badge badge-owner">Distribution</span>
+        <span class="badge badge-tool">Errata Tool</span>
+        <span class="badge badge-doc">Documented</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num" style="background: var(--amber); color: #1a1a1a;">3.2</div>
+      <div class="step-content">
+        <h3>Configure Product Listings</h3>
+        <p>Set up product listings required for advisories. Import composes via compose-composedb-import.</p>
+      </div>
+      <div class="step-meta">
+        <span class="badge badge-owner">Distribution</span>
+        <span class="badge badge-doc">Documented</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num" style="background: var(--amber); color: #1a1a1a;">3.3</div>
+      <div class="step-content">
+        <h3>Define Advisory Creation Process</h3>
+        <p>Phase 1: Clone RHEL advisories 1:1 ("RHIVOS clone:" prefix). Phase 2: Bulk advisories for remaining builds (up to 100/advisory). RHIVOS-native packages (kernel-automotive, bluechi, qm, AIB) get dedicated advisories.</p>
+      </div>
+      <div class="step-meta">
+        <span class="badge badge-owner">Distribution</span>
+        <span class="badge badge-doc">Documented</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Phase 4 -->
+<section id="phase4">
+<div class="phase-card">
+  <div class="phase-card-header">
+    <div class="phase-icon p-compose">4</div>
+    <h2>Phase 4: Compose Pipeline</h2>
+    <span class="step-count">3 steps</span>
+  </div>
+  <div class="phase-card-body">
+    <div class="step-row">
+      <div class="step-num" style="background: var(--teal);">4.1</div>
+      <div class="step-content">
+        <h3>Create Release Configs</h3>
+        <p>Add release configuration: compose URL, Koji tag, S3 path, RCM host, Polarion project. Add to release-configs file + gator-run-configs.</p>
+      </div>
+      <div class="step-meta">
+        <span class="badge badge-owner">Release Eng</span>
+        <span class="badge badge-tool">release-definitions</span>
+        <span class="badge badge-doc">Documented</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num" style="background: var(--teal);">4.2</div>
+      <div class="step-content">
+        <h3>Configure ODCS Compose</h3>
+        <p>Set up nightly composes: latest-RHIVOS-X.Y (from *-candidate, switches to *-z-candidate after Dev Complete). RC composes created after Dev Complete from *-candidate.</p>
+      </div>
+      <div class="step-meta">
+        <span class="badge badge-owner">Release Eng</span>
+        <span class="badge badge-tool">ODCS</span>
+        <span class="badge badge-doc">Documented</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num" style="background: var(--teal);">4.3</div>
+      <div class="step-content">
+        <h3>Set Up Internal Distribution</h3>
+        <p>Configure internal channels: webserver (rhivos.auto-toolchain.redhat.com), AWS S3 (auto-product-build-downstream), EC2 download mirror.</p>
+      </div>
+      <div class="step-meta">
+        <span class="badge badge-owner">Distribution</span>
+        <span class="badge badge-doc">Documented</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Phase 5 -->
+<section id="phase5">
+<div class="phase-card">
+  <div class="phase-card-header">
+    <div class="phase-icon p-release">5</div>
+    <h2>Phase 5: Release Execution</h2>
+    <span class="step-count">4 steps</span>
+  </div>
+  <div class="phase-card-body">
+    <div class="step-row">
+      <div class="step-num" style="background: var(--green);">5.1</div>
+      <div class="step-content">
+        <h3>Errata Batch Operations (10-step workflow)</h3>
+        <p>Refresh cache - compare batch vs compose - sync builds - reload file lists - find/drop empty advisories - count status - move NEW_FILES to QE - stage push - move QE to REL_PREP - live push.</p>
+      </div>
+      <div class="step-meta">
+        <span class="badge badge-owner">Distribution</span>
+        <span class="badge badge-tool">errata-distribution</span>
+        <span class="badge badge-doc">Documented</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num" style="background: var(--green);">5.2</div>
+      <div class="step-content">
+        <h3>CDN Stage Push</h3>
+        <p>Push to CDN staging for validation using et-push --stage on RCM host. Chunking: batch name for 500 or fewer advisories, 100-200 IDs per run for larger batches. Run CCAT checks.</p>
+      </div>
+      <div class="step-meta">
+        <span class="badge badge-owner">Distribution (ET mgr)</span>
+        <span class="badge badge-tool">et-push --stage</span>
+        <span class="badge badge-doc">Documented</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num" style="background: var(--green);">5.3</div>
+      <div class="step-content">
+        <h3>CDN Live Push</h3>
+        <p>Push staged content to live CDN using et-push --live. Prerequisite: all advisories in PUSH_READY state (auto-promoted from REL_PREP).</p>
+      </div>
+      <div class="step-meta">
+        <span class="badge badge-owner">Distribution (ET mgr)</span>
+        <span class="badge badge-tool">et-push --live</span>
+        <span class="badge badge-doc">Documented</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num" style="background: var(--green);">5.4</div>
+      <div class="step-content">
+        <h3>Partner Distribution</h3>
+        <p>Push to partner channels: SFTP (accessible under SP) and JFrog Artifactory via sea-bridge service.</p>
+      </div>
+      <div class="step-meta">
+        <span class="badge badge-owner">Distribution</span>
+        <span class="badge badge-tool">sea-bridge</span>
+        <span class="badge badge-doc">Documented</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Phase 6 -->
+<section id="phase6">
+<div class="phase-card">
+  <div class="phase-card-header">
+    <div class="phase-icon p-verify">6</div>
+    <h2>Phase 6: Verification</h2>
+    <span class="step-count">Pre-release checklist</span>
+  </div>
+  <div class="phase-card-body">
+    <div style="padding: 20px 24px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 8px; font-size: 13px;">
+          <span style="color: var(--green); font-size: 16px;">&#9744;</span> All builds present in ET advisories
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; font-size: 13px;">
+          <span style="color: var(--green); font-size: 16px;">&#9744;</span> Product listings updated
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; font-size: 13px;">
+          <span style="color: var(--green); font-size: 16px;">&#9744;</span> Test suites passed (CAT + Validator)
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; font-size: 13px;">
+          <span style="color: var(--green); font-size: 16px;">&#9744;</span> CDN stage content verified
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; font-size: 13px;">
+          <span style="color: var(--green); font-size: 16px;">&#9744;</span> CDN live content accessible
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; font-size: 13px;">
+          <span style="color: var(--green); font-size: 16px;">&#9744;</span> Subscription/entitlement chain tested E2E
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; font-size: 13px;">
+          <span style="color: var(--green); font-size: 16px;">&#9744;</span> Internal distribution channels updated
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; font-size: 13px;">
+          <span style="color: var(--green); font-size: 16px;">&#9744;</span> Partner distribution channels updated
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Gap Analysis -->
+<section id="gaps">
+<div class="gap-section">
+  <div class="gap-header">
+    <span style="font-size: 20px;">&#9888;</span>
+    <h2>Documentation Gap Analysis</h2>
+  </div>
+  <div class="gap-grid">
+    <div class="gap-col gap-documented">
+      <h3><span style="color: var(--green);">&#9679;</span> Well Documented</h3>
+      <ul>
+        <li>Brew tag structure and inheritance (Branching Strategy)</li>
+        <li>CDN directory layout design (Branching Strategy)</li>
+        <li>Errata Tool product/release structure (Branching Strategy + Confluence)</li>
+        <li>Distribution channels and identifiers (Confluence)</li>
+        <li>CDN stage/live push commands (errata-distribution repo)</li>
+        <li>EngID creation steps (errata-distribution repo)</li>
+        <li>Gating workflow across phases (Confluence)</li>
+        <li>Dist-git branch naming and policies (Branching Strategy)</li>
+        <li>Compose strategy: nightly, RC, per-release (Branching Strategy)</li>
+        <li>10-step errata batch workflow (errata-distribution repo)</li>
+      </ul>
+    </div>
+    <div class="gap-col gap-tribal">
+      <h3><span style="color: var(--amber);">&#9675;</span> Tribal Knowledge (Gaps)</h3>
+      <ul>
+        <li>SKU / subscription creation process (PM + business side)</li>
+        <li>Candlepin content set configuration procedure</li>
+        <li>Product Service config YAML structure (no examples)</li>
+        <li>cdn-utils directory layout definition steps</li>
+        <li>rhsm-pulp repo creation procedure</li>
+        <li>CDN Authorizer configuration for new products</li>
+        <li>End-to-end verification checklist (stage to live)</li>
+        <li>Step ordering and dependencies (which blocks which)</li>
+        <li>Owner assignments per step</li>
+        <li>Timeline expectations per phase</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Sources -->
+<section id="sources">
+<h2 class="section-title">Source Documents</h2>
+<p class="section-subtitle">All documentation sources used to compile this pipeline overview</p>
+
+<div class="sources-grid">
+  <div class="source-card">
+    <span class="source-type st-gdoc">Google Doc</span>
+    <h3><a href="https://docs.google.com/document/d/1CSU4qFh2G7VXkUaYXIqOdVNa_oWpkDZWgMw_8Hk1lD8/edit" target="_blank">RHIVOS Branching Strategy</a></h3>
+    <p>Most comprehensive source. Covers dist-git, Brew tags, gating, composes, Errata Tool, CDN layout. Design-level, not operational step-by-step.</p>
+  </div>
+  <div class="source-card">
+    <span class="source-type st-confluence">Confluence</span>
+    <h3><a href="https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196262002" target="_blank">Auto Toolchain Distribution Focus Area</a></h3>
+    <p>Distribution channels (internal/partner/CDN), EngID 931, rhsm-pulp push, Pub CLI, Errata product IDs (225, PV 2141, PV 2316), advisory creation phases.</p>
+  </div>
+  <div class="source-card">
+    <span class="source-type st-confluence">Confluence</span>
+    <h3><a href="https://redhat.atlassian.net/wiki/spaces/Automotive/pages/387157013" target="_blank">RHEL & RHIVOS Gating Process</a></h3>
+    <p>Gating workflow across development, errata advisory, Dev Complete, and Blocker/Exception phases. RHEL-to-RHIVOS build flow via Brew tags.</p>
+  </div>
+  <div class="source-card">
+    <span class="source-type st-repo">Repository</span>
+    <h3>errata-distribution</h3>
+    <p>EngID setup procedure, CDN stage/live push guides, 10-step release workflow, batch sync, known issues, troubleshooting. Best operational documentation.</p>
+  </div>
+  <div class="source-card">
+    <span class="source-type st-wiki">Local Wiki</span>
+    <h3>rhivos-workflows-wiki</h3>
+    <p>SKU/ProductID/entitlement chain research, RHIVOS vs Voyager comparison, QC LP release approach, downstream overhead cascade analysis.</p>
+  </div>
+  <div class="source-card">
+    <span class="source-type st-wiki">Local Wiki</span>
+    <h3>atc_llm_wiki</h3>
+    <p>Dist-git commit policies, BUILD_BRANCH to STREAM pipeline, release management patterns, how to add new release streams.</p>
+  </div>
+  <div class="source-card">
+    <span class="source-type st-gdoc">Google Doc</span>
+    <h3><a href="https://docs.google.com/document/d/1ByerHeNOB0xcZVJHYxyx_o6tmqQoJKIFDcCT8fUoWVc/edit" target="_blank">SKU/Repo Analysis & Draft Runbook</a></h3>
+    <p>Full analysis document with detailed step-by-step runbook, gap analysis, key repos, contacts, and known issues. Created from this research.</p>
+  </div>
+  <div class="source-card">
+    <span class="source-type st-gdoc">Google Doc</span>
+    <h3><a href="https://docs.google.com/document/d/17q7g2rd3-JvBy7jHn3Py85fqAPmYvN0Wwxe-uNIs7FI/edit" target="_blank">RHIVOS 2.0 Retro</a></h3>
+    <p>Origin of this work - GG's question: "SKU/Repo presentation (CDN, staging, etc) - have we documented all the steps?"</p>
+  </div>
+</div>
+</section>
+
+</div>
+
+<div class="footer">
+  RHIVOS SKU/Repo Presentation Pipeline - Generated 2026-07-19 - DRAFT for team review
+</div>
+
+</body>
+</html>
