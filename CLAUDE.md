@@ -59,19 +59,19 @@ Factual updates to Right now (changed dates, flipped statuses) are allowed mid-s
 
 - **CAT complete.** RHIVOS 2.0-Core CAT Jun 29-30 finished. RC3 CTC at 93% (3 tickets remaining). All errata at REL_PREP.
 - **CY26Q2 Quarterly Connection** — Accomplishments and Feedback & Development drafts ready in `~/Documents/`. Team member QC reports (RHAS + ATC) in `agent_brain/projects/qc-agent/active/Q2-2026/`. Juanje, Eitan, Kanitha, Muhamad, and Bella drafts expanded with self-input. Development briefs for all 10 directs at `talent-architecture/active/`. May need supplementing with Jira/G-docs/1:1 data before Workday submission.
-- **Hubert Stefanski transition day 15 (started Jul 1).** Jeff Ligon takes scrum master from Manuel Sandino (no formal announcement yet). Knowledge transfer plan overdue. AutoSD CloudFront migration timeline needed since Hubert (fork maintainer) is leaving.
+- **Hubert Stefanski transition day 19 (started Jul 1).** Jeff Ligon takes scrum master from Manuel Sandino (no formal announcement yet). Knowledge transfer plan overdue. AutoSD CloudFront migration timeline needed since Hubert (fork maintainer) is leaving.
 - **Kanitha Chim retention - active.** Exploring internal mobility (informed Jul 13). 1:1 same day produced Toolchain Architect trial role, TPO reduction, distribution offloading plan. Assessment: structural (role composition), not fundamental (environment). **Jamie sync done Jul 15 - no objections to role change.** Mentor candidates: Alexander Larsson, Ian McLeod. Jan Onderka critical for distribution - Meital Arki follow-up Jul 16. Remaining this week: Ozan distribution offload discussion, absorb TPO personally. Longer-term: Christine connection (after Jul 21 PTO). RoG migration architecture proposal (4-phase, 21 packages) created Jul 14 as first Toolchain Architect deliverable - needs Petr + Rachel input. Tracking at `talent-architecture/active/retention/kanitha-chim.md`.
 - **Scope-refresh with Jaime.** Raised in Jul 15 1:1 (move away from toolchain, step back from RHAS testing ownership). Topic opened, ongoing.
-- **Aman Vishwakarma onboarding starts Jul 18.** Intern conversion to ATC (RHIVOS Toolchain). Christine Freitas (manager) OOO until Jul 27 - user designated as primary onboarding contact. Aman needs badge and laptop. Also key for Kanitha distribution offloading.
+- **Aman Vishwakarma onboarding day 2 (started Jul 18).** Intern conversion to ATC (RHIVOS Toolchain). Christine Freitas (manager) OOO until Jul 27 - user designated as primary onboarding contact. Aman needs badge and laptop. Also key for Kanitha distribution offloading.
 - **Talent Cycle July 2026 opened.** Engineering Competencies retired for SE/QE/EM/PM-Tech. New High Potential Flag (top 15%) replaces Future Talent. Skill Progression Matrices are the new framework. Action plan with What/How ratings at `talent-architecture/active/talent-cycle-2026H2/`.
-- **Roderick Kieley** — 45 days into onboarding (started Jun 1). 30-day checkpoint scheduled (was 14 days overdue). SPSE (L5) development profile ready at `talent-architecture/active/roderick.kieley/`. PITCREW-294 due Jul 28, Roderick PTO Jul 27-Aug 3 - needs wrap-up before leave.
+- **Roderick Kieley** — 49 days into onboarding (started Jun 1). 30-day checkpoint 19 days overdue. SPSE (L5) development profile ready at `talent-architecture/active/roderick.kieley/`. PITCREW-294 due Jul 28, Roderick PTO Jul 27-Aug 3 - needs wrap-up before leave.
 - **RHAS QE deliverables draft v1.0.** Test Strategy + Release Criteria HTMLs uploaded to Drive, emailed. User review needed before sharing with broader team. OCP QE outreach not initiated.
 
 ### Files
 
 Promotion is gradual — files climb through layers of visibility based on sustained use, not jumps. Structural context (team, primary project) lives in `USER.md`, not here. Most knowledge is reachable through directory indexes in "Where to find things." Only files that are genuinely hot from current work need to be here.
 
-- [Talent Architecture](agent_brain/projects/talent-architecture/index.md) — Radford dimensions, SE/QE progression matrices, competency proficiency levels. Read when assessing career levels, preparing 1:1 development conversations, or evaluating promotion readiness.
+(No files at active-context level currently. Talent Architecture demoted to level 3 on 2026-07-16 after 3 active sessions without access.)
 
 ## Where to find things
 
@@ -124,6 +124,7 @@ Read the full skill file ONLY when the trigger matches. Don't read skills preemp
 - [rhas-test-strategy](agent_brain/skills/rhas-test-strategy.md) — Generates RHAS test strategy document (HTML + Google Doc) covering scope, test types, environments, gating model, ownership, RHIVOS/OCP comparison, agentic testing options, gap analysis, and timeline. Knowledge base at [rhas-qe-agent/](agent_brain/projects/rhas-qe-agent/index.md). Use on "RHAS test strategy", "generate test strategy", "testing strategy for RHAS", "QE strategy".
 - [rhas-release-criteria](agent_brain/skills/rhas-release-criteria.md) — Generates RHAS test release criteria document (HTML + Google Doc) with three-tier measurable gates (monthly, Tech Preview, GA), current readiness assessment, and waiver process. Knowledge base at [rhas-qe-agent/](agent_brain/projects/rhas-qe-agent/index.md). Use on "RHAS release criteria", "test release criteria", "generate release criteria", "what must pass for release".
 - [rhas-test-status](agent_brain/skills/rhas-test-status.md) — Gap analysis comparing current RHAS testing state (live Jira + Slack) against test strategy and release criteria. Tracks changes between runs. Knowledge base at [rhas-qe-agent/](agent_brain/projects/rhas-qe-agent/index.md). Use on "RHAS test status", "testing status", "QE readiness status", "test gap analysis".
+- [build-llm-wiki](agent_brain/skills/build-llm-wiki.md) — Builds an LLM-queryable knowledge base from a Confluence page tree. Fetches via v2 API, converts to markdown, scaffolds wiki with INGEST rounds (concepts, workflows, processes, enrichment, onboarding), enriches from diagrams, LINTs, verifies. Use on "build a wiki from Confluence", "create knowledge base from [page]", "make this Confluence content queryable".
 
 ## Rules
 

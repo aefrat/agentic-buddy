@@ -32,4 +32,7 @@ Example:
 2026-07-13|assisted|people-management|kanitha-retention-conversation-prep|high
 2026-07-13|assisted|people-management|kanitha-1on1-transcript-analysis-summary|high
 2026-07-13|assisted|communication|kanitha-slack-draft-jamie|high
+2026-07-19|assisted|reporting|atc-completed-ticket-synthesis-6-vroom|high
+2026-07-19|autonomous|reporting|atc-slack-channel-scan-13ch|high
+2026-07-19|autonomous|reporting|stakeholder-slack-activity-lookup-4ppl|high
 

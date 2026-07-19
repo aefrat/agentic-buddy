@@ -13,10 +13,11 @@ Sources: `daily`, `weekly`, `monthly`, `user`.
 
 ---
 
-- **reminder** (2026-07-12, weekly): **Hubert transition day 12, KT plan still overdue.** Was due ~Jun 17. CloudFront migration timeline needed (Hubert is the fork maintainer). Jeff Ligon scrum master handoff not formally announced.
-- **reminder** (2026-07-12, weekly): **Roderick 30-day checkpoint 12 days overdue.** Day 41 (started Jun 1). SPSE development profile ready at `talent-architecture/active/roderick.kieley/` - use as conversation framework.
-- **reminder** (2026-07-12, weekly): **Workday QC manager evaluations pending.** Juanje, Eitan, and remaining team members. QC deadline July 10 may have passed for some.
-- **reminder** (2026-07-13, daily): **Atlassian API token expires Jul 19.** Renew before expiry or Jira queries from manager report and skills will break.
-- **reminder** (2026-07-13, daily): **Kanitha retention action items this week:** (1) Jamie sync about opportunities/mentorship, (2) Ozan distribution offloading discussion, (3) begin absorbing TPO/operational tasks personally.
-- **review** (2026-07-02, daily): **RHAS QE deliverables draft v1.0 need review.** Test Strategy + Release Criteria HTMLs on Drive and emailed. Review before broader sharing. OCP QE outreach not initiated.
-- **info** (2026-06-14, daily): PITCREW-291 overdue (was target RHAS-0526). Still In Progress. One month in deferred - escalate or re-target.
+- **reminder** (2026-07-19, daily): **Atlassian API token expires TODAY (Jul 19).** Renew immediately or Jira queries from manager report and all skills will break.
+- **reminder** (2026-07-19, daily): **Aman Vishwakarma onboarding - day 2 (started Jul 18).** Christine Freitas OOO until Jul 27 - you are primary onboarding contact. Aman needs badge and laptop. Also key for Kanitha distribution offloading.
+- **reminder** (2026-07-19, daily): **Hubert Stefanski transition day 19 (started Jul 1), KT plan still overdue.** Was due ~Jun 17. CloudFront migration timeline needed (Hubert is fork maintainer). Jeff Ligon scrum master handoff not formally announced.
+- **reminder** (2026-07-19, daily): **Roderick 30-day checkpoint 19 days overdue.** Day 49 (started Jun 1). SPSE development profile ready at `talent-architecture/active/roderick.kieley/` - use as conversation framework. PITCREW-294 due Jul 28, Roderick PTO Jul 27-Aug 3 - needs wrap-up before leave.
+- **reminder** (2026-07-19, daily): **Kanitha retention - remaining action items:** (1) Ozan distribution offload discussion, (2) absorb TPO personally. Jamie sync done Jul 15 - no objections. Christine connection after Jul 21 PTO. RoG proposal needs Petr + Rachel input.
+- **reminder** (2026-07-19, daily): **Workday QC manager evaluations pending.** Juanje, Eitan, and remaining team members. QC deadline July 10 may have passed.
+- **review** (2026-07-02, daily): **RHAS QE deliverables draft v1.0 need review (17 days old).** Test Strategy + Release Criteria HTMLs on Drive and emailed. Review before broader sharing. OCP QE outreach not initiated.
+- **info** (2026-06-14, daily): PITCREW-291 overdue (was target RHAS-0526). Still In Progress. 35 days in deferred - escalate or re-target.
