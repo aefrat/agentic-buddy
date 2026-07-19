@@ -21,4 +21,4 @@ Log files: `logs/YYYY-MM-DD.md` (derive from the date in each entry).
 - 2026-07-14: active — QC self-evaluation review, scope-refresh draft, Petr 1:1 (single LP, RoG migration, tagging bottleneck), RoG architecture proposal
 - 2026-07-15: maintenance
 - 2026-07-16: active — ATC Slack scan, nightly compose failures (RHIVOS 2.0-z and 2.1), gating pipeline breakage
-- 2026-07-19: active — **Weekly W29 report** + LP status report ([VERIFY] At Risk), email+docs action item scan (24 items, 13 net new), talent calibration prep (Jul 23), task triage (8 resolved)
+- 2026-07-19: active — **Weekly W29 report** + LP status report ([VERIFY] At Risk), email+docs action item scan (24 items, 13 net new), talent calibration prep (Jul 23), task triage (11 resolved), SBI feedback doc (Matt Goldman MR !901), SKU/Repo retro analysis doc, Confluence token unified

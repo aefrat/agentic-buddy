@@ -120,6 +120,8 @@ Resolved observations are moved to the bottom.
 
 - **2026-07-19:** "Weekly email + docs action item scan" - parallel agents scan Gmail and Google Docs/Sheets for the last 7 days, extract tasks and action items, consolidate and deduplicate against existing tracked items (deferred queue), present prioritized list, capture to tasks file. Steps: (1) fan out Gmail agent + Docs/Sheets agent in parallel, (2) each extracts action items with source/urgency/context, (3) consolidate and deduplicate against deferred.md, (4) present grouped by urgency, (5) capture to `user/tasks-YYYY-MM-DD.md`. Discovered 13 net-new items (including 4 expired SOAs) that were not on any radar. Could become a weekly hygiene skill. (seen: 1)
 
+- **2026-07-19:** "Multi-host GitLab auth - check per-hostname status" - `glab auth status` shows all configured hosts together. An expired token on gitlab.com caused the agent to assume all GitLab was inaccessible, when gitlab.cee.redhat.com (where MR !901 lived) was fine. Always check per-hostname status before falling back to alternative data sources. Led to wrong MR identification via Slack instead of direct GitLab API query. (seen: 1)
+
 - **2026-07-19:** "Compliance deadlines in spreadsheets without alerts create invisible risk" - 4 ATC SOAs expired (oldest: 69 days ago) without anyone noticing because the tracking spreadsheet has no automated expiry notifications. Discovered only because the docs scan agent read the spreadsheet contents and compared dates. Pattern: any compliance/renewal deadline tracked only in a spreadsheet (not Jira, not calendar, no email alerts) will eventually be missed. Generalizable beyond SOAs to certs, licenses, contracts. (seen: 1)
 
 ## Structure candidates (tools)
