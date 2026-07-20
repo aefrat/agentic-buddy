@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PitCrew Team Report - 2026-07-20</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Red Hat Text', 'Segoe UI', system-ui, -apple-system, sans-serif; color: #1a1a1a; line-height: 1.5;">
+
+<table style="width: 100%; border-collapse: collapse; border: none;">
+<tr><td style="padding: 0;">
+
+<!-- HERO BANNER (compact) -->
+<table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+<tr>
+<td style="background: #1a1a2e; padding: 20px 24px; color: white; vertical-align: middle;">
+<h1 style="margin: 0; font-size: 20px; font-weight: 700; color: white;">PitCrew / RHAS Team Report</h1>
+<p style="margin: 4px 0 0; font-size: 13px; color: #c9c9c9;">July 20, 2026 | RHAS-0726</p>
+</td>
+<td style="background: #3e8635; width: 110px; text-align: center; vertical-align: middle; padding: 16px;">
+<span style="color: white; font-size: 13px; font-weight: 700; text-transform: uppercase;">On Track</span>
+</td>
+</tr>
+</table>
+
+<!-- EXECUTIVE SUMMARY -->
+<h2 style="font-size: 16px; color: #0066cc; border-bottom: 2px solid #0066cc; padding-bottom: 6px; margin-top: 20px;">Executive Summary</h2>
+
+<p style="font-size: 14px; margin: 10px 0;">Strong feature dev momentum this week. JEP-0014 virtual target framework progressing well - four sub-tasks closed (Phases 1-3 + Phase 2b), Phase 2a now in Review. Builder 0.2.0 shipped and OCI-image-as-RPM-repo completed. Sprint has 5 tickets in Review awaiting merge, 3 In Progress, and 10 New (mostly ExporterSet controller decomposition). Watch item: PITCREW-294 due Jul 28, Roderick PTO Jul 27.</p>
+
+<!-- CHANGES SINCE LAST REPORT -->
+<h2 style="font-size: 16px; color: #c44b00; border-bottom: 2px solid #c44b00; padding-bottom: 6px; margin-top: 20px;">Changes Since Last Report (Jul 12)</h2>
+
+<table style="width: 100%; border-collapse: collapse; margin-bottom: 6px;">
+<tr>
+<td style="width: 5px; padding: 0; background: #3e8635;"></td>
+<td style="background: #e7f4e4; padding: 8px 12px; font-size: 13px;">
+<strong style="color: #3e8635;">Closed:</strong> PITCREW-493 (OCI image as RPM repo - Benny), 480 (video streaming - Benny), 479 (socket fix - Benny), 462/461/460/459 (JEP-0014 Phases - Miguel), 439 (Builder 0.2.0 - Benny), 221 (dynamic scaling)
+</td>
+</tr>
+</table>
+
+<table style="width: 100%; border-collapse: collapse; margin-bottom: 6px;">
+<tr>
+<td style="width: 5px; padding: 0; background: #0066cc;"></td>
+<td style="background: #e7f1fa; padding: 8px 12px; font-size: 13px;">
+<strong style="color: #0066cc;">Added to sprint:</strong> PITCREW-494 (lease sharing), 488/487/486/485/484 (ExporterSet controller), 478 (flasher mocking), 477 (QEMU provisioner), 465 (ExporterSet Deployments), 450 (lab boot failure)
+</td>
+</tr>
+</table>
+
+<table style="width: 100%; border-collapse: collapse; margin-bottom: 6px;">
+<tr>
+<td style="width: 5px; padding: 0; background: #3e8635;"></td>
+<td style="background: #e7f4e4; padding: 8px 12px; font-size: 13px;">
+<strong style="color: #3e8635;">New epic:</strong> PITCREW-481 "Eclipse SDV Hackathon: Chapter 4"
+</td>
+</tr>
+</table>
+
+<!-- CURRENT SPRINT -->
+<h2 style="font-size: 16px; color: #009596; border-bottom: 2px solid #009596; padding-bottom: 6px; margin-top: 20px;">Current Sprint</h2>
+
+<table style="width: 100%; border-collapse: collapse; margin-bottom: 12px;">
+<tr>
+<td style="background: #3e8635; padding: 6px 0; text-align: center; color: white; font-size: 11px; font-weight: 700; width: 33%;">9 Closed (33%)</td>
+<td style="background: #0066cc; padding: 6px 0; text-align: center; color: white; font-size: 11px; font-weight: 700; width: 11%;">3 WIP</td>
+<td style="background: #c44b00; padding: 6px 0; text-align: center; color: white; font-size: 11px; font-weight: 700; width: 19%;">5 Review</td>
+<td style="background: #e0e0e0; padding: 6px 0; text-align: center; color: #6a6e73; font-size: 11px; font-weight: 700; width: 37%;">10 New</td>
+</tr>
+</table>
+
+<p style="font-size: 13px; font-weight: 600; margin: 10px 0 6px;">Open</p>
+<table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+<tr style="background: #f0f0f0;">
+<th style="text-align: left; padding: 6px 10px; font-weight: 700; color: #6a6e73; text-transform: uppercase; font-size: 11px; border-bottom: 2px solid #d2d2d2;">Key</th>
+<th style="text-align: left; padding: 6px 10px; font-weight: 700; color: #6a6e73; text-transform: uppercase; font-size: 11px; border-bottom: 2px solid #d2d2d2;">Summary</th>
+<th style="text-align: left; padding: 6px 10px; font-weight: 700; color: #6a6e73; text-transform: uppercase; font-size: 11px; border-bottom: 2px solid #d2d2d2;">Status</th>
+<th style="text-align: left; padding: 6px 10px; font-weight: 700; color: #6a6e73; text-transform: uppercase; font-size: 11px; border-bottom: 2px solid #d2d2d2;">Assignee</th>
+</tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-464</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">JEP-0014 Phase 2a: VirtualTargetClass + ExporterSet CRDs</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2; background: #fff0e6; color: #c44b00; font-weight: bold;">Review</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Miguel Angel Ajo Pelayo</td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-473</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">jmp shell connections fail on slow exporters</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2; background: #fff0e6; color: #c44b00; font-weight: bold;">Review</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Evgeni Vakhonin</td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-417</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Bump Python to [3.12-3.14]</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2; background: #fff0e6; color: #c44b00; font-weight: bold;">Review</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Jeff Ligon</td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-393</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">e2e downstream testing: acquire prerequisites</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2; background: #fff0e6; color: #c44b00; font-weight: bold;">Review</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Evgeni Vakhonin</td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-359</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Log Standardization</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2; background: #fff0e6; color: #c44b00; font-weight: bold;">Review</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Bella Khizgiyaev</td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-489</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Python exporter: exit at end of lease support</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2; background: #e7f1fa; color: #0066cc; font-weight: bold;">In Progress</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Benny Zlotnik</td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-475</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Exporter stuck in AfterLeaseHook permanently</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2; background: #e7f1fa; color: #0066cc; font-weight: bold;">In Progress</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Evgeni Vakhonin</td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-233</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Gather logs from exporter</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2; background: #e7f1fa; color: #0066cc; font-weight: bold;">In Progress</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Bella Khizgiyaev</td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-494</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">RFE: Sharing Jumpstarter leases</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2; background: #f0f0f0; color: #6a6e73;">New</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;"></td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-488</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">ExporterSet: create pods with injected credentials</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2; background: #f0f0f0; color: #6a6e73;">New</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;"></td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-487</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">ExporterSet: sidecar exec via unix socket</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2; background: #f0f0f0; color: #6a6e73;">New</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;"></td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-486</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">ExporterSet: create and destroy Exporter objects</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2; background: #f0f0f0; color: #6a6e73;">New</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Bella Khizgiyaev</td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-485</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">ExporterSet: status reporting</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2; background: #f0f0f0; color: #6a6e73;">New</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;"></td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-484</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">ExporterSet: resource watching and decision engine</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2; background: #f0f0f0; color: #6a6e73;">New</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;"></td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-478</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Design: flasher mocking in E2E test</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2; background: #f0f0f0; color: #6a6e73;">New</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;"></td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-477</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">ExporterSet: QEMU provisioner pod + sidecar</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2; background: #f0f0f0; color: #6a6e73;">New</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Miguel Angel Ajo Pelayo</td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-465</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Deploy ExporterSet provisioners in Deployments</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2; background: #f0f0f0; color: #6a6e73;">New</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Mohamad Abo Ras</td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-450</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Lab: ti-jacinto boot failure</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2; background: #f0f0f0; color: #6a6e73;">New</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Shawn Doherty</td></tr>
+</table>
+
+<p style="font-size: 13px; font-weight: 600; margin: 14px 0 6px;">Recently Closed</p>
+<table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+<tr style="background: #f0f0f0;">
+<th style="text-align: left; padding: 6px 10px; font-weight: 700; color: #6a6e73; text-transform: uppercase; font-size: 11px; border-bottom: 2px solid #d2d2d2;">Key</th>
+<th style="text-align: left; padding: 6px 10px; font-weight: 700; color: #6a6e73; text-transform: uppercase; font-size: 11px; border-bottom: 2px solid #d2d2d2;">Summary</th>
+<th style="text-align: left; padding: 6px 10px; font-weight: 700; color: #6a6e73; text-transform: uppercase; font-size: 11px; border-bottom: 2px solid #d2d2d2;">Assignee</th>
+</tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-493</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">OCI image as RPM repository</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Benny Zlotnik</td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-480</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">jumpstarter: video streaming</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Benny Zlotnik</td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-479</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">fix: force close socket on http cleanup</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Benny Zlotnik</td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-462</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">JEP-0014 Phase 2b: Operator integration</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Miguel Angel Ajo Pelayo</td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-461</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">JEP-0014 Phase 3: External provisioning</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Miguel Angel Ajo Pelayo</td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-460</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">JEP-0014 Phase 2a: VirtualTargetClass CRDs</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Miguel Angel Ajo Pelayo</td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-459</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">JEP-0014 Phase 1: Exporter enabled field</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Miguel Angel Ajo Pelayo</td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-439</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">builder: release 0.2.0</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">Benny Zlotnik</td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">PITCREW-221</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;">dynamic scaling and instantiation</td><td style="padding: 6px 10px; border-bottom: 1px solid #d2d2d2;"></td></tr>
+</table>
+
+<!-- FOOTER -->
+<p style="text-align: center; color: #6a6e73; font-size: 11px; padding: 20px 0 12px;">
+Generated: July 20, 2026 | Jira Cloud (PITCREW) | Baseline: Jul 12
+</p>
+
+</td></tr>
+</table>
+
+</body>
+</html>
