@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-07-20 | Roni Eliezer QC enrichment: self-input (11 items), 3 peer feedbacks (Yariv/Meital/Rachel), QE-to-SE transition across 5 docs | (reflect-only) |
 | 2026-07-20 | Slides + doc redesign continuation (dark theme conference quality) + weekend manager report | `4fb81e05-a0ae-4916-bbe9-54e46805b473` (continued) |
 | 2026-07-20 | Daily + weekly manager reports rerun (parallel, emailed) | (reflect-only) |
 | 2026-07-20 | Daily + weekly manager report rerun (both emailed) | (reflect-only) |
