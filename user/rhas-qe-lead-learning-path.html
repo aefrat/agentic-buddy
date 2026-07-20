@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RHAS QE Lead - One-Week Learning Path</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-2: #1c2128;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --text-dim: #6e7681;
+    --accent-blue: #58a6ff;
+    --accent-green: #3fb950;
+    --accent-orange: #d29922;
+    --accent-red: #f85149;
+    --accent-purple: #bc8cff;
+    --accent-teal: #39d2c0;
+    --rh-red: #ee0000;
+    --day1: #58a6ff;
+    --day2: #bc8cff;
+    --day3: #3fb950;
+    --day4: #d29922;
+    --day5: #f85149;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 0;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    padding: 60px 40px 48px;
+    border-bottom: 3px solid var(--rh-red);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 100px,
+      rgba(255,255,255,0.015) 100px,
+      rgba(255,255,255,0.015) 101px
+    );
+  }
+
+  .hero-content { position: relative; max-width: 1100px; margin: 0 auto; }
+
+  .hero h1 {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+
+  .hero .subtitle {
+    font-size: 18px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .hero-meta span {
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .badge-rh { background: var(--rh-red); color: #fff; }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 40px;
+  }
+
+  /* Week overview bar */
+  .week-bar {
+    display: flex;
+    gap: 4px;
+    margin: 32px 0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .week-bar-segment {
+    flex: 1;
+    padding: 14px 16px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+
+  .week-bar-segment:hover { transform: scaleY(1.08); }
+  .week-bar-segment.d1 { background: var(--day1); }
+  .week-bar-segment.d2 { background: var(--day2); }
+  .week-bar-segment.d3 { background: var(--day3); }
+  .week-bar-segment.d4 { background: var(--day4); }
+  .week-bar-segment.d5 { background: var(--day5); }
+
+  .week-bar-segment .day-label { display: block; font-size: 11px; opacity: 0.8; margin-bottom: 2px; }
+
+  /* Day sections */
+  .day-section {
+    margin-bottom: 40px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .day-header {
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .day-header.d1 { background: linear-gradient(90deg, rgba(88,166,255,0.15), transparent); border-left: 4px solid var(--day1); }
+  .day-header.d2 { background: linear-gradient(90deg, rgba(188,140,255,0.15), transparent); border-left: 4px solid var(--day2); }
+  .day-header.d3 { background: linear-gradient(90deg, rgba(63,185,80,0.15), transparent); border-left: 4px solid var(--day3); }
+  .day-header.d4 { background: linear-gradient(90deg, rgba(210,153,34,0.15), transparent); border-left: 4px solid var(--day4); }
+  .day-header.d5 { background: linear-gradient(90deg, rgba(248,81,73,0.15), transparent); border-left: 4px solid var(--day5); }
+
+  .day-number {
+    font-size: 28px;
+    font-weight: 700;
+    min-width: 44px;
+  }
+
+  .day-title-block h2 { font-size: 20px; font-weight: 600; }
+  .day-title-block .goal { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+  .day-body { padding: 0 28px 28px; background: var(--surface); }
+
+  .time-block {
+    margin-top: 24px;
+  }
+
+  .time-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+
+  .task-card {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .task-card h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .task-card h4 .task-num {
+    background: var(--border);
+    color: var(--text-muted);
+    font-size: 11px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .task-card .source {
+    font-size: 13px;
+    color: var(--accent-blue);
+    margin-bottom: 4px;
+    word-break: break-all;
+  }
+
+  .task-card .source a {
+    color: var(--accent-blue);
+    text-decoration: none;
+  }
+
+  .task-card .source a:hover { text-decoration: underline; }
+
+  .task-card .extract {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .task-card .extract strong { color: var(--text); font-weight: 600; }
+
+  .task-card .ask-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 6px;
+  }
+
+  .task-card .ask-list li {
+    font-size: 13px;
+    color: var(--text-muted);
+    padding: 3px 0 3px 18px;
+    position: relative;
+  }
+
+  .task-card .ask-list li::before {
+    content: '?';
+    position: absolute;
+    left: 0;
+    color: var(--accent-orange);
+    font-weight: 700;
+  }
+
+  /* Component table */
+  .component-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-top: 8px;
+  }
+
+  .component-table th {
+    text-align: left;
+    padding: 8px 12px;
+    background: var(--bg);
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .component-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  .component-table td:first-child { font-weight: 600; color: var(--accent-teal); }
+
+  .component-table tr:last-child td { border-bottom: none; }
+
+  /* Cross-product table */
+  .xp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-top: 8px;
+  }
+
+  .xp-table th {
+    text-align: left;
+    padding: 8px 12px;
+    background: var(--bg);
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .xp-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  .xp-table td:first-child { font-weight: 600; }
+  .xp-table tr:last-child td { border-bottom: none; }
+
+  .product-tag {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .product-tag.rhoai { background: rgba(188,140,255,0.2); color: var(--accent-purple); }
+  .product-tag.rhel { background: rgba(248,81,73,0.2); color: var(--accent-red); }
+  .product-tag.pqe { background: rgba(57,210,192,0.2); color: var(--accent-teal); }
+
+  /* Channels list */
+  .channel-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .channel-list li {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 4px 12px;
+    border-radius: 14px;
+    font-size: 12px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    color: var(--accent-blue);
+  }
+
+  /* People directory */
+  .people-section { margin-top: 48px; }
+
+  .section-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .people-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 12px;
+  }
+
+  .person-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 20px;
+  }
+
+  .person-card .name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--accent-teal);
+  }
+
+  .person-card .role {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+
+  .person-card .why {
+    font-size: 13px;
+    color: var(--text);
+  }
+
+  /* Resources section */
+  .resources-section { margin-top: 48px; }
+
+  .resource-group {
+    margin-bottom: 28px;
+  }
+
+  .resource-group h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
+
+  .resource-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .resource-list li {
+    padding: 8px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-bottom: 4px;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .resource-list li .label { color: var(--text); font-weight: 500; }
+
+  .resource-list li .id {
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    flex-shrink: 0;
+  }
+
+  .resource-list li a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 11px;
+  }
+
+  .resource-list li a:hover { text-decoration: underline; }
+
+  /* Success criteria */
+  .success-section {
+    margin-top: 48px;
+    margin-bottom: 48px;
+  }
+
+  .success-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .success-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent-green);
+    border-radius: 6px;
+    padding: 16px 20px;
+  }
+
+  .success-card .num {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent-green);
+    margin-bottom: 4px;
+  }
+
+  .success-card .label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .success-card .desc {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 12px;
+    color: var(--text-dim);
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 768px) {
+    .hero { padding: 32px 20px; }
+    .hero h1 { font-size: 26px; }
+    .container { padding: 20px; }
+    .day-header, .day-body { padding-left: 16px; padding-right: 16px; }
+    .week-bar { flex-direction: column; }
+    .people-grid, .success-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ========== HERO ========== -->
+<div class="hero">
+  <div class="hero-content">
+    <h1>RHAS QE Lead - Learning Path</h1>
+    <div class="subtitle">One-week ramp-up from ATC engineering manager to RHAS Quality Engineering lead</div>
+    <div class="hero-meta">
+      <span class="badge badge-rh">Red Hat Automotive Suite</span>
+      <span>Created: July 20, 2026</span>
+      <span>Target: Tech Preview Sep 29 / GA Dec 22</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ========== WEEK BAR ========== -->
+<div class="week-bar">
+  <div class="week-bar-segment d1">
+    <span class="day-label">Mon</span>
+    Product Foundation
+  </div>
+  <div class="week-bar-segment d2">
+    <span class="day-label">Tue</span>
+    Architecture
+  </div>
+  <div class="week-bar-segment d3">
+    <span class="day-label">Wed</span>
+    Testing Landscape
+  </div>
+  <div class="week-bar-segment d4">
+    <span class="day-label">Thu</span>
+    RHIVOS QE Patterns
+  </div>
+  <div class="week-bar-segment d5">
+    <span class="day-label">Fri</span>
+    Strategy & Synthesis
+  </div>
+</div>
+
+<!-- ========== DAY 1 ========== -->
+<div class="day-section">
+  <div class="day-header d1">
+    <div class="day-number" style="color:var(--day1)">01</div>
+    <div class="day-title-block">
+      <h2>Product Foundation: What is RHAS?</h2>
+      <div class="goal">Understand what RHAS is, what it does, who it's for, and how it relates to RHIVOS</div>
+    </div>
+  </div>
+  <div class="day-body">
+
+    <div class="time-block">
+      <div class="time-label">Morning - Read</div>
+
+      <div class="task-card">
+        <h4><span class="task-num">1</span> RHAS Strategic Guide</h4>
+        <div class="source"><a href="https://docs.google.com/document/d/10qaHs_mfOCJtIJoJq35HjhHAeLEMJwYde51wgCKrQx8/edit">Google Doc: 10qaHs_mfOCJtIJoJq35HjhHAeLEMJwYde51wgCKrQx8</a></div>
+        <div class="extract"><strong>Extract:</strong> Tier definitions, target persona (platform engineers at automotive OEMs), product positioning vs RHIVOS. This is the single most important doc for product context.</div>
+      </div>
+
+      <div class="task-card">
+        <h4><span class="task-num">2</span> RHAS 2026 Roadmap</h4>
+        <div class="source"><a href="https://docs.google.com/document/d/1j4Chcv71S8Y3P8HT2wTao9ZEoHoHm-X102VmaNpk1CA/edit">Google Doc: 1j4Chcv71S8Y3P8HT2wTao9ZEoHoHm-X102VmaNpk1CA</a></div>
+        <div class="extract"><strong>Extract:</strong> Release dates (monthly drops, Tech Preview Sep 29, GA Dec 22), feature epics per milestone.</div>
+      </div>
+
+      <div class="task-card">
+        <h4><span class="task-num">3</span> RHIVOS Background on Confluence</h4>
+        <div class="source"><a href="https://spaces.redhat.com/spaces/Automotive">https://spaces.redhat.com/spaces/Automotive</a></div>
+        <div class="extract"><strong>Extract:</strong> RHIVOS architecture (ostree-based in-vehicle OS), how RHAS extends it (developer tooling layer on OCP). RHAS builds on top of RHIVOS - you need the base to understand the product.</div>
+      </div>
+    </div>
+
+    <div class="time-block">
+      <div class="time-label">Afternoon - Hands-on</div>
+
+      <div class="task-card">
+        <h4><span class="task-num">4</span> PitCrew Jira Board</h4>
+        <div class="extract"><strong>Browse:</strong> Current sprint and epics. Ask Manuel Sandino or Jeff Ligon for the board link.<br>
+        <strong>Key epics:</strong> PITCREW-337 (QE Readiness), PITCREW-331 (CTC), PITCREW-335 (Konflux), PITCREW-336 (Distribution), PITCREW-334 (RH-SDLC Compliance).<br>
+        <strong>Extract:</strong> Sprint cadence, active work, who owns what.</div>
+      </div>
+
+      <div class="task-card">
+        <h4><span class="task-num">5</span> Join Slack Channels</h4>
+        <ul class="channel-list">
+          <li>#team-pitcrew-automotive</li>
+          <li>#forum-jumpstarter</li>
+          <li>#forum-qe-automotive</li>
+          <li>#team-auto-toolchain-qe</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========== DAY 2 ========== -->
+<div class="day-section">
+  <div class="day-header d2">
+    <div class="day-number" style="color:var(--day2)">02</div>
+    <div class="day-title-block">
+      <h2>Architecture: What Does RHAS Actually Ship?</h2>
+      <div class="goal">Understand the component architecture - what pieces make up the product and how they fit together</div>
+    </div>
+  </div>
+  <div class="day-body">
+
+    <div class="time-block">
+      <div class="time-label">Morning - Read</div>
+
+      <div class="task-card">
+        <h4><span class="task-num">1</span> Benny's Testing Architecture Doc</h4>
+        <div class="source"><a href="https://docs.google.com/document/d/1NEzWHE1K4CiGkEDjhL5gpQUpcnepsiBvMDWPXUxLOHQ/edit">Google Doc: 1NEzWHE1K4CiGkEDjhL5gpQUpcnepsiBvMDWPXUxLOHQ</a></div>
+        <div class="extract"><strong>Extract:</strong> 3-layer model (Jumpstarter E2E, Builder E2E, black-box integration), kind vs OCP gap. This is the team's own view of testable components.</div>
+      </div>
+
+      <div class="task-card">
+        <h4><span class="task-num">2</span> RHAS CI Testing Proposal</h4>
+        <div class="source"><a href="https://docs.google.com/document/d/1Txk4PQC9pGvNrNE9VViN8EMI8o94KpJa_kLMscBthAI/edit">Google Doc: 1Txk4PQC9pGvNrNE9VViN8EMI8o94KpJa_kLMscBthAI</a></div>
+        <div class="extract"><strong>Extract:</strong> Pipeline architecture (install-cluster -> deploy-operators -> run-tests -> destroy-cluster), ephemeral IPI SNO on AWS Graviton3, 3-phase rollout, trigger strategy (nightly), open questions.</div>
+      </div>
+
+      <div class="task-card">
+        <h4><span class="task-num">3</span> Component Map</h4>
+        <table class="component-table">
+          <thead><tr><th>Component</th><th>What It Does</th><th>Upstream Repo</th></tr></thead>
+          <tbody>
+            <tr><td>Automotive Image Builder / Builder Operator</td><td>OCI image builds, bootc images, RPMs, ISOs</td><td>centos-automotive-suite/automotive-dev-operator</td></tr>
+            <tr><td>Jumpstarter</td><td>Hardware-in-the-loop test framework, board management</td><td>jumpstarter-dev/jumpstarter</td></tr>
+            <tr><td>Konflux</td><td>CI/CD pipeline (Tekton-based), artifact signing</td><td>-</td></tr>
+            <tr><td>GitOps Integration</td><td>GitLab/GitHub CI connectivity</td><td>-</td></tr>
+            <tr><td>Keycloak / SSO</td><td>Authentication, cert management</td><td>-</td></tr>
+            <tr><td>Platform Web Console</td><td>Developer UI (Roni Eliezer)</td><td>-</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="time-block">
+      <div class="time-label">Afternoon - Hands-on</div>
+
+      <div class="task-card">
+        <h4><span class="task-num">4</span> Look at the Actual CI</h4>
+        <div class="extract">Get eyes on what's running:
+          <ul style="margin-top:6px; padding-left:18px; list-style:disc; color:var(--text-muted); font-size:13px;">
+            <li><strong>RHAS CI GitLab:</strong> gitlab.cee.redhat.com/automotive/jumpstarter/rhas-ci (Evgeni's pipeline)</li>
+            <li><strong>Upstream Builder E2E:</strong> github.com/centos-automotive-suite/automotive-dev-operator/tree/main/test/e2e</li>
+            <li><strong>Upstream Jumpstarter E2E:</strong> github.com/jumpstarter-dev/jumpstarter</li>
+            <li><strong>bootc tests:</strong> gitlab.cee.redhat.com/automotive/tests/all</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="task-card">
+        <h4><span class="task-num">5</span> Clusters - Know Where Things Run</h4>
+        <div class="extract">
+          <ul style="margin-top:4px; padding-left:18px; list-style:disc; color:var(--text-muted); font-size:13px;">
+            <li><strong>External public:</strong> console-openshift-console.apps.automotive1.ocp.automotive.sig.centos.org</li>
+            <li><strong>Internal dev (ROSA):</strong> console-openshift-console.apps.rosa.auto-devcluster.bzdx.p3.openshiftapps.com</li>
+            <li>Request access from Benny Zlotnik or Bella Khizgiyaev if needed</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========== DAY 3 ========== -->
+<div class="day-section">
+  <div class="day-header d3">
+    <div class="day-number" style="color:var(--day3)">03</div>
+    <div class="day-title-block">
+      <h2>Testing Landscape: What Exists Today?</h2>
+      <div class="goal">Understand what testing is already happening, what's missing, and where the gaps are</div>
+    </div>
+  </div>
+  <div class="day-body">
+
+    <div class="time-block">
+      <div class="time-label">Morning - Read</div>
+
+      <div class="task-card">
+        <h4><span class="task-num">1</span> RHAS Testing Landscape Report (Jun 30)</h4>
+        <div class="extract"><strong>Extract:</strong> Upstream (operational, per-PR) vs Downstream (blocked, WIP), HiL status, QE Readiness gap, risk assessment. This is your own report - the most honest assessment of where things stand.</div>
+      </div>
+
+      <div class="task-card">
+        <h4><span class="task-num">2</span> RHAS Test Strategy - DRAFT</h4>
+        <div class="source"><a href="https://docs.google.com/document/d/1tLAguZTTa6CKif-GBA7mM1N1rDXw3IrrjKo3218Us4U/edit">Google Doc: 1tLAguZTTa6CKif-GBA7mM1N1rDXw3IrrjKo3218Us4U</a></div>
+        <div class="extract"><strong>Extract:</strong> 3-layer architecture, ownership model, timeline, critical actions needed.</div>
+      </div>
+
+      <div class="task-card">
+        <h4><span class="task-num">3</span> RHAS Test Release Criteria - DRAFT</h4>
+        <div class="source"><a href="https://docs.google.com/document/d/13wceO7V-q44G9mn2yWN0zYlrAaJOnD7MQBCjPKQc4hM/edit">Google Doc: 13wceO7V-q44G9mn2yWN0zYlrAaJOnD7MQBCjPKQc4hM</a></div>
+        <div class="extract"><strong>Extract:</strong> 3-tier progressive gates (Monthly, Tech Preview, GA), measurable thresholds, current evidence status.</div>
+      </div>
+
+      <div class="task-card">
+        <h4><span class="task-num">4</span> RHAS Testing Dashboard (Jul 20)</h4>
+        <div class="extract"><strong>Location:</strong> Google Drive - "RHAS Testing Dashboard - 2026-07-20"<br>
+        <strong>Extract:</strong> Visual overview of readiness, criteria status, risk heatmap, infrastructure status, pipeline design.</div>
+      </div>
+    </div>
+
+    <div class="time-block">
+      <div class="time-label">Afternoon - 1:1 Meetings</div>
+
+      <div class="task-card">
+        <h4><span class="task-num">5</span> Evgeni Vakhonin (30 min) - DS Pipeline Status</h4>
+        <div class="extract">He's been building the downstream CI since March 2026.</div>
+        <ul class="ask-list">
+          <li>Where is the pipeline now? What's still blocking?</li>
+          <li>When can we expect nightly runs?</li>
+          <li>What's the DNS/infra situation (VROOM-44573)?</li>
+        </ul>
+      </div>
+
+      <div class="task-card">
+        <h4><span class="task-num">6</span> Mohamad Abo Ras (30 min) - Upstream Testing Coverage</h4>
+        <div class="extract">He owns upstream per-PR testing via GitHub Actions.</div>
+        <ul class="ask-list">
+          <li>What exactly does the upstream E2E cover?</li>
+          <li>What's the gap between kind tests and OCP?</li>
+          <li>What's the test coverage like?</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========== DAY 4 ========== -->
+<div class="day-section">
+  <div class="day-header d4">
+    <div class="day-number" style="color:var(--day4)">04</div>
+    <div class="day-title-block">
+      <h2>RHIVOS QE Patterns: What Can We Borrow?</h2>
+      <div class="goal">Learn from RHIVOS QE and cross-product patterns that apply to RHAS</div>
+    </div>
+  </div>
+  <div class="day-body">
+
+    <div class="time-block">
+      <div class="time-label">Morning - Read</div>
+
+      <div class="task-card">
+        <h4><span class="task-num">1</span> RHIVOS CTC Process</h4>
+        <div class="source">
+          <a href="https://spaces.redhat.com/spaces/Automotive/pages/196260232">Confluence: RHIVOS ER Release Testing Process (196260232)</a><br>
+          <a href="https://spaces.redhat.com/spaces/Automotive/pages/196285195">Confluence: Pass-Fail Criteria (196285195)</a>
+        </div>
+        <div class="extract"><strong>Extract:</strong> Two-phase CTC (Reduced vs Full ASIL), waiver discipline, Greenwave gating. This is the model RHAS should adapt.</div>
+      </div>
+
+      <div class="task-card">
+        <h4><span class="task-num">2</span> RHIVOS Gating Process</h4>
+        <div class="source"><a href="https://spaces.redhat.com/spaces/Automotive/pages/387157013">Confluence: RHEL & RHIVOS Gating (387157013)</a></div>
+        <div class="extract"><strong>Extract:</strong> Gator automation, ResultsDB, tag promotion flow (gate -> candidate -> pending).</div>
+      </div>
+
+      <div class="task-card">
+        <h4><span class="task-num">3</span> Cross-Product Comparisons</h4>
+        <div class="extract">Patterns worth borrowing from other products (from Confluence research Jul 20):</div>
+        <table class="xp-table">
+          <thead><tr><th>Product</th><th>Key Pattern</th><th>Page</th></tr></thead>
+          <tbody>
+            <tr><td><span class="product-tag rhoai">RHOAI</span></td><td>TFA (Test Failure Analysis) - 7 categorization labels, Jira automation</td><td>422150347</td></tr>
+            <tr><td><span class="product-tag rhoai">RHOAI</span></td><td>Code Freeze Blocker governance - 5-question impact assessment</td><td>418808717</td></tr>
+            <tr><td><span class="product-tag rhoai">RHOAI</span></td><td>Component quality gates matrix - per-component sign-off</td><td>304028544</td></tr>
+            <tr><td><span class="product-tag rhel">RHEL 8</span></td><td>GA Minimal Ship Criteria - measurable thresholds (100% critical, 80% important, 95% customer)</td><td>310813093</td></tr>
+            <tr><td><span class="product-tag pqe">Platform QE</span></td><td>Test Strategy Checklist (21 items)</td><td>279614114</td></tr>
+            <tr><td><span class="product-tag pqe">Platform QE</span></td><td>Release Readiness Checklist (13 items)</td><td>279611662</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="time-block">
+      <div class="time-label">Afternoon - 1:1 Meetings</div>
+
+      <div class="task-card">
+        <h4><span class="task-num">4</span> Benny Zlotnik (45 min) - Architecture and Testing Vision</h4>
+        <div class="extract">Tech lead with the deepest RHAS product knowledge. Wrote the testing architecture doc.</div>
+        <ul class="ask-list">
+          <li>Walk me through the 3-layer testing model</li>
+          <li>What's the gap between what we have and what we need for Tech Preview?</li>
+          <li>What keeps you up at night about RHAS quality?</li>
+        </ul>
+      </div>
+
+      <div class="task-card">
+        <h4><span class="task-num">5</span> Miguel Angel Ajo (30 min) - Jumpstarter and HiL</h4>
+        <div class="extract">Owns the hardware-in-the-loop infrastructure, lab ops, cluster management.</div>
+        <ul class="ask-list">
+          <li>How does Jumpstarter work end-to-end?</li>
+          <li>What boards do we have and what's their health?</li>
+          <li>How does HiL testing fit into the release cycle?</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========== DAY 5 ========== -->
+<div class="day-section">
+  <div class="day-header d5">
+    <div class="day-number" style="color:var(--day5)">05</div>
+    <div class="day-title-block">
+      <h2>OCP QE and Strategy: Where Are We Heading?</h2>
+      <div class="goal">Understand OCP QE alignment opportunities and form your own QE strategy for RHAS</div>
+    </div>
+  </div>
+  <div class="day-body">
+
+    <div class="time-block">
+      <div class="time-label">Morning - Read</div>
+
+      <div class="task-card">
+        <h4><span class="task-num">1</span> OCP Feature Quality Strategy</h4>
+        <div class="source"><a href="https://docs.google.com/document/d/1zuWKi9MvRVyOWn1lj-Khi47TvElUdmGWKRJhTnSVfVg/edit">Google Doc: 1zuWKi9MvRVyOWn1lj-Khi47TvElUdmGWKRJhTnSVfVg (Cameron Meadors)</a></div>
+        <div class="extract"><strong>Extract:</strong> Four-phase model (Planning, Development, Stabilization, Maintenance), pre-merge vs periodic E2E split, Component Readiness dashboards.</div>
+      </div>
+
+      <div class="task-card">
+        <h4><span class="task-num">2</span> OCP QE Jira Epics</h4>
+        <div class="extract">Know what OCP QE is working on - alignment opportunities:
+          <ul style="margin-top:6px; padding-left:18px; list-style:disc; color:var(--text-muted); font-size:13px;">
+            <li><strong>OCPQE-32074:</strong> Define Overall Quality Strategy (Cameron Meadors)</li>
+            <li><strong>OCPQE-32075:</strong> Test Case Management (David Kutalek)</li>
+            <li><strong>OCPSTRAT-3352:</strong> Revamp Quality Engineering</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="task-card">
+        <h4><span class="task-num">3</span> PITCREW-337: QE Readiness</h4>
+        <div class="extract"><strong>This is the epic you will own.</strong> Read the description carefully. Understand scope, dependencies (blocked by PITCREW-336 Distribution), and current state (unassigned, 0 comments).</div>
+      </div>
+
+      <div class="task-card">
+        <h4><span class="task-num">4</span> Features Requiring Testing</h4>
+        <div class="extract">12 testing domains, feature epics organized by release target from monthly drops through GA. Know your test surface - this is the scope of your job.</div>
+      </div>
+    </div>
+
+    <div class="time-block">
+      <div class="time-label">Afternoon - Synthesis</div>
+
+      <div class="task-card">
+        <h4><span class="task-num">5</span> Write Your Own 1-Page QE Priorities Doc</h4>
+        <div class="extract">Now that you've read everything, answer these four questions:
+          <ul class="ask-list">
+            <li>What are the top 3 risks for Tech Preview (Sep 29)?</li>
+            <li>What's the minimum viable QE process for monthly releases?</li>
+            <li>What do you need from the PitCrew team vs what you build yourself?</li>
+            <li>Who are your first 3 hires/assignments?</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="task-card">
+        <h4><span class="task-num">6</span> Schedule Meetings for Next Week</h4>
+        <div class="extract">
+          <ul style="margin-top:4px; padding-left:18px; list-style:disc; color:var(--text-muted); font-size:13px;">
+            <li><strong>Cameron Meadors</strong> (cmeadors@redhat.com) - OCP QE strategy alignment</li>
+            <li><strong>John George</strong> - next-gen QE working group</li>
+            <li><strong>Paul Wallrabe</strong> - RHAS product direction, customer priorities</li>
+            <li><strong>Jeff Ligon</strong> - PO perspective on quality gates</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========== PEOPLE DIRECTORY ========== -->
+<div class="people-section">
+  <h2 class="section-title">Key People Directory</h2>
+  <div class="people-grid">
+    <div class="person-card">
+      <div class="name">Benny Zlotnik</div>
+      <div class="role">PitCrew Tech Lead</div>
+      <div class="why">Deepest RHAS architecture knowledge. Wrote the testing doc. Your go-to for "how does it actually work."</div>
+    </div>
+    <div class="person-card">
+      <div class="name">Evgeni Vakhonin</div>
+      <div class="role">RHAS CI Engineer</div>
+      <div class="why">Building the downstream pipeline since March. Your primary CI contact. Knows the infra blockers intimately.</div>
+    </div>
+    <div class="person-card">
+      <div class="name">Mohamad Abo Ras</div>
+      <div class="role">E2E Upstream Testing</div>
+      <div class="why">Owns upstream per-PR tests. Knows test coverage and the kind-vs-OCP gap firsthand.</div>
+    </div>
+    <div class="person-card">
+      <div class="name">Miguel Angel Ajo</div>
+      <div class="role">Jumpstarter Lead</div>
+      <div class="why">HiL infrastructure, board management, lab ops. Key-person risk for hardware testing.</div>
+    </div>
+    <div class="person-card">
+      <div class="name">Martin Perina</div>
+      <div class="role">bootc Testing</div>
+      <div class="why">bootc test development, Jumpstarter integration. Primary contributor to automotive/tests/all.</div>
+    </div>
+    <div class="person-card">
+      <div class="name">Bella Khizgiyaev</div>
+      <div class="role">PitCrew Engineer</div>
+      <div class="why">Konflux, CTC, demos. Good for broad context and cluster access permissions.</div>
+    </div>
+    <div class="person-card">
+      <div class="name">Eitan Raviv</div>
+      <div class="role">ATC Infrastructure</div>
+      <div class="why">AWS IAM, DNS for RHAS-CI cluster. You already know him from ATC.</div>
+    </div>
+    <div class="person-card">
+      <div class="name">Rachel Sibley</div>
+      <div class="role">RHIVOS QE Coordinator</div>
+      <div class="why">CTC scheduling, waiver process. The model for what RHAS QE coordination should look like.</div>
+    </div>
+    <div class="person-card">
+      <div class="name">Cameron Meadors</div>
+      <div class="role">OCP QE Strategy</div>
+      <div class="why">OCP quality strategy owner (OCPQE-32074). Your alignment contact for cross-product QE practices.</div>
+    </div>
+    <div class="person-card">
+      <div class="name">Paul Wallrabe</div>
+      <div class="role">Engineering Director</div>
+      <div class="why">Strategic direction, customer priorities. Knows what external customers (Ford, HATCI) actually care about testing.</div>
+    </div>
+    <div class="person-card">
+      <div class="name">Jeff Ligon</div>
+      <div class="role">Product Owner</div>
+      <div class="why">PO perspective, feature priorities, what customers need tested. Defines "ready to ship."</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== RESOURCES ========== -->
+<div class="resources-section">
+  <h2 class="section-title">Key Resources</h2>
+
+  <div class="resource-group">
+    <h3>Google Docs</h3>
+    <ul class="resource-list">
+      <li><span class="label">RHAS Strategic Guide</span><a href="https://docs.google.com/document/d/10qaHs_mfOCJtIJoJq35HjhHAeLEMJwYde51wgCKrQx8/edit">10qaHs...rQx8</a></li>
+      <li><span class="label">RHAS 2026 Roadmap</span><a href="https://docs.google.com/document/d/1j4Chcv71S8Y3P8HT2wTao9ZEoHoHm-X102VmaNpk1CA/edit">1j4Chc...k1CA</a></li>
+      <li><span class="label">Benny's Testing Architecture</span><a href="https://docs.google.com/document/d/1NEzWHE1K4CiGkEDjhL5gpQUpcnepsiBvMDWPXUxLOHQ/edit">1NEzWH...LOHQ</a></li>
+      <li><span class="label">RHAS CI Testing Proposal</span><a href="https://docs.google.com/document/d/1Txk4PQC9pGvNrNE9VViN8EMI8o94KpJa_kLMscBthAI/edit">1Txk4P...thAI</a></li>
+      <li><span class="label">RHAS Test Strategy (DRAFT)</span><a href="https://docs.google.com/document/d/1tLAguZTTa6CKif-GBA7mM1N1rDXw3IrrjKo3218Us4U/edit">1tLAgu...s4U</a></li>
+      <li><span class="label">RHAS Test Release Criteria (DRAFT)</span><a href="https://docs.google.com/document/d/13wceO7V-q44G9mn2yWN0zYlrAaJOnD7MQBCjPKQc4hM/edit">13wceO...c4hM</a></li>
+      <li><span class="label">RHAS Testing Landscape</span><a href="https://docs.google.com/document/d/19T2hFTrEhnGpgVjFvuyUXQPiRk_p3j6VAHAQQGAX7mI/edit">19T2hF...X7mI</a></li>
+      <li><span class="label">OCP Feature Quality Strategy</span><a href="https://docs.google.com/document/d/1zuWKi9MvRVyOWn1lj-Khi47TvElUdmGWKRJhTnSVfVg/edit">1zuWKi...fVg</a></li>
+      <li><span class="label">Hubert's Onboarding Plan (reference)</span><a href="https://docs.google.com/document/d/1G-iqrNyzqijEXdRqV3gscl6uxHwmnSKTjthlf3BJ44A/edit">1G-iqr...J44A</a></li>
+    </ul>
+  </div>
+
+  <div class="resource-group">
+    <h3>Test Infrastructure</h3>
+    <ul class="resource-list">
+      <li><span class="label">Test Console (CTC results)</span><span class="id">test-console.corp.redhat.com/rhivos-testing/ctc</span></li>
+      <li><span class="label">Jumpstarter Monitor</span><span class="id">monitor.ajo.es/status/jumpstarter</span></li>
+      <li><span class="label">RHAS CI GitLab</span><span class="id">gitlab.cee.redhat.com/automotive/jumpstarter/rhas-ci</span></li>
+      <li><span class="label">Prow CI (OCP)</span><span class="id">prow.ci.openshift.org</span></li>
+      <li><span class="label">Sippy (Component Readiness)</span><span class="id">sippy-auth.dptools.openshift.org</span></li>
+    </ul>
+  </div>
+
+  <div class="resource-group">
+    <h3>Confluence</h3>
+    <ul class="resource-list">
+      <li><span class="label">RHIVOS Home</span><a href="https://spaces.redhat.com/spaces/Automotive">spaces.redhat.com/spaces/Automotive</a></li>
+      <li><span class="label">RHIVOS Release Testing Process</span><span class="id">Page 196260232</span></li>
+      <li><span class="label">RHIVOS Pass-Fail Criteria</span><span class="id">Page 196285195</span></li>
+      <li><span class="label">RHEL & RHIVOS Gating</span><span class="id">Page 387157013</span></li>
+    </ul>
+  </div>
+
+  <div class="resource-group">
+    <h3>Slack Channels</h3>
+    <ul class="resource-list">
+      <li><span class="label">#team-pitcrew-automotive</span><span class="id">Team channel</span></li>
+      <li><span class="label">#forum-jumpstarter</span><span class="id">Technical</span></li>
+      <li><span class="label">#forum-qe-automotive</span><span class="id">Automotive QE</span></li>
+      <li><span class="label">#forum-openshift-qe</span><span class="id">OCP QE</span></li>
+      <li><span class="label">#wg-openshift-next-gen-quality</span><span class="id">Next-gen QE working group</span></li>
+    </ul>
+  </div>
+
+  <div class="resource-group">
+    <h3>Jira Epics</h3>
+    <ul class="resource-list">
+      <li><span class="label">PITCREW-337 - QE Readiness</span><span class="id" style="color:var(--accent-red);">The epic you'll own</span></li>
+      <li><span class="label">PITCREW-331 - CTC Adoption</span><span class="id">In Progress</span></li>
+      <li><span class="label">PITCREW-393/394 - DS Testing Pipeline</span><span class="id">Blocked/New</span></li>
+      <li><span class="label">PITCREW-335 - Konflux Onboarding</span><span class="id">In Progress</span></li>
+      <li><span class="label">PITCREW-336 - Distribution</span><span class="id">Blocks QE Readiness</span></li>
+      <li><span class="label">PITCREW-42 - Original QE Plan</span><span class="id">Unassigned</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ========== SUCCESS CRITERIA ========== -->
+<div class="success-section">
+  <h2 class="section-title">What Success Looks Like After This Week</h2>
+  <div class="success-grid">
+    <div class="success-card">
+      <div class="num">1</div>
+      <div class="label">Explain RHAS</div>
+      <div class="desc">To someone who's never heard of it - what it is, who it's for, how it differs from RHIVOS</div>
+    </div>
+    <div class="success-card">
+      <div class="num">2</div>
+      <div class="label">Draw the Architecture</div>
+      <div class="desc">Builder, Jumpstarter, Konflux, GitOps, Keycloak, Console - and how they connect</div>
+    </div>
+    <div class="success-card">
+      <div class="num">3</div>
+      <div class="label">Describe Current Testing</div>
+      <div class="desc">What's operational (upstream per-PR, HiL), what's blocked (DS pipeline), what doesn't exist (QE process, release criteria)</div>
+    </div>
+    <div class="success-card">
+      <div class="num">4</div>
+      <div class="label">Name Top 3 Risks</div>
+      <div class="desc">For Tech Preview (Sep 29) and have an opinion on mitigation for each</div>
+    </div>
+    <div class="success-card">
+      <div class="num">5</div>
+      <div class="label">Know Every Key Person</div>
+      <div class="desc">By name and what they do - 11 contacts across PitCrew, ATC, RHIVOS QE, and OCP QE</div>
+    </div>
+    <div class="success-card">
+      <div class="num">6</div>
+      <div class="label">Draft Priority List</div>
+      <div class="desc">For your first 30 days as QE lead - risks, process, people, deliverables</div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  RHAS QE Lead Learning Path - Generated July 20, 2026 - Based on RHAS QE Agent Knowledge Base
+</div>
+
+</body>
+</html>
