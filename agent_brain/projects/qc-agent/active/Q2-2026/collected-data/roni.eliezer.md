@@ -167,11 +167,27 @@ member: Roni Eliezer
 
 ## Cross-Team Feedback
 
-### Yariv (BOA team) — July 2026
+### Yariv Rachmani (BOA team) — July 2026
 
 > Roni works within our RHIVOS team but acts as a vital collaborative anchor across three distinct teams: Toolchain, Jumpstarter, and BoA. I am providing this feedback at the Advanced level. Roni practices Multiplier behaviors individually; through TestConsole, scales these behaviors to elevate the effectiveness of multiple teams integrated under one product. Roni is willing to mentor and assist others to begin contributing to TestConsole.
 
 **Key themes:** cross-team multiplier (Toolchain + Jumpstarter + BoA), Advanced-level Multiplier competency, mentoring/enablement through TestConsole platform, collaborative anchor role.
+
+### Meital Arki — May 2026
+
+**Strengths:**
+> Based on my collaboration with Roni during CY25Q4 on the BOA/Test Console AI Chatbot initiative, I had the opportunity to see several of his strengths in action. Roni demonstrated strong AI knowledge and curiosity, which was very valuable as we explored new ideas and technical directions for the AI Chatbot effort. He quickly understood the technical context and was able to contribute thoughtful ideas and practical solutions. He also showed great collaboration and problem-solving skills. Throughout our work together, Roni was highly engaged in the effort, actively participating in discussions, thinking both deeply and broadly about challenges, and helping move ideas forward. His ability to look at problems from multiple angles and propose constructive approaches was very helpful for the team. Another strength Roni brings is his ownership mindset. He is proactive, asks the right questions, and demonstrates a genuine commitment to the success of the initiative. On a personal level, Roni is also a very pleasant and supportive colleague to work with. The collaboration with him always feels open, comfortable, and productive, which positively impacts the overall team dynamic. I have known Roni since the RHV project, and today in RHIVOS I can clearly see how much he has grown. He is thriving in this environment, and his skills are really coming into their own. It feels like he has found a product where he can fully express his strengths, and it is great to see the positive impact he is making.
+
+**Development:**
+> One area that could help him grow further is increasing the visibility of his work across the broader RHIVOS. I believe Roni has valuable ideas and strong technical insights, and sharing demos of his work could help others benefit from his contributions. I would personally like to hear more from Roni in broader discussions, as I think he has a lot to offer.
+
+**Key themes:** AI knowledge and curiosity, collaboration and problem-solving (multiple angles), ownership mindset, pleasant colleague, clear growth since RHV. Development: increase visibility, share demos, speak up in broader discussions.
+
+### Rachel Sibley (ATC/BOA) — May 2026
+
+> Roni is an absolute powerhouse on the ATC team. Whether it's a high-priority fix or a complex debugging challenge, he delivers results fast. He's a quick study and always willing to jump in and help others, making him both a technical leader and a fantastic teammate. Roni has done an amazing job with co-leading the Test Console development work, and his involvement with the Jumpstarter migration.
+
+**Key themes:** speed and delivery, technical leadership, quick learner, helpful teammate, Test Console co-leadership, Jumpstarter migration.
 
 ### Slack patterns
 
