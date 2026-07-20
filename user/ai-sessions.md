@@ -8,6 +8,9 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-07-20 | Slides + doc redesign continuation (dark theme conference quality) + weekend manager report | `4fb81e05-a0ae-4916-bbe9-54e46805b473` (continued) |
+| 2026-07-20 | Daily + weekly manager reports rerun (parallel, emailed) | (reflect-only) |
+| 2026-07-20 | Daily + weekly manager report rerun (both emailed) | (reflect-only) |
 | 2026-07-20 | PitCrew completed ticket synthesis (PITCREW-493 OCI image as RPM repo) | (reflect-only) |
 | 2026-07-20 | ATC single-ticket synthesis (VROOM-44486 SonarQube frontend CI) | (reflect-only) |
 | 2026-07-20 | ATC Slack scan (10 channels, 7 days) - nightly failures, productID confusion, infra issues, CTC planning | (reflect-only) |
