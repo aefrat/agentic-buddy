@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-07-20 | LP status report + PitCrew weekly report (both emailed, stores updated) | `4fb81e05-a0ae-4916-bbe9-54e46805b473` (continued) |
 | 2026-07-20 | RHAS testing docs update: 3 Google Docs updated with CI Testing Proposal, testing dashboard created, agent KB wired | `e6660038-93d6-4552-8757-c5912fa26c4b` |
 | 2026-07-20 | Roni Eliezer QC enrichment: self-input (11 items), 3 peer feedbacks (Yariv/Meital/Rachel), QE-to-SE transition across 5 docs | (reflect-only) |
 | 2026-07-20 | Slides + doc redesign continuation (dark theme conference quality) + weekend manager report | `4fb81e05-a0ae-4916-bbe9-54e46805b473` (continued) |
