@@ -50,26 +50,30 @@ Roni is operating at a strong IC Level 4 with clear Level 5 signals in scope and
 
 ## e. Growth opportunities
 
-1. **Write a Test Console strategy document.** Position TC as an enterprise QE platform with a 12-month roadmap: LLM capabilities, security hardening, performance targets, integration points. This builds the Level 5 "developing and implementing mid-term quality strategies" signal. Maps to: Test Console improvements (security, performance, LLM) priority.
-2. **Present Test Console and AI-in-QE at an internal forum or conference.** Level 5 QE differentiator: "strategic AI leverage for workflow optimization." Roni is already doing this - he needs to make it visible beyond ATC. Maps to: Agentic SDLC transformation program priority.
-3. **Build stakeholder management skills.** Level 5 QE expects "business acumen, stakeholder management, leadership." Start by presenting CTC metrics and quality trends to program leadership - not just running CTC, but framing what CTC results mean for release decisions. Maps to: Core directive (securing automotive customer wins).
-4. **Design enterprise-level CI/CD standards for QE.** Level 5 shift: "from managing CI/CD to designing enterprise-level CI/CD standards." Roni's TC and CTC experience positions him to define how QE CI/CD should work across RHIVOS, not just within ATC. Maps to: CAIB integration and Konflux integration priorities.
+1. **QE-to-SE career track transition.** Roni's current job profile is Principal Software Quality Engineer (QE Level 4), but his Q2 work is overwhelmingly software engineering: Flask-to-FastAPI migration, MCP server architecture, API design (enable/disable jobs, CPU support, env-var update), frontend performance optimization, AI pipeline engineering. Of 43 merged MRs, the vast majority are feature development and platform architecture, not traditional QE (test planning, strategy, execution). The July 2026 talent cycle guidance from Tashana explicitly opens a QE-to-SE transition path, noting that QE and SE do not map 1:1 and transitioning often represents a promotion in both expectations and compensation. Roni's self-input confirms this framing - his top accomplishment is converting TC into an MCP server through a full framework migration, which is pure software engineering. Peer feedback reinforces: Rachel calls him "an absolute powerhouse" co-leading "Test Console development work" (not test work); Meital highlights his "AI knowledge" and "practical solutions." This transition would formally align his job profile with the work he already does and open the SE progression path (through Senior Principal SE) for future growth. If interested, note in Workday Talent Action for Tashana to coordinate.
+2. **Increase visibility across broader RHIVOS.** Consistent peer feedback theme (Meital): "I would personally like to hear more from Roni in broader discussions." His technical innovations (MCP server, AI analysis pipeline) are well known within immediate teams but not broadly. Share demos, present at cross-team forums, write internal articles. Maps to: visibility as a precondition for IC-5 recognition.
+3. **Write a Test Console strategy document.** Position TC as an enterprise QE/SE platform with a 12-month roadmap: LLM capabilities, MCP server evolution, security hardening, performance targets, integration points. This builds the Level 5 "developing and implementing mid-term strategies" signal. Maps to: Test Console improvements (security, performance, LLM) priority.
+4. **Present Test Console and AI-in-QE at an internal forum or conference.** Level 5 differentiator. Roni is already doing the work - he needs to make it visible beyond ATC. The MCP server conversion and the AI analysis pipeline improvements are compelling conference talk material. Maps to: Agentic SDLC transformation program priority.
+5. **Build stakeholder management skills.** Level 5 expects "business acumen, stakeholder management, leadership." Start by presenting CTC metrics and quality trends to program leadership - not just running CTC, but framing what CTC results mean for release decisions. Maps to: Core directive (securing automotive customer wins).
+6. **Design enterprise-level CI/CD standards.** Level 5 shift: "from managing CI/CD to designing enterprise-level CI/CD standards." Roni's TC and CTC experience positions him to define how testing infrastructure should work across RHIVOS, not just within ATC. Maps to: CAIB integration and Konflux integration priorities.
 
 ## f. 1:1 talking points
 
-1. You own Test Console end-to-end and coordinate CTC across all release candidates. If you had to write a 12-month vision for TC, what would the top priorities be?
-2. The 3 Gemini model transitions this quarter show strong AI integration instinct. Where do you see AI changing QE practices most significantly in the next year?
-3. Level 5 QE asks for "leading activities of professional staff" and stakeholder management. Where do you see your natural entry points for that kind of leadership?
-4. You're the person 199 people mention when they need testing answers. How do you want to scale that influence - through delegation, documentation, or something else?
-5. What's one thing about Test Console or CTC that you'd want to present to a broader audience?
+1. **QE-to-SE transition:** Your Test Console work this quarter - Flask-to-FastAPI migration, MCP server, API design, UI performance, AI pipeline - is fundamentally software engineering. The org is offering QEs a supported path to SE roles. No pressure, but I want you to know the option exists. Would that interest you?
+2. You own Test Console end-to-end and coordinate CTC across all release candidates. If you had to write a 12-month vision for TC, what would the top priorities be?
+3. The AI analysis pipeline improvements (junit_results.xml, JSON conversion, failover) and the MCP server are innovations worth sharing widely. What's one thing you'd want to demo to a broader audience?
+4. Meital's feedback mentions she'd like to hear more from you in broader discussions. How do you feel about your visibility across RHIVOS?
+5. Level 5 asks for "leading activities of professional staff" and stakeholder management. Where do you see your natural entry points for that kind of leadership?
+6. You're the person 199 people mention when they need testing answers. How do you want to scale that influence - through delegation, documentation, or something else?
 
 ## g. Recommended next steps
 
-1. **Draft a Test Console 12-month roadmap** covering LLM evolution, security hardening (building on VROOM-28392), performance targets, and CAIB/Konflux integration points. Present to ATC and QE leadership. Maps to: Test Console improvements priority.
-2. **Present CTC metrics and quality trends to program leadership** - frame what CTC pass rates mean for release readiness and customer confidence. Builds stakeholder management and business acumen. Maps to: Core directive (securing automotive customer wins).
-3. **Propose enterprise QE CI/CD standards** based on TC and CTC experience. Start with a document outlining how testing infrastructure should integrate with CAIB and Konflux. Maps to: CAIB integration and Konflux integration priorities.
-4. **Submit a talk proposal** on AI-in-QE or Test Console architecture for an internal tech talk or DevConf. Makes existing work visible beyond ATC.
-5. **Mentor a QE team member** on Test Console development or CTC coordination - begin building the Level 5 "mentoring peers, providing expert guidance on QE strategy" signal.
+1. **Discuss QE-to-SE transition** in next 1:1. Frame as: "Your Test Console work is already substantial software engineering. The org is offering QEs a supported path to SE if that interests you." If interested, note in Workday Talent Action. Tashana can coordinate support and training resources.
+2. **Draft a Test Console 12-month roadmap** covering MCP server evolution, LLM integration, security hardening (building on VROOM-28392), performance targets, and CAIB/Konflux integration points. Present to ATC and QE leadership. Maps to: Test Console improvements priority.
+3. **Demo the MCP server and AI analysis improvements** to a broader audience - internal tech talk, cross-team forum, or sprint demo open to other teams. Addresses the visibility gap Meital flagged.
+4. **Present CTC metrics and quality trends to program leadership** - frame what CTC pass rates mean for release readiness and customer confidence. Builds stakeholder management and business acumen. Maps to: Core directive (securing automotive customer wins).
+5. **Submit a talk proposal** on AI-in-QE or Test Console MCP architecture for DevConf or a testing conference. Makes existing work visible beyond ATC and Red Hat.
+6. **Formalize mentoring** for cross-team Test Console contributors - Yariv confirms willingness to mentor others into the platform. Structure regular sessions for BOA and other teams.
 
 ---
 

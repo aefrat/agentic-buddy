@@ -400,11 +400,11 @@ Conclusion: Not yet ready for promotion. Juanje is on a clear trajectory from Le
 
 ---
 
-## Principal Quality Engineer (IC Level 4 - next: Senior Principal QE, IC Level 5)
+## Principal Quality Engineer (IC Level 4 - next: Senior Principal QE, IC Level 5 or SE transition)
 
 ### Roni Eliezer - Principal Software Quality Engineer, ATC
 
-**Note:** Using the Quality Engineer IC Progression Matrix and the Professional Track dimensions for Roni's development path.
+**Note:** Using the Quality Engineer IC Progression Matrix and the Professional Track dimensions for Roni's development path. However, Roni's actual work aligns more closely with the SE progression matrix (see QE-to-SE transition section below).
 
 **Dimension assessment (Professional Track - QE):**
 
@@ -437,12 +437,13 @@ Conclusion: Not yet ready for promotion. Juanje is on a clear trajectory from Le
 - *Enterprise CI/CD:* Level 5 expects "design and implement robust CI/CD pipelines that meet enterprise-level standards." Test Console CI/CD is solid but could be positioned as a reference architecture
 
 **Recommended development path:**
-1. **Write a quality engineering strategy** - document where RHIVOS testing should go: AI-powered analysis maturity, Test Console evolution, new test types, coverage targets. Present to leadership
-2. **Position Test Console as enterprise reference** - the platform is mature enough to be a reference architecture. Document it, present it at internal forums, offer it as a pattern for other products
-3. **Present externally** - the AI-powered test analysis story (3 model transitions, fallback mechanisms) is a compelling conference talk for DevConf or testing conferences
-4. **Expand stakeholder engagement** - engage more with product management and customers on quality metrics. Translate testing results into business language
-5. **Formalize mentoring** - Yariv's feedback confirms Roni's willingness to mentor others into Test Console. Structure this into regular mentoring sessions for cross-team contributors. Help Bella with her CTC reporting work as a natural extension
-6. **Develop business acumen** - understand how quality metrics connect to product release decisions, customer satisfaction, and revenue impact
+1. **Discuss QE-to-SE career track transition.** Roni's Q2 work is overwhelmingly software engineering: Flask-to-FastAPI migration, MCP server architecture, API design (enable/disable jobs, CPU support, env-var update), frontend performance optimization, AI pipeline engineering. His self-input confirms this - his top accomplishment is converting TC into an MCP server through a full framework migration. Peer feedback reinforces it: Rachel calls him "an absolute powerhouse" co-leading "Test Console development work"; Meital highlights "AI knowledge" and "practical solutions." The July 2026 talent cycle guidance from Tashana explicitly opens a QE-to-SE transition path (QE and SE do not map 1:1; transitioning often represents a promotion in expectations and compensation). His work already aligns with the SE Level 4 progression matrix: cross-subsystem features, proposing new techniques (MCP server, JMESpath filtering, AI pipeline redesign), leading cooperative efforts among teams. If interested, note in Workday Talent Action for Tashana to coordinate support.
+2. **Increase visibility across broader RHIVOS.** Consistent peer feedback theme (Meital): "I would personally like to hear more from Roni in broader discussions." Demo the MCP server and AI analysis improvements to a broader audience
+3. **Write a Test Console strategy document** - position TC as an enterprise platform with a 12-month roadmap: MCP server evolution, LLM capabilities, security hardening, performance targets, integration points. Present to leadership
+4. **Present externally** - the MCP server conversion and the AI-powered test analysis story (junit_results.xml discovery, JSON conversion, failover) are compelling conference talk material for DevConf or testing conferences
+5. **Expand stakeholder engagement** - engage more with product management and customers on quality metrics. Translate testing results into business language
+6. **Formalize mentoring** - Yariv's feedback confirms willingness to mentor others into Test Console. Meital notes his ownership mindset. Structure regular mentoring sessions for cross-team contributors
+7. **Develop business acumen** - understand how quality metrics connect to product release decisions, customer satisfaction, and revenue impact
 
 ---
 
@@ -459,7 +460,7 @@ Conclusion: Not yet ready for promotion. Juanje is on a clear trajectory from Le
 - Benny [Level 4] - Scope: 4 / Complexity: 4, trending 5 / Impact: 4. Strongest: Complexity (connective hub, community expert). Biggest gap: Impact - tactical breadth, needs strategic direction-setting.
 - Roderick [Level 4] - Scope: Too early / Complexity: Too early / Impact: Too early. Strongest: N/A (onboarding). Biggest gap: Domain depth - establish Level 4 baseline first.
 - Matt [Level 4] - Scope: 4 (building) / Complexity: 3-4 / Impact: 3. Strongest: Scope (initiative to propose improvements). Biggest gap: Complexity + Impact - domain expertise and delivery cadence still ramping.
-- Roni [Level 4] - Scope: 4-5 / Complexity: 4, trending 5 / Impact: 4, trending 5. Strongest: Impact (Test Console decisions directly affect CTC/release) and cross-team multiplier effect (Yariv/BOA: Advanced-level Multiplier through platform enablement). Biggest gap: Complexity - needs to be recognized as SME advising functional leaders; strategic direction articulation.
+- Roni [Level 4] - Scope: 4-5 / Complexity: 4, trending 5 / Impact: 4, trending 5. Strongest: Impact (Test Console decisions directly affect CTC/release) and cross-team multiplier effect (Yariv/BOA: Advanced-level Multiplier through platform enablement). Biggest gap: Complexity - needs to be recognized as SME advising functional leaders; strategic direction articulation. **Career track note:** QE-to-SE transition recommended - work profile (MCP server, API design, FastAPI migration, AI pipeline) aligns with SE, not traditional QE.
 
 ### Common themes
 

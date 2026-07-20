@@ -109,6 +109,14 @@ Per Tashana's guidance, use this talent cycle to check QE interest in developing
 - If interested, note it in the **Talent Action** section of Workday. Tashana can coordinate support and training resources
 - **Reassure:** This initiative focuses on career growth and does not impact job security
 
+**Q2 2026 evidence supporting the transition (updated with self-input and peer feedback):**
+
+- **Self-reported top accomplishment:** Converting TC backend into an MCP server - migrated all code from Flask to FastAPI, then automatically exposed all APIs as MCP tools. This is pure software architecture and platform engineering
+- **43 merged MRs in Q2:** Vast majority are feature development (API design, framework migration, performance optimization, AI pipeline engineering), not traditional QE (test planning, test strategy, test execution)
+- **Key SE-aligned work:** New APIs for CPU support (AWS Graviton 3), job enable/disable, env-var updates; DPAC integration with Ozan and Juanje; JMESpath filtering; frontend SonarQube CI; UI performance optimization (lazy-loading runner_status/log); bootc-testing integration with Jumpstarter
+- **Peer feedback alignment:** Rachel describes him co-leading "Test Console development work" (not test work). Meital highlights "AI knowledge," "practical solutions," and "ownership mindset." Yariv positions him as a cross-team multiplier through a platform he builds and maintains
+- **SE Level 4 matrix fit:** Cross-subsystem/component features (TC spans backend, frontend, client, CI), proposes new techniques (MCP server, JMESpath, AI analysis redesign), leads cooperative efforts among teams (Ozan/DPAC, Benny+Bella/bootc, Testing Farm/CPU), recognized expert within team
+
 **Recommendation:** Have this conversation in Roni's next 1:1. Frame it as: "Your Test Console work is already substantial software engineering. The org is offering QEs a supported path to SE if that interests you. No pressure - just want you to know the option exists."
 
 ---
@@ -169,11 +177,12 @@ Per Tashana's guidance, use this talent cycle to check QE interest in developing
 - Agility: YES - navigated 3 Gemini model transitions (external change), built fallback mechanisms, adapted testing approach for each release candidate
 - **HiPo designation: YES**
 
-**QE-to-SE transition:** Discuss in next 1:1 (see section above). Note interest in Talent Action if applicable.
+**QE-to-SE transition:** Discuss in next 1:1 (see section above). Q2 evidence strongly supports: self-reported top accomplishment is MCP server conversion (pure SE); 43 MRs are overwhelmingly feature dev and platform architecture; peer feedback frames him as a developer, not a tester. If interested, note in Talent Action. This transition would formally align his job profile with the work he already does and open the SE progression path (through Senior Principal SE) for future growth.
 
 **Movement readiness:** Continue growing in current role
 - Promotion readiness (IC-4 to IC-5): not yet. 1-2 quarters.
 - Gaps per QE Matrix IC-5: published mid-term QE strategy, stakeholder management beyond engineering, business acumen, external presentations
+- Gaps per SE Matrix IC-5 (if QE-to-SE transition): organizational-level strategy positioning, external conferences, cross-org networks. Note: many SE IC-4 expectations are already met (cross-subsystem features, new techniques, cooperative efforts)
 - Strengths already at IC-5: platform ownership, AI innovation, cross-team enablement
 
 **Talent actions (next 6 months):**
@@ -181,8 +190,8 @@ Per Tashana's guidance, use this talent cycle to check QE interest in developing
 - Development (3 Es):
   - Experience: Own 12-month QE strategy document. Formalize mentoring for cross-team Test Console contributors
   - Exposure: Present AI-in-QE externally (testing conference or DevConf). Engage product management on quality metrics
-  - Education: Consider QE-to-SE path if interested (Tashana can coordinate training resources)
-- Growth: Write Test Console strategy doc. Develop business acumen (connect quality to release/revenue impact). Stakeholder management beyond engineering
+  - Education: QE-to-SE path if interested (Tashana can coordinate training resources). Evidence strongly supports transition - work profile already aligns with SE
+- Growth: Write Test Console strategy doc. Increase visibility (demos, broader discussions - per Meital's feedback). Develop business acumen (connect quality to release/revenue impact). Stakeholder management beyond engineering
 
 **Promotion timeline:** Q4 2026 or Q1 2027
 
