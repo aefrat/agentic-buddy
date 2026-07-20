@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-07-20 | US-Iran conflict OSINT assessment (escalation probability, expert analysis, Israel-Iran dynamics) | (reflect-only) |
 | 2026-07-19 | SKU/Repo retro research + Google Doc (analysis + draft runbook) + HTML visualization (pipeline flow), Confluence token unified, SBI feedback for Matt Goldman | `852fb163-3007-47cf-bf1c-f58544a467cf` |
 | 2026-07-19 | Weekly + LP reports, email/docs action item scan (22 items captured), SOA renewals discovered, action item triage, talent calibration review, RHIVOS schedule URLs, SBI feedback doc (Matt MR !901), 11 tasks resolved | `6beab373-1f54-416f-8618-050d80a966b5` (continued after compaction) |
 | 2026-07-19 | Stakeholder Slack activity summary (Jaime, Jeff, Paul, Petr) | (reflect-only) |
