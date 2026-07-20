@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-07-19
-access_count: 37
+last_accessed: 2026-07-20
+access_count: 38
 created: 2026-06-01
 ---
 
@@ -123,6 +123,10 @@ Resolved observations are moved to the bottom.
 - **2026-07-19:** "Multi-host GitLab auth - check per-hostname status" - `glab auth status` shows all configured hosts together. An expired token on gitlab.com caused the agent to assume all GitLab was inaccessible, when gitlab.cee.redhat.com (where MR !901 lived) was fine. Always check per-hostname status before falling back to alternative data sources. Led to wrong MR identification via Slack instead of direct GitLab API query. (seen: 1)
 
 - **2026-07-19:** "Compliance deadlines in spreadsheets without alerts create invisible risk" - 4 ATC SOAs expired (oldest: 69 days ago) without anyone noticing because the tracking spreadsheet has no automated expiry notifications. Discovered only because the docs scan agent read the spreadsheet contents and compared dates. Pattern: any compliance/renewal deadline tracked only in a spreadsheet (not Jira, not calendar, no email alerts) will eventually be missed. Generalizable beyond SOAs to certs, licenses, contracts. (seen: 1)
+
+- **2026-07-19:** "Programmatic slide deck construction via helper functions" - building conference-quality Google Slides via API requires Python helper functions for common patterns (flow_boxes for horizontal flows, make_shape/fill_shape/style_text for individual elements). Without helpers, 200+ API requests across 13 slides would be unmanageable. The pattern: define a small DSL of composable helpers, then describe each slide declaratively using those helpers. Applied to RHIVOS build-to-distribution pipeline slides. Generalizable to any structured slide deck generation. (seen: 1)
+
+- **2026-07-19:** "Google Docs batchUpdate bulk formatting" - efficient strategy for reformatting an entire Google Doc: (1) delete all content, (2) insert all new text as a single string, (3) track section ranges during text assembly, (4) apply paragraph/text styles using the tracked ranges. Indices don't shift during styling-only operations (no new insertions), making the math trivial. Much simpler than interleaving insertText and updateTextStyle calls. Applied to reformatting the RHIVOS flow doc with heading hierarchy and colored headings. (seen: 1)
 
 ## Structure candidates (tools)
 
