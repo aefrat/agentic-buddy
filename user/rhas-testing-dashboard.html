@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RHAS Testing Dashboard - July 20, 2026</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+  :root {
+    --surface-page:   #0d0d0d;
+    --surface-card:   #1a1a19;
+    --text-primary:   #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted:     #898781;
+    --gridline:       #2c2c2a;
+    --baseline:       #383835;
+    --border:         rgba(255,255,255,0.10);
+
+    --good:      #0ca30c;
+    --warning:   #fab219;
+    --serious:   #ec835a;
+    --critical:  #d03b3b;
+
+    --good-bg:     rgba(12,163,12,0.12);
+    --warning-bg:  rgba(250,178,25,0.12);
+    --serious-bg:  rgba(236,131,90,0.12);
+    --critical-bg: rgba(208,59,59,0.12);
+    --muted-bg:    rgba(137,135,129,0.10);
+
+    --seq-100: #cde2fb;
+    --seq-200: #9ec5f4;
+    --seq-300: #6da7ec;
+    --seq-400: #3987e5;
+    --seq-500: #256abf;
+    --seq-600: #184f95;
+
+    --cat-1: #3987e5;
+    --cat-2: #008300;
+    --cat-3: #d55181;
+    --cat-4: #c98500;
+    --cat-5: #199e70;
+    --cat-6: #d95926;
+    --cat-7: #9085e9;
+
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--text-primary);
+    background: var(--surface-page);
+  }
+
+  body { padding: 24px; max-width: 1280px; margin: 0 auto; }
+
+  .dash-header {
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--gridline);
+    padding-bottom: 16px;
+  }
+  .dash-header h1 {
+    font-size: 22px; font-weight: 600; margin-bottom: 4px;
+  }
+  .dash-header .subtitle {
+    color: var(--text-secondary); font-size: 13px;
+  }
+
+  .section { margin-bottom: 32px; }
+  .section-title {
+    font-size: 14px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 16px;
+  }
+
+  .card-grid { display: grid; gap: 16px; }
+  .card-grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .card-grid-4 { grid-template-columns: repeat(4, 1fr); }
+  .card-grid-2 { grid-template-columns: 1fr 1fr; }
+
+  .card {
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  /* Stat tile */
+  .stat-tile { text-align: center; }
+  .stat-label {
+    font-size: 12px; font-weight: 500; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;
+  }
+  .stat-value {
+    font-size: 36px; font-weight: 600; line-height: 1.1; margin-bottom: 4px;
+  }
+  .stat-sub {
+    font-size: 13px; color: var(--text-secondary);
+  }
+  .stat-bar {
+    height: 6px; border-radius: 3px; margin-top: 12px;
+    background: var(--gridline); overflow: hidden; display: flex;
+  }
+  .stat-bar span { display: block; height: 100%; }
+
+  /* Stacked bar chart */
+  .stacked-chart { padding: 20px 24px; }
+  .stacked-row { margin-bottom: 16px; }
+  .stacked-row:last-child { margin-bottom: 0; }
+  .stacked-row-label {
+    font-size: 13px; font-weight: 500; color: var(--text-secondary);
+    margin-bottom: 6px; display: flex; justify-content: space-between;
+  }
+  .stacked-bar-container {
+    height: 28px; border-radius: 4px; display: flex;
+    overflow: hidden; background: var(--gridline); gap: 2px;
+  }
+  .stacked-seg {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; color: var(--text-primary);
+    position: relative; min-width: 24px; transition: opacity 0.15s;
+    cursor: default;
+  }
+  .stacked-seg:hover { opacity: 0.85; }
+  .stacked-seg .seg-tooltip {
+    display: none; position: absolute; bottom: calc(100% + 6px);
+    background: #0d0d0d; border: 1px solid var(--baseline);
+    border-radius: 4px; padding: 6px 10px; font-size: 12px;
+    font-weight: 400; white-space: nowrap; z-index: 10;
+    pointer-events: none;
+  }
+  .stacked-seg:hover .seg-tooltip { display: block; }
+
+  .legend-row {
+    display: flex; gap: 16px; margin-top: 12px; flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 12px; color: var(--text-secondary);
+  }
+  .legend-swatch {
+    width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0;
+  }
+
+  /* Heatmap */
+  .heatmap-table {
+    width: 100%; border-collapse: separate; border-spacing: 3px;
+    font-size: 13px;
+  }
+  .heatmap-table th {
+    font-weight: 500; color: var(--text-muted); padding: 6px 8px;
+    text-align: center; font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .heatmap-table th:first-child { text-align: left; min-width: 120px; }
+  .heatmap-table td {
+    text-align: center; padding: 8px 6px; border-radius: 4px;
+    font-weight: 500; font-size: 12px; cursor: default;
+    position: relative;
+  }
+  .heatmap-table td .cell-tooltip {
+    display: none; position: absolute; bottom: calc(100% + 4px);
+    left: 50%; transform: translateX(-50%);
+    background: #0d0d0d; border: 1px solid var(--baseline);
+    border-radius: 4px; padding: 5px 8px; font-size: 11px;
+    font-weight: 400; white-space: nowrap; z-index: 10;
+    pointer-events: none; color: var(--text-primary);
+  }
+  .heatmap-table td:hover .cell-tooltip { display: block; }
+  .hm-exists   { background: var(--good-bg);     color: var(--good); }
+  .hm-partial  { background: var(--warning-bg);   color: var(--warning); }
+  .hm-missing  { background: var(--critical-bg);  color: var(--critical); }
+  .hm-na       { background: var(--muted-bg);     color: var(--text-muted); }
+  .hm-row-head { font-weight: 500; color: var(--text-secondary); text-align: left !important; }
+
+  /* Infra status */
+  .infra-card { display: flex; align-items: center; gap: 12px; }
+  .infra-dot {
+    width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+  }
+  .infra-card .infra-name {
+    font-size: 14px; font-weight: 500; color: var(--text-primary);
+  }
+  .infra-card .infra-status {
+    font-size: 12px; color: var(--text-secondary);
+  }
+
+  /* Timeline */
+  .timeline-container { padding: 20px 24px; }
+  .timeline-track {
+    display: flex; align-items: stretch; position: relative;
+    padding: 0 0 0 0; margin-top: 8px;
+  }
+  .timeline-month {
+    flex: 1; text-align: center; position: relative;
+    padding-top: 28px;
+  }
+  .timeline-month::before {
+    content: ''; position: absolute; top: 8px;
+    left: 0; right: 0; height: 4px;
+    background: var(--gridline); border-radius: 2px;
+  }
+  .timeline-month:first-child::before { border-radius: 2px 0 0 2px; }
+  .timeline-month:last-child::before { border-radius: 0 2px 2px 0; }
+  .timeline-month.filled::before { background: var(--seq-400); }
+  .timeline-month.partial::before {
+    background: linear-gradient(90deg, var(--seq-400) 60%, var(--gridline) 60%);
+  }
+  .timeline-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--gridline); border: 2px solid var(--surface-card);
+    position: absolute; top: 4px; left: 50%; transform: translateX(-50%);
+    z-index: 2;
+  }
+  .timeline-month.filled .timeline-dot { background: var(--seq-400); }
+  .timeline-month.partial .timeline-dot { background: var(--seq-400); }
+  .timeline-month.milestone .timeline-dot {
+    width: 16px; height: 16px; top: 2px;
+    border: 3px solid var(--surface-card);
+  }
+  .timeline-month-label {
+    font-size: 13px; font-weight: 500; color: var(--text-secondary);
+    margin-top: 4px;
+  }
+  .timeline-desc {
+    font-size: 11px; color: var(--text-muted); margin-top: 2px;
+    line-height: 1.3;
+  }
+  .timeline-milestone-label {
+    font-size: 11px; font-weight: 600; margin-top: 2px;
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+
+  /* Criteria detail table */
+  .criteria-table {
+    width: 100%; border-collapse: collapse; font-size: 13px;
+  }
+  .criteria-table th {
+    text-align: left; font-weight: 500; color: var(--text-muted);
+    padding: 8px 12px; border-bottom: 1px solid var(--baseline);
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em;
+  }
+  .criteria-table td {
+    padding: 8px 12px; border-bottom: 1px solid var(--gridline);
+    vertical-align: top;
+  }
+  .criteria-table tr:last-child td { border-bottom: none; }
+  .criteria-table .id-col { font-weight: 600; color: var(--text-muted); white-space: nowrap; width: 60px; }
+  .criteria-table .crit-col { color: var(--text-primary); }
+  .criteria-table .pass-col { color: var(--text-secondary); font-size: 12px; max-width: 280px; }
+  .criteria-table .waiver-col { text-align: center; width: 60px; }
+
+  .status-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 12px; font-weight: 500; padding: 2px 8px;
+    border-radius: 4px; white-space: nowrap;
+  }
+  .status-met        { background: var(--good-bg);     color: var(--good); }
+  .status-partial    { background: var(--warning-bg);   color: var(--warning); }
+  .status-not-met    { background: var(--critical-bg);  color: var(--critical); }
+  .status-not-testable { background: var(--muted-bg);   color: var(--text-muted); }
+
+  .milestone-divider td {
+    padding: 12px 12px 8px;
+    font-weight: 600; font-size: 13px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--baseline);
+    background: rgba(255,255,255,0.02);
+  }
+
+  /* Risk summary */
+  .risk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .risk-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px; background: var(--surface-card);
+    border: 1px solid var(--border); border-radius: 8px;
+  }
+  .risk-count {
+    font-size: 28px; font-weight: 600; line-height: 1;
+  }
+  .risk-label { font-size: 13px; color: var(--text-secondary); }
+
+  /* Pipeline diagram */
+  .pipeline-flow {
+    display: flex; align-items: center; gap: 0;
+    padding: 16px 0; overflow-x: auto;
+  }
+  .pipeline-stage {
+    display: flex; align-items: center; justify-content: center;
+    padding: 10px 16px; border-radius: 6px;
+    font-size: 12px; font-weight: 500; white-space: nowrap;
+    border: 1px solid var(--border);
+  }
+  .pipeline-arrow {
+    font-size: 16px; color: var(--text-muted); padding: 0 6px; flex-shrink: 0;
+  }
+  .pipeline-stage.ready { background: var(--good-bg); color: var(--good); border-color: rgba(12,163,12,0.25); }
+  .pipeline-stage.wip { background: var(--warning-bg); color: var(--warning); border-color: rgba(250,178,25,0.25); }
+  .pipeline-stage.blocked { background: var(--critical-bg); color: var(--critical); border-color: rgba(208,59,59,0.25); }
+
+  .card-title {
+    font-size: 14px; font-weight: 600; color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+
+  .table-toggle {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; color: var(--text-muted); cursor: pointer;
+    background: none; border: 1px solid var(--gridline);
+    padding: 4px 8px; border-radius: 4px; margin-top: 12px;
+  }
+  .table-toggle:hover { color: var(--text-secondary); border-color: var(--baseline); }
+
+  .table-view { display: none; margin-top: 12px; }
+  .table-view.show { display: block; }
+  .table-view table {
+    width: 100%; border-collapse: collapse; font-size: 12px;
+  }
+  .table-view th {
+    text-align: left; padding: 6px 8px; color: var(--text-muted);
+    border-bottom: 1px solid var(--baseline); font-weight: 500;
+  }
+  .table-view td {
+    padding: 5px 8px; border-bottom: 1px solid var(--gridline);
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 900px) {
+    .card-grid-3, .card-grid-4 { grid-template-columns: repeat(2, 1fr); }
+    .card-grid-2 { grid-template-columns: 1fr; }
+    .risk-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .card-grid-3, .card-grid-4, .card-grid-2 { grid-template-columns: 1fr; }
+    body { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="dash-header">
+  <h1>RHAS Testing Dashboard</h1>
+  <div class="subtitle">Red Hat Automotive Suite - Quality Engineering Status as of July 20, 2026</div>
+</div>
+
+<!-- SECTION 1: Release Readiness -->
+<div class="section">
+  <div class="section-title">Release Readiness</div>
+  <div class="card-grid card-grid-3" style="margin-bottom: 16px;">
+    <div class="card stat-tile">
+      <div class="stat-label">Monthly Release</div>
+      <div class="stat-value" style="color: var(--warning);">50%</div>
+      <div class="stat-sub">4 of 8 criteria met</div>
+      <div class="stat-bar">
+        <span style="width:50%; background: var(--good);" title="4 Met"></span>
+        <span style="width:37.5%; background: var(--warning);" title="3 Partially Met"></span>
+        <span style="width:12.5%; background: var(--critical);" title="1 Not Met"></span>
+      </div>
+    </div>
+    <div class="card stat-tile">
+      <div class="stat-label">Tech Preview (Sep 29)</div>
+      <div class="stat-value" style="color: var(--critical);">27%</div>
+      <div class="stat-sub">4 of 15 criteria met</div>
+      <div class="stat-bar">
+        <span style="width:26.7%; background: var(--good);" title="4 Met"></span>
+        <span style="width:20%; background: var(--warning);" title="3 Partially Met"></span>
+        <span style="width:40%; background: var(--critical);" title="6 Not Met"></span>
+        <span style="width:13.3%; background: var(--text-muted);" title="2 Not Yet Testable"></span>
+      </div>
+    </div>
+    <div class="card stat-tile">
+      <div class="stat-label">GA (Dec 22)</div>
+      <div class="stat-value" style="color: var(--critical);">17%</div>
+      <div class="stat-sub">4 of 23 criteria met</div>
+      <div class="stat-bar">
+        <span style="width:17.4%; background: var(--good);" title="4 Met"></span>
+        <span style="width:17.4%; background: var(--warning);" title="4 Partially Met"></span>
+        <span style="width:52.2%; background: var(--critical);" title="12 Not Met"></span>
+        <span style="width:13%; background: var(--text-muted);" title="3 Not Yet Testable"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card stacked-chart">
+    <div class="card-title">Criteria Status by Milestone</div>
+    <div class="stacked-row">
+      <div class="stacked-row-label"><span>Monthly</span><span>8 criteria</span></div>
+      <div class="stacked-bar-container">
+        <span class="stacked-seg" style="flex: 4; background: var(--good);">4<span class="seg-tooltip">4 Met: M-04, M-05, M-06, M-08</span></span>
+        <span class="stacked-seg" style="flex: 3; background: var(--warning);">3<span class="seg-tooltip">3 Partially Met: M-01, M-02, M-03</span></span>
+        <span class="stacked-seg" style="flex: 1; background: var(--critical);">1<span class="seg-tooltip">1 Not Met: M-07 (Builder-to-Jumpstarter handoff)</span></span>
+      </div>
+    </div>
+    <div class="stacked-row">
+      <div class="stacked-row-label"><span>+ Tech Preview</span><span>+7 criteria</span></div>
+      <div class="stacked-bar-container">
+        <span class="stacked-seg" style="flex: 5; background: var(--critical);">5<span class="seg-tooltip">5 Not Met: TP-01, TP-02, TP-04, TP-06, TP-07</span></span>
+        <span class="stacked-seg" style="flex: 2; background: var(--text-muted);">2<span class="seg-tooltip">2 Not Yet Testable: TP-03, TP-05</span></span>
+      </div>
+    </div>
+    <div class="stacked-row">
+      <div class="stacked-row-label"><span>+ GA</span><span>+8 criteria</span></div>
+      <div class="stacked-bar-container">
+        <span class="stacked-seg" style="flex: 1; background: var(--warning);">1<span class="seg-tooltip">1 Partially Met: GA-02 (Multi-board HiL)</span></span>
+        <span class="stacked-seg" style="flex: 6; background: var(--critical);">6<span class="seg-tooltip">6 Not Met: GA-01, GA-03, GA-04, GA-05, GA-07, GA-08</span></span>
+        <span class="stacked-seg" style="flex: 1; background: var(--text-muted);">1<span class="seg-tooltip">1 Not Yet Testable: GA-06 (CDN distribution)</span></span>
+      </div>
+    </div>
+    <div class="legend-row">
+      <div class="legend-item"><span class="legend-swatch" style="background: var(--good);"></span> Met</div>
+      <div class="legend-item"><span class="legend-swatch" style="background: var(--warning);"></span> Partially Met</div>
+      <div class="legend-item"><span class="legend-swatch" style="background: var(--critical);"></span> Not Met</div>
+      <div class="legend-item"><span class="legend-swatch" style="background: var(--text-muted);"></span> Not Yet Testable</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 2: Test Coverage Heatmap + Infrastructure -->
+<div class="section">
+  <div class="card-grid card-grid-2">
+    <div class="card">
+      <div class="card-title">Test Coverage Matrix</div>
+      <table class="heatmap-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Unit</th>
+            <th>Integ.</th>
+            <th>E2E</th>
+            <th>HiL</th>
+            <th>Perf</th>
+            <th>Security</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="hm-row-head">Builder</td>
+            <td class="hm-exists">&#10003;<span class="cell-tooltip">Exists - Running per PR</span></td>
+            <td class="hm-exists">&#10003;<span class="cell-tooltip">Exists - Running per PR</span></td>
+            <td class="hm-partial">~<span class="cell-tooltip">Partial - 40/61 tests (47 Ginkgo specs)</span></td>
+            <td class="hm-na">--<span class="cell-tooltip">N/A</span></td>
+            <td class="hm-missing">&#10007;<span class="cell-tooltip">Missing - Not started</span></td>
+            <td class="hm-missing">&#10007;<span class="cell-tooltip">Missing - Not started</span></td>
+          </tr>
+          <tr>
+            <td class="hm-row-head">Jumpstarter</td>
+            <td class="hm-exists">&#10003;<span class="cell-tooltip">Exists - Running per PR</span></td>
+            <td class="hm-exists">&#10003;<span class="cell-tooltip">Exists - Running per PR</span></td>
+            <td class="hm-exists">&#10003;<span class="cell-tooltip">Exists - Kind clusters + HiL</span></td>
+            <td class="hm-exists">&#10003;<span class="cell-tooltip">Exists - RHIVOS CTC active</span></td>
+            <td class="hm-missing">&#10007;<span class="cell-tooltip">Missing - Not started</span></td>
+            <td class="hm-missing">&#10007;<span class="cell-tooltip">Missing - Not started</span></td>
+          </tr>
+          <tr>
+            <td class="hm-row-head">Konflux</td>
+            <td class="hm-exists">&#10003;<span class="cell-tooltip">Exists</span></td>
+            <td class="hm-partial">~<span class="cell-tooltip">Partial</span></td>
+            <td class="hm-missing">&#10007;<span class="cell-tooltip">Missing</span></td>
+            <td class="hm-na">--<span class="cell-tooltip">N/A</span></td>
+            <td class="hm-missing">&#10007;<span class="cell-tooltip">Missing</span></td>
+            <td class="hm-missing">&#10007;<span class="cell-tooltip">Missing</span></td>
+          </tr>
+          <tr>
+            <td class="hm-row-head">GitOps</td>
+            <td class="hm-exists">&#10003;<span class="cell-tooltip">Exists</span></td>
+            <td class="hm-partial">~<span class="cell-tooltip">Partial</span></td>
+            <td class="hm-missing">&#10007;<span class="cell-tooltip">Missing</span></td>
+            <td class="hm-na">--<span class="cell-tooltip">N/A</span></td>
+            <td class="hm-missing">&#10007;<span class="cell-tooltip">Missing</span></td>
+            <td class="hm-missing">&#10007;<span class="cell-tooltip">Missing</span></td>
+          </tr>
+          <tr>
+            <td class="hm-row-head">Keycloak</td>
+            <td class="hm-exists">&#10003;<span class="cell-tooltip">Exists</span></td>
+            <td class="hm-exists">&#10003;<span class="cell-tooltip">Exists</span></td>
+            <td class="hm-partial">~<span class="cell-tooltip">Partial</span></td>
+            <td class="hm-na">--<span class="cell-tooltip">N/A</span></td>
+            <td class="hm-missing">&#10007;<span class="cell-tooltip">Missing</span></td>
+            <td class="hm-partial">~<span class="cell-tooltip">Partial</span></td>
+          </tr>
+          <tr>
+            <td class="hm-row-head">Cross-component</td>
+            <td class="hm-na">--<span class="cell-tooltip">N/A</span></td>
+            <td class="hm-missing">&#10007;<span class="cell-tooltip">Missing - Never attempted</span></td>
+            <td class="hm-missing">&#10007;<span class="cell-tooltip">Missing - Never attempted</span></td>
+            <td class="hm-missing">&#10007;<span class="cell-tooltip">Missing - Not separated from RHIVOS</span></td>
+            <td class="hm-missing">&#10007;<span class="cell-tooltip">Missing</span></td>
+            <td class="hm-missing">&#10007;<span class="cell-tooltip">Missing</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="legend-row" style="margin-top: 16px;">
+        <div class="legend-item"><span class="legend-swatch" style="background: var(--good);"></span> Exists</div>
+        <div class="legend-item"><span class="legend-swatch" style="background: var(--warning);"></span> Partial</div>
+        <div class="legend-item"><span class="legend-swatch" style="background: var(--critical);"></span> Missing</div>
+        <div class="legend-item"><span class="legend-swatch" style="background: var(--text-muted);"></span> N/A</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Infrastructure Status</div>
+      <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px;">
+        <div class="infra-card">
+          <span class="infra-dot" style="background: var(--good);"></span>
+          <div>
+            <div class="infra-name">Upstream Testing</div>
+            <div class="infra-status">Operational - GitHub Actions, Packit, per-PR</div>
+          </div>
+        </div>
+        <div class="infra-card">
+          <span class="infra-dot" style="background: var(--warning);"></span>
+          <div>
+            <div class="infra-name">Downstream Pipeline</div>
+            <div class="infra-status">Prerequisites ready - pipeline WIP (DNS blocker remains)</div>
+          </div>
+        </div>
+        <div class="infra-card">
+          <span class="infra-dot" style="background: var(--good);"></span>
+          <div>
+            <div class="infra-name">Hardware-in-the-Loop</div>
+            <div class="infra-status">Operational - RHIVOS CTC, 8 board families</div>
+          </div>
+        </div>
+        <div class="infra-card">
+          <span class="infra-dot" style="background: var(--good);"></span>
+          <div>
+            <div class="infra-name">CTC Gating</div>
+            <div class="infra-status">Operational - ship/no-ship decisions active</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-title" style="margin-top: 8px;">DS Pipeline Design</div>
+      <div class="pipeline-flow">
+        <div class="pipeline-stage ready">install-cluster</div>
+        <span class="pipeline-arrow">&#8594;</span>
+        <div class="pipeline-stage ready">deploy-operators</div>
+        <span class="pipeline-arrow">&#8594;</span>
+        <div class="pipeline-stage wip">run-tests</div>
+        <span class="pipeline-arrow">&#8594;</span>
+        <div class="pipeline-stage ready">destroy-cluster</div>
+      </div>
+      <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+        Ephemeral IPI SNO - AWS Graviton3 m7g.4xlarge, arm64 - ~95 min total cycle
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3: Timeline -->
+<div class="section">
+  <div class="card timeline-container">
+    <div class="card-title">Release Timeline</div>
+    <div class="timeline-track">
+      <div class="timeline-month partial">
+        <div class="timeline-dot"></div>
+        <div class="timeline-month-label">Jul</div>
+        <div class="timeline-desc">Foundation</div>
+        <div class="timeline-desc" style="color: var(--warning);">In progress</div>
+      </div>
+      <div class="timeline-month">
+        <div class="timeline-dot"></div>
+        <div class="timeline-month-label">Aug</div>
+        <div class="timeline-desc">Pipeline Ready</div>
+      </div>
+      <div class="timeline-month milestone">
+        <div class="timeline-dot" style="background: var(--serious);"></div>
+        <div class="timeline-month-label" style="font-weight: 600;">Sep 29</div>
+        <div class="timeline-milestone-label" style="color: var(--serious);">Tech Preview</div>
+        <div class="timeline-desc">71 days away</div>
+      </div>
+      <div class="timeline-month">
+        <div class="timeline-dot"></div>
+        <div class="timeline-month-label">Oct</div>
+        <div class="timeline-desc">Hardening</div>
+      </div>
+      <div class="timeline-month">
+        <div class="timeline-dot"></div>
+        <div class="timeline-month-label">Nov</div>
+        <div class="timeline-desc">Validation</div>
+      </div>
+      <div class="timeline-month milestone">
+        <div class="timeline-dot" style="background: var(--critical);"></div>
+        <div class="timeline-month-label" style="font-weight: 600;">Dec 22</div>
+        <div class="timeline-milestone-label" style="color: var(--critical);">GA</div>
+        <div class="timeline-desc">155 days away</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 4: Risk Assessment + Blockers -->
+<div class="section">
+  <div class="section-title">Risk Assessment &amp; Blockers</div>
+  <div class="card-grid card-grid-2">
+    <div class="card">
+      <div class="card-title">Risk Summary</div>
+      <div class="risk-grid">
+        <div class="risk-item">
+          <div class="risk-count" style="color: var(--critical);">3</div>
+          <div class="risk-label">Critical risks</div>
+        </div>
+        <div class="risk-item">
+          <div class="risk-count" style="color: var(--serious);">3</div>
+          <div class="risk-label">High risks</div>
+        </div>
+        <div class="risk-item">
+          <div class="risk-count" style="color: var(--warning);">3</div>
+          <div class="risk-label">Medium risks</div>
+        </div>
+      </div>
+      <div style="margin-top: 16px; font-size: 13px; color: var(--text-secondary);">
+        <div style="margin-bottom: 8px; font-weight: 500; color: var(--text-muted); font-size: 12px; text-transform: uppercase;">Critical</div>
+        <div style="margin-bottom: 6px; padding-left: 12px; border-left: 3px solid var(--critical);">No DS testing pipeline yet - TP is Sep 29</div>
+        <div style="margin-bottom: 6px; padding-left: 12px; border-left: 3px solid var(--critical);">QE Readiness epic empty (PITCREW-337)</div>
+        <div style="margin-bottom: 12px; padding-left: 12px; border-left: 3px solid var(--critical);">Testing doc expanded but workspace tests TODO</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Critical Blockers</div>
+      <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+        <thead>
+          <tr>
+            <th style="text-align: left; padding: 6px 8px; color: var(--text-muted); border-bottom: 1px solid var(--baseline); font-weight: 500; font-size: 12px;">Blocker</th>
+            <th style="text-align: left; padding: 6px 8px; color: var(--text-muted); border-bottom: 1px solid var(--baseline); font-weight: 500; font-size: 12px;">Affects</th>
+            <th style="text-align: left; padding: 6px 8px; color: var(--text-muted); border-bottom: 1px solid var(--baseline); font-weight: 500; font-size: 12px;">Jira</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 8px; border-bottom: 1px solid var(--gridline); color: var(--text-primary);">No QE lead assigned</td>
+            <td style="padding: 8px; border-bottom: 1px solid var(--gridline); color: var(--text-secondary);">All criteria</td>
+            <td style="padding: 8px; border-bottom: 1px solid var(--gridline); color: var(--text-muted);">PITCREW-337</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border-bottom: 1px solid var(--gridline); color: var(--text-primary);">DNS blocking DS pipeline</td>
+            <td style="padding: 8px; border-bottom: 1px solid var(--gridline); color: var(--text-secondary);">TP-01, TP-05</td>
+            <td style="padding: 8px; border-bottom: 1px solid var(--gridline); color: var(--text-muted);">PITCREW-393</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border-bottom: 1px solid var(--gridline); color: var(--text-primary);">Distribution incomplete</td>
+            <td style="padding: 8px; border-bottom: 1px solid var(--gridline); color: var(--text-secondary);">GA-06</td>
+            <td style="padding: 8px; border-bottom: 1px solid var(--gridline); color: var(--text-muted);">PITCREW-336</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; color: var(--text-primary);">E2E infra designed, not operational</td>
+            <td style="padding: 8px; color: var(--text-secondary);">TP-01, TP-02</td>
+            <td style="padding: 8px; color: var(--text-muted);">PITCREW-275/394</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 5: 3-Layer Test Architecture -->
+<div class="section">
+  <div class="section-title">Test Architecture - 3-Layer Model</div>
+  <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+    <div class="card" style="border-left: 3px solid var(--good);">
+      <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; font-weight: 600; letter-spacing: 0.04em;">Layer 1 - Foundation</div>
+      <div style="font-size: 14px; font-weight: 500; margin-bottom: 8px;">Jumpstarter E2E</div>
+      <div style="font-size: 13px; color: var(--text-secondary);">Kind clusters. Fastest, cheapest, primary gate. Most test investment here.</div>
+      <div style="margin-top: 8px;"><span class="status-badge status-met">&#9679; Operational</span></div>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--warning);">
+      <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; font-weight: 600; letter-spacing: 0.04em;">Layer 2 - Validation</div>
+      <div style="font-size: 14px; font-weight: 500; margin-bottom: 8px;">Builder E2E</div>
+      <div style="font-size: 13px; color: var(--text-secondary);">Kind clusters - less ideal for Builder (tailored for OpenShift). 40/61 tests implemented.</div>
+      <div style="margin-top: 8px;"><span class="status-badge status-partial">&#9679; Partial</span></div>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--critical);">
+      <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; font-weight: 600; letter-spacing: 0.04em;">Layer 3 - Integration</div>
+      <div style="font-size: 14px; font-weight: 500; margin-bottom: 8px;">Black-box on OpenShift</div>
+      <div style="font-size: 13px; color: var(--text-secondary);">3 phases: CI Jumpstarter, in-cluster Jumpstarter, upstream E2E on OCP (47 Ginkgo specs).</div>
+      <div style="margin-top: 8px;"><span class="status-badge status-not-met">&#9679; Pipeline WIP</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 6: Full Criteria Detail -->
+<div class="section">
+  <div class="section-title">Release Criteria Detail</div>
+  <div class="card" style="overflow-x: auto;">
+    <table class="criteria-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Criterion</th>
+          <th>Pass Condition</th>
+          <th>Status</th>
+          <th>Waiver</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="milestone-divider"><td colspan="5">Monthly Release (RHAS-MMYY) - 4/8 Met</td></tr>
+        <tr>
+          <td class="id-col">M-01</td>
+          <td class="crit-col">Builder operator deploys</td>
+          <td class="pass-col">Pod running, no CrashLoopBackOff for 30 min</td>
+          <td><span class="status-badge status-partial">&#9679; Partially</span></td>
+          <td class="waiver-col">Yes</td>
+        </tr>
+        <tr>
+          <td class="id-col">M-02</td>
+          <td class="crit-col">OCI image build completes</td>
+          <td class="pass-col">Image pushed to registry, pull succeeds</td>
+          <td><span class="status-badge status-partial">&#9679; Partially</span></td>
+          <td class="waiver-col">Yes</td>
+        </tr>
+        <tr>
+          <td class="id-col">M-03</td>
+          <td class="crit-col">bootc image build completes</td>
+          <td class="pass-col">Image boots on target board within 5 min</td>
+          <td><span class="status-badge status-partial">&#9679; Partially</span></td>
+          <td class="waiver-col">Yes</td>
+        </tr>
+        <tr>
+          <td class="id-col">M-04</td>
+          <td class="crit-col">Jumpstarter exporter connectivity</td>
+          <td class="pass-col">All exporters report healthy</td>
+          <td><span class="status-badge status-met">&#9679; Met</span></td>
+          <td class="waiver-col">Yes</td>
+        </tr>
+        <tr>
+          <td class="id-col">M-05</td>
+          <td class="crit-col">Board lease/release cycle</td>
+          <td class="pass-col">Lease within 60s, released within 5 min</td>
+          <td><span class="status-badge status-met">&#9679; Met</span></td>
+          <td class="waiver-col">Yes</td>
+        </tr>
+        <tr>
+          <td class="id-col">M-06</td>
+          <td class="crit-col">Smoke tests pass</td>
+          <td class="pass-col">>= 2 board families pass smoke suite</td>
+          <td><span class="status-badge status-met">&#9679; Met</span></td>
+          <td class="waiver-col">Yes</td>
+        </tr>
+        <tr>
+          <td class="id-col">M-07</td>
+          <td class="crit-col">Builder-to-Jumpstarter handoff</td>
+          <td class="pass-col">OCI artifact consumed, board provisioned</td>
+          <td><span class="status-badge status-not-met">&#9679; Not Met</span></td>
+          <td class="waiver-col">Yes</td>
+        </tr>
+        <tr>
+          <td class="id-col">M-08</td>
+          <td class="crit-col">No P1/P2 regressions</td>
+          <td class="pass-col">Zero P1/P2 bugs since previous release</td>
+          <td><span class="status-badge status-met">&#9679; Met</span></td>
+          <td class="waiver-col">No</td>
+        </tr>
+
+        <tr class="milestone-divider"><td colspan="5">Tech Preview (Sep 29) - 0/7 Additional Met</td></tr>
+        <tr>
+          <td class="id-col">TP-01</td>
+          <td class="crit-col">Full workflow E2E</td>
+          <td class="pass-col">Commit -> build -> deploy -> test-on-board in single pipeline</td>
+          <td><span class="status-badge status-not-met">&#9679; Not Met</span></td>
+          <td class="waiver-col">No</td>
+        </tr>
+        <tr>
+          <td class="id-col">TP-02</td>
+          <td class="crit-col">Multi-component integration</td>
+          <td class="pass-col">Builder + Jumpstarter + GitOps function together</td>
+          <td><span class="status-badge status-not-met">&#9679; Not Met</span></td>
+          <td class="waiver-col">No</td>
+        </tr>
+        <tr>
+          <td class="id-col">TP-03</td>
+          <td class="crit-col">No critical/high CVEs</td>
+          <td class="pass-col">Zero critical/high CVEs in shipped images</td>
+          <td><span class="status-badge status-not-testable">&#9679; Not Testable</span></td>
+          <td class="waiver-col">No</td>
+        </tr>
+        <tr>
+          <td class="id-col">TP-04</td>
+          <td class="crit-col">Documentation validated</td>
+          <td class="pass-col">Walkthrough completed by non-author</td>
+          <td><span class="status-badge status-not-met">&#9679; Not Met</span></td>
+          <td class="waiver-col">Yes</td>
+        </tr>
+        <tr>
+          <td class="id-col">TP-05</td>
+          <td class="crit-col">DS CI pipeline operational</td>
+          <td class="pass-col">IPI SNO provisions and runs test suite</td>
+          <td><span class="status-badge status-not-testable">&#9679; Not Testable</span></td>
+          <td class="waiver-col">No</td>
+        </tr>
+        <tr>
+          <td class="id-col">TP-06</td>
+          <td class="crit-col">Build time baseline</td>
+          <td class="pass-col">OCI + bootc build times measured</td>
+          <td><span class="status-badge status-not-met">&#9679; Not Met</span></td>
+          <td class="waiver-col">Yes</td>
+        </tr>
+        <tr>
+          <td class="id-col">TP-07</td>
+          <td class="crit-col">Operator upgrade</td>
+          <td class="pass-col">Upgrade succeeds without downtime</td>
+          <td><span class="status-badge status-not-met">&#9679; Not Met</span></td>
+          <td class="waiver-col">Yes</td>
+        </tr>
+
+        <tr class="milestone-divider"><td colspan="5">GA (Dec 22) - 0/8 Additional Met</td></tr>
+        <tr>
+          <td class="id-col">GA-01</td>
+          <td class="crit-col">Concurrent builds</td>
+          <td class="pass-col">>= 5 simultaneous OCI builds</td>
+          <td><span class="status-badge status-not-met">&#9679; Not Met</span></td>
+          <td class="waiver-col">Yes</td>
+        </tr>
+        <tr>
+          <td class="id-col">GA-02</td>
+          <td class="crit-col">Multi-board HiL</td>
+          <td class="pass-col">>= 4 boards testing simultaneously</td>
+          <td><span class="status-badge status-partial">&#9679; Partially</span></td>
+          <td class="waiver-col">Yes</td>
+        </tr>
+        <tr>
+          <td class="id-col">GA-03</td>
+          <td class="crit-col">7-day soak test</td>
+          <td class="pass-col">No crashes or resource leaks for 7 days</td>
+          <td><span class="status-badge status-not-met">&#9679; Not Met</span></td>
+          <td class="waiver-col">Yes</td>
+        </tr>
+        <tr>
+          <td class="id-col">GA-04</td>
+          <td class="crit-col">Security audit</td>
+          <td class="pass-col">Review completed, critical findings resolved</td>
+          <td><span class="status-badge status-not-met">&#9679; Not Met</span></td>
+          <td class="waiver-col">No</td>
+        </tr>
+        <tr>
+          <td class="id-col">GA-05</td>
+          <td class="crit-col">Keycloak SSO validation</td>
+          <td class="pass-col">Login -> token -> API across components</td>
+          <td><span class="status-badge status-not-met">&#9679; Not Met</span></td>
+          <td class="waiver-col">Yes</td>
+        </tr>
+        <tr>
+          <td class="id-col">GA-06</td>
+          <td class="crit-col">CDN distribution</td>
+          <td class="pass-col">Product via configured distribution channels</td>
+          <td><span class="status-badge status-not-testable">&#9679; Not Testable</span></td>
+          <td class="waiver-col">No</td>
+        </tr>
+        <tr>
+          <td class="id-col">GA-07</td>
+          <td class="crit-col">RH-SDLC compliance</td>
+          <td class="pass-col">All evidence artifacts collected</td>
+          <td><span class="status-badge status-not-met">&#9679; Not Met</span></td>
+          <td class="waiver-col">No</td>
+        </tr>
+        <tr>
+          <td class="id-col">GA-08</td>
+          <td class="crit-col">Customer scenario</td>
+          <td class="pass-col">At least 1 customer use case validated</td>
+          <td><span class="status-badge status-not-met">&#9679; Not Met</span></td>
+          <td class="waiver-col">Yes</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SECTION 7: Dependency Map -->
+<div class="section">
+  <div class="section-title">Critical Path</div>
+  <div class="card">
+    <div style="display: flex; align-items: center; gap: 0; padding: 12px 0; overflow-x: auto;">
+      <div class="pipeline-stage blocked" style="font-size: 11px; padding: 8px 12px;">
+        TP-05<br><span style="font-weight: 400; font-size: 10px;">DS Pipeline</span>
+      </div>
+      <span class="pipeline-arrow">&#8594;</span>
+      <div class="pipeline-stage blocked" style="font-size: 11px; padding: 8px 12px;">
+        M-07<br><span style="font-weight: 400; font-size: 10px;">Handoff</span>
+      </div>
+      <span class="pipeline-arrow">&#8594;</span>
+      <div class="pipeline-stage blocked" style="font-size: 11px; padding: 8px 12px;">
+        TP-01<br><span style="font-weight: 400; font-size: 10px;">E2E Workflow</span>
+      </div>
+      <span class="pipeline-arrow">&#8594;</span>
+      <div class="pipeline-stage blocked" style="font-size: 11px; padding: 8px 12px;">
+        TP-02<br><span style="font-weight: 400; font-size: 10px;">Multi-component</span>
+      </div>
+    </div>
+    <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">
+      Unblocking <strong style="color: var(--text-primary);">TP-05</strong> (DNS resolution via PITCREW-393) is the single highest-leverage action. Pipeline design and prerequisites are ready - DNS is the remaining blocker.
+    </div>
+  </div>
+</div>
+
+<div style="text-align: center; padding: 16px 0; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--gridline); margin-top: 16px;">
+  Sources: RHAS Test Strategy (Jul 20) | RHAS Testing Landscape (Jul 20) | RHAS Test Release Criteria (Jul 20) | RHAS CI Testing Proposal
+</div>
+
+</body>
+</html>
