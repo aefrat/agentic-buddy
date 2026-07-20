@@ -37,6 +37,8 @@ Read these files:
 - `agent_brain/projects/rhas-testing-ownership/testing-landscape-report.md`
 - `agent_brain/projects/rhas-qe-agent/active/test-strategy-draft.md` (if exists)
 
+Export Google Doc `1Txk4PQC9pGvNrNE9VViN8EMI8o94KpJa_kLMscBthAI` (RHAS CI Testing Proposal) via `gws drive files export`. Extract DS pipeline design, phased rollout, prerequisites status, and upstream E2E suite scope - these directly affect criteria TP-01, TP-05, and M-07.
+
 ### 2. Fetch live Jira status
 
 Query PITCREW-337, PITCREW-331, PITCREW-393/394, PITCREW-336 for current state.

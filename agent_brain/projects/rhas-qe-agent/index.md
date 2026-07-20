@@ -34,6 +34,11 @@ to the relevant store.
 - [RHIVOS 2.0 RC3](../RHIVOS_2_0_release_RC3.md) - CTC patterns,
   Greenwave gating, release pipeline structure.
 
+## Key Google Docs
+
+- Benny's Testing Architecture (`1NEzWHE1K4CiGkEDjhL5gpQUpcnepsiBvMDWPXUxLOHQ`) - 3-layer test architecture, cadence decisions.
+- RHAS CI Testing Proposal (`1Txk4PQC9pGvNrNE9VViN8EMI8o94KpJa_kLMscBthAI`) - 3-phase rollout, DS pipeline design, ephemeral IPI SNO specs, upstream E2E suite scope (40/61 tests, 47 Ginkgo specs), prerequisites, trigger strategy, open questions.
+
 ## Skills
 
 - [rhas-test-strategy](../../skills/rhas-test-strategy.md)

@@ -26,6 +26,7 @@ created: 2026-07-02
 | Document | ID | Purpose |
 |----------|----|---------|
 | Benny's Testing Architecture | `1NEzWHE1K4CiGkEDjhL5gpQUpcnepsiBvMDWPXUxLOHQ` | 3-layer testing architecture |
+| RHAS CI Testing Proposal | `1Txk4PQC9pGvNrNE9VViN8EMI8o94KpJa_kLMscBthAI` | 3-phase rollout, DS pipeline design, IPI SNO specs, upstream E2E scope |
 | RHAS Testing Ownership | `1WvfY8ktEsn5hUb0ji7M9_hAqz1kdjvT8MVtULtuTwIU` | Testing ownership initiative doc |
 | RHAS Strategic Guide | `10qaHs_mfOCJtIJoJq35HjhHAeLEMJwYde51wgCKrQx8` | Platform strategy, tier definitions |
 | 2026 Roadmap | `1j4Chcv71S8Y3P8HT2wTao9ZEoHoHm-X102VmaNpk1CA` | Release timeline, feature roadmap |

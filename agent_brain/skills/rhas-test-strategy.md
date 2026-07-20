@@ -55,9 +55,11 @@ Query Jira for current status of testing epics:
 
 Search Slack (read-only via slack-mcp): #team-pitcrew-automotive, #forum-jumpstarter for recent testing discussions (last 14 days).
 
-### 4. Read Benny's testing architecture doc
+### 4. Read testing architecture docs
 
-Export Google Doc `1NEzWHE1K4CiGkEDjhL5gpQUpcnepsiBvMDWPXUxLOHQ` via `gws drive files export`. Extract 3-layer architecture details and cadence decisions.
+Export Google Doc `1NEzWHE1K4CiGkEDjhL5gpQUpcnepsiBvMDWPXUxLOHQ` (Benny's 3-layer architecture) via `gws drive files export`. Extract 3-layer architecture details and cadence decisions.
+
+Export Google Doc `1Txk4PQC9pGvNrNE9VViN8EMI8o94KpJa_kLMscBthAI` (RHAS CI Testing Proposal) via `gws drive files export`. Extract phased rollout plan (Phase 1-3), DS pipeline design, ephemeral IPI SNO prerequisites, trigger strategy, upstream E2E test suite scope (40/61 tests, 47 Ginkgo specs), and open questions.
 
 ### 5. Synthesize test strategy
 
@@ -102,6 +104,7 @@ Create Google Docs-friendly HTML at `/tmp/rhas-test-strategy-YYYY-MM-DD.html`:
 Before generating, verify:
 - [ ] features-requiring-testing.md has content (empty = data loss)
 - [ ] Benny's Google Doc returns content (empty = auth expired)
+- [ ] RHAS CI Testing Proposal returns content (empty = auth expired)
 - [ ] Jira queries return results (empty = auth failure or project access)
 - [ ] At least one Slack channel returns messages (empty = token issue)
 
@@ -131,6 +134,7 @@ If any check fails, flag the gap in the output rather than generating silently i
 - [ ] Live Jira data fetched for 6 testing epics
 - [ ] Slack searched for recent testing discussions
 - [ ] Benny's testing doc read
+- [ ] RHAS CI Testing Proposal read
 - [ ] Disconfirmation gate passed
 - [ ] HTML strategy generated with 14 sections
 - [ ] Saved to active/ and history/
