@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-07-19
-access_count: 10
+last_accessed: 2026-07-20
+access_count: 11
 created: 2026-06-23
 ---
 
@@ -65,7 +65,7 @@ Key implications (per Petr):
 
 ---
 
-## Progress (as of Jul 19, 2026)
+## Progress (as of Jul 20, 2026)
 
 ### Completed
 
