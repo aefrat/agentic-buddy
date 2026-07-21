@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-07-12
-access_count: 8
+last_accessed: 2026-07-21
+access_count: 9
 created: 2026-06-18
 ---
 
@@ -36,3 +36,7 @@ Generalized knowledge, patterns, and lessons learned from project work.
 
 - [Cross-referencing Slack vs documentation](cross-referencing-slack-vs-docs.md) — comparing observed behavior (Slack) against documented processes reveals structural gaps invisible from either source alone
 - [Confluence API patterns](confluence-api-patterns.md) — CQL search, page tree traversal, cross-space queries using .netrc basic auth
+
+## Tooling patterns
+
+- [Jira CLI default project JQL breakage](jira-cli-default-project-jql.md) — default project in `~/.jira/.config.yml` silently breaks ORDER BY and cross-project JQL. Workarounds: CLI flags for sorting, `jira issue view` for individual tickets. Read when writing JQL for skills or troubleshooting Jira CLI queries.
