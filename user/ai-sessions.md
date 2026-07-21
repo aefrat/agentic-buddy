@@ -8,6 +8,8 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-07-21 | Agentic First Pilot Debrief video review attempt (500MB MP4, NotebookLM, no transcript found) | (reflect-only) |
+| 2026-07-21 | RHAS testing Google Docs update (3 docs refreshed, gap info added to release criteria) | `3791a48f-069a-4a17-a420-7be4508bcaa0` |
 | 2026-07-21 | Talent Cycle Workday + daily report + LP status report | `ca7d94b4-e443-4596-9b8d-4bb915d77183` |
 | 2026-07-21 | PitCrew Slack summary for manager report (25 messages, SSH/DSCP, F44 VPN, lab infra issues) | (reflect-only) |
 | 2026-07-20 | Confluence research for RHAS QE - cross-product test strategy and release criteria (15+ spaces, RHIVOS/RHOAI/RHEL/OCP) | `31fecdc2-6b48-4a6d-9ce4-13c8f154444b` |
