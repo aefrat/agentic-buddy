@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-07-19
-access_count: 4
+last_accessed: 2026-07-21
+access_count: 5
 created: 2026-06-21
 ---
 
@@ -35,3 +35,7 @@ Accumulated from daily/weekly/weekend manager report Slack analysis. Each entry 
 - **2026-07-19 | Roni Eliezer | Collaborate:** Coordinated NXP hardware onboarding into Test Console across #test-console, linking his own MRs (767, 1543) with Rachel Sibley's CTC run planning to deliver a complete hardware target addition.
 - **2026-07-19 | Kanitha Chim | Connect:** Navigated RHIVOS product ID scope confusion across #team-sp-rhel-distribution and ethel database channels, working with distribution team members well outside ATC's typical domain to resolve 2.0/2.1/2.2 productid alignment.
 - **2026-07-19 | Hubert Stefanski | Connect:** Diagnosed autosd.sig.centos.org download link breakage reported by Brian Grech in #automotive-toolchain, traced the root cause to directory depth limits, and shipped MRs 907+908 to fix s3_indexer recursion and optimization.
+- **2026-07-21 | Hubert Stefanski | Be Transparent:** Proactively flagged AWS monthly costs climbing again (~$7500 ec2-other) in #wg-team-auto-toolchain-infra, tagged Eitan and Matt for investigation before it became a budget issue.
+- **2026-07-21 | Matt Goldman | Collaborate:** Presented two options for VHCL-009 httpd image update in #automotive-toolchain, soliciting team input rather than deciding unilaterally, then created follow-up ticket VROOM-46991.
+- **2026-07-21 | Juanje Ojeda | Connect:** Generated new safety list for RHIVOS-2.0-RC3 and proactively engaged FoA team (leiwang) on next steps for a demo, bridging ATC and FoA coordination on safety artifacts.
+- **2026-07-21 | Roderick Kieley | Be Transparent:** Shared VPN connectivity fix (Fedora 44 CA path issue) in #team-pitcrew-automotive after resolving it, making the solution available to others who might hit the same problem.
