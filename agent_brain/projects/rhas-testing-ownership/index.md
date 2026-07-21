@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-06-29
-access_count: 1
+last_accessed: 2026-07-21
+access_count: 2
 created: 2026-06-29
 ---
 
@@ -24,4 +24,6 @@ Keycloak, targeting platform engineers at automotive OEMs.
 
 ## Status
 
-Phase: Landscape assessment complete (Jun 30, 2026)
+Phase: Landscape assessment complete (Jun 30, 2026). Refreshed Jul 21, 2026.
+Key finding: DS pipeline DNS approach architecturally invalid for OCP (Jul 13).
+PITCREW-337 (QE Readiness) still unassigned after 3+ months. PITCREW-403 (flaky E2E) closed.

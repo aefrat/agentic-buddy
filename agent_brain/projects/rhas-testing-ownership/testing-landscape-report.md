@@ -1,12 +1,12 @@
 ---
-last_accessed: 2026-06-30
-access_count: 1
+last_accessed: 2026-07-21
+access_count: 2
 created: 2026-06-30
 ---
 
 # RHAS Testing Landscape Report
 
-Generated: June 30, 2026
+Generated: June 30, 2026 | Last refreshed: July 21, 2026
 Sources: PITCREW Jira, PitCrew Full Report (Jun 1), Slack (#team-pitcrew-automotive,
 #team-toolchain-automotive, #automotive-image-builder, #test-validator-bot),
 Benny Zlotnik verbal input (PDR Staff Meeting).
@@ -124,11 +124,16 @@ acknowledged as a risk.
 1. **PITCREW-275** (Closed, May 18) - Research: evaluated OpenShift on AWS,
    PROW CI via Gingway API, Cluster-bot with external trigger, ROSA, and SNO
    on ATC infra. **Decision: ephemeral IPI SNO arm64 on ATC AWS infrastructure.**
-2. **PITCREW-393** (Review, Jun 29) - Acquire prerequisites and credentials
+2. **PITCREW-393** (Review, Jul 13) - Acquire prerequisites and credentials
    from Automotive Toolchain admins. Evgeni has been working with Eitan Raviv
    since May 18 on AWS IAM, DNS resolution, pull secrets.
-   - **Latest (Jun 29):** "the CI is failing, blocked by a misconfiguration on
-     the infra side. working with Eitan to solve it on his side"
+   - **Latest (Jul 13):** "some progress on toolchain side. we're in contact
+     to see if anything moved forward."
+   - Jul 6: "checked with Eitan from toolchain - no fix yet on his side."
+   - Jun 30: "Blocked waiting for the toolchain team to solve the CI worker
+     permissions."
+   - Jun 29: "the CI is failing, blocked by a misconfiguration on the infra
+     side. working with Eitan to solve it on his side"
    - Jun 28: Working cluster install and destroy achieved (with workarounds for
      missing permissions). Pushed to CI, pipeline running.
    - Jun 21: "significant progress" - most permission issues sorted against
@@ -136,6 +141,7 @@ acknowledged as a risk.
 3. **PITCREW-394** (New, Jun 28) - Implement pipeline to install OpenShift with
    operators and run tests. Soft-blocked on VROOM-44573 (DNS + orphan security
    groups). Evgeni: "I'll be able to progress almost to completion while waiting."
+   No updates since Jun 28.
 
 ### Infrastructure Design
 
@@ -156,8 +162,12 @@ acknowledged as a risk.
 
 ### Blockers
 
-1. DNS misconfiguration blocking CI pipeline (Jun 29)
-2. VROOM-44573 still open (DNS + orphan SG)
+1. DNS resolution blocking CI pipeline - still unresolved as of Jul 13. Evgeni
+   noted (Jul 13 on VROOM-44573) that the proposed DNS fix will not work with
+   OpenShift clusters because the cluster API and apps run on ELBs managed by
+   the cluster, not on the EC2 instance. Needs wildcard DNS for
+   *.apps.rhas-ci.<domain>. The DNS approach itself is now in question.
+2. VROOM-44573 still open (DNS + orphan SG) - Eitan Raviv, In Progress
 3. IT Ticket UR0191597 pending for DNS record creation
 4. No test cases written yet (PITCREW-394 is about the pipeline, not the tests
    themselves)
@@ -177,8 +187,10 @@ acknowledged as a risk.
 - Test Console shows CTC results at `test-console.corp.redhat.com/rhivos-testing/ctc`
 - Lab maintenance automated: smoke tests, firmware reflashes, device health
   monitoring (55 PASS, 4 FAIL, 6 XFAIL on Jun 23)
-- **Flaky E2E issue (PITCREW-403):** "Connection to exporter lost" during lease
-  acquisition - Benny created reproducer script (Jun 15)
+- **~~Flaky E2E issue (PITCREW-403):~~** CLOSED. "Connection to exporter lost"
+  during lease acquisition - was fixed. Root cause was corrected (original
+  analysis of race condition in listenQueues sync.Map was incorrect per ticket
+  update). No longer a risk.
 - Jumpstarter 0.9.0-rc.1 auto-upgraded on cluster (Jun 27) - Benny noted need
   for future gating on auto-upgrades
 - External monitoring at `monitor.ajo.es/status/jumpstarter`
@@ -223,7 +235,7 @@ acknowledged as a risk.
 **Epic:** PITCREW-337 (In Progress, Unassigned, 0 comments)
 **Target:** RHAS-1026 (Oct 27)
 
-### Current State
+### Current State (as of Jul 21)
 
 - **No QE plan exists** for RHAS
 - **No regression suites** defined
@@ -231,8 +243,9 @@ acknowledged as a risk.
 - Epic description explicitly states: "QE readiness is not about adding tests
   to the codebase - engineering already does that. It is about having a formal
   process that defines what 'ready to ship' means."
-- Blocked by Distribution epic (PITCREW-336, New)
-- No one assigned, no activity
+- Blocked by Distribution epic (PITCREW-336, New, still unassigned)
+- **Still no one assigned, zero comments** - no movement since ticket creation.
+  This is now 3+ months old with no activity. Tech Preview is 70 days away.
 - **PITCREW-42** ("productization: QE plan for official release") is also
   unassigned, still a template with no real content. Reporter: Allison King.
   This is the original QE plan ticket predating the RHAS-era PITCREW-337.
@@ -305,10 +318,13 @@ CTC GATING (Operational, rough)
 
 ### Critical
 
-1. **No DS testing pipeline yet** - Tech Preview is Sep 29 (91 days). DS
+1. **No DS testing pipeline yet** - Tech Preview is Sep 29 (70 days). DS
    pipeline has been in development since March with persistent infra blockers.
+   DNS approach itself is now questioned (Jul 13) - OpenShift ELB architecture
+   incompatible with proposed DNS fix.
 2. **QE Readiness epic is empty** - No plan, no owner, no test strategy. Target
-   is Oct 27 but depends on Distribution (also not started).
+   is Oct 27 but depends on Distribution (also not started). Zero comments on
+   PITCREW-337 after 3+ months. This remains the single biggest blocker.
 3. **Benny's testing doc is minimal** - The Google Doc exists but is only a few
    paragraphs. Covers architecture (3 layers) but no specifics on test cases,
    coverage, pass/fail criteria, or operational runbook. Needs expansion.
@@ -316,21 +332,25 @@ CTC GATING (Operational, rough)
 ### High
 
 4. **Mohamad console access blocked** - Wrong org assignment prevents cluster
-   access. Basic operational blocker.
-5. **Flaky E2E tests** (PITCREW-403) - "Connection to exporter lost" affects
-   CTC reliability. Reproducer exists but fix not confirmed.
+   access. Basic operational blocker. (Status unknown - not re-verified Jul 21.)
+5. ~~**Flaky E2E tests** (PITCREW-403)~~ - **RESOLVED.** Closed as of Jun 26.
 6. **No formal test plan** for RHAS as a product - individual component tests
    exist but no integration test strategy spanning Builder + Jumpstarter +
    Konflux + GitOps + Keycloak.
+7. **DNS resolution approach is wrong** - Evgeni's Jul 13 analysis on
+   VROOM-44573 shows the proposed DNS fix won't work for OpenShift (needs
+   wildcard DNS for ELBs, not static EC2 records). This may require a
+   fundamentally different approach, extending the blocker timeline. Elevated
+   from Medium to High.
 
 ### Medium
 
-7. **DNS resolution** for RHAS-CI cluster depends on IT ticket (UR0191597) with
-   uncertain timeline.
 8. **Auto-upgrade of Jumpstarter** on production cluster without gating -
    Benny flagged, MR pending.
 9. **Miguel Angel load** - carries lab ops, cluster management, customer
    escalations, and documentation. Key-person risk for HiL testing.
+10. **Konflux onboarding (PITCREW-335) stalled** - unassigned, no comments,
+    blocks Distribution which blocks QE Readiness. Chain of inaction.
 
 ---
 

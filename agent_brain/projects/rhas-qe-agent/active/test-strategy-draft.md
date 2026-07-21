@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RHAS Test Strategy - July 2, 2026</title>
+<title>RHAS Test Strategy - July 21, 2026</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #f6f8fa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;">
 
@@ -32,7 +32,7 @@
 <table cellpadding="0" cellspacing="0" border="0">
 <tr>
 <td style="padding-right: 16px;">
-<span style="font-size: 13px; color: #8888aa;">Date: July 2, 2026</span>
+<span style="font-size: 13px; color: #8888aa;">Date: July 21, 2026 (refreshed from July 2 draft)</span>
 </td>
 <td>
 <span style="display: inline-block; background-color: #0550ae; color: #ffffff; font-size: 12px; font-weight: 600; padding: 4px 12px; letter-spacing: 0.5px;">DRAFT</span>
@@ -68,7 +68,7 @@ RHAS is approaching two critical milestones - Tech Preview (September 29, 2026) 
 <strong>What works today:</strong> Upstream testing is solid. Each component runs unit and integration tests per-PR via GitHub Actions and Packit. The RHIVOS CTC model provides a proven gating framework we can adapt. HiL board testing infrastructure is operational and shared with RHIVOS via Jumpstarter.
 </p>
 <p style="margin: 0 0 14px 0; font-size: 14px; line-height: 1.6; color: #24292f;">
-<strong>What is missing:</strong> PITCREW-337 (QE Readiness) remains unassigned - there is no QE lead driving this work. The downstream testing pipeline is blocked by a DNS resolution issue (PITCREW-393/394). No release criteria or formal test strategy exist. Cross-component integration testing has never been attempted.
+<strong>What is missing:</strong> PITCREW-337 (QE Readiness) remains unassigned after 3+ months with zero comments - there is no QE lead driving this work. The downstream testing pipeline remains blocked by a DNS resolution issue (PITCREW-393/394), and as of July 13 the proposed DNS fix has been identified as architecturally incompatible with OpenShift (ELBs require wildcard DNS, not static records). No release criteria or formal test strategy exist. Cross-component integration testing has never been attempted. On the positive side, the flaky E2E bug (PITCREW-403) has been closed.
 </p>
 <p style="margin: 0 0 14px 0; font-size: 14px; line-height: 1.6; color: #24292f;">
 <strong>Context:</strong> OpenShift QE is simultaneously undergoing its own modernization effort (OCPQE-32074), which presents both alignment opportunities and a cautionary example of the complexity involved. RHIVOS CTC offers a closer, more directly applicable model for RHAS given the shared automotive context.
@@ -80,7 +80,7 @@ RHAS is approaching two critical milestones - Tech Preview (September 29, 2026) 
 <p style="margin: 0 0 4px 0; font-size: 14px; font-weight: 600; color: #24292f;">Critical actions needed:</p>
 <ol style="margin: 8px 0 0 0; padding-left: 20px; font-size: 14px; line-height: 1.8; color: #24292f;">
 <li>Assign a QE lead for RHAS (PITCREW-337) - this is the single biggest blocker</li>
-<li>Unblock the downstream CI pipeline - DNS resolution for PITCREW-393</li>
+<li>Unblock the downstream CI pipeline - DNS approach itself is wrong (Jul 13); needs architectural rethink for OpenShift ELB wildcard DNS</li>
 <li>Define and adopt this test strategy as the guiding document</li>
 <li>Establish release criteria (companion document, separate deliverable)</li>
 </ol>
@@ -277,7 +277,7 @@ Coverage status by component and test type. Colors indicate maturity: green = ex
 <td style="padding: 8px 10px; font-size: 12px; font-weight: 600; color: #24292f; border: 1px solid #d0d7de;">Ephemeral IPI SNO</td>
 <td style="padding: 8px 10px; font-size: 12px; color: #24292f; border: 1px solid #d0d7de;">L3 DS tests</td>
 <td style="padding: 8px 10px; font-size: 12px; color: #24292f; border: 1px solid #d0d7de;">Cloud provisioned</td>
-<td style="background-color: #ffebe9; padding: 8px 10px; font-size: 12px; color: #c44b00; text-align: center; font-weight: 600; border: 1px solid #d0d7de;">Blocked (DNS)</td>
+<td style="background-color: #ffebe9; padding: 8px 10px; font-size: 12px; color: #c44b00; text-align: center; font-weight: 600; border: 1px solid #d0d7de;">Blocked (DNS approach invalid)</td>
 </tr>
 <tr>
 <td style="padding: 8px 10px; font-size: 12px; font-weight: 600; color: #24292f; border: 1px solid #d0d7de;">ROSA dev cluster</td>
@@ -425,7 +425,7 @@ Clear ownership is the most important enabler for testing. The biggest gap today
 <td style="padding: 8px 10px; font-size: 12px; color: #24292f; border: 1px solid #d0d7de;">DS CI pipeline</td>
 <td style="padding: 8px 10px; font-size: 12px; color: #24292f; border: 1px solid #d0d7de;">Matt Minnich</td>
 <td style="padding: 8px 10px; font-size: 12px; color: #24292f; border: 1px solid #d0d7de;">Aug 2026</td>
-<td style="background-color: #ffebe9; padding: 8px 10px; font-size: 12px; color: #c44b00; text-align: center; font-weight: 600; border: 1px solid #d0d7de;">Blocked</td>
+<td style="background-color: #ffebe9; padding: 8px 10px; font-size: 12px; color: #c44b00; text-align: center; font-weight: 600; border: 1px solid #d0d7de;">Blocked (DNS approach invalid)</td>
 </tr>
 <tr>
 <td style="padding: 8px 10px; font-size: 12px; color: #24292f; border: 1px solid #d0d7de;">E2E workflow tests</td>
@@ -822,7 +822,7 @@ AI-assisted testing is maturing rapidly but unevenly. For RHAS, the priority is 
 </tr>
 <tr>
 <td style="padding: 8px 10px; font-size: 12px; font-weight: 600; color: #24292f; border: 1px solid #d0d7de;">DS CI pipeline</td>
-<td style="background-color: #ffebe9; padding: 8px 10px; font-size: 12px; color: #c44b00; text-align: center; font-weight: 600; border: 1px solid #d0d7de;">Blocked (DNS)</td>
+<td style="background-color: #ffebe9; padding: 8px 10px; font-size: 12px; color: #c44b00; text-align: center; font-weight: 600; border: 1px solid #d0d7de;">Blocked (DNS invalid)</td>
 <td style="background-color: #dafbe1; padding: 8px 10px; font-size: 12px; color: #1a7a3e; text-align: center; font-weight: 600; border: 1px solid #d0d7de;">Operational</td>
 <td style="background-color: #dafbe1; padding: 8px 10px; font-size: 12px; color: #1a7a3e; text-align: center; font-weight: 600; border: 1px solid #d0d7de;">Mature</td>
 </tr>
@@ -1012,24 +1012,24 @@ AI-assisted testing is maturing rapidly but unevenly. For RHAS, the priority is 
 </tr>
 <tr>
 <td style="padding: 8px 10px; font-size: 12px; font-weight: 600; color: #24292f; border: 1px solid #d0d7de;">DS pipeline blocked</td>
-<td style="background-color: #ffebe9; padding: 8px 10px; font-size: 12px; color: #c44b00; text-align: center; font-weight: 600; border: 1px solid #d0d7de;">High</td>
+<td style="background-color: #ffebe9; padding: 8px 10px; font-size: 12px; color: #c44b00; text-align: center; font-weight: 600; border: 1px solid #d0d7de;">Critical</td>
 <td style="background-color: #ffebe9; padding: 8px 10px; font-size: 12px; color: #c44b00; text-align: center; font-weight: 600; border: 1px solid #d0d7de;">Current</td>
-<td style="padding: 8px 10px; font-size: 12px; color: #24292f; border: 1px solid #d0d7de;">Cannot run downstream tests. L3 testing impossible.</td>
-<td style="padding: 8px 10px; font-size: 12px; color: #24292f; border: 1px solid #d0d7de;">Resolve DNS issue (Evgeni Vakhonin). Escalate if not resolved by mid-July.</td>
+<td style="padding: 8px 10px; font-size: 12px; color: #24292f; border: 1px solid #d0d7de;">Cannot run downstream tests. L3 testing impossible. DNS approach itself is architecturally wrong for OpenShift (Jul 13).</td>
+<td style="padding: 8px 10px; font-size: 12px; color: #24292f; border: 1px solid #d0d7de;">Mid-July escalation deadline passed with no resolution. Needs architectural rethink for wildcard DNS with ELBs. Escalate immediately.</td>
 </tr>
 <tr>
 <td style="padding: 8px 10px; font-size: 12px; font-weight: 600; color: #24292f; border: 1px solid #d0d7de;">Timeline compression</td>
 <td style="background-color: #ffebe9; padding: 8px 10px; font-size: 12px; color: #c44b00; text-align: center; font-weight: 600; border: 1px solid #d0d7de;">High</td>
 <td style="background-color: #fff8c5; padding: 8px 10px; font-size: 12px; color: #b08800; text-align: center; font-weight: 600; border: 1px solid #d0d7de;">Medium</td>
-<td style="padding: 8px 10px; font-size: 12px; color: #24292f; border: 1px solid #d0d7de;">Only 3 months to Tech Preview. Insufficient time for comprehensive testing.</td>
+<td style="padding: 8px 10px; font-size: 12px; color: #24292f; border: 1px solid #d0d7de;">Only 70 days to Tech Preview. Insufficient time for comprehensive testing.</td>
 <td style="padding: 8px 10px; font-size: 12px; color: #24292f; border: 1px solid #d0d7de;">Prioritize L1 tests first (fastest value). Defer L3 if timeline is tight. Accept TP with known gaps and workarounds.</td>
 </tr>
 <tr>
 <td style="padding: 8px 10px; font-size: 12px; font-weight: 600; color: #24292f; border: 1px solid #d0d7de;">HiL flakiness</td>
-<td style="background-color: #fff8c5; padding: 8px 10px; font-size: 12px; color: #b08800; text-align: center; font-weight: 600; border: 1px solid #d0d7de;">Medium</td>
-<td style="background-color: #fff8c5; padding: 8px 10px; font-size: 12px; color: #b08800; text-align: center; font-weight: 600; border: 1px solid #d0d7de;">Known</td>
-<td style="padding: 8px 10px; font-size: 12px; color: #24292f; border: 1px solid #d0d7de;">False failures block releases. Erodes confidence in test results.</td>
-<td style="padding: 8px 10px; font-size: 12px; color: #24292f; border: 1px solid #d0d7de;">PITCREW-403 fix. Implement retry logic. Classify flaky vs. real failures in test reporting.</td>
+<td style="background-color: #dafbe1; padding: 8px 10px; font-size: 12px; color: #1a7a3e; text-align: center; font-weight: 600; border: 1px solid #d0d7de;">Resolved</td>
+<td style="background-color: #dafbe1; padding: 8px 10px; font-size: 12px; color: #1a7a3e; text-align: center; font-weight: 600; border: 1px solid #d0d7de;">Closed</td>
+<td style="padding: 8px 10px; font-size: 12px; color: #24292f; border: 1px solid #d0d7de;">PITCREW-403 closed as of Jun 26. No longer a risk.</td>
+<td style="padding: 8px 10px; font-size: 12px; color: #24292f; border: 1px solid #d0d7de;">Resolved. Monitor for recurrence.</td>
 </tr>
 <tr>
 <td style="padding: 8px 10px; font-size: 12px; font-weight: 600; color: #24292f; border: 1px solid #d0d7de;">Konflux onboarding delay</td>
@@ -1058,10 +1058,10 @@ AI-assisted testing is maturing rapidly but unevenly. For RHAS, the priority is 
 <tr>
 <td style="border-top: 1px solid #d0d7de; padding-top: 20px;">
 <p style="margin: 0 0 4px 0; font-size: 12px; color: #57606a;">
-Generated by RHAS QE Expert Lead Agent on July 2, 2026
+Generated by RHAS QE Expert Lead Agent on July 2, 2026. Refreshed July 21, 2026.
 </p>
 <p style="margin: 0 0 4px 0; font-size: 12px; color: #57606a;">
-Version: DRAFT v1.0
+Version: DRAFT v1.1
 </p>
 <p style="margin: 0; font-size: 11px; color: #8b949e;">
 This document is a living strategy guide. Update as RHAS QE matures. Companion documents: Release Criteria (TBD), Test Plan per component (TBD).

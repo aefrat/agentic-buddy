@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RHAS Test Release Criteria - July 2, 2026</title>
+<title>RHAS Test Release Criteria - July 21, 2026</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #f6f8fa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;">
 
@@ -38,7 +38,7 @@
 </tr>
 <tr>
 <td style="text-align: center; padding-top: 14px;">
-<span style="font-size: 13px; color: #8892b0;">July 2, 2026</span>
+<span style="font-size: 13px; color: #8892b0;">July 21, 2026 (refreshed from July 2 draft)</span>
 </td>
 </tr>
 </table>
@@ -353,7 +353,7 @@ Tech Preview includes all 8 Monthly criteria (Section 3) plus the 7 additional c
 <td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #24292f;">DS CI pipeline operational</td>
 <td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #24292f;">Ephemeral IPI SNO provisions and runs test suite</td>
 <td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; text-align: center;"><span style="display: inline-block; background-color: #57606a; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 8px; text-transform: uppercase;">Not Yet Testable</span></td>
-<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #57606a; font-size: 12px;">Blocked by DNS (PITCREW-393)</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #57606a; font-size: 12px;">Blocked: DNS approach invalid for OCP ELBs (Jul 13). Needs architectural rethink.</td>
 <td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; text-align: center; font-weight: 600; color: #c44b00;">No</td>
 </tr>
 <!-- TP-06 -->
@@ -619,7 +619,7 @@ Aggregate view of how many criteria are currently met at each milestone level. R
 <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 16px;">
 <tr>
 <td style="padding: 12px 16px; background-color: #fff8c5; border: 1px solid #d4a72c; font-size: 13px; color: #24292f; line-height: 1.5;">
-<span style="font-weight: 700;">Assessment:</span> Monthly readiness is at 50% with the main gap being the Builder-to-Jumpstarter E2E handoff (M-07). Tech Preview and GA are at 27% and 17% respectively, reflecting the early stage of integration testing, pipeline infrastructure, and compliance work. The biggest risk is the absence of a QE lead (PITCREW-337) to drive these criteria forward.
+<span style="font-weight: 700;">Assessment (Jul 21):</span> No change in readiness percentages since Jul 2. Monthly at 50%, Tech Preview at 27%, GA at 17%. The two biggest blockers - no QE lead (PITCREW-337, 3+ months unassigned with zero comments) and the DS pipeline DNS issue (PITCREW-393, DNS approach itself now identified as architecturally wrong for OpenShift ELBs) - have not improved. PITCREW-403 (flaky E2E) was closed, which is positive but does not move any criterion. With 70 days to Tech Preview, the gap between current state and target is widening.
 </td>
 </tr>
 </table>
@@ -663,19 +663,19 @@ These are the issues that must be resolved before significant progress can be ma
 </tr>
 <!-- Blocker 1 -->
 <tr>
-<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #24292f; font-weight: 600;">No QE lead</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #24292f; font-weight: 600;">No QE lead (3+ months, 0 comments)</td>
 <td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #24292f;">All criteria</td>
 <td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #57606a;">PITCREW-337</td>
 <td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #57606a;">(unassigned)</td>
-<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #24292f;">Jul 2026</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #24292f;">Jul target missed; overdue</td>
 </tr>
 <!-- Blocker 2 -->
 <tr>
-<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #24292f; font-weight: 600; background-color: #f6f8fa;">DNS blocking DS pipeline</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #24292f; font-weight: 600; background-color: #f6f8fa;">DNS blocking DS pipeline (approach invalid)</td>
 <td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #24292f; background-color: #f6f8fa;">TP-05, TP-01</td>
-<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #57606a; background-color: #f6f8fa;">PITCREW-393</td>
-<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #57606a; background-color: #f6f8fa;">Evgeni Vakhonin</td>
-<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #24292f; background-color: #f6f8fa;">Jul 2026</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #57606a; background-color: #f6f8fa;">PITCREW-393 / VROOM-44573</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #57606a; background-color: #f6f8fa;">Evgeni Vakhonin / Eitan Raviv</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #24292f; background-color: #f6f8fa;">Jul target missed; needs rethink</td>
 </tr>
 <!-- Blocker 3 -->
 <tr>
@@ -758,7 +758,7 @@ Some criteria cannot be satisfied until prerequisites are in place. Understandin
 <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 16px;">
 <tr>
 <td style="padding: 12px 16px; background-color: #ddf4ff; border: 1px solid #54aeff; font-size: 13px; color: #24292f; line-height: 1.5;">
-<span style="font-weight: 700;">Critical path:</span> The longest dependency chain runs TP-05 (DS pipeline) -> M-07 (handoff) -> TP-01 (E2E) -> TP-02 (multi-component). Unblocking TP-05 (DNS resolution via PITCREW-393) is the single highest-leverage action for improving overall readiness.
+<span style="font-weight: 700;">Critical path:</span> The longest dependency chain runs TP-05 (DS pipeline) -> M-07 (handoff) -> TP-01 (E2E) -> TP-02 (multi-component). Unblocking TP-05 remains the single highest-leverage action, but as of Jul 13 the DNS approach itself is invalid for OpenShift (needs wildcard DNS for ELBs). This requires an architectural rethink, not just an IT ticket resolution.
 </td>
 </tr>
 </table>
@@ -778,8 +778,8 @@ Some criteria cannot be satisfied until prerequisites are in place. Understandin
 <tr>
 <td style="background-color: #f6f8fa; border-top: 1px solid #d0d7de; padding: 20px 32px; text-align: center;">
 <span style="font-size: 12px; color: #57606a; line-height: 1.6;">
-Generated by RHAS QE Expert Lead Agent on July 2, 2026. Version: DRAFT v1.0.<br>
-Companion document: RHAS Test Strategy (rhas-test-strategy-2026-07-02.html)
+Generated by RHAS QE Expert Lead Agent on July 2, 2026. Refreshed July 21, 2026. Version: DRAFT v1.1.<br>
+Companion document: RHAS Test Strategy (rhas-test-strategy-2026-07-21.html)
 </span>
 </td>
 </tr>
