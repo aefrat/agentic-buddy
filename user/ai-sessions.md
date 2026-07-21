@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-07-21 | Talent Cycle Workday submissions (9/10 members), daily manager report, project pulse | `ca7d94b4-e443-4596-9b8d-4bb915d77183` |
 | 2026-07-21 | PitCrew Slack summary for manager report (25 messages, SSH/DSCP, F44 VPN, lab infra issues) | (reflect-only) |
 | 2026-07-20 | Confluence research for RHAS QE - cross-product test strategy and release criteria (15+ spaces, RHIVOS/RHOAI/RHEL/OCP) | `31fecdc2-6b48-4a6d-9ce4-13c8f154444b` |
 | 2026-07-20 | LP status report + PitCrew weekly report (both emailed, stores updated) | `4fb81e05-a0ae-4916-bbe9-54e46805b473` (continued) |
