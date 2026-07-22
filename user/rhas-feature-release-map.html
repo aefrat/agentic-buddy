@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RHAS Feature-to-Release Map - Testing Framework</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f6f8fa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;">
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f6f8fa;">
+<tr>
+<td align="center" style="padding: 20px 10px;">
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 960px; background-color: #ffffff; border: 1px solid #d0d7de;">
+
+<!-- HERO BANNER -->
+<tr>
+<td style="background-color: #1a1a2e; padding: 40px 32px 32px 32px; text-align: center;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td style="text-align: center;">
+<span style="display: inline-block; background-color: #8250df; color: #ffffff; font-size: 12px; font-weight: 700; padding: 4px 14px; letter-spacing: 1px; text-transform: uppercase;">DRAFT</span>
+</td>
+</tr>
+<tr>
+<td style="text-align: center; padding-top: 18px;">
+<span style="font-size: 28px; font-weight: 700; color: #ffffff; letter-spacing: -0.3px;">RHAS Feature-to-Release Map</span>
+</td>
+</tr>
+<tr>
+<td style="text-align: center; padding-top: 8px;">
+<span style="font-size: 16px; color: #a8b2d1; font-weight: 400;">Spec / BDD / TDD Testing Framework for Release Criteria</span>
+</td>
+</tr>
+<tr>
+<td style="text-align: center; padding-top: 14px;">
+<span style="font-size: 13px; color: #8892b0;">July 22, 2026 - Source: PitCrew Jira (live data)</span>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- PURPOSE -->
+<tr>
+<td style="padding: 0;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td style="background-color: #24292f; padding: 12px 32px;">
+<span style="font-size: 16px; font-weight: 700; color: #ffffff;">1. Purpose</span>
+</td>
+</tr>
+<tr>
+<td style="padding: 20px 32px 24px 32px;">
+<span style="font-size: 14px; color: #24292f; line-height: 1.65;">
+This document maps every RHAS feature (PitCrew Jira epics) to its target release version, extracts acceptance criteria from each epic, and derives a Spec/BDD/TDD testing approach for building release criteria. It is a companion to the RHAS Test Release Criteria document and the RHAS Test Strategy.
+</span>
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 16px;">
+<tr>
+<td style="padding: 8px 0; font-size: 14px; color: #24292f; line-height: 1.5;">
+<span style="font-weight: 600;">Release timeline:</span> RHAS-0226 (shipped) -> RHAS-0426 Dev Preview (shipped) -> Monthly drops -> RHAS-0926 Tech Preview (Sep 29) -> RHAS-1226 GA (Dec 22)
+</td>
+</tr>
+<tr>
+<td style="padding: 8px 0; font-size: 14px; color: #24292f; line-height: 1.5;">
+<span style="font-weight: 600;">Testing approach:</span> Epic acceptance criteria -> BDD feature specifications -> TDD test cases. Each milestone is a strict superset of the one below it.
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- RELEASE OVERVIEW -->
+<tr>
+<td style="padding: 0;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td style="background-color: #24292f; padding: 12px 32px;">
+<span style="font-size: 16px; font-weight: 700; color: #ffffff;">2. Release Overview</span>
+</td>
+</tr>
+<tr>
+<td style="padding: 20px 32px 8px 32px;">
+<span style="font-size: 14px; color: #57606a; line-height: 1.5;">
+Summary of epic distribution across releases. 27 epics total, grouped under 5 parent features.
+</span>
+</td>
+</tr>
+<tr>
+<td style="padding: 12px 32px 28px 32px;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="border: 1px solid #d0d7de; font-size: 13px;">
+<tr>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 10px 12px; font-weight: 700; color: #24292f;">Release</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 10px 12px; font-weight: 700; color: #24292f; text-align: center;">Date</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 10px 12px; font-weight: 700; color: #24292f; text-align: center;">Epics</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 10px 12px; font-weight: 700; color: #24292f;">Theme</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 10px 12px; font-weight: 700; color: #24292f; text-align: center;">Status</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; font-weight: 600; color: #24292f;">RHAS-0226</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; color: #57606a;">Feb 2026</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; color: #24292f;">3</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; color: #24292f;">Requirements Gathering</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center;"><span style="display: inline-block; background-color: #1a7a3e; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 10px;">SHIPPED</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; font-weight: 600; color: #24292f; background-color: #f6f8fa;">RHAS-0426 (Dev Preview)</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; color: #57606a; background-color: #f6f8fa;">Apr 2026</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; color: #24292f; background-color: #f6f8fa;">9</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; color: #24292f; background-color: #f6f8fa;">Developer Experience MVP</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; background-color: #f6f8fa;"><span style="display: inline-block; background-color: #1a7a3e; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 10px;">SHIPPED</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; font-weight: 600; color: #24292f;">RHAS-0526</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; color: #57606a;">May 2026</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; color: #24292f;">3</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; color: #24292f;">Observability + Lab Reliability</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center;"><span style="display: inline-block; background-color: #b08800; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 10px;">PARTIAL</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; font-weight: 600; color: #24292f; background-color: #f6f8fa;">RHAS-0626</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; color: #57606a; background-color: #f6f8fa;">Jun 2026</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; color: #24292f; background-color: #f6f8fa;">2</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; color: #24292f; background-color: #f6f8fa;">Build Pipeline + Virtual Targets</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; background-color: #f6f8fa;"><span style="display: inline-block; background-color: #b08800; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 10px;">IN PROGRESS</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; font-weight: 600; color: #24292f;">RHAS-0726</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; color: #57606a;">Jul 28</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; color: #24292f;">4</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; color: #24292f;">Internal Adoption + Compliance + Autonomy</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center;"><span style="display: inline-block; background-color: #b08800; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 10px;">IN PROGRESS</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; font-weight: 600; color: #24292f; background-color: #f6f8fa;">RHAS-0826</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; color: #57606a; background-color: #f6f8fa;">Aug 2026</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; color: #24292f; background-color: #f6f8fa;">2</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; color: #24292f; background-color: #f6f8fa;">Virtual Scale + Developer Velocity</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; background-color: #f6f8fa;"><span style="display: inline-block; background-color: #57606a; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 10px;">PLANNED</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; font-weight: 600; color: #24292f;">RHAS-0926 (Tech Preview)</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; color: #57606a;">Sep 29</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; color: #24292f;">2</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; color: #24292f;">Product Packaging + Resilience</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center;"><span style="display: inline-block; background-color: #57606a; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 10px;">PLANNED</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; font-weight: 600; color: #24292f; background-color: #f6f8fa;">RHAS-1026</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; color: #57606a; background-color: #f6f8fa;">Oct 2026</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; color: #24292f; background-color: #f6f8fa;">3</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; color: #24292f; background-color: #f6f8fa;">QE + Docs + Developer Experience</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; background-color: #f6f8fa;"><span style="display: inline-block; background-color: #57606a; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 10px;">PLANNED</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; font-weight: 600; color: #24292f;">RHAS-1126</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; color: #57606a;">Nov 2026</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; color: #24292f;">2</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; color: #24292f;">Broader Adoption + Simulation</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center;"><span style="display: inline-block; background-color: #57606a; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 10px;">PLANNED</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; font-weight: 600; color: #24292f; background-color: #f6f8fa;">RHAS-1226 (GA)</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; color: #57606a; background-color: #f6f8fa;">Dec 22</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; color: #24292f; background-color: #f6f8fa;">1</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; color: #24292f; background-color: #f6f8fa;">AI-Powered Platform</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 12px; text-align: center; background-color: #f6f8fa;"><span style="display: inline-block; background-color: #57606a; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 10px;">PLANNED</span></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- DELIVERED WORK -->
+<tr>
+<td style="padding: 0;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td style="background-color: #1a7a3e; padding: 12px 32px;">
+<span style="font-size: 16px; font-weight: 700; color: #ffffff;">3. Delivered Work (Done through Jul 2026)</span>
+</td>
+</tr>
+
+<!-- Dev Preview -->
+<tr>
+<td style="padding: 20px 32px 8px 32px;">
+<span style="font-size: 15px; font-weight: 700; color: #24292f;">RHAS-0226 + RHAS-0426 (Dev Preview) - Developer Experience MVP</span>
+</td>
+</tr>
+<tr>
+<td style="padding: 8px 32px 20px 32px;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="border: 1px solid #d0d7de; font-size: 12px;">
+<tr>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 110px;">Epic</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 90px;">Key</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f;">Acceptance Criteria (testable)</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600;">Developer Story MVP</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a;">PITCREW-208</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5;">Code from browser (DevSpaces) on ARM. Build on remote ARM machine. Test on real board (Jumpstarter). Published image can be flashed. Developer Hub portal available.</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600; background-color: #f6f8fa;">Developer Onboarding</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a; background-color: #f6f8fa;">PITCREW-200</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5; background-color: #f6f8fa;">One-click "Onboarding" button. Git repo with manifest builds RHIVOS image with no intervention. Default repo (ffi-demo) builds automatically.</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600;">DevSpaces Flow</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a;">PITCREW-195</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5;">Inner loop: devspace + app dev + Jumpstarter test. Inner-to-outer loop: trigger outer loop from devspaces. Local build and test of app.</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600; background-color: #f6f8fa;">Automotive-dev Operator</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a; background-color: #f6f8fa;">PITCREW-196</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5; background-color: #f6f8fa;">Operator deploys DevSpaces, build/test pipelines, Jumpstarter, Developer Hub. Manages user accounts/secrets. Supports Konflux integration.</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- 0526 -->
+<tr>
+<td style="padding: 20px 32px 8px 32px;">
+<span style="font-size: 15px; font-weight: 700; color: #24292f;">RHAS-0526 - Observability + Lab Reliability Foundation</span>
+</td>
+</tr>
+<tr>
+<td style="padding: 8px 32px 20px 32px;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="border: 1px solid #d0d7de; font-size: 12px;">
+<tr>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 110px;">Epic</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 90px;">Key</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f;">Acceptance Criteria (testable)</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 80px; text-align: center;">Completion</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600;">End-to-End Trace</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a;">PITCREW-291</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5;">Single trace ID connects build/deploy/boot/test. Device-side events in same trace. Structured JSON API. No perf degradation on constrained HW. Works air-gapped.</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center;"><span style="display: inline-block; background-color: #b08800; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 8px;">9/19</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600; background-color: #f6f8fa;">C2 Recovery Time</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a; background-color: #f6f8fa;">PITCREW-222</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5; background-color: #f6f8fa;">Infra-as-code (Ansible/Terraform). Runbook for rebuild from zero. External deps identified. Dry-run validates 24h rebuild. Alerts on total failure.</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; background-color: #f6f8fa;"><span style="display: inline-block; background-color: #b08800; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 8px;">In Prog</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600;">C2 Recovery Point</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a;">PITCREW-223</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5;">Automated backups every 4h. Off-cluster storage. Validated restore procedure. Alerts on backup failure or replication lag exceeding 4h.</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center;"><span style="display: inline-block; background-color: #b08800; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 8px;">In Prog</span></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- 0626 -->
+<tr>
+<td style="padding: 20px 32px 8px 32px;">
+<span style="font-size: 15px; font-weight: 700; color: #24292f;">RHAS-0626 - Build Pipeline + Virtual Targets</span>
+</td>
+</tr>
+<tr>
+<td style="padding: 8px 32px 20px 32px;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="border: 1px solid #d0d7de; font-size: 12px;">
+<tr>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 110px;">Epic</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 90px;">Key</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f;">Acceptance Criteria (testable)</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 80px; text-align: center;">Completion</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600;">Konflux Onboarding</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a;">PITCREW-335</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5;">All components via Konflux with signed provenance. Reproducible builds. No dev workflow friction. Automatic supply chain attestations. No non-Konflux pipeline.</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center;"><span style="display: inline-block; background-color: #b08800; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 8px;">2/6</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600; background-color: #f6f8fa;">Android Virtual Target</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a; background-color: #f6f8fa;">PITCREW-298</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5; background-color: #f6f8fa;">Cuttlefish on OpenShift via QEMU+KVM on ARM bare-metal. Jumpstarter exporter pods with start-avm sidecars. Programmatic adb interaction. ADR co-authored with HATCI. Upstream Apache 2.0.</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; background-color: #f6f8fa;"><span style="display: inline-block; background-color: #b08800; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 8px;">In Prog</span></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- CURRENT -->
+<tr>
+<td style="padding: 0;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td style="background-color: #b08800; padding: 12px 32px;">
+<span style="font-size: 16px; font-weight: 700; color: #ffffff;">4. Current Sprint - RHAS-0726 (due Jul 28)</span>
+</td>
+</tr>
+<tr>
+<td style="padding: 20px 32px 8px 32px;">
+<span style="font-size: 14px; color: #57606a; line-height: 1.5;">
+Internal Customer Adoption + Compliance + Platform Autonomy. 4 epics, 46 total children.
+</span>
+</td>
+</tr>
+<tr>
+<td style="padding: 8px 32px 28px 32px;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="border: 1px solid #d0d7de; font-size: 12px;">
+<tr>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 110px;">Epic</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 90px;">Key</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f;">Acceptance Criteria (testable)</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 80px; text-align: center;">Children</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600;">CTC Adoption</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a;">PITCREW-331</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5;">CTC runs validation as primary workflow. Accurate test results (failures/warnings/skips). Timestamped logs with version info. All CTC bugs prioritized. Trusted for ship/no-ship decisions.</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center;"><span style="font-weight: 600;">8/19</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600; background-color: #f6f8fa;">RH-SDLC Compliance</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a; background-color: #f6f8fa;">PITCREW-334</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5; background-color: #f6f8fa;">All SDLC gates identified+owned. Security reviews complete. Vuln management active within SLA. Secure coding documented. Audit-ready at any time.</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; background-color: #f6f8fa;"><span style="font-weight: 600;">3/13</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600;">Lab Infrastructure</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a;">PITCREW-330</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5;">Infra defined in code. Versioned+reviewable changes. Rebuild from scratch documented. HW inventory machine-accessible. Infra-level monitoring.</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center;"><span style="font-weight: 600;">4/14</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600; background-color: #f6f8fa;">Autonomous Reactions</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a; background-color: #f6f8fa;">PITCREW-294</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5; background-color: #f6f8fa;">Structured events with trace context. Auto-isolate crashing devices. Auto-correlate clustered build failures. Auto-retry provisioning with backoff. All actions in trace store. Engineers can stop any agent.</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; background-color: #f6f8fa;"><span style="font-weight: 600; color: #c44b00;">0/0</span></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- PLANNED WORK -->
+<tr>
+<td style="padding: 0;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td style="background-color: #24292f; padding: 12px 32px;">
+<span style="font-size: 16px; font-weight: 700; color: #ffffff;">5. Planned Work (RHAS-0826 through GA)</span>
+</td>
+</tr>
+
+<!-- 0826 -->
+<tr>
+<td style="padding: 20px 32px 8px 32px;">
+<span style="font-size: 15px; font-weight: 700; color: #24292f;">RHAS-0826 - Virtual Scale + Developer Velocity</span>
+</td>
+</tr>
+<tr>
+<td style="padding: 8px 32px 20px 32px;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="border: 1px solid #d0d7de; font-size: 12px;">
+<tr>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 110px;">Epic</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 90px;">Key</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f;">Acceptance Criteria (testable)</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 80px; text-align: center;">Children</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600;">Virtual Target Orchestration</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a;">PITCREW-299</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5;">Dynamic exporter pod creation. Architecture-aware worker node selection. Idle reclaim with configurable timeout. FIFO lease queue. Cluster capacity as only constraint. HATCI validates 25-dev concurrent load.</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center;"><span style="font-weight: 600;">3/13</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600; background-color: #f6f8fa;">Seconds-per-Iteration</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a; background-color: #f6f8fa;">PITCREW-295</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5; background-color: #f6f8fa;">Push changed files without full rebuild. Service restart without reboot. Clean revert to base image. Seconds not minutes. Actions in session trace. Works virtual+physical. Single-dev-per-device lock.</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; background-color: #f6f8fa;"><span style="font-weight: 600; color: #c44b00;">0/0</span></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- 0926 TP -->
+<tr>
+<td style="padding: 20px 32px 8px 32px;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<span style="font-size: 15px; font-weight: 700; color: #24292f;">RHAS-0926 (Tech Preview) - Product Packaging + Resilience</span>
+<span style="display: inline-block; margin-left: 12px; background-color: #8250df; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 10px; vertical-align: middle;">MILESTONE</span>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td style="padding: 8px 32px 20px 32px;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="border: 1px solid #d0d7de; font-size: 12px;">
+<tr>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 110px;">Epic</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 90px;">Key</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f;">Acceptance Criteria (testable)</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 80px; text-align: center;">Children</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600;">Distribution</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a;">PITCREW-336</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5;">All artifacts through official Red Hat channels. Versioned docs per release. Standard Red Hat install/update/uninstall tooling. Full lifecycle. No unsupported distribution methods.</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center;"><span style="font-weight: 600;">1/5</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600; background-color: #f6f8fa;">Ext. Dependency Resilience</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a; background-color: #f6f8fa;">PITCREW-329</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5; background-color: #f6f8fa;">Graceful degradation when external deps unavailable. Clear error messages (external vs internal). Critical deps documented. Caching/retries/fallbacks. Monitoring detects degradation before users.</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; background-color: #f6f8fa;"><span style="font-weight: 600;">1/3</span></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- 1026 -->
+<tr>
+<td style="padding: 20px 32px 8px 32px;">
+<span style="font-size: 15px; font-weight: 700; color: #24292f;">RHAS-1026 - QE + Docs + Developer Experience</span>
+</td>
+</tr>
+<tr>
+<td style="padding: 8px 32px 20px 32px;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="border: 1px solid #d0d7de; font-size: 12px;">
+<tr>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 110px;">Epic</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 90px;">Key</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f;">Acceptance Criteria (testable)</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 80px; text-align: center;">Children</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600;">QE Readiness</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a;">PITCREW-337</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5;">QE plan with scope/strategy/release criteria. Regression suites before every release. Release qualification criteria defined. Full product surface covered.</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center;"><span style="font-weight: 600;">1/3</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600; background-color: #f6f8fa;">Product Documentation</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a; background-color: #f6f8fa;">PITCREW-338</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5; background-color: #f6f8fa;">Official docs on Red Hat channels. Covers install/config/usage/troubleshooting/upgrade. Versioned per release. Onboarding guide zero-to-working.</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; background-color: #f6f8fa;"><span style="font-weight: 600; color: #c44b00;">0/0</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600;">Unified Developer Session</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a;">PITCREW-292</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5;">SSO for all platform functions. Fast workspace provisioning. Non-interactive mode for CI/agents. On-demand virtual devices. Session ID in all traces. Resource limits.</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center;"><span style="font-weight: 600;">1/10</span></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- 1126 -->
+<tr>
+<td style="padding: 20px 32px 8px 32px;">
+<span style="font-size: 15px; font-weight: 700; color: #24292f;">RHAS-1126 - Broader Adoption + Simulation</span>
+</td>
+</tr>
+<tr>
+<td style="padding: 8px 32px 20px 32px;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="border: 1px solid #d0d7de; font-size: 12px;">
+<tr>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 110px;">Epic</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 90px;">Key</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f;">Acceptance Criteria (testable)</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 80px; text-align: center;">Children</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600;">ATC Adoption</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a;">PITCREW-332</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5;">Declarative image spec + auto-build. Test against target HW. Incremental CI/CD integration. All bugs as product defects. Go/no-go decision based on PoC.</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center;"><span style="font-weight: 600; color: #c44b00;">0/0</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600; background-color: #f6f8fa;">Virtual Interface Sim</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a; background-color: #f6f8fa;">PITCREW-300</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5; background-color: #f6f8fa;">Bluetooth via RootCanal as Jumpstarter driver. BT discovery/pairing/Android Auto handshake on virtual targets. Fidelity validated vs physical HW. Upstream Apache 2.0.</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; background-color: #f6f8fa;"><span style="font-weight: 600; color: #c44b00;">0/0</span></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- 1226 GA -->
+<tr>
+<td style="padding: 20px 32px 8px 32px;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<span style="font-size: 15px; font-weight: 700; color: #24292f;">RHAS-1226 (GA) - AI-Powered Platform</span>
+<span style="display: inline-block; margin-left: 12px; background-color: #c44b00; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 10px; vertical-align: middle;">GA MILESTONE</span>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td style="padding: 8px 32px 28px 32px;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="border: 1px solid #d0d7de; font-size: 12px;">
+<tr>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 110px;">Epic</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 90px;">Key</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f;">Acceptance Criteria (testable)</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 80px; text-align: center;">Children</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600;">Ask the Platform</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a;">PITCREW-293</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5;">Natural language questions with underlying query shown. Answers grounded in telemetry data. Works from any trace/session/build/lease/device/test ID. Structured JSON output. Read-only. Air-gapped.</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center;"><span style="font-weight: 600;">0/1</span></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- FEATURE GROUPING -->
+<tr>
+<td style="padding: 0;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td style="background-color: #24292f; padding: 12px 32px;">
+<span style="font-size: 16px; font-weight: 700; color: #ffffff;">6. Feature Grouping by Parent</span>
+</td>
+</tr>
+<tr>
+<td style="padding: 20px 32px 28px 32px;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="border: 1px solid #d0d7de; font-size: 12px;">
+<tr>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 140px;">Feature</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 90px;">Key</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f;">Epics (by release)</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600;">Agentic Platform</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a;">PITCREW-290</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5;">End-to-End Trace (0526) -> Autonomous Reactions (0726) -> Seconds-per-Iteration (0826) -> Unified Developer Session (1026) -> Ask the Platform (1226 GA)</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600; background-color: #f6f8fa;">Product Readiness</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a; background-color: #f6f8fa;">PITCREW-333</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5; background-color: #f6f8fa;">Konflux (0626) -> RH-SDLC (0726) -> Distribution (0926 TP) -> QE Readiness (1026) -> Product Docs (1026)</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600;">Platform Reliability</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a;">PITCREW-328</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5;">Recovery Time + Recovery Point (0526) -> Lab Infrastructure (0726) -> Ext. Dependency Resilience (0926 TP)</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600; background-color: #f6f8fa;">Customer - HATCI</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a; background-color: #f6f8fa;">PITCREW-297</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5; background-color: #f6f8fa;">Android Virtual Target (0626) -> Virtual Target Orchestration (0826) -> Virtual Interface Simulation (1126)</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600;">Customer - Internal</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a;">PITCREW-340</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5;">CTC (0726) -> ATC (1126)</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- SPEC/BDD/TDD FRAMEWORK -->
+<tr>
+<td style="padding: 0;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td style="background-color: #8250df; padding: 12px 32px;">
+<span style="font-size: 16px; font-weight: 700; color: #ffffff;">7. Spec / BDD / TDD Testing Framework</span>
+</td>
+</tr>
+<tr>
+<td style="padding: 20px 32px 12px 32px;">
+<span style="font-size: 14px; color: #24292f; line-height: 1.65;">
+Each epic's acceptance criteria maps to a <span style="font-weight: 600;">Specification</span>. Each spec decomposes into <span style="font-weight: 600;">BDD scenarios</span> (Given/When/Then). Each scenario drives <span style="font-weight: 600;">TDD test cases</span> (unit + integration). Priority is set by release timeline and dependency chain.
+</span>
+</td>
+</tr>
+
+<!-- Priority table -->
+<tr>
+<td style="padding: 12px 32px 8px 32px;">
+<span style="font-size: 15px; font-weight: 700; color: #24292f;">Test Development Priority</span>
+</td>
+</tr>
+<tr>
+<td style="padding: 8px 32px 20px 32px;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="border: 1px solid #d0d7de; font-size: 12px;">
+<tr>
+<td style="background-color: #c44b00; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #ffffff; width: 40px; text-align: center;">P</td>
+<td style="background-color: #c44b00; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #ffffff; width: 70px;">Criterion</td>
+<td style="background-color: #c44b00; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #ffffff;">Spec (from Release Criteria doc)</td>
+<td style="background-color: #c44b00; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #ffffff;">Maps to Epic(s)</td>
+<td style="background-color: #c44b00; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #ffffff; width: 65px; text-align: center;">Waivable</td>
+</tr>
+<!-- P0 -->
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; font-weight: 700; color: #c44b00;">P0</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; font-weight: 600; color: #24292f;">TP-01</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f;">Commit -> build -> deploy -> test-on-board in single pipeline</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a;">PITCREW-335, 291</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; font-weight: 600; color: #c44b00;">No</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; font-weight: 700; color: #c44b00; background-color: #f6f8fa;">P0</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; font-weight: 600; color: #24292f; background-color: #f6f8fa;">TP-02</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; background-color: #f6f8fa;">Builder + Jumpstarter + GitOps deploy and function together</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a; background-color: #f6f8fa;">PITCREW-335, 298</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; font-weight: 600; color: #c44b00; background-color: #f6f8fa;">No</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; font-weight: 700; color: #c44b00;">P0</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; font-weight: 600; color: #24292f;">TP-03</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f;">Zero critical/high CVEs in shipped container images</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a;">PITCREW-334</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; font-weight: 600; color: #c44b00;">No</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; font-weight: 700; color: #c44b00; background-color: #f6f8fa;">P0</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; font-weight: 600; color: #24292f; background-color: #f6f8fa;">M-08</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; background-color: #f6f8fa;">Zero P1/P2 bugs introduced since previous release</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a; background-color: #f6f8fa;">All</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; font-weight: 600; color: #c44b00; background-color: #f6f8fa;">No</td>
+</tr>
+<!-- P1 -->
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; font-weight: 700; color: #b08800;">P1</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; font-weight: 600; color: #24292f;">M-07</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f;">OCI artifact from Builder consumed by Jumpstarter, board provisioned</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a;">PITCREW-335</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; color: #24292f;">Yes</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; font-weight: 700; color: #b08800; background-color: #f6f8fa;">P1</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; font-weight: 600; color: #24292f; background-color: #f6f8fa;">TP-05</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; background-color: #f6f8fa;">Ephemeral IPI SNO provisions and runs test suite</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a; background-color: #f6f8fa;">PITCREW-337</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; font-weight: 600; color: #c44b00; background-color: #f6f8fa;">No</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; font-weight: 700; color: #b08800;">P1</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; font-weight: 600; color: #24292f;">TP-07</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f;">Upgrade from previous to current version without downtime</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a;">PITCREW-196</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; color: #24292f;">Yes</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; font-weight: 700; color: #b08800; background-color: #f6f8fa;">P1</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; font-weight: 600; color: #24292f; background-color: #f6f8fa;">TP (epic)</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; background-color: #f6f8fa;">Distribution - all artifacts via official channels</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a; background-color: #f6f8fa;">PITCREW-336</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; color: #24292f; background-color: #f6f8fa;">-</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; font-weight: 700; color: #b08800;">P1</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; font-weight: 600; color: #24292f;">TP (epic)</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f;">External Dependency Resilience - graceful degradation</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a;">PITCREW-329</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; color: #24292f;">-</td>
+</tr>
+<!-- P2 -->
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; font-weight: 700; color: #57606a; background-color: #f6f8fa;">P2</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; font-weight: 600; color: #24292f; background-color: #f6f8fa;">GA-01..08</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; background-color: #f6f8fa;">Concurrent builds, multi-board HiL, 7-day soak, security audit, SSO, CDN, SDLC, customer scenario</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a; background-color: #f6f8fa;">PITCREW-299, 330, 334, 292, 336, 331/332</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; color: #24292f; background-color: #f6f8fa;">Mixed</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- BDD SCENARIOS -->
+<tr>
+<td style="padding: 20px 32px 8px 32px;">
+<span style="font-size: 15px; font-weight: 700; color: #24292f;">BDD Scenario Examples</span>
+</td>
+</tr>
+
+<!-- Distribution BDD -->
+<tr>
+<td style="padding: 8px 32px 4px 32px;">
+<span style="font-size: 13px; font-weight: 700; color: #8250df;">Feature: Distribution (PITCREW-336 / Tech Preview)</span>
+</td>
+</tr>
+<tr>
+<td style="padding: 4px 32px 16px 32px;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="border: 1px solid #d0d7de;">
+<tr>
+<td style="padding: 12px 16px; background-color: #f6f8fa; font-size: 12px; color: #24292f; line-height: 1.8; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;">
+<span style="color: #8250df; font-weight: 600;">Scenario:</span> CLI install via DNF on RHEL<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Given</span> a RHEL 9.x system with active subscription<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">When</span> I run "dnf install jumpstarter-cli"<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Then</span> the package installs successfully<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">And</span> the binary is signed with Red Hat's GPG key<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">And</span> "jmp version" returns the current release version<br><br>
+<span style="color: #8250df; font-weight: 600;">Scenario:</span> Upgrade preserves configuration<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Given</span> RHAS RHAS-0826 is installed<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">When</span> I run "dnf update jumpstarter-cli"<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Then</span> the package upgrades without errors<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">And</span> existing configuration is preserved<br><br>
+<span style="color: #8250df; font-weight: 600;">Scenario:</span> No unsupported distribution required<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Given</span> I am a production RHAS user<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Then</span> all components are available through Red Hat channels<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">And</span> no component requires pip, GitHub releases, or upstream registries
+</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- Resilience BDD -->
+<tr>
+<td style="padding: 8px 32px 4px 32px;">
+<span style="font-size: 13px; font-weight: 700; color: #8250df;">Feature: External Dependency Resilience (PITCREW-329 / Tech Preview)</span>
+</td>
+</tr>
+<tr>
+<td style="padding: 4px 32px 16px 32px;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="border: 1px solid #d0d7de;">
+<tr>
+<td style="padding: 12px 16px; background-color: #f6f8fa; font-size: 12px; color: #24292f; line-height: 1.8; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;">
+<span style="color: #8250df; font-weight: 600;">Scenario:</span> Container registry unavailable<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Given</span> RHAS is running normally<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">When</span> the container registry becomes unreachable<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Then</span> builds not needing registry access continue working<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">And</span> affected builds fail with message identifying the external dependency<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">And</span> the error does not say "internal error"<br><br>
+<span style="color: #8250df; font-weight: 600;">Scenario:</span> DNS failure<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Given</span> RHAS is running normally<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">When</span> the DNS server is unreachable<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Then</span> Jumpstarter exporters maintain existing connections<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">And</span> monitoring alerts fire within 5 minutes<br><br>
+<span style="color: #8250df; font-weight: 600;">Scenario:</span> Auth provider outage<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Given</span> users are authenticated with active sessions<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">When</span> the auth provider goes down<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Then</span> existing sessions continue working<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">And</span> new logins fail with "authentication service unavailable"
+</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- E2E BDD -->
+<tr>
+<td style="padding: 8px 32px 4px 32px;">
+<span style="font-size: 13px; font-weight: 700; color: #8250df;">Feature: Full Workflow E2E (TP-01 / non-waivable)</span>
+</td>
+</tr>
+<tr>
+<td style="padding: 4px 32px 16px 32px;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="border: 1px solid #d0d7de;">
+<tr>
+<td style="padding: 12px 16px; background-color: #f6f8fa; font-size: 12px; color: #24292f; line-height: 1.8; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;">
+<span style="color: #8250df; font-weight: 600;">Scenario:</span> Happy path - commit to test results<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Given</span> a git repo with a valid Containerfile<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">And</span> a Jumpstarter-managed target board is available<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">When</span> I push a commit to the repository<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Then</span> an OCI image build is triggered automatically<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">And</span> the built image is deployed to the target board<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">And</span> the smoke test suite runs against the deployed image<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">And</span> I receive a pass/fail result with a trace ID<br><br>
+<span style="color: #8250df; font-weight: 600;">Scenario:</span> Build failure stops pipeline<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Given</span> a git repo with an invalid Containerfile<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">When</span> I push a commit<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Then</span> the build fails with a clear error message<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">And</span> no deployment is attempted<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">And</span> the trace captures the build failure<br><br>
+<span style="color: #8250df; font-weight: 600;">Scenario:</span> Board unavailable - graceful queueing<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Given</span> all target boards are in use<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">When</span> I push a commit and the build succeeds<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Then</span> the deployment request is queued<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">And</span> when a board becomes available, deployment proceeds
+</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- CTC BDD -->
+<tr>
+<td style="padding: 8px 32px 4px 32px;">
+<span style="font-size: 13px; font-weight: 700; color: #8250df;">Feature: CTC Pipeline Accuracy (PITCREW-331)</span>
+</td>
+</tr>
+<tr>
+<td style="padding: 4px 32px 16px 32px;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="border: 1px solid #d0d7de;">
+<tr>
+<td style="padding: 12px 16px; background-color: #f6f8fa; font-size: 12px; color: #24292f; line-height: 1.8; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;">
+<span style="color: #8250df; font-weight: 600;">Scenario:</span> Test failure correctly reflected<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Given</span> a CTC validation pipeline runs on RHAS<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">When</span> a test case fails<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Then</span> the subresult bar shows the failure in red<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">And</span> the summary count includes the failure<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">And</span> the results-junit.xml contains the failure<br><br>
+<span style="color: #8250df; font-weight: 600;">Scenario:</span> Logs have timestamps and clean formatting<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Given</span> a CTC validation pipeline completes<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Then</span> every log line includes a timestamp<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">And</span> logs include the Jumpstarter version<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">And</span> no non-printable characters appear in console output<br><br>
+<span style="color: #8250df; font-weight: 600;">Scenario:</span> AVC check failures roll up<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Given</span> a CTC pipeline with AVC checks<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">When</span> an AVC check fails<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">Then</span> the failure rolls up to the main test case result<br>
+&nbsp;&nbsp;<span style="color: #1a7a3e; font-weight: 600;">And</span> the overall pipeline result reflects the AVC failure
+</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- TDD Structure -->
+<tr>
+<td style="padding: 20px 32px 8px 32px;">
+<span style="font-size: 15px; font-weight: 700; color: #24292f;">Proposed TDD Test Structure</span>
+</td>
+</tr>
+<tr>
+<td style="padding: 8px 32px 28px 32px;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="border: 1px solid #d0d7de;">
+<tr>
+<td style="padding: 12px 16px; background-color: #f6f8fa; font-size: 12px; color: #24292f; line-height: 1.8; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;">
+tests/<br>
+&nbsp;&nbsp;unit/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;builder/test_oci_build.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># M-01, M-02</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;builder/test_bootc_build.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># M-03</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;jumpstarter/test_exporter_health.py&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># M-04</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;jumpstarter/test_lease_cycle.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># M-05</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;jumpstarter/test_virtual_target.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># PITCREW-298, 299</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;trace/test_trace_correlation.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># PITCREW-291</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;distribution/test_package_signing.py&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># PITCREW-336</span><br>
+&nbsp;&nbsp;integration/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;test_builder_jumpstarter_handoff.py&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># M-07</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;test_e2e_pipeline.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># TP-01</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;test_multi_component.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># TP-02</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;test_operator_upgrade.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># TP-07</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;test_sso_flow.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># GA-05</span><br>
+&nbsp;&nbsp;resilience/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;test_registry_failure.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># PITCREW-329</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;test_dns_failure.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># PITCREW-329</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;test_auth_provider_failure.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># PITCREW-329</span><br>
+&nbsp;&nbsp;scale/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;test_concurrent_builds.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># GA-01</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;test_multi_board_hil.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># GA-02</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;test_soak_7day.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># GA-03</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;test_virtual_scaling.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># PITCREW-299</span><br>
+&nbsp;&nbsp;security/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;test_cve_scan.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># TP-03</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;test_signed_provenance.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># PITCREW-335</span><br>
+&nbsp;&nbsp;customer/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;test_ctc_pipeline.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># PITCREW-331</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;test_atc_image_build.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># PITCREW-332</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;test_hatci_virtual_target.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #57606a;"># PITCREW-298</span>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- GAPS AND RISKS -->
+<tr>
+<td style="padding: 0;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td style="background-color: #c44b00; padding: 12px 32px;">
+<span style="font-size: 16px; font-weight: 700; color: #ffffff;">8. Gaps and Risks</span>
+</td>
+</tr>
+<tr>
+<td style="padding: 20px 32px 28px 32px;">
+
+<!-- Gaps table -->
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="border: 1px solid #d0d7de; font-size: 12px;">
+<tr>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 30px; text-align: center;">#</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f;">Gap</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f;">Impact</td>
+<td style="background-color: #f6f8fa; border-bottom: 2px solid #d0d7de; padding: 8px 8px; font-weight: 700; color: #24292f; width: 80px; text-align: center;">Severity</td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; font-weight: 600;">1</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600;">5 epics have zero children</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f;">PITCREW-294 (due Jul 28), 295 (Aug), 300 (Nov), 332 (Nov), 338 (Oct) - cannot write tests without stories</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center;"><span style="display: inline-block; background-color: #c44b00; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 8px;">HIGH</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; font-weight: 600; background-color: #f6f8fa;">2</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600; background-color: #f6f8fa;">Shipped work still incomplete</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; background-color: #f6f8fa;">PITCREW-291 (0526): 10/19 children New. PITCREW-222/223 (0526): still In Progress. PITCREW-335 (0626): 4/6 open.</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; background-color: #f6f8fa;"><span style="display: inline-block; background-color: #c44b00; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 8px;">HIGH</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; font-weight: 600;">3</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600;">No release criterion for virtual targets</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f;">PITCREW-299 (scaling) and PITCREW-298 (Android) have AC but no matching release criterion</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center;"><span style="display: inline-block; background-color: #b08800; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 8px;">MEDIUM</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; font-weight: 600; background-color: #f6f8fa;">4</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600; background-color: #f6f8fa;">No air-gapped testing criterion</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; background-color: #f6f8fa;">3 epics (Trace, Autonomous Reactions, Ask the Platform) require air-gapped operation, but no release gate covers it</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; background-color: #f6f8fa;"><span style="display: inline-block; background-color: #b08800; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 8px;">MEDIUM</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; font-weight: 600;">5</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600;">No autonomous reactions criterion</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f;">PITCREW-294 (due Jul 28) defines agent behaviors but no release criterion validates them</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center;"><span style="display: inline-block; background-color: #b08800; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 8px;">MEDIUM</span></td>
+</tr>
+<tr>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; font-weight: 600; background-color: #f6f8fa;">6</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600; background-color: #f6f8fa;">Dev Preview ACs undocumented</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; background-color: #f6f8fa;">PITCREW-180, 185 (closed, shipped) have no acceptance criteria - cannot validate retroactively</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; background-color: #f6f8fa;"><span style="display: inline-block; background-color: #57606a; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 8px;">LOW</span></td>
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- NEXT STEPS -->
+<tr>
+<td style="padding: 0;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td style="background-color: #24292f; padding: 12px 32px;">
+<span style="font-size: 16px; font-weight: 700; color: #ffffff;">9. Recommended Next Steps</span>
+</td>
+</tr>
+<tr>
+<td style="padding: 20px 32px 28px 32px;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="font-size: 14px; color: #24292f; line-height: 1.65;">
+<tr><td style="padding: 6px 0;"><span style="font-weight: 600;">1.</span> Update release criteria document to include feature-specific criteria from epic ACs (Distribution, Resilience, Virtual Targets, Unified Developer Session)</td></tr>
+<tr><td style="padding: 6px 0;"><span style="font-weight: 600;">2.</span> Break down zero-children epics into testable stories - PITCREW-294 is due in 6 days with nothing to test</td></tr>
+<tr><td style="padding: 6px 0;"><span style="font-weight: 600;">3.</span> Create BDD feature files starting with P0 non-waivable criteria (TP-01, TP-02, TP-03, M-08)</td></tr>
+<tr><td style="padding: 6px 0;"><span style="font-weight: 600;">4.</span> Reconcile shipped-but-incomplete work - decide if 0526 epics are done or need retagging</td></tr>
+<tr><td style="padding: 6px 0;"><span style="font-weight: 600;">5.</span> Add air-gapped testing criterion - 3 epics require it, no release gate covers it</td></tr>
+<tr><td style="padding: 6px 0;"><span style="font-weight: 600;">6.</span> Add virtual target and HATCI-specific release criteria to match epic acceptance criteria</td></tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- FOOTER -->
+<tr>
+<td style="padding: 0;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td style="background-color: #f6f8fa; border-top: 1px solid #d0d7de; padding: 20px 32px; text-align: center;">
+<span style="font-size: 12px; color: #57606a; line-height: 1.6;">
+Generated July 22, 2026. Source: PitCrew Jira project (live data extraction). Version: DRAFT v1.0.<br>
+Companion documents: RHAS Test Release Criteria (v1.1), RHAS Test Strategy (v1.0)
+</span>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+
+</table>
+</td>
+</tr>
+</table>
+
+</body>
+</html>
