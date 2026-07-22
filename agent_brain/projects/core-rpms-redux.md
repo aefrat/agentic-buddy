@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-06-24
-access_count: 2
+last_accessed: 2026-07-22
+access_count: 3
 created: 2026-06-23
 ---
 
@@ -24,25 +24,24 @@ Replace the ambiguously defined "core RPMs" list with several new machine-readab
 
 Format: JSON (`jq` is part of the product). Fields: binary package name + source RPM NVR.
 
-## Current status (Jun 23, 2026)
+## Current status (Jul 22, 2026)
 
-### Pipeline integration — DONE
-From ToolChain Open Sync (Jun 23):
-- **Core RPMs redux feature already integrated into the pipelines** (Juanje)
-- New generated lists: https://rhivos.auto-toolchain.redhat.com/ci-gitlab-workspaces-downstream/16092802.5248061d/data-lists/
-- **Next steps:**
-  - Adjust tests, add the final list (now 4 lists instead of one)
-  - Lists need to be versioned by releases
-- **Open question:** Do we expect so many differences when compared to "New Core-rpm list for defect cloning script (RHIVOS 2.0)"?
+### Pipeline integration — DONE (82% complete, 18/22 children closed)
+3 tickets newly closed since Jun 23 report:
+- **VROOM-36812** — Nightly smoke test canonical list checks (Closed)
+- **VROOM-36808** — Execopen running in composes (Closed)
+- **VROOM-31126** — New location for data/package lists in compose (Closed)
+
+RC3 safety list generation in progress - Juanje generating initial canonical list for witness testing, to be replaced with final after FuSa team approval (per ToolChain Open Sync).
+
+### Pipeline alert (Jul 21)
+build-execopen-image failed for x86_64 and aarch64 across RHIVOS-2.0 and RHIVOS-2.0-Core. Root cause: shimx64.efi not found during bootloader config (packaging regression in bootc/bootupd). Escalated to FDA/upstream teams. Blocks all image generation until resolved.
 
 ### Remaining work (children of VROOM-31017)
 - **VROOM-40719** — Integrate comparison test into pipeline and gate compose on failure (New, Juanje). Comparison gates on package names only (not versions). Uses canonical list repo maintained by FuSa team. Gating failure blocks compose promotion.
 - **VROOM-40584** — Update FoA Lib abstractions with real data (New, unassigned)
-- **VROOM-31126** — Create new location for data/package lists in compose (New, unassigned)
-- **VROOM-35595** — Create RPM→JIRA component mapping in canonical safety file (New, unassigned)
-- **VROOM-36808** — Execopen running in composes to produce package lists (New, unassigned) — may be functionally done
+- **VROOM-35595** — Create RPM-JIRA component mapping in canonical safety file (New, unassigned)
 - **VROOM-36811** — Create internal repo for execopen code + canonical lists (New, Steve Loranz)
-- **VROOM-36812** — Nightly smoke test updated to check canonical lists (New, unassigned)
 
 ### Linked issues (not children)
 - **VROOM-37096** — Update glibc-revdep validators (New, Asaf Rachmani)
