@@ -5,7 +5,7 @@ comes up in conversation or needs context for a decision.
 
 ## Active
 
-- **[RHIVOS 2.0 RC3](RHIVOS_2_0_release_RC3.md)** — RC3 release tracking: go/no-go Monday 2026-06-16, CTC schedule, blocker tickets, CVE dependencies. Read when RC3, RHIVOS release, or CTC testing comes up.
+- **[RHIVOS 2.0 RC3](RHIVOS_2_0_release_RC3.md)** — RC3 release tracking: composes published Jun 16, CTC at 93% (3 tickets remaining), errata at REL_PREP. Read when RC3, RHIVOS release, or CTC testing comes up.
 - [PitCrew strategic context](pitcrew-strategic-context.md) — Team mission, Q2 priorities, product direction
 - [AIIL demo — RHAS](aiil-demo-rhas.md) — Michael Kuehl's AI-in-the-Loop demo for ELIV/CES27. Addresses PITCREW-290/293/294/291/396. Read when agentic platform, demo planning, or Roderick's onboarding comes up.
 - [ATC LLM wiki](atc-llm-wiki.md) — Confluence-to-wiki build project
@@ -25,9 +25,12 @@ comes up in conversation or needs context for a decision.
 - **[Quarterly Connection Agent](quarterly-connection-agent.md)** — Stateful process-oriented agent for quarterly evaluation reports. Applies agent-forge design principles to rebuild the [QC report CLI](https://gitlab.cee.redhat.com/aefrat/qc_report_agent) as a Claude Code skill with memory. Knowledge base at [qc-agent/](qc-agent/index.md).
 - **[Manager Report Agent](manager-report-agent.md)** — Stateful agent wrapping the daily/weekly/weekend engineering status report script. Adds identity, memory, verification, and learning to the existing Python execution engine. Knowledge base at [mr-agent/](mr-agent/index.md).
 - **[Project Pulse Agent](project-pulse-agent.md)** — Post-report intelligence layer. Cross-references manager report Slack data against active project files, proposes sourced updates. Runs after each manager report (interactive) or on demand.
+- **[Team Priorities](team-priorities.md)** — ATC and PitCrew/RHAS Q3 2026 priorities + RHIVOS program priorities. Used by talent-development and manager report skills.
+- **[RHAS Testing Ownership](rhas-testing-ownership/index.md)** — Testing ownership establishment for RHAS Tech Preview/GA. Candidate qualifications, features requiring testing, testing landscape report.
 
 ## Background
 
 - [PitCrew image mode future](pitcrew-image-mode-future-2026-05-27.md) — Image mode roadmap discussion (2026-05-27)
 - [RHIVOS release approach](rhivos-release-approach.md) — General release process and gating
 - [RHIVOS SKU/ProductID research](rhivos-sku-productid-research.md) — Product ID mapping research
+- [Claude tips - autonomous Opus](claude-tips-autonomous-opus.md) — Boris Cherny's tips for autonomous Claude Code usage (reference, single access)

@@ -32,9 +32,14 @@ Generalized knowledge, patterns, and lessons learned from project work.
 
 - [Google Docs as rendering proxy](google-docs-rendering-proxy.md) — upload HTML with mimeType in request body to convert to native Docs format. Enables permanent-URL live dashboards. Key: mimeType in `--json`, not `--params`. Read when uploading HTML reports to Drive or troubleshooting conversion.
 
+## Information and evidence patterns
+
+- [Source authority hierarchy](source-authority-hierarchy.md) — primary/runtime sources (config files, CI YAML, policy files) outrank secondary/documentary sources (wikis, READMEs) for factual questions; richest synthesis outranks raw data for assessments. Read when choosing which data source to trust.
+- [Cross-referencing Slack vs documentation](cross-referencing-slack-vs-docs.md) — comparing observed behavior (Slack) against documented processes reveals structural gaps invisible from either source alone
+
 ## Process patterns
 
-- [Cross-referencing Slack vs documentation](cross-referencing-slack-vs-docs.md) — comparing observed behavior (Slack) against documented processes reveals structural gaps invisible from either source alone
+- [Invisible enforcement gaps](invisible-enforcement-gaps.md) — when automated enforcement or alerting is absent, business requirements become invisible and will be missed. Read when evaluating CI gate changes, manual pipeline steps, or compliance tracking.
 - [Confluence API patterns](confluence-api-patterns.md) — CQL search, page tree traversal, cross-space queries using .netrc basic auth
 
 ## Tooling patterns
