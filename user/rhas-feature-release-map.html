@@ -242,7 +242,7 @@ Summary of epic distribution across releases. 27 epics total, grouped under 5 pa
 <tr>
 <td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600;">End-to-End Trace</td>
 <td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #57606a;">PITCREW-291</td>
-<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5;">Single trace ID connects build/deploy/boot/test. Device-side events in same trace. Structured JSON API. No perf degradation on constrained HW. Works without internet connectivity.</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; line-height: 1.5;">Single trace ID connects build/deploy/boot/test. Device-side events in same trace. Structured JSON API. No perf degradation on constrained HW. Works air-gapped (offline/disconnected network).</td>
 <td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center;"><span style="display: inline-block; background-color: #b08800; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 8px;">9/19</span></td>
 </tr>
 <tr>
@@ -924,8 +924,8 @@ tests/<br>
 </tr>
 <tr>
 <td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; font-weight: 600; background-color: #f6f8fa;">4</td>
-<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600; background-color: #f6f8fa;">No offline/disconnected testing criterion</td>
-<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; background-color: #f6f8fa;">3 epics (Trace, Autonomous Reactions, Ask the Platform) must work without internet connectivity, but no release gate covers it</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; font-weight: 600; background-color: #f6f8fa;">No air-gapped (offline/disconnected network) testing criterion</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 8px; color: #24292f; background-color: #f6f8fa;">3 epics (Trace, Autonomous Reactions, Ask the Platform) require air-gapped (offline/disconnected network) operation, but no release gate covers it</td>
 <td style="border-bottom: 1px solid #d0d7de; padding: 8px; text-align: center; background-color: #f6f8fa;"><span style="display: inline-block; background-color: #b08800; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 8px;">MEDIUM</span></td>
 </tr>
 <tr>
@@ -964,7 +964,7 @@ tests/<br>
 <tr><td style="padding: 6px 0;"><span style="font-weight: 600;">2.</span> Break down zero-children epics into testable stories - PITCREW-294 is due in 6 days with nothing to test</td></tr>
 <tr><td style="padding: 6px 0;"><span style="font-weight: 600;">3.</span> Create BDD feature files starting with P0 non-waivable criteria (TP-01, TP-02, TP-03, M-08)</td></tr>
 <tr><td style="padding: 6px 0;"><span style="font-weight: 600;">4.</span> Reconcile shipped-but-incomplete work - decide if 0526 epics are done or need retagging</td></tr>
-<tr><td style="padding: 6px 0;"><span style="font-weight: 600;">5.</span> Add offline/disconnected testing criterion - 3 epics must work without internet, no release gate covers it</td></tr>
+<tr><td style="padding: 6px 0;"><span style="font-weight: 600;">5.</span> Add air-gapped (offline/disconnected network) testing criterion - 3 epics require it, no release gate covers it</td></tr>
 <tr><td style="padding: 6px 0;"><span style="font-weight: 600;">6.</span> Add virtual target and HATCI-specific release criteria to match epic acceptance criteria</td></tr>
 </table>
 </td>
