@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Physical AI - RHIVOS BU Initiative Brief</title>
+<style>
+  :root {
+    --rh-red: #EE0000;
+    --rh-dark: #1a1a1a;
+    --rh-gray-100: #f5f5f5;
+    --rh-gray-200: #e8e8e8;
+    --rh-gray-300: #d2d2d2;
+    --rh-gray-600: #6a6e73;
+    --rh-gray-800: #3c3f42;
+    --rh-blue: #0066cc;
+    --rh-green: #3e8635;
+    --rh-amber: #f0ab00;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Red Hat Text', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    color: var(--rh-dark);
+    background: #fff;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 24px;
+  }
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--rh-dark);
+    border-bottom: 3px solid var(--rh-red);
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    color: var(--rh-gray-600);
+    font-size: 14px;
+    margin-bottom: 32px;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--rh-dark);
+    margin-top: 32px;
+    margin-bottom: 12px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--rh-gray-200);
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--rh-gray-800);
+    margin-top: 20px;
+    margin-bottom: 8px;
+  }
+  p { margin-bottom: 12px; }
+  .executive-summary {
+    background: var(--rh-gray-100);
+    border-left: 4px solid var(--rh-red);
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    border-radius: 0 4px 4px 0;
+  }
+  .executive-summary p { margin-bottom: 8px; }
+  .executive-summary p:last-child { margin-bottom: 0; }
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 4px;
+  }
+  .tag-new { background: #e7f1ff; color: var(--rh-blue); }
+  .tag-musthave { background: #fce4e4; color: #a30000; }
+  .tag-growth { background: #e9f7e8; color: var(--rh-green); }
+  .tag-tbd { background: #fff3cd; color: #856404; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 20px 0;
+    font-size: 14px;
+  }
+  th, td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--rh-gray-200);
+  }
+  th {
+    background: var(--rh-gray-100);
+    font-weight: 600;
+    color: var(--rh-gray-800);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  tr:hover td { background: #fafafa; }
+  ul, ol { margin: 8px 0 16px 24px; }
+  li { margin-bottom: 6px; }
+  .layer-card {
+    border: 1px solid var(--rh-gray-200);
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .layer-card h3 { margin-top: 0; }
+  .layer-1 { border-left: 4px solid var(--rh-red); }
+  .layer-2 { border-left: 4px solid var(--rh-blue); }
+  .layer-3 { border-left: 4px solid var(--rh-gray-600); }
+  .use-case-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 12px 0 20px 0;
+  }
+  .use-case {
+    background: var(--rh-gray-100);
+    border-radius: 6px;
+    padding: 14px;
+  }
+  .use-case strong { display: block; margin-bottom: 4px; color: var(--rh-dark); }
+  .use-case span { font-size: 13px; color: var(--rh-gray-800); }
+  .link-list { list-style: none; margin-left: 0; padding-left: 0; }
+  .link-list li {
+    padding: 6px 0;
+    border-bottom: 1px solid var(--rh-gray-200);
+  }
+  .link-list li:last-child { border-bottom: none; }
+  .link-list a { color: var(--rh-blue); text-decoration: none; }
+  .link-list a:hover { text-decoration: underline; }
+  .link-desc { color: var(--rh-gray-600); font-size: 13px; margin-left: 4px; }
+  .slack-item {
+    background: var(--rh-gray-100);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+  }
+  .slack-item .channel {
+    font-size: 12px;
+    color: var(--rh-gray-600);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .slack-item .person { font-weight: 600; color: var(--rh-dark); }
+  .observation-list li {
+    padding: 4px 0;
+  }
+  .footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rh-gray-200);
+    color: var(--rh-gray-600);
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Physical AI - RHIVOS BU Initiative Brief</h1>
+<p class="subtitle">Compiled 2026-07-23 | Sources: AUTOBU-1108, RHIVOS 2.x Planning, RHIVOS+ Presentation, Slack</p>
+
+<div class="executive-summary">
+  <p><strong>Executive Summary:</strong> RHIVOS+ is a proposed extension of Red Hat In-Vehicle OS that positions RHIVOS as a certified, open source governance platform for Physical AI - AI agents that control physical systems beyond automotive. The initiative targets robotics, drones, industrial automation, and energy systems through a three-layer defense model built on RHIVOS's existing ISO 26262 ASIL-B certified Linux foundation, with NVIDIA OpenShell providing agent sandboxing.</p>
+  <p><span class="tag tag-new">NEW</span> <span class="tag tag-growth">GROWTH</span> Created Jul 17, 2026 by Gadi Glogowski. Early-stage concept with phased roadmap starting Q3 2026.</p>
+</div>
+
+<h2>The Problem</h2>
+<p>Agentic software is fundamentally different from traditional processes - decisions are made at runtime by an LLM, making behavior non-deterministic and untrusted by default. As AI agents enter safety-critical physical systems (robotics, drones, industrial automation), application-level guardrails alone are insufficient. True enforcement must occur at a privilege boundary the agent cannot cross.</p>
+<p>Three requirements for safe agent operation on physical systems:</p>
+<ol>
+  <li><strong>Containment</strong> - The AI agent runs in a partition that cannot interfere with safety-critical functions</li>
+  <li><strong>Governance</strong> - Enforce what the agent can access at the OS level</li>
+  <li><strong>Validation</strong> - The agent produces a plan; that plan is verified against a safety envelope before any physical action</li>
+</ol>
+
+<h2>Architecture - Three-Layer Defense Model</h2>
+
+<div class="layer-card layer-1">
+  <h3>Layer 1: RHIVOS+ (Software - Containment, Governance, Validation)</h3>
+  <p>Extends RHIVOS with agent-specific governance and validation within the certified safety architecture. Adds governance within the non-safety (QM) partition where AI agents operate. Enforces architectural separation between agent planning and physical execution.</p>
+  <ul>
+    <li><strong>Containment:</strong> Kernel-level isolation via 9+ mechanisms (namespaces, cgroups, seccomp, LSMs, SELinux, capabilities, MMU, scheduler policies, Podman/systemd)</li>
+    <li><strong>Governance:</strong> NVIDIA OpenShell - programmable agent sandboxes with four policy layers (Filesystem, Network, Process, Inference). Live policy updates with full audit trail</li>
+    <li><strong>Validation:</strong> Sense-Plan-Validate-Act architecture. Untrusted plans never reach actuators without validation against a safety envelope (position, velocity, force, authorization)</li>
+  </ul>
+  <p><strong>Certified safety claims:</strong> Spatial Isolation (memory boundaries), Temporal Isolation (CPU/memory/resource limits), Resource Isolation (device/filesystem/network access control). ISO 26262 ASIL-B certified.</p>
+</div>
+
+<div class="layer-card layer-2">
+  <h3>Layer 2: Safety Controller (Certified Hardware)</h3>
+  <p>Dedicated MCU/ECU independent of all AI software. Per-actuator current/torque/force limits. E-stop circuits. Hardware watchdogs. Certified to ISO 26262 (automotive), IEC 61508 (industrial), ISO 13482 (robotics).</p>
+</div>
+
+<div class="layer-card layer-3">
+  <h3>Layer 3: Physical System (Physics)</h3>
+  <p>Motor torque limits (back-EMF), mechanical stops, crush zones, breakaway mechanisms, fuses. Physics is the final enforcer - software cannot override.</p>
+</div>
+
+<h2>NVIDIA OpenShell - Agent Governance Partnership</h2>
+<p>Red Hat and NVIDIA are collaborating on OpenShell to bring the same agent governance from the datacenter to embedded devices on RHIVOS. OpenShell provides:</p>
+<ul>
+  <li><strong>Programmable sandboxes</strong> - "break-safe" environments per agent</li>
+  <li><strong>Granular policy enforcement</strong> - filesystem, network, process, and inference layers</li>
+  <li><strong>Gateway</strong> - translates policy rules into runtime enforcement decisions</li>
+  <li><strong>Threat mitigation</strong> - data exfiltration (network policies), credential theft (Landlock), unauthorized API usage (privacy routing), privilege escalation (seccomp)</li>
+</ul>
+
+<h2>Roadmap</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Phase</th>
+      <th>Feature</th>
+      <th>Target</th>
+      <th>Priority</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>HW Enablement</td>
+      <td>Enable non-automotive hardware platforms (NVIDIA Jetson Thor/Orin, Intel Panther Lake, Qualcomm IoT SoCs, NXP i.MX8/9, TI)</td>
+      <td><span class="tag tag-tbd">TBD</span></td>
+      <td><span class="tag tag-musthave">MUST HAVE</span></td>
+      <td>Focus on automotive HW first; split once target platform identified</td>
+    </tr>
+    <tr>
+      <td>Concept</td>
+      <td>Define AI governance stack for physical systems (three-layer architecture definition)</td>
+      <td>Q3 2026</td>
+      <td><span class="tag tag-musthave">MUST HAVE</span></td>
+      <td>JF to work on proposed dates with current investment</td>
+    </tr>
+    <tr>
+      <td>Phase 1</td>
+      <td>Prototype RHIVOS + OpenShell integration for safe agent execution. Eclipse working group participation. Thought leadership (whitepapers, talks)</td>
+      <td>Q4 2026 / Q1 2027</td>
+      <td><span class="tag tag-musthave">MUST HAVE</span></td>
+      <td>Need direction on use cases for physical AI</td>
+    </tr>
+    <tr>
+      <td>Phase 2</td>
+      <td>Open source domain-specific safety policy engine (automotive, robotics geofencing/force limiting, drone operational boundaries, industrial zone restrictions)</td>
+      <td><span class="tag tag-tbd">TBD</span></td>
+      <td><span class="tag tag-musthave">MUST HAVE</span></td>
+      <td>Requires clear definition of Physical AI requirements. Target start Q1 2027</td>
+    </tr>
+    <tr>
+      <td>Phase 3</td>
+      <td>Deliver certified end-to-end AI governance stack (RHIVOS + OpenShell + domain policy, all certified)</td>
+      <td><span class="tag tag-tbd">TBD</span></td>
+      <td><span class="tag tag-musthave">MUST HAVE</span></td>
+      <td>Requires clear definition of Physical AI requirements</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Jira tracking:</strong> AUTOBU-1108 (Outcome, Status: New). No child Feature/Initiative tickets created yet. All features in the spreadsheet have no individual Jira tickets.</p>
+
+<h2>Target Markets and Use Cases</h2>
+
+<div class="use-case-grid">
+  <div class="use-case">
+    <strong>Autonomous Forklifts</strong>
+    <span>Warehouse/logistics. Plans efficient pick paths, adapts routes in real time. Force, speed, and zone limits enforced by safety controller.</span>
+  </div>
+  <div class="use-case">
+    <strong>In-Vehicle Voice Assistants</strong>
+    <span>Calls vehicle APIs for climate, navigation, media. Cannot actuate steering, braking, or drivetrain without validated plan.</span>
+  </div>
+  <div class="use-case">
+    <strong>Drone Fleet Management</strong>
+    <span>Coordinates flight plans across delivery drone fleets. Geofencing and altitude limits enforced; no-fly zones immutable.</span>
+  </div>
+  <div class="use-case">
+    <strong>Robotic Arms in Manufacturing</strong>
+    <span>Optimizes assembly sequence based on sensor feedback. Torque and force envelopes enforced at hardware level.</span>
+  </div>
+</div>
+
+<p><strong>Target certifications:</strong> ISO 26262 (automotive), IEC 61508 (industrial), ISO 13482 (robotics/personal care).</p>
+
+<h2>People and Teams Involved</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Person</th>
+      <th>Role / Involvement</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Gadi Glogowski</td>
+      <td>Created AUTOBU-1108 (Outcome owner)</td>
+    </tr>
+    <tr>
+      <td>Jaime Flynn (JF)</td>
+      <td>Owns timeline proposals for all features. Shared the RHIVOS+ presentation deck</td>
+    </tr>
+    <tr>
+      <td>Chris Custine</td>
+      <td>Ecosystems Engineering. Posts weekly Physical AI team status to #physical-ai-use-cases</td>
+    </tr>
+    <tr>
+      <td>Luis Arizmendi</td>
+      <td>Published two-part Red Hat blog series on Physical AI. Active in #wg-edge-robotics</td>
+    </tr>
+    <tr>
+      <td>saypaul</td>
+      <td>Training/deploying Unitree G1 humanoid in sim. Building ROS2 on Fedora. Creating robotics dev toolbox</td>
+    </tr>
+    <tr>
+      <td>fzdarsky, rmalone</td>
+      <td>Coordinating with saypaul on robotics toolbox and demo</td>
+    </tr>
+    <tr>
+      <td>Luke Thompson</td>
+      <td>Shared Physical AI architecture decks and Edge AI/Gen-AI inference decks in #rockwell-team</td>
+    </tr>
+    <tr>
+      <td>lrossett</td>
+      <td>Security discussion on AI agents as attackers in #physical-ai-use-cases</td>
+    </tr>
+    <tr>
+      <td>Mike Evans</td>
+      <td>Sharing NVIDIA/Japan Physical AI market intelligence</td>
+    </tr>
+    <tr>
+      <td>kswitt</td>
+      <td>Notes Omron has been asking Red Hat to engage</td>
+    </tr>
+    <tr>
+      <td>tanakash</td>
+      <td>NVIDIA Cosmos consortium participation in Japan</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Slack Activity Summary</h2>
+<p>Physical AI is actively discussed across multiple Slack channels. AUTOBU-1108 itself has zero Slack mentions - discussions use "Physical AI" terminology instead.</p>
+
+<div class="slack-item">
+  <div class="channel">#physical-ai-use-cases</div>
+  <p><span class="person">Chris Custine</span> (Jul 22) - Posts weekly Ecosystems Engineering Physical AI updates with a rolling status Google Doc.</p>
+  <p><span class="person">lrossett</span> (Jul 22) - Shared article on AI agents as attackers (Hugging Face intrusion campaign). Thread discussion on Physical AI security implications.</p>
+  <p><span class="person">Mike Evans</span> (Jul 21) - NVIDIA Physical AI investment in Japan. <span class="person">kswitt</span> notes Omron engagement interest.</p>
+</div>
+
+<div class="slack-item">
+  <div class="channel">#wg-edge-robotics</div>
+  <p><span class="person">Luis Arizmendi</span> (Jul 18-19) - Published Part 1 of Physical AI blog. Shared Part 2 draft. Noted pushback getting it published due to length and not being tied to a specific product.</p>
+  <p><span class="person">saypaul</span> (Jul 19) - Planning e2e demo, container-toolbox for developers, and video of demo robots in simulator.</p>
+</div>
+
+<div class="slack-item">
+  <div class="channel">#beyond-autoregressive-llms</div>
+  <p><span class="person">saypaul</span> (Jul 21) - Progress report: training and deploying Unitree G1 humanoid in sim, working with open-robotics to build ROS2 in Fedora, creating devtoolbox for robotics developers.</p>
+  <p><span class="person">fzdarsky</span> (Jul 21) - Setting up a call between saypaul, Evgenii Dushkin, rmalone, and fzdarsky re: toolbox and demo.</p>
+</div>
+
+<div class="slack-item">
+  <div class="channel">#rockwell-team</div>
+  <p><span class="person">Luke Thompson</span> (Jul 22) - Shared three decks: Physical AI architecture breakdown, Edge AI deck, Gen-AI inference deck.</p>
+</div>
+
+<div class="slack-item">
+  <div class="channel">#team-ssa-edge-support-request</div>
+  <p>(Jul 20) - Xantara/Prognostica/Red Hat to meet at Fertig Motors (Beckhoff) to evaluate quality and production control with on-prem physical AI using cameras. Potential to scale into packaging machine market.</p>
+</div>
+
+<div class="slack-item">
+  <div class="channel">#kubota-msr-account-channel</div>
+  <p><span class="person">tanakash</span> (Jul 20) - NVIDIA Cosmos consortium participation in Japan. Robotics/manufacturing leaders building on NVIDIA Cosmos for Physical AI.</p>
+</div>
+
+<h2>Key Resources</h2>
+<ul class="link-list">
+  <li><a href="https://docs.google.com/presentation/d/16jAwHKNJqFGpke8hkYkSDCjtE004vVaOMMZ1UBZsqFs/edit">RHIVOS+ Physical AI: On Device Agent Management</a> <span class="link-desc">- 24-slide architecture and strategy presentation</span></li>
+  <li><a href="https://docs.google.com/spreadsheets/d/1H7YviNZhrjn56_7pvs6_3xAa_gyTy9d2J5Iza4rQ2gA/edit?gid=83628794">RHIVOS 2.x Planning - Features/Team</a> <span class="link-desc">- Rows 2-7 for "RHIVOS Pivot To Other Industries"</span></li>
+  <li><a href="https://redhat.atlassian.net/browse/AUTOBU-1108">AUTOBU-1108</a> <span class="link-desc">- Jira Outcome: establish RHIVOS as certified governance platform for Physical AI</span></li>
+  <li><a href="https://docs.google.com/document/d/12SgM5etROj2VAL61wx8__fzW-qUXvdbnV9HYvKdhqtI/edit">Physical AI Team Status - Rolling</a> <span class="link-desc">- Chris Custine's weekly Ecosystems Engineering updates</span></li>
+  <li><a href="https://www.redhat.com/en/blog/physical-ai-physical-operations-are-broken-new-kind-intelligence-needed">Blog Part 1: Physical operations are broken</a> <span class="link-desc">- Luis Arizmendi, published Jul 18</span></li>
+  <li><a href="https://docs.google.com/document/d/1c37MmT_BJePFyr58-u2ZzwrgNTcURTvnw4pLKez-JXA/edit">Blog Part 2 Draft: When machines start to think and act</a> <span class="link-desc">- Luis Arizmendi, Red Hat's role in model lifecycle</span></li>
+  <li><a href="https://github.com/NVIDIA/OpenShell">NVIDIA OpenShell</a> <span class="link-desc">- GitHub repo for the agent governance framework</span></li>
+</ul>
+
+<h2>Observations and Assessment</h2>
+<ul class="observation-list">
+  <li><strong>Very early stage.</strong> AUTOBU-1108 was created Jul 17 with no child tickets, no assignee, and no linked issues. The Outcome is well-articulated but execution structures are not yet in place.</li>
+  <li><strong>NVIDIA partnership is central.</strong> OpenShell is a joint collaboration. NVIDIA's Physical AI market push (Japan investment, Cosmos consortium, Omron engagement) is a strong external driver.</li>
+  <li><strong>Builds on proven RHIVOS foundations.</strong> The three-layer defense model leverages RHIVOS's existing ISO 26262 ASIL-B certification, mixed-criticality container isolation, and PREEMPT_RT kernel capabilities. RHIVOS+ is an extension, not a rebuild.</li>
+  <li><strong>Multiple teams already active.</strong> Ecosystems Engineering (Chris Custine), edge robotics WG (Luis Arizmendi), research/sim (saypaul + fzdarsky), SSA field (Xantara), and #rockwell-team (Luke Thompson) are all working on related streams.</li>
+  <li><strong>Requirements clarity is the blocker.</strong> Phases 2 and 3 (safety policy engine and certified stack) are explicitly blocked on "clear definition of requirements for Physical AI." Phase 1 needs "direction on use cases."</li>
+  <li><strong>Cross-industry certification is ambitious.</strong> Spanning ISO 26262 (automotive), IEC 61508 (industrial), and ISO 13482 (robotics) means significant certification effort beyond the existing automotive scope.</li>
+  <li><strong>Active thought leadership play.</strong> Luis Arizmendi's blog series, Eclipse working group participation, and conference talks are planned for the concept/Phase 1 timeline.</li>
+  <li><strong>Real customer signals.</strong> Omron asking to engage, Xantara/Fertig Motors SSA engagement for on-prem physical AI with cameras, NVIDIA Cosmos consortium partners in Japan manufacturing/robotics.</li>
+</ul>
+
+<div class="footer">
+  <p>Brief prepared 2026-07-23 | Sources: Jira AUTOBU-1108, RHIVOS 2.x Planning spreadsheet, RHIVOS+ Physical AI presentation (24 slides), Slack (#physical-ai-use-cases, #wg-edge-robotics, #beyond-autoregressive-llms, #rockwell-team, #forum-ai, #team-ssa-edge-support-request, #kubota-msr-account-channel, DMs)</p>
+</div>
+
+</body>
+</html>
