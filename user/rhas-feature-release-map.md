@@ -369,5 +369,5 @@ tests/
 2. **Break down zero-children epics** - PITCREW-294 is due in 6 days with nothing to test
 3. **Create BDD feature files** starting with P0 non-waivable criteria (TP-01, TP-02, TP-03)
 4. **Reconcile shipped-but-incomplete work** - decide if 0526 epics are actually done or need retagging
-5. **Add air-gapped testing criterion** - 3 epics require it, no release gate covers it
+5. **Add offline/disconnected testing criterion** - 3 epics must work without internet, no release gate covers it
 6. **Add virtual target criteria** - HATCI work (PITCREW-297 children) has specific AC but no release criteria
