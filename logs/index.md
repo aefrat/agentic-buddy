@@ -29,3 +29,4 @@ Moved to `archive/2026-06/`: 2026-06-01, 2026-06-10, 2026-06-11, 2026-06-14, 202
 - 2026-07-20: active — Personal geopolitical research (US-Iran escalation analysis)
 - 2026-07-21: active — ATC ticket synthesis for manager report, PitCrew Slack monitoring, daily consolidation
 - 2026-07-22: active — ATC Slack monitoring (osbuild merge, 2FA, test-console MR), Aman onboarding tracking, **weekly W30 review** (W29-W30 combined)
+- 2026-07-23: active — ATC ticket synthesis for weekly reporting, PitCrew Slack monitoring, PDR Talent Calibration day

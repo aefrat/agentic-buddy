@@ -30,7 +30,7 @@ Purpose: Map delivered and planned features to releases, derive Spec/BDD/TDD tes
 
 | Epic | Key | Status | Acceptance Criteria |
 |------|-----|--------|---------------------|
-| End-to-End Trace | PITCREW-291 | In Progress | Single trace ID connects build/deploy/boot/test; device-side events in same trace; structured JSON API; no perf degradation on constrained HW; works air-gapped. **Note: 10/19 children still New - telemetry correlation incomplete** |
+| End-to-End Trace | PITCREW-291 | In Progress | Single trace ID connects build/deploy/boot/test; device-side events in same trace; structured JSON API; no perf degradation on constrained HW; works without internet connectivity. **Note: 10/19 children still New - telemetry correlation incomplete** |
 | Lab C2 Recovery Time (24h) | PITCREW-222 | In Progress | Infra-as-code (Ansible/Terraform); runbook for rebuild from zero; external deps identified; dry-run validates 24h rebuild; alerts on total failure |
 | Lab C2 Recovery Point (4h) | PITCREW-223 | In Progress | Automated backups every 4h; off-cluster storage; validated restore procedure; alerts on backup failure/replication lag |
 
@@ -54,7 +54,7 @@ Purpose: Map delivered and planned features to releases, derive Spec/BDD/TDD tes
 | CTC Adoption | PITCREW-331 | In Progress | CTC runs validation as primary workflow; accurate test results (failures/warnings/skips); timestamped logs with version info; all CTC bugs prioritized; trusted for ship/no-ship decisions | 8/19 closed, 11 open (subresult indicators, non-printable chars, AVC rollup, skipped status, missing logs) |
 | RH-SDLC Compliance | PITCREW-334 | In Progress | All SDLC gates identified+owned; security reviews complete; vuln management active within SLA; secure coding documented; audit-ready at any time; continuous compliance | 3/13 closed, SOA in progress, remaining: threat model, SAST, DAST, SAR, pentest, secure signing, secure distribution |
 | Lab Infrastructure | PITCREW-330 | New | Infra defined in code; versioned+reviewable changes; rebuild from scratch documented; HW inventory machine-accessible; infra-level monitoring | 4/14 closed, remaining: HW onboarding, board enablement (Renesas H5X, NXP S32N79, SA8255P) |
-| Autonomous Platform Reactions | PITCREW-294 | New | Structured events with trace context; auto-isolate crashing devices + preserve artifacts; auto-correlate clustered build failures; auto-retry provisioning with backoff; all actions in trace store; engineers can stop any agent; default notify-only; air-gapped | **0 children - not broken down** |
+| Autonomous Platform Reactions | PITCREW-294 | New | Structured events with trace context; auto-isolate crashing devices + preserve artifacts; auto-correlate clustered build failures; auto-retry provisioning with backoff; all actions in trace store; engineers can stop any agent; default notify-only; works without internet connectivity | **0 children - not broken down** |
 
 ---
 
@@ -93,7 +93,7 @@ Purpose: Map delivered and planned features to releases, derive Spec/BDD/TDD tes
 
 | Epic | Key | Status | Acceptance Criteria | Children |
 |------|-----|--------|---------------------|----------|
-| Ask the Platform | PITCREW-293 | New | Natural language questions with underlying query shown; answers grounded in telemetry data; works from any trace/session/build/lease/device/test ID; structured JSON output; read-only; air-gapped | 1 child |
+| Ask the Platform | PITCREW-293 | New | Natural language questions with underlying query shown; answers grounded in telemetry data; works from any trace/session/build/lease/device/test ID; structured JSON output; read-only; works without internet connectivity | 1 child |
 
 ---
 
