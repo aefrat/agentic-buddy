@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-07-23 | RHAS feature-to-release map HTML + Google Doc delivery, air-gapped wording refinement | `2d6b43b7-3149-4524-a9d9-97477aa95d84` |
 | 2026-07-23 | PitCrew Slack summary (2 channels, light activity - PR #346, CES board access, MCP issues) | (reflect-only) |
 | 2026-07-22 | Stakeholder Slack activity summary (Jaime, Jeff, Paul, Petr - last 1 day) | (reflect-only) |
 | 2026-07-21 | Agentic First Pilot Debrief video review attempt (500MB MP4, NotebookLM, no transcript found) | (reflect-only) |
