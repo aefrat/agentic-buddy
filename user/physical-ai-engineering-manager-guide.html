@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Physical AI - Engineering Manager Learning Guide</title>
+<style>
+  :root {
+    --rh-red: #EE0000;
+    --rh-dark: #1a1a1a;
+    --rh-gray-100: #f5f5f5;
+    --rh-gray-200: #e8e8e8;
+    --rh-gray-300: #d2d2d2;
+    --rh-gray-600: #6a6e73;
+    --rh-gray-800: #3c3f42;
+    --rh-blue: #0066cc;
+    --rh-green: #3e8635;
+    --rh-amber: #f0ab00;
+    --rh-purple: #6753ac;
+    --rh-teal: #009596;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Red Hat Text', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.7;
+    color: var(--rh-dark);
+    background: #fff;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 40px 24px;
+  }
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--rh-dark);
+    border-bottom: 3px solid var(--rh-red);
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    color: var(--rh-gray-600);
+    font-size: 14px;
+    margin-bottom: 32px;
+  }
+  h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--rh-dark);
+    margin-top: 40px;
+    margin-bottom: 14px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--rh-gray-200);
+  }
+  h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--rh-gray-800);
+    margin-top: 24px;
+    margin-bottom: 10px;
+  }
+  h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--rh-gray-800);
+    margin-top: 16px;
+    margin-bottom: 8px;
+  }
+  p { margin-bottom: 12px; }
+  .executive-summary {
+    background: var(--rh-gray-100);
+    border-left: 4px solid var(--rh-red);
+    padding: 20px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 6px 6px 0;
+  }
+  .executive-summary p { margin-bottom: 10px; }
+  .executive-summary p:last-child { margin-bottom: 0; }
+  .callout {
+    background: #f0f4ff;
+    border-left: 4px solid var(--rh-blue);
+    padding: 16px 20px;
+    margin: 16px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .callout-warn {
+    background: #fff8e1;
+    border-left: 4px solid var(--rh-amber);
+    padding: 16px 20px;
+    margin: 16px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .callout-green {
+    background: #e9f7e8;
+    border-left: 4px solid var(--rh-green);
+    padding: 16px 20px;
+    margin: 16px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 4px;
+  }
+  .tag-concept { background: #e7f1ff; color: var(--rh-blue); }
+  .tag-tech { background: #f3e8ff; color: var(--rh-purple); }
+  .tag-mgmt { background: #e9f7e8; color: var(--rh-green); }
+  .tag-rh { background: #fce4e4; color: #a30000; }
+  .tag-nvidia { background: #e0f7f7; color: #006d6e; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 22px 0;
+    font-size: 14px;
+  }
+  th, td {
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--rh-gray-200);
+  }
+  th {
+    background: var(--rh-gray-100);
+    font-weight: 600;
+    color: var(--rh-gray-800);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  tr:hover td { background: #fafafa; }
+  ul, ol { margin: 8px 0 16px 24px; }
+  li { margin-bottom: 8px; }
+  .layer-card {
+    border: 1px solid var(--rh-gray-200);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .layer-card h4 { margin-top: 0; }
+  .layer-1 { border-left: 5px solid var(--rh-red); }
+  .layer-2 { border-left: 5px solid var(--rh-blue); }
+  .layer-3 { border-left: 5px solid var(--rh-gray-600); }
+  .layer-os { border-left: 5px solid var(--rh-teal); }
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 14px 0 22px 0;
+  }
+  .card {
+    background: var(--rh-gray-100);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .card strong { display: block; margin-bottom: 6px; color: var(--rh-dark); }
+  .card span { font-size: 13px; color: var(--rh-gray-800); line-height: 1.5; }
+  .timeline {
+    border-left: 3px solid var(--rh-gray-300);
+    margin: 16px 0 24px 12px;
+    padding-left: 24px;
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 18px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -31px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--rh-blue);
+    border: 2px solid #fff;
+  }
+  .timeline-item .date {
+    font-size: 13px;
+    color: var(--rh-gray-600);
+    font-weight: 600;
+  }
+  code {
+    background: var(--rh-gray-100);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-family: 'Red Hat Mono', 'Fira Code', monospace;
+  }
+  pre {
+    background: var(--rh-gray-100);
+    padding: 14px 18px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 12px 0 16px 0;
+  }
+  .toc {
+    background: var(--rh-gray-100);
+    border-radius: 8px;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+  }
+  .toc h3 { margin-top: 0; }
+  .toc ol { margin-bottom: 0; }
+  .toc a { color: var(--rh-blue); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  a { color: var(--rh-blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 2px solid var(--rh-gray-200);
+    color: var(--rh-gray-600);
+    font-size: 12px;
+  }
+  .section-tag {
+    float: right;
+    margin-top: -4px;
+  }
+  .question {
+    background: var(--rh-gray-100);
+    padding: 14px 18px;
+    border-radius: 6px;
+    margin: 12px 0;
+    font-style: italic;
+    color: var(--rh-gray-800);
+  }
+  .question strong { font-style: normal; color: var(--rh-dark); }
+  .people-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 14px 0 22px 0;
+  }
+  .person-card {
+    background: var(--rh-gray-100);
+    border-radius: 6px;
+    padding: 12px 16px;
+  }
+  .person-card .name { font-weight: 600; color: var(--rh-dark); }
+  .person-card .role { font-size: 13px; color: var(--rh-gray-600); margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<h1>Physical AI - Engineering Manager Learning Guide</h1>
+<p class="subtitle">Comprehensive preparation brief | Compiled 2026-07-26 | Sources: Red Hat internal, NVIDIA OpenShell docs, industry research</p>
+
+<div class="executive-summary">
+  <p><strong>Purpose:</strong> This guide prepares you for moving into an engineering management role on a Physical AI team. It covers the technical foundations, architectural patterns, NVIDIA partnership details, Red Hat's strategic position, and - critically - what changes for engineering management when AI controls physical systems. It is organized from fundamentals through Red Hat-specific context to hands-on management guidance.</p>
+  <p><strong>Bottom line:</strong> Physical AI is AI that closes the perceive-reason-act loop in the real world. It is not just AI plus robots - it is a systems engineering discipline where a bad prediction can cause physical harm, not just a poor recommendation. The engineering management challenge is correspondingly different: safety architecture must be designed from day one, integration complexity exceeds pure software projects by 30-40%, and team composition must span embedded systems, control theory, ML, and safety certification.</p>
+</div>
+
+<div class="toc">
+  <h3>Contents</h3>
+  <ol>
+    <li><a href="#fundamentals">What Is Physical AI</a> - definitions, boundaries, the 3-stage loop</li>
+    <li><a href="#why-now">Why Now</a> - the convergence, market trajectory</li>
+    <li><a href="#architecture">Architecture Patterns</a> - defense in depth, safety layers, Sense-Plan-Validate-Act</li>
+    <li><a href="#openshell">NVIDIA OpenShell Deep Dive</a> - architecture, policy model, deployment</li>
+    <li><a href="#redhat">Red Hat's Position</a> - RHIVOS+, AUTOBU-1108, roadmap, people</li>
+    <li><a href="#em-guide">Engineering Management Guide</a> - 8 critical questions, team composition, timelines</li>
+    <li><a href="#domain-knowledge">Domain Knowledge Map</a> - what to learn, in what order</li>
+    <li><a href="#resources">Reading List and Resources</a></li>
+  </ol>
+</div>
+
+<!-- ================================================================== -->
+<h2 id="fundamentals">1. What Is Physical AI <span class="section-tag"><span class="tag tag-concept">CONCEPT</span></span></h2>
+
+<h3>Definition</h3>
+<p>Physical AI refers to AI systems that operate in and interact with the physical world. It is the combination of AI, edge computing, and robotics working together so machines can sense what is happening around them, reason about it, and take action - all in real time.</p>
+
+<div class="callout">
+  <p><strong>The key test:</strong> Does the system close the loop autonomously? An AI model that detects a fault and sends an alert to a human is useful, but it is not Physical AI. Physical AI requires that the prediction triggers a physical action without a human relaying the instruction. The decision and the action are part of the same automated loop.</p>
+</div>
+
+<h3>What Physical AI is NOT</h3>
+<ul>
+  <li><strong>Not traditional automation.</strong> A conveyor belt running at fixed speed, a robotic arm following a pre-programmed path, a sensor that triggers an alarm above a threshold - these are deterministic, rigid, and unable to adapt. Physical AI systems learn, generalize, and improve.</li>
+  <li><strong>Not just digital twins.</strong> A digital twin is a simulation tool. It becomes part of a Physical AI system only when it closes the loop: sensing real-world data, reasoning, and triggering an action back in the physical environment.</li>
+  <li><strong>Not just predictive maintenance with alerts.</strong> If a human must relay the instruction, the loop is not closed.</li>
+</ul>
+
+<h3>Physical AI vs. Embodied AI</h3>
+<p>These terms are related but distinct. <strong>Physical AI</strong> is the broader umbrella: any system that closes the perceive-reason-act loop in the real world, whether or not it has a body. <strong>Embodied AI</strong> is a subset where the system learns through direct physical interaction - its body (weight, joints, sensors) is part of the intelligence itself. A disembodied AI knows fire is hot because it is in the training data; an embodied agent knows it because touching something hot changed its state.</p>
+<p>All embodied AI is physical AI, but not all physical AI is embodied AI.</p>
+
+<h3>The 3-Stage Loop</h3>
+<p>Every physical AI system works through the same fundamental loop:</p>
+
+<div class="layer-card layer-1">
+  <h4>1. Perceive</h4>
+  <p>Sensors (LiDAR, RGB-D cameras, thermal imagers, tactile sensors, force sensors) gather continuous data from the physical environment. Unlike traditional systems that send data to a remote server, Physical AI handles it locally, at the point of action, in real time. Edge hardware (x86/ARM + GPUs, NPUs, FPGAs) runs inference fast enough for the system to act before the moment passes.</p>
+</div>
+
+<div class="layer-card layer-2">
+  <h4>2. Reason</h4>
+  <p>AI models interpret sensor data, predict what is likely to happen next, and plan the best response. This is where the shift from traditional robotics becomes visible. Technologies like world simulation (MuJoCo, Genesis), predictive generative models (NVIDIA Cosmos, DreamerV3), and vision-language-action systems (OpenVLA, Gemini Robotics, NVIDIA GR00T) can simulate possible futures and plan a course of action before committing - something no rule-based system can do.</p>
+</div>
+
+<div class="layer-card layer-os">
+  <h4>3. Act</h4>
+  <p>Actuators (robotic arms, wheels, drive systems) carry out the decision. Every action produces new sensor data, which feeds back into perception. The system never stops learning. Robotics control subsystems (ROS 2, MoveIt, Nav2, Open-RMF) orchestrate across the full platform.</p>
+</div>
+
+<div class="callout-green">
+  <p><strong>Why this matters for management:</strong> This loop is what separates Physical AI from traditional automation. It is not a faster version of the same thing - it is a fundamentally different architecture that gets better the longer it runs. Your team is building systems that adapt and improve, not systems that execute fixed instructions.</p>
+</div>
+
+<!-- ================================================================== -->
+<h2 id="why-now">2. Why Now <span class="section-tag"><span class="tag tag-concept">CONCEPT</span></span></h2>
+
+<h3>The Three Convergences</h3>
+<p>Physical AI moved from research labs to real operations because three things converged simultaneously:</p>
+
+<div class="two-col">
+  <div class="card">
+    <strong>1. Edge Hardware</strong>
+    <span>Modern processors and dedicated neural processing units pack enough compute into small, low-power form factors to run real-time vision and decision models directly on a robot or drone - no cloud round-trip.</span>
+  </div>
+  <div class="card">
+    <strong>2. AI Model Maturity</strong>
+    <span>Models moved beyond narrow, controlled conditions - recognizing objects under variable lighting, planning around unexpected obstacles, adapting to situations never explicitly trained on.</span>
+  </div>
+  <div class="card">
+    <strong>3. Robotics Middleware</strong>
+    <span>ROS 2 and related frameworks reached production-grade stability. Organizations can build on them with confidence, backed by enterprise support.</span>
+  </div>
+  <div class="card">
+    <strong>Market Trajectory</strong>
+    <span>Global Physical AI market: $5.23B in 2025, projected $49.73B by 2033 (32.53% CAGR). AI-integrated robots deliver up to 40% higher operational efficiency vs. traditional automation. Payback periods compressed from 5-7 years to 1-3 years.</span>
+  </div>
+</div>
+
+<!-- ================================================================== -->
+<h2 id="architecture">3. Architecture Patterns <span class="section-tag"><span class="tag tag-tech">TECH</span></span></h2>
+
+<h3>The Core Problem</h3>
+<p>Agentic software is fundamentally different from traditional processes. Decisions are made at runtime by an LLM, making behavior non-deterministic and untrusted by default. When AI agents enter safety-critical physical systems, application-level guardrails alone are insufficient. True enforcement must occur at a privilege boundary the agent cannot cross.</p>
+
+<h3>Three-Layer Defense Model (RHIVOS+ Architecture)</h3>
+<p>This is the architecture Red Hat is building. Understand it deeply - it is central to your team's work.</p>
+
+<div class="layer-card layer-1">
+  <h4>Layer 1: RHIVOS+ (Software - Containment, Governance, Validation)</h4>
+  <p>Extends RHIVOS with agent-specific governance within the certified safety architecture.</p>
+  <ul>
+    <li><strong>Containment:</strong> Kernel-level isolation via 9+ mechanisms (namespaces, cgroups, seccomp, LSMs, SELinux, capabilities, MMU, scheduler policies, Podman/systemd). The AI agent runs in a partition that cannot interfere with safety-critical functions.</li>
+    <li><strong>Governance:</strong> NVIDIA OpenShell provides programmable agent sandboxes with four policy layers (Filesystem, Network, Process, Inference). Live policy updates with full audit trail.</li>
+    <li><strong>Validation:</strong> Sense-Plan-Validate-Act (SPVA) architecture. The agent produces a plan; that plan is verified against a safety envelope (position, velocity, force, authorization) before any physical action executes. Untrusted plans never reach actuators without validation.</li>
+  </ul>
+  <p><strong>Certified claims:</strong> Spatial Isolation (memory boundaries), Temporal Isolation (CPU/memory/resource limits), Resource Isolation (device/filesystem/network access control). ISO 26262 ASIL-B certified.</p>
+</div>
+
+<div class="layer-card layer-2">
+  <h4>Layer 2: Safety Controller (Certified Hardware)</h4>
+  <p>Dedicated MCU/ECU, completely independent of all AI software. Per-actuator current/torque/force limits. E-stop circuits. Hardware watchdogs. Certified to ISO 26262 (automotive), IEC 61508 (industrial), ISO 13482 (robotics). This layer cannot be overridden by software - it is the hardware enforcer.</p>
+</div>
+
+<div class="layer-card layer-3">
+  <h4>Layer 3: Physical System (Physics)</h4>
+  <p>Motor torque limits (back-EMF), mechanical stops, crush zones, breakaway mechanisms, fuses. Physics is the final enforcer - software cannot override physical limits. This is the last line of defense.</p>
+</div>
+
+<div class="callout-warn">
+  <p><strong>Key architectural insight:</strong> Safety is not a feature you add before shipping. It is an architectural discipline. Every layer assumes the layer above it might fail. The Safety Controller does not trust the software. Physics does not trust the Safety Controller. This defense-in-depth mindset should shape every design decision your team makes.</p>
+</div>
+
+<h3>Sense-Plan-Validate-Act (SPVA)</h3>
+<p>Traditional robotics uses Sense-Plan-Act: perceive the world, compute a plan, execute it. SPVA inserts a validation gate between planning and action:</p>
+<ol>
+  <li><strong>Sense</strong> - Gather sensor data from the physical environment</li>
+  <li><strong>Plan</strong> - AI agent reasons and generates a proposed action plan (this is the non-deterministic, untrusted step)</li>
+  <li><strong>Validate</strong> - A deterministic safety envelope checker verifies the plan against hard constraints (force limits, geofences, velocity caps, authorization policies)</li>
+  <li><strong>Act</strong> - Only validated plans reach the actuators</li>
+</ol>
+<p>The validation step is deterministic, certifiable, and cannot be bypassed by the agent. This is how you get the benefits of AI reasoning while maintaining safety guarantees.</p>
+
+<!-- ================================================================== -->
+<h2 id="openshell">4. NVIDIA OpenShell Deep Dive <span class="section-tag"><span class="tag tag-nvidia">NVIDIA</span></span></h2>
+
+<p>OpenShell is central to the RHIVOS+ strategy. It is a joint Red Hat/NVIDIA collaboration for agent sandboxing. Understanding it is essential for your role.</p>
+
+<h3>What OpenShell Is</h3>
+<p>OpenShell is an open-source runtime (Apache 2.0) for executing autonomous AI agents in sandboxed environments with kernel-level isolation. It pairs sandbox runtime controls with a declarative YAML policy system, enabling teams to operate agents without granting them unfettered access to files, credentials, or networks.</p>
+<p>The core design principle: agents are most useful when they can read files, install packages, call APIs, and use credentials - but that same access creates material risk. OpenShell navigates this tradeoff through <strong>out-of-process enforcement</strong>: controls live outside the agent process, so the agent cannot override them.</p>
+
+<h3>Architecture</h3>
+<table>
+  <thead>
+    <tr><th>Component</th><th>Role</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Gateway</strong></td><td>Control-plane API managing sandbox lifecycle and serving as the authentication boundary</td></tr>
+    <tr><td><strong>Sandbox</strong></td><td>Isolated runtime with container supervision and policy-enforced egress routing. Each sandbox runs in its own container.</td></tr>
+    <tr><td><strong>Policy Engine</strong></td><td>Enforces filesystem, network, and process constraints from the application layer down to the kernel. Evaluates every action at the binary, destination, method, and path level.</td></tr>
+    <tr><td><strong>Privacy Router</strong></td><td>Privacy-aware LLM routing - intercepts inference calls, strips caller credentials, injects backend credentials, routes based on organizational policy.</td></tr>
+  </tbody>
+</table>
+
+<p><strong>Compute drivers:</strong> Docker, Podman, MicroVM, Kubernetes. The Gateway manages sandbox lifecycle through the configured driver.</p>
+<p><strong>Platforms:</strong> Linux, macOS (Apple Silicon), Windows/WSL2 (experimental). Helm chart available for Kubernetes (experimental). OpenShift supported.</p>
+
+<h3>Four Policy Domains</h3>
+<table>
+  <thead>
+    <tr><th>Domain</th><th>What It Controls</th><th>Enforcement Mechanism</th><th>Mutability</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Filesystem</strong></td>
+      <td>Prevents reads/writes outside allowed paths</td>
+      <td>Landlock LSM (kernel-enforced, not namespace tricks)</td>
+      <td>Locked at creation</td>
+    </tr>
+    <tr>
+      <td><strong>Network</strong></td>
+      <td>Blocks unauthorized outbound connections</td>
+      <td>HTTP CONNECT proxy evaluated by OPA/Rego policies in real-time. Deny-by-default.</td>
+      <td>Hot-reloadable</td>
+    </tr>
+    <tr>
+      <td><strong>Process</strong></td>
+      <td>Blocks privilege escalation and dangerous syscalls</td>
+      <td>Seccomp BPF filters. No privilege escalation, no socket creation outside the proxy.</td>
+      <td>Locked at creation</td>
+    </tr>
+    <tr>
+      <td><strong>Inference</strong></td>
+      <td>Reroutes model API calls to controlled backends</td>
+      <td>Privacy router intercepts LLM API calls, strips credentials, routes per policy</td>
+      <td>Hot-reloadable</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <p><strong>Static vs. dynamic:</strong> Filesystem and process policies are locked at sandbox creation and cannot be loosened - this is a security guarantee. Network and inference policies can be hot-reloaded on a running sandbox with <code>openshell policy set</code>, allowing dynamic adjustment without restarts. All policies are declarative YAML files, making them version-controllable, reviewable, and auditable.</p>
+</div>
+
+<h3>Threat Model</h3>
+<table>
+  <thead>
+    <tr><th>Threat</th><th>Agent Behavior</th><th>Mitigation</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Data exfiltration</td><td>Uploading internal files to unauthorized endpoints</td><td>Network allow-listing (OPA/Rego)</td></tr>
+    <tr><td>Credential theft</td><td>Reading SSH keys, cloud credentials</td><td>Landlock filesystem confinement</td></tr>
+    <tr><td>Unauthorized API usage</td><td>Sending data to unapproved model providers</td><td>Privacy routing + network policies</td></tr>
+    <tr><td>Privilege escalation</td><td>sudo, setuid exploitation</td><td>Seccomp BPF + unprivileged identity</td></tr>
+  </tbody>
+</table>
+
+<h3>Practical Usage</h3>
+<pre>
+# Install
+curl -LsSf https://raw.githubusercontent.com/NVIDIA/OpenShell/main/install.sh | sh
+
+# Create a sandbox and launch an agent
+openshell sandbox create -- claude
+
+# Apply a network policy to a running sandbox
+openshell policy set demo --policy policy.yaml --wait
+
+# Connect to a running sandbox
+openshell sandbox connect demo
+
+# Monitor with terminal UI
+openshell term
+</pre>
+
+<h3>Current Status</h3>
+<p>Alpha (v0.0.36), Apache 2.0. Positioned as "proof-of-life: one developer, one environment, one gateway." Multi-tenant enterprise deployments are a future goal. NVIDIA announced OpenShell + NemoClaw at GTC 2026 as part of the NVIDIA Agent Toolkit (OpenShell + NemoClaw + AI-Q). The company positions the next 6-12 months as critical for establishing enterprise agent deployment standards.</p>
+
+<!-- ================================================================== -->
+<h2 id="redhat">5. Red Hat's Position <span class="section-tag"><span class="tag tag-rh">RED HAT</span></span></h2>
+
+<h3>Strategic Thesis</h3>
+<p>RHIVOS+ is an extension of RHIVOS positioning Red Hat as a certified governance platform for Physical AI - AI agents that control physical systems in non-automotive markets (robotics, drones, industrial automation, energy systems). The core thesis: agentic workloads are non-deterministic and untrusted by default. Application-level guardrails are insufficient - governance must be enforced at the OS level, at a privilege boundary the agent cannot cross.</p>
+
+<h3>What Red Hat Brings</h3>
+<ul>
+  <li><strong>ISO 26262 ASIL-B certified Linux</strong> - proven safety certification, the foundation for cross-industry certification</li>
+  <li><strong>Mixed-criticality container isolation</strong> - running safety-critical and non-safety workloads on the same hardware with guaranteed isolation</li>
+  <li><strong>PREEMPT_RT kernel</strong> - deterministic, low-latency real-time performance required for Physical AI</li>
+  <li><strong>Enterprise Linux lifecycle</strong> - 10+ year support, security patching at scale, fleet management</li>
+  <li><strong>Open source governance</strong> - avoiding vendor lock-in in safety-critical infrastructure</li>
+  <li><strong>Edge computing expertise</strong> - MicroShift, RHEL for Edge, atomic updates for distributed device fleets</li>
+</ul>
+
+<h3>AUTOBU-1108 - The Initiative</h3>
+<p>Jira Outcome: "Establish RHIVOS as the certified governance platform for Physical AI in non-automotive markets." Created Jul 17, 2026 by Gadi Glogowski. Status: New. No child tickets or assignees yet. Very early stage - well-articulated Outcome but execution structures not yet in place.</p>
+
+<h3>Roadmap</h3>
+<div class="timeline">
+  <div class="timeline-item">
+    <div class="date">Q3 2026 - Concept</div>
+    <p>Define AI governance stack for physical systems (three-layer architecture definition). JF to work on proposed dates with current investment.</p>
+  </div>
+  <div class="timeline-item">
+    <div class="date">Q4 2026 / Q1 2027 - Phase 1</div>
+    <p>Prototype RHIVOS + OpenShell integration for safe agent execution. Eclipse working group participation. Thought leadership (whitepapers, talks).</p>
+  </div>
+  <div class="timeline-item">
+    <div class="date">TBD - Phase 2</div>
+    <p>Open source domain-specific safety policy engine (automotive, robotics geofencing/force limiting, drone operational boundaries, industrial zone restrictions). Requires clear definition of Physical AI requirements. Target start Q1 2027.</p>
+  </div>
+  <div class="timeline-item">
+    <div class="date">TBD - Phase 3</div>
+    <p>Deliver certified end-to-end AI governance stack (RHIVOS + OpenShell + domain policy, all certified). Requires clear requirements definition.</p>
+  </div>
+</div>
+
+<p><strong>Hardware enablement (parallel):</strong> Enable non-automotive platforms - NVIDIA Jetson Thor/Orin, Intel Panther Lake, Qualcomm IoT, NXP i.MX8/9, TI. Focus on automotive HW first; split once target platform identified.</p>
+
+<h3>Target Markets</h3>
+<div class="two-col">
+  <div class="card">
+    <strong>Autonomous Forklifts</strong>
+    <span>Warehouse/logistics. AI plans efficient pick paths, adapts routes in real time. Force, speed, and zone limits enforced by safety controller.</span>
+  </div>
+  <div class="card">
+    <strong>In-Vehicle Voice Assistants</strong>
+    <span>Calls vehicle APIs for climate, navigation, media. Cannot actuate steering, braking, or drivetrain without validated plan.</span>
+  </div>
+  <div class="card">
+    <strong>Drone Fleet Management</strong>
+    <span>Coordinates flight plans across delivery drone fleets. Geofencing and altitude limits enforced; no-fly zones immutable.</span>
+  </div>
+  <div class="card">
+    <strong>Robotic Arms in Manufacturing</strong>
+    <span>Optimizes assembly sequence based on sensor feedback. Torque and force envelopes enforced at hardware level.</span>
+  </div>
+</div>
+
+<p><strong>Target certifications:</strong> ISO 26262 (automotive), IEC 61508 (industrial), ISO 13482 (robotics/personal care). Cross-certification spanning three standards is ambitious and represents significant scope beyond existing automotive certification.</p>
+
+<h3>People to Know</h3>
+<div class="people-grid">
+  <div class="person-card">
+    <div class="name">Gadi Glogowski</div>
+    <div class="role">Created AUTOBU-1108 (Outcome owner)</div>
+  </div>
+  <div class="person-card">
+    <div class="name">Jaime Flynn (JF)</div>
+    <div class="role">Owns timeline proposals, shared the RHIVOS+ deck</div>
+  </div>
+  <div class="person-card">
+    <div class="name">Chris Custine</div>
+    <div class="role">Ecosystems Engineering. Weekly Physical AI status to #physical-ai-use-cases</div>
+  </div>
+  <div class="person-card">
+    <div class="name">Luis Arizmendi</div>
+    <div class="role">Published the 2-part Physical AI blog series. Active in #wg-edge-robotics</div>
+  </div>
+  <div class="person-card">
+    <div class="name">saypaul</div>
+    <div class="role">Training/deploying Unitree G1 humanoid in sim. Building ROS2 on Fedora. Robotics dev toolbox.</div>
+  </div>
+  <div class="person-card">
+    <div class="name">fzdarsky, rmalone</div>
+    <div class="role">Coordinating robotics toolbox and demo with saypaul</div>
+  </div>
+  <div class="person-card">
+    <div class="name">Luke Thompson</div>
+    <div class="role">Physical AI architecture decks, Edge AI deck, Gen-AI inference deck (#rockwell-team)</div>
+  </div>
+  <div class="person-card">
+    <div class="name">lrossett</div>
+    <div class="role">Security discussion - AI agents as attackers (#physical-ai-use-cases)</div>
+  </div>
+</div>
+
+<h3>Slack Channels</h3>
+<table>
+  <thead><tr><th>Channel</th><th>What You'll Find</th></tr></thead>
+  <tbody>
+    <tr><td><strong>#physical-ai-use-cases</strong></td><td>Primary channel. Chris Custine posts weekly Ecosystems Engineering status. Security discussions. NVIDIA market intelligence.</td></tr>
+    <tr><td><strong>#wg-edge-robotics</strong></td><td>Edge Robotics Working Group. Luis Arizmendi's blog work. saypaul's e2e demo planning.</td></tr>
+    <tr><td><strong>#beyond-autoregressive-llms</strong></td><td>Research-oriented. Unitree G1 sim progress, robotics toolbox coordination.</td></tr>
+    <tr><td><strong>#rockwell-team</strong></td><td>Luke Thompson's architecture decks. Edge AI and Gen-AI inference content.</td></tr>
+    <tr><td><strong>#forum-ai</strong></td><td>Broader AI discussion forum.</td></tr>
+  </tbody>
+</table>
+
+<h3>Customer Signals</h3>
+<ul>
+  <li><strong>Omron</strong> - has been asking Red Hat to engage (kswitt)</li>
+  <li><strong>Xantara / Fertig Motors (Beckhoff)</strong> - SSA engagement for on-prem physical AI with cameras for quality/production control. Potential to scale into packaging machine market.</li>
+  <li><strong>NVIDIA Cosmos consortium (Japan)</strong> - Robotics/manufacturing leaders building on NVIDIA Cosmos for Physical AI (tanakash)</li>
+</ul>
+
+<!-- ================================================================== -->
+<h2 id="em-guide">6. Engineering Management Guide <span class="section-tag"><span class="tag tag-mgmt">MGMT</span></span></h2>
+
+<h3>8 Questions Every Engineering Leader Should Understand</h3>
+<p>Based on industry research across engineering teams building Physical AI systems:</p>
+
+<h4>Q1: Why is Physical AI so much harder than software AI?</h4>
+<p>Unlike software AI, you cannot safely iterate in production. A bad prediction means physical damage, safety incidents, or mission failure - not just a poor recommendation.</p>
+<ul>
+  <li><strong>Real-time constraints are absolute.</strong> A robot arm with 200ms latency where 5ms is required becomes dangerous, not just slow.</li>
+  <li><strong>Physical environments are adversarial.</strong> Dust, vibration, temperature swings, occlusion, reflective surfaces, and lighting shifts routinely break model assumptions.</li>
+  <li><strong>Hardware-firmware-software coupling is deep.</strong> A firmware-level decision can fundamentally constrain what ML models can accomplish, and vice versa.</li>
+</ul>
+
+<h4>Q2: Why do models fail in the real world?</h4>
+<p>The most common culprit is training data distribution mismatch - models trained on data that does not reflect actual deployment conditions. The sim-to-real gap compounds this: robots trained entirely in simulation often fail because the simulation lacked physical accuracy (not just visual realism). Serious teams invest in physics-based simulation for training, targeted edge-case data generation, and continuous data pipelines from deployed systems.</p>
+
+<h4>Q3: How do you architect for safety?</h4>
+<div class="callout-warn">
+  <p><strong>Safety is an architectural discipline, not a feature you add before shipping.</strong></p>
+</div>
+<ul>
+  <li><strong>Layered safety is mandatory.</strong> AI decisions must sit inside an architecture with deterministic safety layers: hard-coded limits, sensor cross-checks, watchdog timers, manual override paths.</li>
+  <li><strong>Fail-safe states must be designed from the start.</strong> How does the system respond when the model is uncertain? When sensor data is invalid? When an action exceeds a safety threshold?</li>
+  <li><strong>Certification is almost always underestimated.</strong> Depending on domain, regulatory frameworks (IEC 61508, ISO 26262, ISO 13482) impose specific validation requirements. Retrofitting compliance into a system not designed for it is one of the most expensive mistakes a product team can make.</li>
+</ul>
+
+<h4>Q4: What does a realistic timeline look like?</h4>
+<ul>
+  <li>Hardware iteration cycles are slow (PCB revisions, mechanical redesigns, sensor procurement do not move at sprint velocity)</li>
+  <li>Integration testing reveals what unit testing cannot - sensor fusion algorithms working on recorded data behave differently on real sensors in real mechanical assemblies</li>
+  <li>Safety validation cannot be compressed</li>
+</ul>
+<div class="callout">
+  <p><strong>Rule of thumb:</strong> Add 30-40% to your most optimistic timeline for integration and safety validation, then build in additional margin for sensor behavior, calibration drift, and data pipeline issues. Teams that plan for this buffer are the ones that ship.</p>
+</div>
+
+<h4>Q5: Build custom models or use foundation models?</h4>
+<p>Almost always both, at different layers:</p>
+<ul>
+  <li><strong>Foundation models</strong> (NVIDIA Cosmos, GR00T) handle high-level reasoning, environmental understanding, task planning</li>
+  <li><strong>Fine-tuned/purpose-built models</strong> handle domain-specific perception (anomaly detection, object classification)</li>
+  <li><strong>Classical control algorithms</strong> handle low-level actuation where latency and predictability are paramount</li>
+</ul>
+
+<h4>Q6: How to handle training data scarcity?</h4>
+<p>Data scarcity is consistently a top blocker. Real-world data collection for physical systems is expensive, slow, sometimes dangerous, and privacy-constrained.</p>
+<ul>
+  <li><strong>Physics-based synthetic data</strong> - simulation built on real physical models (not just visual realism)</li>
+  <li><strong>Domain randomization</strong> - systematically varying simulation parameters to build model resilience</li>
+  <li><strong>Targeted edge-case generation</strong> - focus on failure modes that real-world collection rarely captures</li>
+</ul>
+<div class="callout-warn">
+  <p><strong>Critical distinction:</strong> Photorealistic is NOT physically accurate. Visual realism does not guarantee transfer to real-world performance. Teams confusing the two find models performing well in sim but struggling upon deployment.</p>
+</div>
+
+<h4>Q7: How to manage integration complexity?</h4>
+<p>This is where most projects stall. Physical AI systems span embedded firmware, middleware, edge compute, cloud/backend, and APIs - each with its own tooling, performance requirements, and failure modes.</p>
+<ul>
+  <li>Invest early in hardware abstraction layers</li>
+  <li>Use robotics-native frameworks (ROS 2) rather than adapting cloud frameworks</li>
+  <li>Treat sensor fusion as a first-class architectural concern</li>
+  <li>Define the cloud/edge split early - getting this wrong late forces painful rework</li>
+</ul>
+
+<h4>Q8: How do you know when the system is ready?</h4>
+<p>"It worked in testing" is insufficient. Define readiness across multiple dimensions - performance, safety, latency, fault tolerance, environmental robustness - each with explicit, testable criteria.</p>
+<ul>
+  <li>What failure modes have been validated?</li>
+  <li>Has testing covered actual real-world condition distributions?</li>
+  <li>Can you observe the system in production (model confidence, sensor health, actuation performance)?</li>
+  <li>Is there a rollback and override path?</li>
+</ul>
+
+<h3>Team Composition</h3>
+<p>Physical AI demands multidisciplinary teams that span domains rarely combined in traditional software engineering:</p>
+
+<table>
+  <thead><tr><th>Discipline</th><th>What They Do</th><th>Why You Need Them</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Embedded Systems</strong></td><td>Firmware, real-time OS, hardware abstraction</td><td>The software-hardware boundary is where most Physical AI bugs hide</td></tr>
+    <tr><td><strong>Control Systems</strong></td><td>PID controllers, state machines, safety interlocks</td><td>The deterministic layer that keeps AI decisions within safe bounds</td></tr>
+    <tr><td><strong>ML / AI</strong></td><td>Model training, inference optimization, MLOps</td><td>The reasoning layer - but it is only one layer of many</td></tr>
+    <tr><td><strong>Robotics / ROS</strong></td><td>ROS 2, sensor fusion, motion planning</td><td>The integration middleware that ties perception to action</td></tr>
+    <tr><td><strong>Safety / Certification</strong></td><td>IEC 61508, ISO 26262, hazard analysis</td><td>Certification requirements shape the architecture - not the other way around</td></tr>
+    <tr><td><strong>Security</strong></td><td>Threat modeling, agent sandboxing, OS hardening</td><td>Physical AI creates new attack surfaces: a compromised robot can cause physical harm</td></tr>
+    <tr><td><strong>Linux / OS</strong></td><td>Kernel, PREEMPT_RT, container isolation</td><td>The governance and isolation layer that separates trusted from untrusted workloads</td></tr>
+  </tbody>
+</table>
+
+<div class="callout-green">
+  <p><strong>Management insight:</strong> In pure software teams, you can often decompose work by feature. In Physical AI teams, you must decompose by system layer and ensure tight integration across layers. The model is never the bottleneck - the integration between model, safety, hardware, and validation is.</p>
+</div>
+
+<h3>What Changes for Engineering Management</h3>
+<table>
+  <thead><tr><th>Aspect</th><th>Software AI</th><th>Physical AI</th></tr></thead>
+  <tbody>
+    <tr><td>Failure impact</td><td>Bad output, UX degradation</td><td>Physical damage, safety incidents, regulatory consequences</td></tr>
+    <tr><td>Iteration speed</td><td>Deploy daily, A/B test</td><td>Hardware cycles (weeks), certification cycles (months)</td></tr>
+    <tr><td>Testing</td><td>Unit tests, integration tests, staging</td><td>Hardware-in-the-loop, simulation, field trials, certification testing</td></tr>
+    <tr><td>Timeline buffer</td><td>10-20%</td><td>30-40% minimum for integration and safety validation</td></tr>
+    <tr><td>Team composition</td><td>Software engineers + ML engineers</td><td>Multi-discipline: embedded, control, ML, robotics, safety, security, OS</td></tr>
+    <tr><td>Definition of done</td><td>"Tests pass, deploys cleanly"</td><td>"Meets safety envelope under real-world condition distribution"</td></tr>
+    <tr><td>Observability</td><td>Application logs, metrics</td><td>Model confidence, sensor health, actuation performance, anomaly patterns</td></tr>
+    <tr><td>Rollback</td><td>Revert deploy</td><td>Failsafe state + manual override path designed from day one</td></tr>
+  </tbody>
+</table>
+
+<!-- ================================================================== -->
+<h2 id="domain-knowledge">7. Domain Knowledge Map <span class="section-tag"><span class="tag tag-mgmt">MGMT</span></span></h2>
+
+<p>Prioritized learning path for an engineering manager moving into Physical AI:</p>
+
+<h3>Tier 1: Learn First (Weeks 1-2)</h3>
+<table>
+  <thead><tr><th>Topic</th><th>What to Learn</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Physical AI fundamentals</strong></td><td>Perceive-reason-act loop, SPVA architecture, embodied vs. physical AI distinction</td><td>Foundational vocabulary for every conversation</td></tr>
+    <tr><td><strong>Three-layer defense model</strong></td><td>Software governance, safety controller, physics as enforcer</td><td>This is the architecture your team builds on</td></tr>
+    <tr><td><strong>NVIDIA OpenShell</strong></td><td>Policy domains (filesystem, network, process, inference), out-of-process enforcement, sandbox lifecycle</td><td>Core partnership technology. You need to understand what it can and cannot do.</td></tr>
+    <tr><td><strong>Safety certification landscape</strong></td><td>ISO 26262, IEC 61508, ISO 13482 - what they require, how they differ</td><td>Certification requirements shape architecture decisions from day one</td></tr>
+  </tbody>
+</table>
+
+<h3>Tier 2: Learn Next (Weeks 3-4)</h3>
+<table>
+  <thead><tr><th>Topic</th><th>What to Learn</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr><td><strong>ROS 2 ecosystem</strong></td><td>Architecture, key packages (Nav2, MoveIt, Open-RMF), how it integrates with RHEL/RHIVOS</td><td>The robotics middleware your team will build on and support</td></tr>
+    <tr><td><strong>RHIVOS fundamentals</strong></td><td>ASIL-B certification scope, mixed-criticality isolation, PREEMPT_RT kernel, container model</td><td>Understanding what RHIVOS already provides vs. what RHIVOS+ adds</td></tr>
+    <tr><td><strong>Edge computing for AI</strong></td><td>NPUs, GPU inference on edge, latency requirements, power constraints</td><td>Physical AI runs on edge hardware, not in the cloud</td></tr>
+    <tr><td><strong>Sim-to-real transfer</strong></td><td>Physics-based simulation, domain randomization, synthetic data pipelines</td><td>The training data problem is the most common blocker</td></tr>
+  </tbody>
+</table>
+
+<h3>Tier 3: Deepen Over Time (Month 2+)</h3>
+<table>
+  <thead><tr><th>Topic</th><th>What to Learn</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Foundation models for robotics</strong></td><td>NVIDIA Cosmos, GR00T, OpenVLA, vision-language-action models</td><td>The reasoning layer that drives autonomous behavior</td></tr>
+    <tr><td><strong>Agent security</strong></td><td>Threat modeling for physical agents, attack surfaces, defense-in-depth</td><td>A compromised Physical AI agent can cause physical harm</td></tr>
+    <tr><td><strong>MLOps for edge</strong></td><td>Model lifecycle on edge devices, drift detection, retraining pipelines</td><td>Models degrade over time - managing the lifecycle at fleet scale is a distinct challenge</td></tr>
+    <tr><td><strong>Domain-specific use cases</strong></td><td>Autonomous forklifts, drone fleets, robotic arms, quality inspection</td><td>Understanding customer problems and deployment contexts</td></tr>
+  </tbody>
+</table>
+
+<!-- ================================================================== -->
+<h2 id="resources">8. Reading List and Resources <span class="section-tag"><span class="tag tag-concept">REFERENCE</span></span></h2>
+
+<h3>Red Hat Internal</h3>
+<ul>
+  <li><a href="https://docs.google.com/presentation/d/16jAwHKNJqFGpke8hkYkSDCjtE004vVaOMMZ1UBZsqFs/edit">RHIVOS+ Physical AI: On Device Agent Management</a> - 24-slide architecture and strategy presentation</li>
+  <li><a href="https://docs.google.com/document/d/12SgM5etROj2VAL61wx8__fzW-qUXvdbnV9HYvKdhqtI/edit">Physical AI Team Status - Rolling</a> - Chris Custine's weekly Ecosystems Engineering updates</li>
+  <li><a href="https://docs.google.com/spreadsheets/d/1H7YviNZhrjn56_7pvs6_3xAa_gyTy9d2J5Iza4rQ2gA/edit?gid=83628794">RHIVOS 2.x Planning - Features/Team</a></li>
+  <li><a href="https://redhat.atlassian.net/browse/AUTOBU-1108">AUTOBU-1108</a> - Jira Outcome for the initiative</li>
+</ul>
+
+<h3>Red Hat Published</h3>
+<ul>
+  <li><a href="https://www.redhat.com/en/blog/physical-ai-physical-operations-are-broken-new-kind-intelligence-needed">Physical AI Part 1: Physical operations are broken</a> - Luis Arizmendi (Jul 2026). Comprehensive industry overview.</li>
+  <li><a href="https://docs.google.com/document/d/1c37MmT_BJePFyr58-u2ZzwrgNTcURTvnw4pLKez-JXA/edit">Physical AI Part 2 (draft): When machines start to think and act</a> - Red Hat's role in model lifecycle</li>
+</ul>
+
+<h3>NVIDIA OpenShell</h3>
+<ul>
+  <li><a href="https://github.com/NVIDIA/OpenShell">GitHub - NVIDIA/OpenShell</a> - Source code, README, policy examples</li>
+  <li><a href="https://docs.nvidia.com/openshell/about/overview">OpenShell Documentation - Overview</a></li>
+  <li><a href="https://docs.nvidia.com/openshell/latest/home">OpenShell Documentation - Home</a></li>
+</ul>
+
+<h3>Industry Research</h3>
+<ul>
+  <li><a href="https://www.edge-ai-vision.com/2026/05/physical-ai-8-questions-every-engineering-leader-is-asking/">Physical AI: 8 Questions Every Engineering Leader Is Asking</a> - Geisel Software / Edge AI and Vision Alliance (May 2026)</li>
+  <li><a href="https://www.bcg.com/publications/2026/the-ceos-guide-to-physical-ai">The CEO's Guide to Physical AI</a> - BCG (May 2026)</li>
+  <li><a href="https://www.deloitte.com/us/en/insights/topics/technology-management/tech-trends/2026/physical-ai-humanoid-robots.html">AI Goes Physical: AI and Robotics Convergence</a> - Deloitte Tech Trends 2026</li>
+  <li><a href="https://cset.georgetown.edu/wp-content/uploads/CSET-Physical-AI.pdf">Physical AI: A Primer for Policymakers</a> - Georgetown CSET (Feb 2026)</li>
+  <li><a href="https://www.roboticscenter.ai/blog/physical-ai-2026-guide">Physical AI in 2026: What It Is, Key Models, and How to Build It</a> - SVRC</li>
+  <li><a href="https://arxiv.org/html/2605.10653v1">Embodied AI in Action - SAE World Congress 2026</a></li>
+  <li><a href="https://www.cio.com/article/4125160/preparing-for-physical-ai-5-critical-infrastructure-components.html">Preparing for Physical AI: 5 Critical Infrastructure Components</a> - CIO</li>
+  <li><a href="https://www.edge-ai-vision.com/2026/03/2026-the-year-intelligence-gets-physical/">2026: The Year Intelligence Gets Physical</a> - Edge AI and Vision Alliance</li>
+  <li><a href="https://futurumgroup.com/insights/openshell-redraws-the-agent-control-plane-open-standard-or-product-launch/">OpenShell Redraws the Agent Control Plane</a> - Futurum Group</li>
+</ul>
+
+<h3>Slack Channels to Join</h3>
+<ul>
+  <li><code>#physical-ai-use-cases</code> - Primary channel, weekly status, security, market intel</li>
+  <li><code>#wg-edge-robotics</code> - Edge Robotics Working Group</li>
+  <li><code>#beyond-autoregressive-llms</code> - Research, simulation, robotics toolbox</li>
+  <li><code>#rockwell-team</code> - Architecture decks, Edge AI content</li>
+  <li><code>#forum-ai</code> - Broader AI discussion</li>
+</ul>
+
+<div class="footer">
+  <p>Learning guide compiled 2026-07-26 | Sources: Red Hat blog (Luis Arizmendi), RHIVOS+ presentation, AUTOBU-1108, NVIDIA OpenShell documentation and GitHub, Physical AI Team Status (Chris Custine), Edge AI and Vision Alliance, BCG, Deloitte, Georgetown CSET, Geisel Software, Futurum Group, industry web search</p>
+  <p>This is a living document. Update as the initiative evolves and your understanding deepens.</p>
+</div>
+
+</body>
+</html>
