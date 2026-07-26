@@ -258,10 +258,13 @@
   <ol>
     <li><a href="#fundamentals">What Is Physical AI</a> - definitions, boundaries, the 3-stage loop</li>
     <li><a href="#why-now">Why Now</a> - the convergence, market trajectory</li>
+    <li><a href="#ai-capabilities">What AI Brings to Robotics</a> - 7 capabilities that change everything</li>
+    <li><a href="#edge">Why Edge Computing Is Mandatory</a> - latency, reliability, bandwidth, privacy</li>
     <li><a href="#architecture">Architecture Patterns</a> - defense in depth, safety layers, Sense-Plan-Validate-Act</li>
     <li><a href="#openshell">NVIDIA OpenShell Deep Dive</a> - architecture, policy model, deployment</li>
-    <li><a href="#redhat">Red Hat's Position</a> - RHIVOS+, AUTOBU-1108, roadmap, people</li>
+    <li><a href="#redhat">Red Hat's Position</a> - RHIVOS+, product portfolio, AUTOBU-1108, roadmap, people</li>
     <li><a href="#em-guide">Engineering Management Guide</a> - 8 critical questions, team composition, timelines</li>
+    <li><a href="#getting-started">Getting Started Framework</a> - 4-step approach for organizations</li>
     <li><a href="#domain-knowledge">Domain Knowledge Map</a> - what to learn, in what order</li>
     <li><a href="#resources">Reading List and Resources</a></li>
   </ol>
@@ -336,7 +339,106 @@
 </div>
 
 <!-- ================================================================== -->
-<h2 id="architecture">3. Architecture Patterns <span class="section-tag"><span class="tag tag-tech">TECH</span></span></h2>
+<h2 id="ai-capabilities">3. What AI Brings to Robotics <span class="section-tag"><span class="tag tag-tech">TECH</span></span></h2>
+
+<p>Traditional robots follow fixed programmed sequences in controlled environments - they stop or fail when something unexpected happens. AI changes this fundamentally. Understanding these seven capabilities is essential for evaluating what your team's platform needs to enable.</p>
+
+<table>
+  <thead>
+    <tr><th>#</th><th>Capability</th><th>Traditional Robotics</th><th>With Physical AI</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><strong>Adaptability</strong></td>
+      <td>Breaks when conditions change slightly</td>
+      <td>Handles variations in size, orientation, or packaging it has never seen before</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><strong>Continuous Learning</strong></td>
+      <td>Does exactly what it was programmed to do, forever</td>
+      <td>Improves through experience. Simulation-based training + real-world operation creates continuous learning loops</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><strong>Generalization</strong></td>
+      <td>Fails outside designed conditions</td>
+      <td>Applies learned knowledge to novel situations. "Generalized robot brains" let any robot master new tasks with minimal retraining</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><strong>Natural Language</strong></td>
+      <td>Requires specialist configuration per product type</td>
+      <td>Vision-language-action (VLA) models allow plain language instructions: "organize the returned items by category"</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td><strong>Sensor Fusion</strong></td>
+      <td>Processes one sensor type at a time</td>
+      <td>Processes camera, LiDAR, thermal, tactile streams simultaneously - builds a coherent environmental picture</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td><strong>Predictive Reasoning</strong></td>
+      <td>Reacts to what happened</td>
+      <td>Simulates possible futures before acting. World models predict what is about to happen</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td><strong>Collective Learning</strong></td>
+      <td>Each unit learns nothing</td>
+      <td>Every robot in a fleet contributes experience as training data. The model improves from aggregate fleet experience and redeploys to every machine simultaneously</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout-green">
+  <p><strong>Management insight:</strong> Capability #7 (collective learning) is why fleet management and MLOps pipelines are critical infrastructure - not nice-to-haves. Your team's platform must support model updates at fleet scale, continuous data pipelines from deployed systems, and version-controlled rollouts. This is where RHIVOS, RHEL Image Mode, and Red Hat Edge Manager fit in.</p>
+</div>
+
+<!-- ================================================================== -->
+<h2 id="edge">4. Why Edge Computing Is Mandatory <span class="section-tag"><span class="tag tag-tech">TECH</span></span></h2>
+
+<p>Edge computing is not an optimization for Physical AI - it is a fundamental requirement. The centralized cloud model fails when AI controls physical systems. Understanding why helps you explain the architecture to stakeholders.</p>
+
+<div class="two-col">
+  <div class="card">
+    <strong>1. Zero Tolerance for Latency</strong>
+    <span>A robotic arm catching a falling object cannot afford a cloud round-trip. Edge computing enables millisecond-level responsiveness through local AI inference. Neural processing units (NPUs) run LLMs and VLA models directly on the robot.</span>
+  </div>
+  <div class="card">
+    <strong>2. Uncompromised Reliability</strong>
+    <span>Physical machines in industrial, remote, or mobile environments cannot pause when connectivity drops. Edge-deployed models keep the sense-reason-act loop running regardless of network status.</span>
+  </div>
+  <div class="card">
+    <strong>3. Massive Bandwidth Efficiency</strong>
+    <span>Physical AI systems generate enormous continuous sensor data: multiple high-res camera streams, LiDAR point clouds, audio feeds. Local edge processors handle sensor fusion and transmit only relevant metadata - not raw streams.</span>
+  </div>
+  <div class="card">
+    <strong>4. Privacy and Security</strong>
+    <span>On-device processing of sensitive operational data limits exposure to external network risks. Critical for industrial, healthcare, and security contexts where data cannot leave the premises.</span>
+  </div>
+</div>
+
+<h3>Edge Implementation Requirements</h3>
+<p>Moving AI to the edge requires four infrastructure capabilities - each maps to Red Hat products:</p>
+<table>
+  <thead><tr><th>Requirement</th><th>What It Means</th><th>Red Hat Product</th></tr></thead>
+  <tbody>
+    <tr><td>Hardware powerful enough for real-time inference</td><td>NPUs, GPUs, FPGAs running models locally at millisecond latency</td><td>RHEL + NVIDIA Jetson validation, PREEMPT_RT kernel</td></tr>
+    <tr><td>Security policies isolating models</td><td>SELinux, cgroups, containers preventing compromised models from affecting safety-critical functions</td><td>RHIVOS mixed-criticality isolation, OpenShell agent sandboxing</td></tr>
+    <tr><td>Orchestration across fleets</td><td>Workload lifecycle management for hundreds/thousands of edge devices</td><td>Red Hat Device Edge (MicroShift), Red Hat Edge Manager</td></tr>
+    <tr><td>Enterprise-grade support and certification</td><td>Long-term support, security patching, safety certification</td><td>RHEL Extended Life Cycle (up to 14+ years), ISO 26262 ASIL-B</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <p><strong>Key metric:</strong> By moving intelligence to the point of action, organizations are seeing 90% reductions in inference costs and 10x improvements in operational safety compared to cloud-dependent architectures.</p>
+</div>
+
+<!-- ================================================================== -->
+<h2 id="architecture">5. Architecture Patterns <span class="section-tag"><span class="tag tag-tech">TECH</span></span></h2>
 
 <h3>The Core Problem</h3>
 <p>Agentic software is fundamentally different from traditional processes. Decisions are made at runtime by an LLM, making behavior non-deterministic and untrusted by default. When AI agents enter safety-critical physical systems, application-level guardrails alone are insufficient. True enforcement must occur at a privilege boundary the agent cannot cross.</p>
@@ -380,7 +482,7 @@
 <p>The validation step is deterministic, certifiable, and cannot be bypassed by the agent. This is how you get the benefits of AI reasoning while maintaining safety guarantees.</p>
 
 <!-- ================================================================== -->
-<h2 id="openshell">4. NVIDIA OpenShell Deep Dive <span class="section-tag"><span class="tag tag-nvidia">NVIDIA</span></span></h2>
+<h2 id="openshell">6. NVIDIA OpenShell Deep Dive <span class="section-tag"><span class="tag tag-nvidia">NVIDIA</span></span></h2>
 
 <p>OpenShell is central to the RHIVOS+ strategy. It is a joint Red Hat/NVIDIA collaboration for agent sandboxing. Understanding it is essential for your role.</p>
 
@@ -476,20 +578,51 @@ openshell term
 <p>Alpha (v0.0.36), Apache 2.0. Positioned as "proof-of-life: one developer, one environment, one gateway." Multi-tenant enterprise deployments are a future goal. NVIDIA announced OpenShell + NemoClaw at GTC 2026 as part of the NVIDIA Agent Toolkit (OpenShell + NemoClaw + AI-Q). The company positions the next 6-12 months as critical for establishing enterprise agent deployment standards.</p>
 
 <!-- ================================================================== -->
-<h2 id="redhat">5. Red Hat's Position <span class="section-tag"><span class="tag tag-rh">RED HAT</span></span></h2>
+<h2 id="redhat">7. Red Hat's Position <span class="section-tag"><span class="tag tag-rh">RED HAT</span></span></h2>
 
 <h3>Strategic Thesis</h3>
 <p>RHIVOS+ is an extension of RHIVOS positioning Red Hat as a certified governance platform for Physical AI - AI agents that control physical systems in non-automotive markets (robotics, drones, industrial automation, energy systems). The core thesis: agentic workloads are non-deterministic and untrusted by default. Application-level guardrails are insufficient - governance must be enforced at the OS level, at a privilege boundary the agent cannot cross.</p>
 
-<h3>What Red Hat Brings</h3>
-<ul>
-  <li><strong>ISO 26262 ASIL-B certified Linux</strong> - proven safety certification, the foundation for cross-industry certification</li>
-  <li><strong>Mixed-criticality container isolation</strong> - running safety-critical and non-safety workloads on the same hardware with guaranteed isolation</li>
-  <li><strong>PREEMPT_RT kernel</strong> - deterministic, low-latency real-time performance required for Physical AI</li>
-  <li><strong>Enterprise Linux lifecycle</strong> - 10+ year support, security patching at scale, fleet management</li>
-  <li><strong>Open source governance</strong> - avoiding vendor lock-in in safety-critical infrastructure</li>
-  <li><strong>Edge computing expertise</strong> - MicroShift, RHEL for Edge, atomic updates for distributed device fleets</li>
-</ul>
+<h3>Red Hat Product Portfolio for Physical AI</h3>
+<p>Physical AI sits at the intersection of three Red Hat strengths: AI, edge computing, and open source robotics. Each pillar maps to specific products your team should know.</p>
+
+<h4>AI Pillar</h4>
+<table>
+  <thead><tr><th>Product</th><th>Role in Physical AI</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Red Hat OpenShift AI</strong></td><td>Full AI model lifecycle - training through production deployment and monitoring across hybrid cloud and edge. Provides end-to-end MLOps for computer vision, predictive maintenance pipelines, and VLA models on edge devices.</td></tr>
+    <tr><td><strong>Neural Magic (acquired early 2025)</strong></td><td>Inference performance engineering and model optimization for edge deployments with constrained memory, power, and compute. Critical for running models locally on robots and drones.</td></tr>
+    <tr><td><strong>NVIDIA collaboration</strong></td><td>Validated support for NVIDIA GPUs and Jetson edge devices. Integration with NVIDIA NIM for generative AI deployment. Enterprise support for the full GPU stack.</td></tr>
+  </tbody>
+</table>
+
+<h4>Edge Computing Pillar</h4>
+<table>
+  <thead><tr><th>Product</th><th>Role in Physical AI</th></tr></thead>
+  <tbody>
+    <tr><td><strong>RHEL Real-Time Kernel (PREEMPT_RT)</strong></td><td>Deterministic, low-jitter performance for robotic coordination, motion control, and machine vision - without proprietary RTOS lock-in.</td></tr>
+    <tr><td><strong>Image Mode for RHEL</strong></td><td>Atomic, immutable OS updates that complete cleanly or roll back. No partial states leaving physical systems in undefined conditions. Critical for fleet consistency.</td></tr>
+    <tr><td><strong>Red Hat Device Edge (MicroShift)</strong></td><td>Kubernetes on hardware with as little as 2 CPU cores and 2 GB RAM. Extends the same APIs, security posture, and operational tooling from data center to robots or drones.</td></tr>
+    <tr><td><strong>Red Hat Edge Manager</strong></td><td>Centralized fleet management for hundreds/thousands of distributed edge devices running Physical AI workloads.</td></tr>
+    <tr><td><strong>RHIVOS (In-Vehicle OS)</strong></td><td>ISO 26262 ASIL-B certified Linux with mixed-criticality container isolation. The proven safety foundation that RHIVOS+ extends to non-automotive markets.</td></tr>
+    <tr><td><strong>Extended Life Cycle Support</strong></td><td>Up to 14+ year lifecycles with 24x7 SLAs and security patches delivered before public disclosure. Physical systems have much longer lifecycles than cloud software.</td></tr>
+  </tbody>
+</table>
+
+<h4>Robotics Pillar</h4>
+<table>
+  <thead><tr><th>Contribution</th><th>What It Means</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Open Source Robotics Alliance (gold member)</strong></td><td>Provides early vulnerability visibility and influence over foundational ROS technology direction.</td></tr>
+    <tr><td><strong>ROS 2 contributions via Fedora</strong></td><td>Fedora Robotics SIG actively packages ROS. Since Fedora is where Red Hat stabilizes packages before RHEL, this creates a clear path for ROS workloads on enterprise-grade infrastructure.</td></tr>
+    <tr><td><strong>Architecture support</strong></td><td>Validated for x86 and ARM, with RISC-V in technical preview. Covers the hardware landscape for Physical AI from server-class to microcontroller-adjacent.</td></tr>
+    <tr><td><strong>Hardware partnerships</strong></td><td>NVIDIA Jetson family support on Red Hat Device Edge (Jetson Orin). Intel Ultra Core 3 for humanoid robots.</td></tr>
+  </tbody>
+</table>
+
+<div class="callout-green">
+  <p><strong>The open source argument:</strong> Legacy automation systems have created expensive dead ends through proprietary vendor control of roadmaps, integrations, and pricing. Red Hat's upstream-first philosophy - contributing to the Linux kernel, glibc, KVM, GCC, and robotics middleware - means these technologies are governed by the broader community, not by a single vendor. For Physical AI systems with 10-15 year lifecycles, this matters more than in cloud software.</p>
+</div>
 
 <h3>AUTOBU-1108 - The Initiative</h3>
 <p>Jira Outcome: "Establish RHIVOS as the certified governance platform for Physical AI in non-automotive markets." Created Jul 17, 2026 by Gadi Glogowski. Status: New. No child tickets or assignees yet. Very early stage - well-articulated Outcome but execution structures not yet in place.</p>
@@ -594,7 +727,7 @@ openshell term
 </ul>
 
 <!-- ================================================================== -->
-<h2 id="em-guide">6. Engineering Management Guide <span class="section-tag"><span class="tag tag-mgmt">MGMT</span></span></h2>
+<h2 id="em-guide">8. Engineering Management Guide <span class="section-tag"><span class="tag tag-mgmt">MGMT</span></span></h2>
 
 <h3>8 Questions Every Engineering Leader Should Understand</h3>
 <p>Based on industry research across engineering teams building Physical AI systems:</p>
@@ -703,7 +836,35 @@ openshell term
 </table>
 
 <!-- ================================================================== -->
-<h2 id="domain-knowledge">7. Domain Knowledge Map <span class="section-tag"><span class="tag tag-mgmt">MGMT</span></span></h2>
+<h2 id="getting-started">9. Getting Started Framework <span class="section-tag"><span class="tag tag-mgmt">MGMT</span></span></h2>
+
+<p>Based on Luis Arizmendi's guidance for organizations entering Physical AI. Useful both for understanding how customers will adopt your team's platform and for framing your own team's initial work.</p>
+
+<div class="timeline">
+  <div class="timeline-item">
+    <div class="date">Step 1: Choose a First Use Case</div>
+    <p>Pick something that is bounded (single location or process), measurable, not too complex but not trivially simple, visible enough that success will be noticed organization-wide, and where data can be collected, curated, and annotated. Avoid boiling the ocean.</p>
+  </div>
+  <div class="timeline-item">
+    <div class="date">Step 2: Choose a Platform</div>
+    <p>Evaluate vendor lock-in risk from the start. Physical AI systems have 10-15 year lifecycles - a proprietary platform choice made now constrains you for a decade. This is where Red Hat's open source governance argument is strongest.</p>
+  </div>
+  <div class="timeline-item">
+    <div class="date">Step 3: Build the Foundation</div>
+    <p>Deploy managed edge nodes on target hardware. Integrate with enterprise systems (WMS, MES, ERP). Establish the MLOps pipeline, fleet management, and security posture before deploying models.</p>
+  </div>
+  <div class="timeline-item">
+    <div class="date">Step 4: Validate in Simulation, Then Go Live</div>
+    <p>Define success criteria. Validate in simulation before real-world deployment. Measure results. Scale. Then select the next use case.</p>
+  </div>
+</div>
+
+<div class="callout">
+  <p><strong>Key principle:</strong> "Physical AI is not a single project - it is a capability that compounds." More than half of AI projects never make it past the pilot stage. In Physical AI, the consequences of a failed deployment are more visible and costly than in software-only projects. Organizations that try to build on unmanaged open source tooling or proprietary systems that cannot evolve often discover that the integration between edge, AI, and robotics is where projects stall.</p>
+</div>
+
+<!-- ================================================================== -->
+<h2 id="domain-knowledge">10. Domain Knowledge Map <span class="section-tag"><span class="tag tag-mgmt">MGMT</span></span></h2>
 
 <p>Prioritized learning path for an engineering manager moving into Physical AI:</p>
 
@@ -741,7 +902,7 @@ openshell term
 </table>
 
 <!-- ================================================================== -->
-<h2 id="resources">8. Reading List and Resources <span class="section-tag"><span class="tag tag-concept">REFERENCE</span></span></h2>
+<h2 id="resources">11. Reading List and Resources <span class="section-tag"><span class="tag tag-concept">REFERENCE</span></span></h2>
 
 <h3>Red Hat Internal</h3>
 <ul>
@@ -753,8 +914,8 @@ openshell term
 
 <h3>Red Hat Published</h3>
 <ul>
-  <li><a href="https://www.redhat.com/en/blog/physical-ai-physical-operations-are-broken-new-kind-intelligence-needed">Physical AI Part 1: Physical operations are broken</a> - Luis Arizmendi (Jul 2026). Comprehensive industry overview.</li>
-  <li><a href="https://docs.google.com/document/d/1c37MmT_BJePFyr58-u2ZzwrgNTcURTvnw4pLKez-JXA/edit">Physical AI Part 2 (draft): When machines start to think and act</a> - Red Hat's role in model lifecycle</li>
+  <li><a href="https://www.redhat.com/en/blog/physical-ai-physical-operations-are-broken-new-kind-intelligence-needed">Physical AI Part 1: Physical operations are broken</a> - Luis Arizmendi (Jul 15, 2026). Industry overview: challenges, use cases, what Physical AI is and is not, the 3-stage loop, market trajectory.</li>
+  <li><a href="https://www.redhat.com/en/blog/physical-ai-when-machines-start-think-and-act-real-world">Physical AI Part 2: When machines start to think and act in the real world</a> - Luis Arizmendi (Jul 21, 2026). 7 AI capabilities for robotics, why edge is mandatory, Red Hat product portfolio (OpenShift AI, Neural Magic, Device Edge, MicroShift, Edge Manager, ROS), getting started framework.</li>
 </ul>
 
 <h3>NVIDIA OpenShell</h3>
@@ -787,7 +948,7 @@ openshell term
 </ul>
 
 <div class="footer">
-  <p>Learning guide compiled 2026-07-26 | Sources: Red Hat blog (Luis Arizmendi), RHIVOS+ presentation, AUTOBU-1108, NVIDIA OpenShell documentation and GitHub, Physical AI Team Status (Chris Custine), Edge AI and Vision Alliance, BCG, Deloitte, Georgetown CSET, Geisel Software, Futurum Group, industry web search</p>
+  <p>Learning guide compiled 2026-07-26 (updated) | Sources: Red Hat blog Parts 1 and 2 (Luis Arizmendi), RHIVOS+ presentation, AUTOBU-1108, NVIDIA OpenShell documentation and GitHub, Physical AI Team Status (Chris Custine), Edge AI and Vision Alliance, BCG, Deloitte, Georgetown CSET, Geisel Software, Futurum Group, industry web search</p>
   <p>This is a living document. Update as the initiative evolves and your understanding deepens.</p>
 </div>
 
