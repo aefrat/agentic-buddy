@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-07-26 | RH release terminology project + RHAS QE readiness gap analysis (6 sources, 9 TP + 9 GA gaps identified) | `7e89b105-19cc-4903-ae02-ed2d1b5cdb26` |
 | 2026-07-26 | Physical AI Engineering Manager Learning Guide (11-section HTML + GDoc, 4 references + web research) | `62f3d8bf-9620-4ad4-b2d9-661e22e59de6` |
 | 2026-07-23 | RHAS Spec/BDD/TDD design (Approach A, sections 1-4), Core RPMs Redux report, LP report, daily report | `72243d54-4cde-4b5f-9349-c0a9959be2a7` |
 | 2026-07-23 | RHAS feature-to-release map HTML + Google Doc delivery, air-gapped wording refinement | `2d6b43b7-3149-4524-a9d9-97477aa95d84` |
