@@ -1,5 +1,5 @@
 ---
-last_accessed: 2026-07-20
+last_accessed: 2026-07-28
 access_count: 11
 created: 2026-06-23
 ---
@@ -64,6 +64,10 @@ Key implications (per Petr):
 | Access | All RHIVOS subscribers | Only customers with QC LP SKU |
 
 ---
+
+## Recent activity
+
+- **2026-07-28 (Jira):** VROOM-39028 closed - CDN access verified via subscription-manager for rhivos-2.0-core. Confirms content delivery works for end users. VROOM-46088 (subscription RH03099 CDN bug) still in progress.
 
 ## Progress (as of Jul 20, 2026)
 

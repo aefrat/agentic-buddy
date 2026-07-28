@@ -1,5 +1,5 @@
 ---
-last_accessed: 2026-06-23
+last_accessed: 2026-07-28
 access_count: 1
 created: 2026-06-23
 ---
@@ -17,6 +17,7 @@ PitCrew team's product engineering work on RHAS (Automotive Development Platform
 
 ## Key activity
 
+- **2026-07-28 (Slack):** QC 8650 boards 03, 06, 10 hit fastboot detection failures - Benny recovering. New ABL reported to cause locked devices to become unbootable (pagranat, #forum-jumpstarter). ExporterSet controller sidecar mechanism (PITCREW-487) and QEMU provisioner (PITCREW-477) moved to Review (Miguel).
 - **2026-06-23 (Slack):** Bruce Benson shared updated bringup agent integrating CAIB and Jumpstarter functionality — committed during RHAS program meeting. Sergei reported QC 8650 board flashing issue with RHIVOS 2.0-Core TP RC1 (26 replies, workaround applied). (#team-pitcrew-automotive, #forum-jumpstarter)
 
 ## Slack channels
