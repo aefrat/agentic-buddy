@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-07-28 | PitCrew Slack summary (2 channels: Jumpstarter PRs, RHAS meeting moved to Aug 3, ABL bricking locked devices, fastboot failures) | (reflect-only) |
 | 2026-07-28 | ATC single-ticket synthesis (VROOM-39028 CDN subscription-manager verification) | (reflect-only) |
 | 2026-07-27 | PitCrew completed ticket synthesis (8 tickets: ExporterSet scaling, Oculus test reporting bugs) | (reflect-only) |
 | 2026-07-26 | RH release terminology project + RHAS QE readiness gap analysis (6 sources, 9 TP + 9 GA gaps identified) | `7e89b105-19cc-4903-ae02-ed2d1b5cdb26` |
