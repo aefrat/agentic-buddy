@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Core RPMs Redux Status - 2026-07-29</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background: #f4f5f7; color: #1a1a2e; line-height: 1.5; }
+  .container { max-width: 960px; margin: 0 auto; padding: 16px; }
+  .hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #fff; padding: 24px 28px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,.2); }
+  .hero h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .hero .subtitle { font-size: 13px; opacity: 0.75; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-left: 8px; }
+  .badge-progress { background: #e8f0fe; color: #0550ae; }
+  .badge-complete { background: #d4edda; color: #155724; }
+  .badge-blocked { background: #f8d7da; color: #721c24; }
+  .badge-stalled { background: #fff3cd; color: #856404; }
+  .badge-new { background: #f5f5f5; color: #555; border: 1px solid #ccc; }
+  .badge-closed { background: #d4edda; color: #155724; border: 1px solid #155724; }
+  .badge-inprogress { background: #e8f0fe; color: #0550ae; border: 1px solid #0550ae; }
+  .section { background: #fff; border: 1px solid #d0d7de; border-radius: 10px; padding: 18px 22px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .section h2 { font-size: 16px; color: #1a1a2e; margin-bottom: 12px; border-bottom: 2px solid #1a1a2e; padding-bottom: 6px; }
+  .section h3 { font-size: 14px; color: #333; margin: 12px 0 8px; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 16px; font-size: 12px; color: #666; margin-bottom: 8px; }
+  .meta-row a { color: #0550ae; text-decoration: none; }
+  .summary-box { background: #f0f4ff; border: 1px solid #c5d3f5; border-left: 4px solid #1a1a2e; border-radius: 0 6px 6px 0; padding: 14px 18px; margin: 12px 0; font-size: 13px; color: #333; line-height: 1.6; }
+  .list-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 14px 0; }
+  .list-card { border-radius: 8px; padding: 14px 16px; border: 1px solid #ddd; background: #fff; }
+  .list-card h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 6px; }
+  .list-card .desc { font-size: 0.82rem; color: #6a6e73; }
+  .cards { display: flex; gap: 12px; flex-wrap: wrap; margin: 14px 0; }
+  .card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 12px 16px; min-width: 120px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .card .num { font-size: 28px; font-weight: 700; }
+  .card .label { font-size: 11px; color: #666; margin-top: 2px; }
+  .progress-bar { background: #e9ecef; border-radius: 8px; height: 24px; overflow: hidden; margin: 14px 0; display: flex; }
+  .progress-bar .done { background: #3e8635; }
+  .progress-bar .open { background: #c5d3f5; }
+  .progress-pct { text-align: center; font-size: 12px; font-weight: 600; color: #fff; line-height: 24px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 10px 0; }
+  th { background: #f6f8fa; text-align: left; padding: 8px 10px; border-bottom: 2px solid #d0d7de; font-weight: 600; }
+  td { padding: 8px 10px; border-bottom: 1px solid #e8e8e8; }
+  td a { color: #0550ae; text-decoration: none; }
+  .change-item { padding: 8px 12px; margin: 4px 0; border-radius: 6px; font-size: 13px; }
+  .change-new { background: #e8f0fe; border-left: 4px solid #0550ae; }
+  .change-closed { background: #d4edda; border-left: 4px solid #155724; }
+  .change-info { background: #fff3cd; border-left: 4px solid #856404; }
+  .pipeline-ok { border-left: 4px solid #3e8635; }
+  .pipeline-warn { border-left: 4px solid #f0ab00; }
+  .pipeline-fail { border-left: 4px solid #c9190b; }
+  .risk-item { margin: 8px 0; padding: 8px 12px; background: #fff8f0; border-left: 3px solid #c44b00; border-radius: 0 4px 4px 0; font-size: 13px; }
+  .footer { text-align: center; color: #aaa; font-size: 11px; margin-top: 12px; padding: 8px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- 1. Hero Banner -->
+<div class="hero">
+  <h1>Core RPMs Redux (VROOM-31017) <span class="badge badge-progress">In Progress</span></h1>
+  <div class="subtitle">Status Report - July 29, 2026 | Compared against: July 22, 2026</div>
+</div>
+
+<!-- 2. Meta Row -->
+<div class="section">
+  <div class="meta-row">
+    <span><strong>Epic:</strong> <a href="https://redhat.atlassian.net/browse/VROOM-31017">VROOM-31017</a></span>
+    <span><strong>Owner:</strong> Petr Sabata</span>
+    <span><strong>Pipeline Lead:</strong> Juanje Ojeda</span>
+    <span><strong>Due:</strong> Jun 3, 2026 (56 days overdue)</span>
+    <span><strong>Slack:</strong> #team-toolchain-automotive</span>
+  </div>
+</div>
+
+<!-- 3. Executive Summary -->
+<div class="section">
+  <h2>Executive Summary</h2>
+  <div class="summary-box">
+    Pipeline integration remains largely complete, but a new approval gate has been added: <a href="https://redhat.atlassian.net/browse/VROOM-47482">VROOM-47482</a> (Review and approve canonical Safety List) was created since the last report, indicating the FuSa team is formalizing the list sign-off process. Meanwhile, <a href="https://redhat.atlassian.net/browse/VROOM-42400">VROOM-42400</a> (canonical safety list git repo) was completed by Michael Ho. The nightly pipeline is currently broken due to a UBI10 image Cosign signature error (<a href="https://redhat.atlassian.net/browse/RELEASE-2673">RELEASE-2673</a>), blocking list generation. The latest Open Sync notes mention "Reverse dependency and the safety list" as a new Juanje topic, indicating continued architecture work. All 4 remaining children and 3 linked validator tickets remain in "New" status with no progress. The VROOM-31421 toolchain umbrella ticket keys have been recycled to unrelated issues in Jira.
+  </div>
+</div>
+
+<!-- 4. Four-List Overview -->
+<div class="section">
+  <h2>4-List Overview</h2>
+  <div class="list-grid">
+    <div class="list-card">
+      <h4>Safety List</h4>
+      <div class="desc">Every package touched by file reads or execution. Monitored for CIA and Defect Triage. Pipeline-generated via execopen eBPF tracer.</div>
+    </div>
+    <div class="list-card">
+      <h4>Runtime List</h4>
+      <div class="desc">Safety List packages still open/mapped after boot. Used during FuSa Triage. Pipeline-generated.</div>
+    </div>
+    <div class="list-card">
+      <h4>Image List</h4>
+      <div class="desc">Every package in the ASIL portion of the image. Pipeline-generated.</div>
+    </div>
+    <div class="list-card">
+      <h4>Tools List</h4>
+      <div class="desc">Manually curated safety-critical tool packages. Monitored for CIA and Defect Triage.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 5. Summary Cards -->
+<div class="section">
+  <h2>Summary</h2>
+  <div class="cards">
+    <div class="card"><div class="num" style="color:#155724">16</div><div class="label">Completed</div></div>
+    <div class="card"><div class="num" style="color:#0550ae">0</div><div class="label">In Progress</div></div>
+    <div class="card"><div class="num" style="color:#888">5</div><div class="label">Not Started</div></div>
+    <div class="card"><div class="num" style="color:#1a1a2e">21</div><div class="label">Total Children</div></div>
+  </div>
+</div>
+
+<!-- 6. Progress Bar -->
+<div class="section">
+  <h2>Completion: 76%</h2>
+  <div class="progress-bar">
+    <div class="done" style="width:76%"><span class="progress-pct">76% (16/21)</span></div>
+    <div class="open" style="width:24%"></div>
+  </div>
+  <div style="font-size:12px;color:#888;margin-top:4px">Note: Completion decreased from 82% (18/22) due to ticket key recycling (1 closed ticket unlinked) and 1 new ticket added (VROOM-47482). No regressions - previously closed work remains done.</div>
+</div>
+
+<!-- 7. Changes Since Last Report -->
+<div class="section">
+  <h2>Changes Since Last Report (Jul 22)</h2>
+  <div class="change-item change-new">
+    <strong>NEW:</strong> <a href="https://redhat.atlassian.net/browse/VROOM-47482">VROOM-47482</a> - Review and approve the canonical Safety List (New, unassigned) - formal FuSa approval gate added
+  </div>
+  <div class="change-item change-closed">
+    <strong>CLOSED:</strong> <a href="https://redhat.atlassian.net/browse/VROOM-42400">VROOM-42400</a> - Create git repository for canonical safety list and tools list RPMs (Michael Ho)
+  </div>
+  <div class="change-item change-info">
+    <strong>DATA:</strong> VROOM-31421 (Build toolchain base) and all 8 subtask keys have been recycled to unrelated Jira issues. Toolchain work tracking via those keys is no longer valid.
+  </div>
+  <div class="change-item change-info">
+    <strong>PIPELINE:</strong> shimx64.efi failure (Jul 21) superseded by UBI10 Cosign signature rejection error. RELEASE-2673 filed - widespread, not yet resolved. Ozan testing pipelines-debugger agent for diagnostics.
+  </div>
+  <div class="change-item change-info">
+    <strong>OPEN SYNC:</strong> New topic: "Reverse dependency and the safety list" (Juanje). Core-rpm-redux integration remains a listed Toolchain priority.
+  </div>
+</div>
+
+<!-- 8. Completed Work -->
+<div class="section">
+  <h2>Completed Work</h2>
+  <table>
+    <tr><th>Ticket</th><th>Summary</th><th>Assignee</th></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-42400">VROOM-42400</a> <span class="badge badge-closed">new</span></td><td>Create git repository for canonical safety list and tools list RPMs</td><td>Michael Ho</td></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-41395">VROOM-41395</a></td><td>Move execopen repo to Automotive namespace</td><td>Juanje Ojeda</td></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-40718">VROOM-40718</a></td><td>Ensure tracing image can run tests in pipeline</td><td>Juanje Ojeda</td></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-40717">VROOM-40717</a></td><td>Run execopen tracer in pipeline, produce RPM list</td><td>Juanje Ojeda</td></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-40716">VROOM-40716</a></td><td>Create tracing image variant for execopen</td><td>Juanje Ojeda</td></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-40715">VROOM-40715</a></td><td>Build execopen RPM in pipeline matching compose kernel NVR</td><td>Juanje Ojeda</td></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-36813">VROOM-36813</a></td><td>Execopen tool owner identified</td><td>Steve Loranz</td></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-36812">VROOM-36812</a></td><td>Nightly smoke test updated to check canonical lists</td><td>-</td></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-36808">VROOM-36808</a></td><td>Execopen running in composes to produce package lists</td><td>-</td></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-31129">VROOM-31129</a></td><td>Add tools-list to the RHIVOS pipeline</td><td>-</td></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-31128">VROOM-31128</a></td><td>Add image-list to the RHIVOS pipeline</td><td>-</td></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-31127">VROOM-31127</a></td><td>Add safety-list to the RHIVOS pipeline</td><td>-</td></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-31126">VROOM-31126</a></td><td>New location for data/package lists in compose</td><td>-</td></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-31010">VROOM-31010</a></td><td>Refine ASIL B packages list scope</td><td>Ian McLeod</td></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-30981">VROOM-30981</a></td><td>Finalize tools RPMs monitoring list</td><td>Matthew Storr</td></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-30913">VROOM-30913</a></td><td>Pipeline job to monitor RHIVOS image changes</td><td>Pavol Brilla</td></tr>
+  </table>
+</div>
+
+<!-- 9. Open/Remaining Work -->
+<div class="section">
+  <h2>Open / Remaining Work</h2>
+  <h3>Children of VROOM-31017</h3>
+  <table>
+    <tr><th>Ticket</th><th>Summary</th><th>Status</th><th>Assignee</th></tr>
+    <tr style="background:#fffff0"><td><a href="https://redhat.atlassian.net/browse/VROOM-47482">VROOM-47482</a> <span class="badge badge-new" style="font-size:9px">NEW</span></td><td>Review and approve the canonical Safety List</td><td><span class="badge badge-new">New</span></td><td>Unassigned</td></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-40719">VROOM-40719</a></td><td>Integrate comparison test into pipeline and gate compose on failure</td><td><span class="badge badge-new">New</span></td><td>Juanje Ojeda</td></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-40584">VROOM-40584</a></td><td>Update FoA Lib abstractions with real data</td><td><span class="badge badge-new">New</span></td><td>Unassigned</td></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-35595">VROOM-35595</a></td><td>Create RPM-JIRA component mapping in canonical safety file</td><td><span class="badge badge-new">New</span></td><td>Unassigned</td></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-36811">VROOM-36811</a></td><td>Create internal repo for execopen code and canonical lists</td><td><span class="badge badge-new">New</span></td><td>Steve Loranz</td></tr>
+  </table>
+  <h3>Linked Issues (not children)</h3>
+  <table>
+    <tr><th>Ticket</th><th>Summary</th><th>Status</th><th>Assignee</th></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-37096">VROOM-37096</a></td><td>Update glibc-revdep validators</td><td><span class="badge badge-new">New</span></td><td>Asaf Rachmani</td></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-37575">VROOM-37575</a></td><td>Re-enable validators</td><td><span class="badge badge-new">New</span></td><td>Unassigned</td></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-30619">VROOM-30619</a></td><td>Refine systemctl validator scope</td><td><span class="badge badge-new">New</span></td><td>Unassigned</td></tr>
+  </table>
+</div>
+
+<!-- 10. Toolchain Work -->
+<div class="section">
+  <h2>Toolchain Work (formerly VROOM-31421)</h2>
+  <div style="background:#fff3cd;border:1px solid #ffc107;border-radius:6px;padding:12px 16px;margin:8px 0;font-size:13px">
+    <strong>Data anomaly:</strong> VROOM-31421 and all 8 subtask keys have been recycled to completely unrelated Jira issues (e.g., VROOM-31421 is now "[Spike] Custom IPC selinux policy for ASIL-QM"). The original "Build toolchain base for RHIVOS" epic is no longer trackable via these keys. The toolchain integration work (Brew targets, documentation, rhivos.io docs) should be reconfirmed with Juanje Ojeda for current tracking location.
+  </div>
+  <p style="font-size:12px;color:#888;margin-top:8px">Last known status from Jul 22: VROOM-37556 (RHIVOS targets) In Progress, VROOM-42073 (rhivos.io docs) In Progress, VROOM-37557 (documentation) To Do.</p>
+</div>
+
+<!-- 11. Pipeline Health -->
+<div class="section">
+  <h2>Pipeline Health</h2>
+  <div style="background:#fff;border:1px solid #e8e8e8;border-radius:6px;padding:14px 16px;margin:8px 0" class="pipeline-fail">
+    <div style="font-weight:600;color:#c9190b;margin-bottom:6px">Pipeline Status: FAILING</div>
+    <div style="font-size:13px;color:#333;line-height:1.6">
+      <strong>Current blocker (Jul 28-29):</strong> UBI10 image Cosign signature rejection in nightly pipeline during image build stage. Ozan investigating. <a href="https://redhat.atlassian.net/browse/RELEASE-2673">RELEASE-2673</a> filed - issue is widespread, not automotive-specific. Juanje noted he has seen this error before from UBI/Konflux team.<br><br>
+      <strong>Previous blocker (Jul 21):</strong> build-execopen-image failed (shimx64.efi not found during bootloader config) - appears superseded by the UBI10 error.<br><br>
+      <strong>Other:</strong> Beaker outage on Red Hat ranch (Jul 28, monthly reboot, ~4h ETA). kernel-ivos-nxp-extra-modules missed rhivos-2.1 gating cycle (Eric Chanudet, #team-toolchain-automotive). Martin Perina identified RHIVOS-2.0-Core compose is behind RHEL 10.2.z for bootc, buildah, ostree, podman, skopeo, rust-bootupd packages.
+    </div>
+  </div>
+</div>
+
+<!-- 12. Risks & Blockers -->
+<div class="section">
+  <h2>Risks and Blockers</h2>
+  <div class="risk-item"><strong>1. Pipeline broken - UBI10 Cosign error.</strong> Nightly pipeline cannot build images. Blocks safety list generation and comparison testing. RELEASE-2673 is cross-team - resolution depends on UBI/Konflux teams.</div>
+  <div class="risk-item"><strong>2. Epic overdue 56 days.</strong> VROOM-31017 due Jun 3. 5 children + 3 linked issues remain in "New" status with no assignee movement.</div>
+  <div class="risk-item"><strong>3. Canonical Safety List approval not started.</strong> New ticket VROOM-47482 (Review and approve canonical Safety List) is unassigned. Blocks FuSa certification workflow.</div>
+  <div class="risk-item"><strong>4. Validator re-enablement stalled.</strong> VROOM-37575 (re-enable validators) and VROOM-37096 (update glibc-revdep) remain "New" with no progress since creation. These are prerequisites for downstream consumers.</div>
+  <div class="risk-item"><strong>5. FoA Lib abstractions unassigned.</strong> VROOM-40584 has no assignee. Michael Ho (FoA) is the natural owner but not assigned.</div>
+  <div class="risk-item"><strong>6. Toolchain tracking lost.</strong> VROOM-31421 keys recycled. Current status of remaining toolchain work (Brew targets, documentation) unknown without manual verification.</div>
+  <div class="risk-item"><strong>7. Zero cross-channel discussion.</strong> Slack keyword search for "core-rpms", "execopen", and "VROOM-31017" returned zero results. The initiative has no active organic discussion outside structured meetings.</div>
+</div>
+
+<!-- 13. Related Epics -->
+<div class="section">
+  <h2>Related Epics</h2>
+  <table>
+    <tr><th>Ticket</th><th>Summary</th><th>Status</th><th>Assignee</th></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-37039">VROOM-37039</a></td><td>RHIVOS 2.0 Canonical RPM Lists Bootstrapping</td><td><span class="badge badge-inprogress">In Progress</span></td><td>Amanda Carter</td></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-29696">VROOM-29696</a></td><td>Systematically link VROOM CVEs to RHEL CVEs</td><td><span class="badge badge-inprogress">In Progress</span></td><td>Petr Sabata</td></tr>
+    <tr><td><a href="https://redhat.atlassian.net/browse/VROOM-38899">VROOM-38899</a></td><td>RHIVOS 10.2 core-rpm gating tests failures</td><td><span class="badge badge-new">New</span></td><td>Rachel Sibley</td></tr>
+  </table>
+</div>
+
+<!-- 14. Key References -->
+<div class="section">
+  <h2>Key References</h2>
+  <table>
+    <tr><th>Resource</th><th>Link</th></tr>
+    <tr><td>Jira Epic</td><td><a href="https://redhat.atlassian.net/browse/VROOM-31017">VROOM-31017</a></td></tr>
+    <tr><td>Execopen Repo</td><td><a href="https://gitlab.com/redhat/edge/ci-cd/pipe-x/execopen">gitlab.com/redhat/edge/ci-cd/pipe-x/execopen</a></td></tr>
+    <tr><td>ToolChain Open Sync</td><td><a href="https://docs.google.com/document/d/1TegJmbETVM627zvw5hj8F5NtiQvvJ40OSbgkGlz-pWw">Google Doc</a></td></tr>
+    <tr><td>Workstreams Doc</td><td><a href="https://docs.google.com/document/d/1uakPWEkSvMksJ9XAfPHlU_h9mMVpcIr9F2uufJw4-Ek">Google Doc</a></td></tr>
+    <tr><td>Confluence Checklist</td><td><a href="https://redhat.atlassian.net/wiki/display/Automotive/core-rpm+checklist">core-rpm checklist</a></td></tr>
+  </table>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  Generated by Core RPMs Redux Agent - July 29, 2026<br>
+  Data sources: Jira Cloud (redhat.atlassian.net) | Slack (#team-toolchain-automotive, #alerts-auto-toolchain) | Google Docs (ToolChain Open Sync)
+</div>
+
+</div>
+</body>
+</html>

@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-07-22
-access_count: 3
+last_accessed: 2026-07-29
+access_count: 4
 created: 2026-06-23
 ---
 
@@ -24,20 +24,19 @@ Replace the ambiguously defined "core RPMs" list with several new machine-readab
 
 Format: JSON (`jq` is part of the product). Fields: binary package name + source RPM NVR.
 
-## Current status (Jul 22, 2026)
+## Current status (Jul 29, 2026)
 
-### Pipeline integration — DONE (82% complete, 18/22 children closed)
-3 tickets newly closed since Jun 23 report:
-- **VROOM-36812** — Nightly smoke test canonical list checks (Closed)
-- **VROOM-36808** — Execopen running in composes (Closed)
-- **VROOM-31126** — New location for data/package lists in compose (Closed)
+### Progress: 76% complete (16/21 children closed)
+Changes since Jul 22:
+- **VROOM-42400** closed (Michael Ho) - canonical safety list git repo created
+- **VROOM-47482** created (New, unassigned) - Review and approve the canonical Safety List (FuSa approval gate)
+- Completion percentage dropped from 82% to 76% due to VROOM-31421 key recycling (1 closed ticket unlinked from epic) and 1 new ticket added. No regressions - previously closed work remains done.
 
-RC3 safety list generation in progress - Juanje generating initial canonical list for witness testing, to be replaced with final after FuSa team approval (per ToolChain Open Sync).
-
-### Pipeline alert (Jul 21)
-build-execopen-image failed for x86_64 and aarch64 across RHIVOS-2.0 and RHIVOS-2.0-Core. Root cause: shimx64.efi not found during bootloader config (packaging regression in bootc/bootupd). Escalated to FDA/upstream teams. Blocks all image generation until resolved.
+### Pipeline alert (Jul 28-29)
+UBI10 image Cosign signature rejection in nightly pipeline during image build stage. RELEASE-2673 filed - widespread, not automotive-specific. Supersedes the Jul 21 shimx64.efi error. Ozan investigating; Juanje noted he has seen this error before from UBI/Konflux team. Blocks all image generation until resolved.
 
 ### Remaining work (children of VROOM-31017)
+- **VROOM-47482** — Review and approve the canonical Safety List (New, unassigned) **[NEW]**
 - **VROOM-40719** — Integrate comparison test into pipeline and gate compose on failure (New, Juanje). Comparison gates on package names only (not versions). Uses canonical list repo maintained by FuSa team. Gating failure blocks compose promotion.
 - **VROOM-40584** — Update FoA Lib abstractions with real data (New, unassigned)
 - **VROOM-35595** — Create RPM-JIRA component mapping in canonical safety file (New, unassigned)
@@ -115,11 +114,13 @@ Pipeline produces per-architecture JSON files:
 
 Separate but related: the toolchain packages needed to *build* core RPMs.
 
-**[VROOM-31421: Build toolchain base for RHIVOS](https://redhat.atlassian.net/browse/VROOM-31421)** — umbrella, In Progress, Juanje Ojeda.
+**WARNING (Jul 29, 2026):** VROOM-31421 and all subtask keys (VROOM-31422, 31427, 31428, 37556, 37557, 41422, 41599, 42073) have been recycled to completely unrelated Jira issues. The ticket table below reflects the **last known state** (Jul 22, 2026) and is no longer verifiable via Jira. Toolchain work tracking via these keys is invalid. Current status of remaining toolchain work (Brew targets, documentation) needs manual verification with Juanje Ojeda.
+
+~~**[VROOM-31421: Build toolchain base for RHIVOS](https://redhat.atlassian.net/browse/VROOM-31421)** — umbrella, In Progress, Juanje Ojeda.~~
 
 Strategy (Jul 2024): tag from CentOS Stream / rebuild without changes / rebuild with RHIVOS-specific changes.
 
-| Ticket | Summary | Status |
+| Ticket | Summary | Last Known Status |
 |--------|---------|--------|
 | VROOM-31422 | Identify packages to rebuild from CS | Done |
 | VROOM-31427 | Create/define RHIVOS Brew tags for toolchain | Done |
