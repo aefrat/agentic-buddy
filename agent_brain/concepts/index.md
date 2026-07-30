@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-07-21
-access_count: 9
+last_accessed: 2026-07-30
+access_count: 10
 created: 2026-06-18
 ---
 
@@ -36,6 +36,7 @@ Generalized knowledge, patterns, and lessons learned from project work.
 
 - [Source authority hierarchy](source-authority-hierarchy.md) — primary/runtime sources (config files, CI YAML, policy files) outrank secondary/documentary sources (wikis, READMEs) for factual questions; richest synthesis outranks raw data for assessments. Read when choosing which data source to trust.
 - [Cross-referencing Slack vs documentation](cross-referencing-slack-vs-docs.md) — comparing observed behavior (Slack) against documented processes reveals structural gaps invisible from either source alone
+- [Gemini transcription verification](gemini-transcription-verification.md) — AI meeting notes garble domain terms (RHIVOS->Rivos, Polarion->Pulp). Use transcript over summary, verify against primary sources. Read when extracting facts from Gemini meeting notes.
 
 ## Process patterns
 

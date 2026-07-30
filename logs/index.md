@@ -33,3 +33,4 @@ Moved to `archive/2026-06/`: 2026-06-01, 2026-06-10, 2026-06-11, 2026-06-14, 202
 - 2026-07-26: active — Physical AI EM learning guide, RH release terminology reference, RHAS QE readiness gap analysis
 - 2026-07-27: maintenance
 - 2026-07-28: active — RC3 ticket synthesis (VROOM-39028), PitCrew Slack monitoring (Jumpstarter ABL regression, RHAS meeting reschedule)
+- 2026-07-30: active — OSCI requirements meeting (RoG onboarding), Distribution FA LLM wiki build (39 Confluence pages), Confluence gap analysis from Slack DMs
