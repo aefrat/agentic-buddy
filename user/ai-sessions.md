@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-07-30 | Kernel Brew tag permissions investigation + RHIVOS 2.0 retro project setup | `c61693af-bc54-49dc-bb93-9e0ecab4fa72` |
 | 2026-07-28 | PitCrew Slack summary (2 channels: Jumpstarter PRs, RHAS meeting moved to Aug 3, ABL bricking locked devices, fastboot failures) | (reflect-only) |
 | 2026-07-28 | ATC single-ticket synthesis (VROOM-39028 CDN subscription-manager verification) | (reflect-only) |
 | 2026-07-27 | PitCrew completed ticket synthesis (8 tickets: ExporterSet scaling, Oculus test reporting bugs) | (reflect-only) |
