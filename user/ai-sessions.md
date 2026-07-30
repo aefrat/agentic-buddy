@@ -10,7 +10,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 |------|-------------|------------|
 | 2026-07-30 | ROG post-meeting briefing: OSCI meeting processing, project file update, HTML + Google Doc briefing | `df0add06-e068-4c60-9854-7bd9e6fa7060` |
 | 2026-07-30 | Distribution FA Slack-to-Confluence (onboarding DMs extraction, 6 pages updated, cross-reference gap analysis) + LLM wiki ingestion (39 pages, 13 topics) | `1e832895-e62b-4e81-b6d2-c62d34c24218` |
-| 2026-07-30 | Kernel Brew tag permissions investigation + RHIVOS 2.0 retro project setup | `c61693af-bc54-49dc-bb93-9e0ecab4fa72` |
+| 2026-07-30 | Kernel Brew tag permissions investigation + RHIVOS 2.0 retro processing (project + transcript + action items) | `c61693af-bc54-49dc-bb93-9e0ecab4fa72` |
 | 2026-07-28 | PitCrew Slack summary (2 channels: Jumpstarter PRs, RHAS meeting moved to Aug 3, ABL bricking locked devices, fastboot failures) | (reflect-only) |
 | 2026-07-28 | ATC single-ticket synthesis (VROOM-39028 CDN subscription-manager verification) | (reflect-only) |
 | 2026-07-27 | PitCrew completed ticket synthesis (8 tickets: ExporterSet scaling, Oculus test reporting bugs) | (reflect-only) |
