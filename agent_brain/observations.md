@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-07-28
-access_count: 44
+last_accessed: 2026-07-30
+access_count: 45
 created: 2026-06-01
 ---
 
@@ -70,6 +70,7 @@ Resolved observations are moved to the bottom.
 - **2026-06-23:** "Post-report intelligence layer" — running an analysis agent immediately after a data-gathering report to cross-reference findings against persistent knowledge (project files). The report gathers raw signals; the pulse agent interprets them against known context. Generalizable beyond project updates — could detect emerging initiatives, stale projects, or cross-project dependencies. Applied: Project Pulse agent as step 8b of manager report. (seen: 1)
 - ~~**2026-06-23:** "Agent chaining by hook"~~ → **resolved 2026-06-30:** created concept `agent_brain/concepts/agent-chaining-by-hook.md` (seen 3x: project-pulse, pitcrew, methodology)
 - **2026-06-23:** "Gemini transcription verification" — AI-generated meeting notes (Gemini) can garble technical terms ("Polarion" → "Pulp", "Kanitha" → "Kita", "RHAS" → "ROS"). When reviewing auto-generated notes, cross-reference specific technical claims with primary sources (Slack, Jira) before acting on them. Applied: Jun 18 backlog refinement catch-up — "Pulp issue" was actually Polarion report upload failure, discovered via Ozan's Slack messages. (seen: 1)
+  - 2026-07-30: Seen again — "Exploring RHIVOS and RoG" meeting notes rendered "RHIVOS" as "Rivos", "Rivals", and "Ryos" throughout. Gemini summary also garbled scope details (called it "Rivals migration"). Transcript was more reliable than the AI-generated summary but still had name variations. Cross-referenced against transcript timestamps and Jira for accuracy. (seen: 2)
 - **2026-06-22:** "Upstream vs downstream CI boundary" — ATC codebase docs correctly stop at external dependency boundaries. AIB's CI infrastructure (Duffy/CentOS CI) is invisible from ATC's docs because ATC consumes AIB as a pre-built tool via Testing Farm. Questions about upstream CI require going directly to the upstream source (AIB `.gitlab-ci.yml`). Pattern: documentation covers what you own and consume, but the CI of your dependencies is their concern. Relevant for onboarding (where does ATC's responsibility end vs CentOS Automotive SIG's?). (seen: 1)
 - **2026-06-23:** "Subagent rule/permission lag" — when rules or permissions are added to settings mid-session, already-running subagents don't inherit them. A subagent launched before Rule 20 (Slack bash curl, not MCP) was added still attempted MCP and failed on auth. Pragmatic fix: run the task directly rather than re-spawn. Platform behavior, not a skill design issue, but relevant for skill authors who spawn long-lived subagents. (seen: 1)
 - **2026-06-23:** "Cross-agent knowledge propagation" — when a procedure is documented in one agent's knowledge base (agentic-buddy QC LP project file), it can be extracted into a reusable skill for a domain-specific agent (errata-distribution). The Confluence EngID page was already linked in errata-distribution's reference.md but only as an unfetchable URL — creating a skill file with the actual content makes the agent self-sufficient. Pattern: when reference docs are behind auth the agent can't reach, inline the content as a skill rather than leaving a dead link. (seen: 1)
