@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-07-19
-access_count: 3
+last_accessed: 2026-07-30
+access_count: 4
 created: 2026-07-14
 ---
 
@@ -12,6 +12,7 @@ created: 2026-07-14
 **Kernel automation:** [KMAINT-2296](https://redhat.atlassian.net/browse/KMAINT-2296) - Automate the automotive kernel builds
 **ARB meeting notes:** [RoK Architecture Review Board](https://docs.google.com/document/d/1JKvrHVlIWEs1-F0CSJDvCJmwp-besBirsQ555VCHQ28/edit)
 **RHEL dev guide (draft builds):** https://one.redhat.com/rhel-development-guide/#con_draft-builds_assembly_development
+**OSCI meeting (Jul 30):** [Gemini notes + transcript](https://docs.google.com/document/d/1PZZo1nfHJtD9Aa3tnd2Jpj1bUJoWw03n2tc7cFVWOuM/edit) | [Recording](https://drive.google.com/file/d/1CfYHefCcvGcv6n8lMpHITj0frzyblpX1/view)
 
 ---
 
@@ -81,6 +82,78 @@ Kanitha raised that RHIVOS needs extra gate tests on Test Console before
 promoting from `-gate` to `-candidate`. Chris Kelley (OSCI) responded that the
 old gating workflow is being decommissioned (another team removing a service it
 depends on) and all builds will be tagged directly to `*-candidate` by May 15.
+
+### From OSCI Team Meeting (Jul 30, 2026)
+
+Meeting with Adam Samalik (PO) and Michal Srb (OSCI) - first direct requirements
+discussion. Attendees: Avihai Efrat, Petr Sabata, Hubert Stefanski, Juanje Ojeda,
+Kanitha Chim, Ozan Unsal.
+
+**Scope confirmed:**
+- ~30 RHIVOS-specific packages only. Additional RHEL package testing is out of
+  scope for this initiative (runs separately, later in pipeline).
+- RHIVOS stays in the private namespace in GitLab (Red Hat employees only).
+  CentOS Stream sync is not on the agenda.
+
+**Technical findings from OSCI side:**
+
+1. **Dynamic main branch** is a known challenge. RHIVOS manages its own `main`
+   branch (e.g. `rhivos-2-main` becomes `rhivos-2.2` when 2.1 releases). Draft
+   builds from MRs need to dynamically resolve the correct Brew target. Michal
+   confirmed Voyager has a similar situation - solvable but needs custom work.
+
+2. **Configuration source:** OSCI uses `box-law-data` components repo as source
+   of truth for onboarding. RHIVOS already has entries there - one less blocker.
+
+3. **Repository configuration:** OSCI currently applies uniform config to all
+   onboarded repos (e.g., one human approver for RHEL). RHIVOS already has an
+   informal policy that satisfies audit requirements, with assignees and
+   contributors defined in the components repo.
+
+4. **Conflux deferred.** Build in Brew first. Conflux integration (workspaces,
+   application component models) takes significant time. Should be invisible to
+   maintainers once the Conflux team has capacity. Lookaside cache support for
+   building directly from GitLab is still WIP.
+
+5. **GitLab and dist-git are separate storage.** Not a frontend on top of
+   dist-git - they sync bidirectionally. Dist-git remains source of truth
+   (lookaside cache). BC check (dist-git rules) runs as an MR test in GitLab.
+   Petr wants to disable direct dist-git pushes and use GitLab-only - Michal
+   said this is preferable and easier for smaller teams who can mandate it.
+
+6. **Testing: phased approach proposed by Michal.**
+   - Phase 1: Onboard without tests. MR merge -> build lands in `-gate` tag ->
+     existing Test Console gating continues as-is.
+   - Phase 2: Plug tests into MRs (run in merge requests, provide results).
+   - Phase 3: When MR merged, draft build promotes directly to `-candidate`,
+     skip old gating entirely.
+   - Michal: RHEL testing is also "kind of messy" - 13+ Jenkins instances,
+     teams migrating at different speeds. Adding RHIVOS-specific logic
+     ("if RHIVOS then do this") is "always possible."
+
+7. **Side tags: GitLab-native workflow is Adam's top priority.** Current
+   Jenkins-based sidetag workflow won't work for RHIVOS. New GitLab-native
+   version is being built for RHEL and "should be reusable without any changes
+   for RHIVOS." This would solve the kernel team's daily pain point (daily
+   kernel builds + external kmod rebuilds in sidetags, currently manual).
+
+**OSCI action items:**
+- Adam + Michal will take requirements back to their team for feasibility
+  assessment, effort estimation, and integration details.
+- Adam will create an epic or Jira ticket to track the RHIVOS onboarding
+  project and share estimates once formulated.
+- Timeline target: H2 2026 (Petr's request, Adam acknowledged).
+
+**Questions answered:**
+- Konflux: deferred, build in Brew first (confirmed by Michal).
+- Code sync: yes, GitLab -> dist-git sync happens automatically. Dist-git
+  remains source of truth for now.
+- Test Console integration: phased approach (see above). Can keep existing
+  gating initially, replace incrementally.
+- Gator: effectively replaced by GitLab MR workflow + direct promotion path.
+- Shift-left testing into RHEL CI: Hubert mentioned Donald Zickus's idea.
+  Juanje noted some TMT tests have been partially integrated but "not
+  practical right now" due to pace of test changes. Future goal, not current.
 
 ## Packages to Onboard
 
@@ -162,15 +235,26 @@ Related:
 
 ## Open Questions
 
-1. Is Konflux builds part of this scope? (Hubert: "not sure, I don't think so")
-2. Is code sync to dist-git included? (Hubert: "likely yes")
-3. How does Test Console testing integrate with the new RoG workflow? (Kanitha's
-   concern about `-gate` tag bypass)
-4. What happens to Gator? Hubert proposed dropping it entirely and adding a
-   small GitLab job for `-pending` to `-candidate` promotion. But Test Console
-   testing needs a replacement path.
-5. Can RHIVOS "shift left" some testing into RHEL's own CI/gating? (Donald
-   Zickus raised this - future conversation, not current scope)
+1. ~~Is Konflux builds part of this scope?~~ **Answered Jul 30:** Deferred.
+   Build in Brew first; Conflux integration comes later when their team has
+   capacity. Should be invisible to maintainers.
+2. ~~Is code sync to dist-git included?~~ **Answered Jul 30:** Yes, GitLab ->
+   dist-git sync is automatic. Dist-git stays source of truth for now
+   (lookaside cache).
+3. ~~How does Test Console integrate?~~ **Answered Jul 30:** Phased. Start with
+   existing gating (merge -> gate tag -> Test Console), then incrementally
+   plug tests into MRs, then skip old gating entirely.
+4. ~~What happens to Gator?~~ **Answered Jul 30:** Replaced by GitLab MR
+   workflow + direct promotion. Phase 1 keeps existing gating as safety net.
+5. Can RHIVOS "shift left" testing into RHEL CI? (Donald Zickus idea) -
+   Juanje: partially started but "not practical right now." Future goal.
+6. **NEW:** What specific changes does OSCI need for dynamic main branch
+   resolution in draft builds? Michal confirmed it's solvable (Voyager
+   precedent) but didn't detail the implementation.
+7. **NEW:** Timeline and effort estimate from OSCI team - awaiting Adam's
+   epic/ticket creation and capacity assessment.
+8. **NEW:** How does the new GitLab-native sidetag workflow work, and when
+   will it be available for RHIVOS to reuse?
 
 ## Architecture Proposal
 

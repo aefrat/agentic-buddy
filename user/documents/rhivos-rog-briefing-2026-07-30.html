@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RHIVOS on GitLab (RoG) - Post-Meeting Briefing - Jul 30, 2026</title>
+<style>
+  body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px;
+    color: #1a1a1a;
+    line-height: 1.6;
+    background: #fafafa;
+  }
+  h1 {
+    font-size: 1.6em;
+    border-bottom: 3px solid #cc0000;
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+  }
+  .subtitle {
+    color: #666;
+    font-size: 0.95em;
+    margin-bottom: 24px;
+  }
+  h2 {
+    font-size: 1.2em;
+    color: #cc0000;
+    margin-top: 28px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 4px;
+  }
+  h3 {
+    font-size: 1.05em;
+    color: #333;
+    margin-top: 20px;
+    margin-bottom: 8px;
+  }
+  .summary-box {
+    background: #fff;
+    border-left: 4px solid #cc0000;
+    padding: 16px 20px;
+    margin: 16px 0;
+    border-radius: 0 4px 4px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .summary-box p {
+    margin: 0;
+  }
+  .status-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .status-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .status-card .label {
+    font-size: 0.8em;
+    text-transform: uppercase;
+    color: #888;
+    letter-spacing: 0.5px;
+  }
+  .status-card .value {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    font-weight: 600;
+  }
+  .badge-new { background: #e3f2fd; color: #1565c0; }
+  .badge-blocked { background: #fce4ec; color: #c62828; }
+  .badge-answered { background: #e8f5e9; color: #2e7d32; }
+  .badge-pending { background: #fff3e0; color: #e65100; }
+  .badge-deferred { background: #f3e5f5; color: #7b1fa2; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 0.92em;
+  }
+  th {
+    background: #f5f5f5;
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 2px solid #ddd;
+    font-weight: 600;
+  }
+  td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eee;
+    vertical-align: top;
+  }
+  tr:hover td {
+    background: #fafafa;
+  }
+  .phase-timeline {
+    position: relative;
+    margin: 20px 0;
+    padding-left: 24px;
+  }
+  .phase-timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 4px;
+    bottom: 4px;
+    width: 2px;
+    background: #cc0000;
+  }
+  .phase-item {
+    position: relative;
+    margin-bottom: 16px;
+    padding-left: 20px;
+  }
+  .phase-item::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #cc0000;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px #cc0000;
+  }
+  .phase-title {
+    font-weight: 600;
+    color: #333;
+  }
+  .phase-desc {
+    color: #555;
+    font-size: 0.92em;
+    margin-top: 2px;
+  }
+  .action-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0;
+  }
+  .action-list li {
+    padding: 8px 12px;
+    margin: 6px 0;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .action-owner {
+    font-weight: 600;
+    color: #cc0000;
+    white-space: nowrap;
+    min-width: 120px;
+  }
+  .finding-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin: 10px 0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .finding-card .finding-title {
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .finding-card .finding-detail {
+    font-size: 0.92em;
+    color: #444;
+  }
+  .quote {
+    border-left: 3px solid #ccc;
+    padding-left: 12px;
+    color: #555;
+    font-style: italic;
+    margin: 8px 0;
+    font-size: 0.92em;
+  }
+  a {
+    color: #1565c0;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  .footer {
+    margin-top: 32px;
+    padding-top: 12px;
+    border-top: 1px solid #ddd;
+    font-size: 0.85em;
+    color: #888;
+  }
+  @media (max-width: 600px) {
+    .status-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<h1>RHIVOS on GitLab (RoG) - Post-Meeting Briefing</h1>
+<div class="subtitle">
+  Meeting: "Exploring RHIVOS and RoG" - Jul 30, 2026 |
+  <a href="https://docs.google.com/document/d/1PZZo1nfHJtD9Aa3tnd2Jpj1bUJoWw03n2tc7cFVWOuM/edit?tab=t.t4me1ed9nbhc">Gemini Notes</a> |
+  <a href="https://docs.google.com/document/d/1PZZo1nfHJtD9Aa3tnd2Jpj1bUJoWw03n2tc7cFVWOuM/edit?tab=t.gk02det9cf5">Transcript</a> |
+  <a href="https://drive.google.com/file/d/1CfYHefCcvGcv6n8lMpHITj0frzyblpX1/view">Recording</a>
+</div>
+
+<div class="summary-box">
+  <p><strong>Bottom line:</strong> OSCI is open to onboarding RHIVOS. Adam Samalik and Michal Srb
+  will take the requirements back to their team, assess feasibility and effort, and create a tracking
+  epic. No commitments yet, but no blockers they consider showstoppers either. The phased approach
+  (onboard without tests first, plug tests in incrementally, then replace gating) gives us a clear
+  path forward. Target: H2 2026.</p>
+</div>
+
+<h2>Meeting Context</h2>
+
+<div class="status-grid">
+  <div class="status-card">
+    <div class="label">Attendees (RHIVOS)</div>
+    <div class="value" style="font-size:0.95em">Avihai Efrat, Petr Sabata, Hubert Stefanski, Juanje Ojeda, Kanitha Chim, Ozan Unsal</div>
+  </div>
+  <div class="status-card">
+    <div class="label">Attendees (OSCI/RHEL)</div>
+    <div class="value" style="font-size:0.95em">Adam Samalik (PO), Michal Srb</div>
+  </div>
+  <div class="status-card">
+    <div class="label">Purpose</div>
+    <div class="value" style="font-size:0.95em">First direct requirements discussion with OSCI team</div>
+  </div>
+  <div class="status-card">
+    <div class="label">Outcome</div>
+    <div class="value" style="font-size:0.95em">OSCI will assess feasibility and create tracking ticket</div>
+  </div>
+</div>
+
+<h2>Jira Status Snapshot</h2>
+
+<table>
+  <tr>
+    <th>Ticket</th>
+    <th>Description</th>
+    <th>Assignee</th>
+    <th>Status</th>
+  </tr>
+  <tr>
+    <td><a href="https://redhat.atlassian.net/browse/AUTOBU-1105">AUTOBU-1105</a></td>
+    <td>Initiative - RHIVOS on GitLab</td>
+    <td>Kanitha Chim</td>
+    <td><span class="badge badge-new">New</span></td>
+  </tr>
+  <tr>
+    <td><a href="https://redhat.atlassian.net/browse/VROOM-41188">VROOM-41188</a></td>
+    <td>Epic - Package Onboarding to RoG (skeleton, AC still "TODO")</td>
+    <td>Kanitha Chim</td>
+    <td><span class="badge badge-new">New</span></td>
+  </tr>
+  <tr>
+    <td><a href="https://redhat.atlassian.net/browse/VROOM-40774">VROOM-40774</a></td>
+    <td>Draft Brew build targets for RHIVOS (key blocker)</td>
+    <td>Ozan Unsal</td>
+    <td><span class="badge badge-blocked">New / Blocker</span></td>
+  </tr>
+  <tr>
+    <td><a href="https://redhat.atlassian.net/browse/OSCI-9642">OSCI-9642</a></td>
+    <td>RHIVOS support in RHEL-on-GitLab</td>
+    <td>Unassigned</td>
+    <td><span class="badge badge-blocked">New / Blocked</span></td>
+  </tr>
+  <tr>
+    <td><a href="https://redhat.atlassian.net/browse/VROOM-32012">VROOM-32012</a></td>
+    <td>Spike - OSCI-like RPM checks design</td>
+    <td>Roni Eliezer</td>
+    <td><span class="badge badge-new">New</span></td>
+  </tr>
+  <tr>
+    <td><a href="https://redhat.atlassian.net/browse/KMAINT-2296">KMAINT-2296</a></td>
+    <td>Automate automotive kernel builds (4/5 subtasks closed)</td>
+    <td>Unassigned</td>
+    <td><span class="badge badge-new">New (epic)</span></td>
+  </tr>
+  <tr>
+    <td>Pending from Adam</td>
+    <td>New OSCI epic/ticket for RHIVOS onboarding</td>
+    <td>Adam Samalik</td>
+    <td><span class="badge badge-pending">Awaiting</span></td>
+  </tr>
+</table>
+
+<h2>Key Findings from the Meeting</h2>
+
+<div class="finding-card">
+  <div class="finding-title">1. Scope: ~30 RHIVOS-specific packages only</div>
+  <div class="finding-detail">
+    Additional RHEL package testing (where RHIVOS runs extra tests on RHEL packages) is out of scope
+    for this initiative. It runs separately, later in the pipeline. RHIVOS stays in the private
+    GitLab namespace (Red Hat employees only). CentOS Stream sync is not on the agenda.
+  </div>
+</div>
+
+<div class="finding-card">
+  <div class="finding-title">2. Dynamic main branch - solvable, needs custom work</div>
+  <div class="finding-detail">
+    RHIVOS manages its own <code>main</code> branch that shifts as releases evolve
+    (<code>rhivos-2-main</code> becomes <code>rhivos-2.2</code> when 2.1 releases).
+    Draft builds from MRs need to dynamically resolve the correct Brew target. RHEL doesn't have
+    this issue (CentOS Stream handles versioning). Michal confirmed Voyager has a similar situation
+    and it's solvable.
+  </div>
+</div>
+
+<div class="finding-card">
+  <div class="finding-title">3. GitLab and dist-git are separate storage systems</div>
+  <div class="finding-detail">
+    Not a frontend on dist-git - they're completely separate systems that sync bidirectionally.
+    Dist-git remains the source of truth (lookaside cache). BC check runs as an MR test in GitLab.
+    Petr wants GitLab-only (disable direct dist-git pushes). Michal says this is preferable and
+    easier for smaller teams who can mandate it to all maintainers.
+    <div class="quote">"If RHIVOS is smaller and you can actually talk to all the maintainers and tell them
+    'you are onboarded to GitLab, please don't push directly to dist-git' - then that would be great."
+    - Michal Srb</div>
+  </div>
+</div>
+
+<div class="finding-card">
+  <div class="finding-title">4. Conflux deferred - build in Brew first</div>
+  <div class="finding-detail">
+    Conflux integration requires workspaces and application component models - takes significant
+    time. Build in Brew initially. When Conflux team has capacity, the switch should be invisible
+    to maintainers. Lookaside cache support for building directly from GitLab is still WIP
+    (specific Conflux feature work in progress).
+    <span class="badge badge-deferred">Deferred</span>
+  </div>
+</div>
+
+<div class="finding-card">
+  <div class="finding-title">5. Testing: phased approach with existing gating as safety net</div>
+  <div class="finding-detail">
+    Michal proposed an incremental migration. RHEL testing is also "kind of messy" with 13+ Jenkins
+    instances and teams migrating at different speeds. Adding RHIVOS-specific logic is "always
+    possible." Juanje described the current RHIVOS testing stack: centralized TMT plan repo, Test
+    Console as orchestrator, routing to Testing Farm (VMs) or Jump Starter (bare metal/edge).
+  </div>
+</div>
+
+<h3>Testing Migration Phases (proposed by Michal Srb)</h3>
+
+<div class="phase-timeline">
+  <div class="phase-item">
+    <div class="phase-title">Phase 1: Onboard without tests</div>
+    <div class="phase-desc">MR merge -> build lands in <code>-gate</code> tag -> existing Test Console
+    gating continues as-is. All current testing infrastructure untouched.</div>
+  </div>
+  <div class="phase-item">
+    <div class="phase-title">Phase 2: Plug tests into MRs</div>
+    <div class="phase-desc">Figure out how to run RHIVOS tests within merge requests and provide
+    results in the MR UI. Tests validate draft builds before merge.</div>
+  </div>
+  <div class="phase-item">
+    <div class="phase-title">Phase 3: Skip old gating</div>
+    <div class="phase-desc">When MR merged, draft build promotes directly to <code>-candidate</code>.
+    Old gating (Gator + Test Console promotion flow) replaced entirely.</div>
+  </div>
+</div>
+
+<div class="finding-card">
+  <div class="finding-title">6. GitLab-native sidetag workflow - top OSCI priority</div>
+  <div class="finding-detail">
+    Current Jenkins-based sidetag workflow won't work for RHIVOS. Adam's team is building a new
+    GitLab-native version for RHEL as a top priority. Should be reusable for RHIVOS "without any
+    changes." This solves the kernel team's daily pain point: daily kernel builds + external kmod
+    sidetag rebuilds, currently all manual.
+    <div class="quote">"That would be fantastic because that's currently a huge pain point especially for
+    the kernel team. They build a new release every single day but we also have external kmods
+    that need to be built against that kernel." - Petr Sabata</div>
+  </div>
+</div>
+
+<div class="finding-card">
+  <div class="finding-title">7. Configuration readiness</div>
+  <div class="finding-detail">
+    OSCI uses <code>box-law-data</code> components repo as source of truth for onboarding. RHIVOS
+    already has entries there with default assignees and contributors. One human approver policy
+    matches RHEL's configuration. This prerequisite is effectively met.
+    <span class="badge badge-answered">Ready</span>
+  </div>
+</div>
+
+<h2>Questions Answered</h2>
+
+<table>
+  <tr>
+    <th>Question</th>
+    <th>Answer</th>
+    <th>Status</th>
+  </tr>
+  <tr>
+    <td>Is Konflux in scope?</td>
+    <td>Deferred. Build in Brew first; Conflux integration later.</td>
+    <td><span class="badge badge-answered">Answered</span></td>
+  </tr>
+  <tr>
+    <td>Is code sync to dist-git included?</td>
+    <td>Yes. GitLab -> dist-git sync is automatic. Dist-git stays source of truth.</td>
+    <td><span class="badge badge-answered">Answered</span></td>
+  </tr>
+  <tr>
+    <td>How does Test Console integrate?</td>
+    <td>Phased: keep existing gating initially, plug tests into MRs, then replace.</td>
+    <td><span class="badge badge-answered">Answered</span></td>
+  </tr>
+  <tr>
+    <td>What happens to Gator?</td>
+    <td>Replaced by GitLab MR workflow + direct promotion. Phase 1 keeps it as safety net.</td>
+    <td><span class="badge badge-answered">Answered</span></td>
+  </tr>
+  <tr>
+    <td>Can RHIVOS shift-left tests into RHEL CI?</td>
+    <td>Partially started but "not practical right now" (Juanje). Future goal.</td>
+    <td><span class="badge badge-pending">Future</span></td>
+  </tr>
+</table>
+
+<h2>New Open Questions</h2>
+
+<table>
+  <tr>
+    <th>Question</th>
+    <th>Owner</th>
+    <th>Status</th>
+  </tr>
+  <tr>
+    <td>What specific changes does OSCI need for dynamic main branch resolution in draft builds?</td>
+    <td>Michal Srb / OSCI team</td>
+    <td><span class="badge badge-pending">Awaiting assessment</span></td>
+  </tr>
+  <tr>
+    <td>Timeline and effort estimate from OSCI team</td>
+    <td>Adam Samalik</td>
+    <td><span class="badge badge-pending">Awaiting epic creation</span></td>
+  </tr>
+  <tr>
+    <td>When will the GitLab-native sidetag workflow be available for RHIVOS to reuse?</td>
+    <td>Adam Samalik</td>
+    <td><span class="badge badge-pending">In progress (OSCI)</span></td>
+  </tr>
+  <tr>
+    <td>Draft Brew build targets creation (VROOM-40774) - who drives this?</td>
+    <td>Ozan Unsal / Brew team</td>
+    <td><span class="badge badge-blocked">Blocked since April</span></td>
+  </tr>
+</table>
+
+<h2>Action Items</h2>
+
+<ul class="action-list">
+  <li>
+    <span class="action-owner">Adam Samalik</span>
+    <span>Assess feasibility and effort with OSCI team. Create an epic or Jira ticket to track
+    the RHIVOS onboarding project. Share estimates and plan with RHIVOS team.</span>
+  </li>
+  <li>
+    <span class="action-owner">Avihai / RHIVOS</span>
+    <span>Follow up with Adam if no ticket appears within ~2 weeks (by mid-August).
+    Share the existing migration architecture proposal for OSCI team review.</span>
+  </li>
+  <li>
+    <span class="action-owner">Ozan Unsal</span>
+    <span>Unblock VROOM-40774 (draft Brew build targets). This has been in "New" since April
+    and blocks OSCI-9642. Coordinate with Brew team.</span>
+  </li>
+  <li>
+    <span class="action-owner">Kanitha Chim</span>
+    <span>Flesh out VROOM-41188 acceptance criteria (currently "TODO"). Update based on
+    meeting findings and phased testing approach.</span>
+  </li>
+  <li>
+    <span class="action-owner">Petr Sabata</span>
+    <span>Coordinate with kernel workflow group on sidetag integration once OSCI's
+    GitLab-native workflow is available.</span>
+  </li>
+</ul>
+
+<h2>Where We Can Go Next</h2>
+
+<div class="summary-box">
+  <p>The meeting removed uncertainty about OSCI's willingness and confirmed that most technical
+  challenges (dynamic branches, testing integration, sidetag workflow) are solvable. The
+  <strong>critical path</strong> is now:</p>
+</div>
+
+<h3>Immediate (next 2 weeks)</h3>
+<ol>
+  <li><strong>Unblock VROOM-40774</strong> - Draft Brew targets have been stuck since April. This is
+  the single longest-standing prerequisite. Push Ozan to coordinate with Brew team, or escalate.</li>
+  <li><strong>Share migration proposal with OSCI</strong> - The 4-phase architecture proposal
+  (Jul 14) aligns well with Michal's phased testing approach. Send it to Adam and Michal
+  as input for their assessment.</li>
+  <li><strong>Flesh out VROOM-41188</strong> - The epic is still a skeleton. Update acceptance criteria
+  based on meeting findings, phased approach, and ~30 package scope.</li>
+</ol>
+
+<h3>Short-term (August)</h3>
+<ol start="4">
+  <li><strong>Await Adam's tracking ticket</strong> - He committed to creating an epic and sharing estimates.
+  Follow up mid-August if nothing appears.</li>
+  <li><strong>Align on Phase 1 scope</strong> - Once OSCI provides estimates, agree on what "onboard without
+  tests" means concretely: which packages first (kernel-automotive as pilot?), what configuration,
+  what validation.</li>
+  <li><strong>Resolve OSCI-9642 ownership</strong> - Still unassigned. Adam's new ticket may supersede it,
+  but clarify the relationship.</li>
+</ol>
+
+<h3>Medium-term (H2 2026)</h3>
+<ol start="7">
+  <li><strong>Phase 1 execution</strong> - Onboard first packages to GitLab MR workflow, keeping existing
+  gating. Kernel packages are the most complex (sidetag dependency) - consider simpler packages first.</li>
+  <li><strong>Sidetag workflow reuse</strong> - Track OSCI's GitLab-native sidetag development. When available,
+  it unblocks the kernel team's daily workflow pain.</li>
+  <li><strong>Phase 2 planning</strong> - Design how to plug Test Console tests into GitLab MRs. This is
+  where Roni's spike (VROOM-32012) and the OSCI RPM checks design become relevant.</li>
+</ol>
+
+<h2>Reference Links</h2>
+
+<table>
+  <tr>
+    <th>Resource</th>
+    <th>Link</th>
+  </tr>
+  <tr>
+    <td>Meeting recording</td>
+    <td><a href="https://drive.google.com/file/d/1CfYHefCcvGcv6n8lMpHITj0frzyblpX1/view">Google Drive</a></td>
+  </tr>
+  <tr>
+    <td>Gemini notes</td>
+    <td><a href="https://docs.google.com/document/d/1PZZo1nfHJtD9Aa3tnd2Jpj1bUJoWw03n2tc7cFVWOuM/edit?tab=t.t4me1ed9nbhc">Notes tab</a></td>
+  </tr>
+  <tr>
+    <td>Meeting transcript</td>
+    <td><a href="https://docs.google.com/document/d/1PZZo1nfHJtD9Aa3tnd2Jpj1bUJoWw03n2tc7cFVWOuM/edit?tab=t.gk02det9cf5">Transcript tab</a></td>
+  </tr>
+  <tr>
+    <td>Migration architecture proposal (Jul 14)</td>
+    <td>Local: user/documents/rhivos-rog-migration-proposal.html</td>
+  </tr>
+  <tr>
+    <td>AUTOBU-1105 (Initiative)</td>
+    <td><a href="https://redhat.atlassian.net/browse/AUTOBU-1105">Jira</a></td>
+  </tr>
+  <tr>
+    <td>VROOM-41188 (Epic)</td>
+    <td><a href="https://redhat.atlassian.net/browse/VROOM-41188">Jira</a></td>
+  </tr>
+  <tr>
+    <td>OSCI-9642</td>
+    <td><a href="https://redhat.atlassian.net/browse/OSCI-9642">Jira</a></td>
+  </tr>
+  <tr>
+    <td>VROOM-40774 (blocker)</td>
+    <td><a href="https://redhat.atlassian.net/browse/VROOM-40774">Jira</a></td>
+  </tr>
+  <tr>
+    <td>RoK ARB meeting notes</td>
+    <td><a href="https://docs.google.com/document/d/1JKvrHVlIWEs1-F0CSJDvCJmwp-besBirsQ555VCHQ28/edit">Google Doc</a></td>
+  </tr>
+  <tr>
+    <td>Jim Bair's test list (from VROOM-32012)</td>
+    <td><a href="https://docs.google.com/document/d/1qdheKSGcDXZgGm_YUeI-n60auDifn2jv5RgLwROLpl8/edit">Google Doc</a></td>
+  </tr>
+</table>
+
+<div class="footer">
+  Generated Jul 30, 2026 | Avihai Efrat | ATC Engineering
+</div>
+
+</body>
+</html>
