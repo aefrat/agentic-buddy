@@ -1,3 +1,13 @@
 {
-  "tasks": []
+  "tasks": [
+    {
+      "id": "a8a701fd",
+      "cron": "7 10 9 8 *",
+      "prompt": "Reminder: Start working on the AI-powered release blocker summary PoC (assigned by Dana at the RHIVOS 2.0 retro, deadline end of August). Action items and approach notes at user/rhivos-retro-action-items.md, project context at agent_brain/projects/rhivos-2.0-retro.md. First steps: design the skill (which channels to scan, output format, cadence), then build the PoC using existing Slack MCP integration.",
+      "createdAt": 1785424884026,
+      "createdBySessionId": "c61693af-bc54-49dc-bb93-9e0ecab4fa72",
+      "createdByPid": 7300,
+      "createdByProcStart": "6293"
+    }
+  ]
 }

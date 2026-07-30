@@ -15,6 +15,7 @@ Full analysis and meeting notes at `agent_brain/projects/rhivos-2.0-retro.md`.
 - [ ] Design the skill/agent (what channels to scan, what format to output, cadence)
 - [ ] Build PoC
 - [ ] Demo to Dana/team
+- **Start date:** 2026-08-09 (Sunday - reminder set)
 - **Status:** Not started
 
 ### 2. Fill out retro doc action items
