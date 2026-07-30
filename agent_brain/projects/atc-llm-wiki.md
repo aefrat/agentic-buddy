@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-07-19
-access_count: 4
+last_accessed: 2026-07-30
+access_count: 5
 created: 2026-05-21
 ---
 
@@ -8,7 +8,7 @@ created: 2026-05-21
 
 ## Status
 
-Active — wiki created, working out where to host it and how to publish the docs site.
+Active — wiki created with two content sources: codebase docs (May 2026) and Confluence Distribution FA pages (Jul 30, 2026). Hosting/deployment still open.
 
 ## What it is
 
@@ -26,6 +26,29 @@ An LLM wiki generated for the ToolChain (ATC) team from all ATC repos, created ~
 - ~~Where does the wiki source live?~~ → **DONE:** pushed to https://gitlab.cee.redhat.com/automotive/pipe-x/atc_llm_wiki
 - Where does the mkdocs site get deployed? → GitLab Pages / domain / S3 (not yet decided)
 - How often does the wiki get regenerated from repos? (maintenance cadence not yet defined)
+- How to keep Confluence-sourced content in sync? (re-ingest on demand vs scheduled)
+
+## Confluence Distribution FA Ingestion (2026-07-30)
+
+Ingested 39 pages from [Auto Toolchain Distribution Focus Area](https://redhat.atlassian.net/wiki/spaces/Automotive/pages/196262002) into `distribution-fa/` directory (13 topic files + index):
+
+| Wiki file | Topics | Source pages |
+|---|---|---|
+| overview.md | What the FA does, channels, content flow | 2 |
+| onboarding.md | Team structure, buddy system, Zero-to-Hero, glossary | 3 |
+| access-and-permissions.md | Errata roles (6), Rover groups (4), tools | 2 |
+| errata-advisories.md | Types, lifecycle, clone vs specific, scripts | 7 |
+| rpm-signing.md | RADAS, manual EC2, key architecture | 3 |
+| cdn-publication.md | Channels, staging, Pub CLI, verification | 5 |
+| product-ids-and-engids.md | EngID lifecycle, PSCA, product listings | 3 |
+| rhsm-pulp.md | Repo management, content sets, CDN paths | 2 |
+| release-process.md | Full checklist, compose staging | 2 |
+| repositories-and-resources.md | 14 repos, URLs, contacts, quick ref | 2 |
+| principal-guide.md | Senior engineer architecture view | 1 |
+| partner-distribution.md | Artifactory, download server, SFTP | 3 |
+| knowledge-transfer.md | Marcel Banas, Paul offboarding notes | 2 |
+
+Raw HTML stored in `distribution-fa/raw/` (not committed). Disconfirmation gate passed (3/3 questions answered from wiki alone).
 
 ## Confluence Documentation
 
