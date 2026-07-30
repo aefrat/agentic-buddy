@@ -86,6 +86,7 @@ Directories with an `index.md` have a content map — read it first to decide wh
 - [Concepts](agent_brain/concepts/) — lessons learned, patterns, generalized knowledge.
 - [Agent Forge Design Principles](agent_brain/projects/agent-forge-design-principles.md) — Juanje Ojeda's 7 principles for stateful process-oriented agents, with prior art analysis and convergence with agentic-buddy. Read when building, reviewing, or discussing agent design.
 - [RHIVOS 2.0 RC3](agent_brain/projects/RHIVOS_2_0_release_RC3.md) — RC3 release tracking, CTC status, tagging documentation audit, Brew permissions. Read when RC3, RHIVOS release, CTC testing, or tagging comes up.
+- [RHIVOS 2.0 Retro](agent_brain/projects/rhivos-2.0-retro.md) — RHIVOS 2.0 release retrospective (Jul 30). What went well/didn't, improvement proposals, action items. Read when retro follow-ups, release process improvements, or 2.1 planning comes up.
 - [Ideas](agent_brain/ideas/) — ideas in various stages. `_scratchpad.md` for one-liners.
 - [Journal](user/journal/) — weekly and monthly activity summaries. Read when the user asks about past activity or needs to prepare reports.
 - [LP Status Agent](agent_brain/projects/lp-status-agent/index.md) — daily RHIVOS QC LP report agent stores (active snapshot, history). Read when running LP status report or comparing against previous run.
