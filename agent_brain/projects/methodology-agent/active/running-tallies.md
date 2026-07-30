@@ -37,4 +37,10 @@ Example:
 2026-07-19|autonomous|reporting|stakeholder-slack-activity-lookup-4ppl|high
 2026-07-23|autonomous|reporting|atc-completed-ticket-synthesis-6-tickets|high
 2026-07-23|autonomous|reporting|pitcrew-slack-monitoring-1day|high
+2026-07-30|assisted|reporting|osci-meeting-briefing-html-gdoc|high
+2026-07-30|enhanced|research|gemini-transcript-cross-referencing|medium
+2026-07-30|autonomous|project-tracking|rog-project-file-update|high
+2026-07-30|assisted|research|slack-dm-confluence-cross-reference|high
+2026-07-30|assisted|documentation|confluence-5page-gap-updates|high
+2026-07-30|assisted|tool-building|distribution-fa-llm-wiki-creation|high
 
