@@ -10,7 +10,7 @@ RHIVOS 2.0 Retro action item: "AI briefs to get a clear state of the release blo
 
 **Repo:** https://gitlab.cee.redhat.com/aefrat/rhivos-release-status
 **Container:** quay.io/aefrat/rhivos-release-status:latest
-**Status:** Phase 3 complete (Aug 2). LLM synthesis + combined dashboard + container rebuilt with LLM deps. E2E tested on all 3 releases with 4 Google Docs output. Demo to Dana/team not yet scheduled.
+**Status:** Phase 3 complete + CI configured (Aug 2). LLM synthesis + combined dashboard + container rebuilt with LLM deps. E2E tested on all 3 releases with 4 Google Docs output. GitLab CI/CD pipeline: lint/build/run-daily, weekdays 07:00 UTC. Demo to Dana/team not yet scheduled.
 **Google Docs:** [Drive folder](https://drive.google.com/drive/folders/1OwzygOZihGEPr18tJFrWS0iQY_fGGySC) | [Program Summary](https://docs.google.com/document/d/1kj6C8JIMyIQmz8WclgWPhHq54d7tvAuQV1zgtLAw5Ps/edit)
 
 ## Features (Phase 1 + Phase 2)
@@ -34,9 +34,20 @@ RHIVOS 2.0 Retro action item: "AI briefs to get a clear state of the release blo
 
 Tested with podman from quay.io. Required env vars: `JIRA_API_TOKEN`, `JIRA_USER_EMAIL`, `SLACK_XOXC_TOKEN`, `SLACK_XOXD_COOKIE`. For LLM: `VERTEX_PROJECT_ID` + ADC credentials mounted with `:z` flag (SELinux). Meeting notes require Workspace API scopes (not available via default ADC) - pipeline continues gracefully without them.
 
+## CI/CD Pipeline
+
+GitLab CI at `gitlab.cee.redhat.com/aefrat/rhivos-release-status`:
+- **lint:** ruff check on push/MR
+- **build:** buildah to quay.io on main when Containerfile/tools/agent change
+- **run-daily:** weekdays 07:00 UTC (09:00 CEST), also manual trigger via web UI
+- **GCP SA:** `rhivos-dashboard-agent@rhivos-release-blockers-agent.iam.gserviceaccount.com` (Vertex AI User role, Drive folder writer)
+- **8 CI/CD variables:** JIRA_API_TOKEN, JIRA_USER_EMAIL, SLACK_XOXC_TOKEN, SLACK_XOXD_COOKIE, VERTEX_PROJECT_ID, QUAY_USER, QUAY_TOKEN, GOOGLE_SA_KEY_PATH (file-type)
+
+Per-release doc IDs and combined_doc_id stored in `release-config.yaml` for CI upload without `gws` CLI.
+
 ## Open questions
 
-- Service account needed for unattended container execution (currently requires `gcloud auth` for Vertex AI ADC + Workspace API scopes for meeting notes)
+- Meeting notes in CI: GCP SA needs Workspace API scopes (domain-wide delegation or explicit scopes) to fetch Google Docs content. Currently skipped gracefully in container mode.
 
 ## Files
 
