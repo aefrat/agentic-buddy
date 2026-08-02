@@ -1,6 +1,6 @@
 ---
 last_accessed: 2026-08-02
-access_count: 2
+access_count: 3
 created: 2026-08-02
 ---
 
@@ -10,7 +10,7 @@ RHIVOS 2.0 Retro action item: "AI briefs to get a clear state of the release blo
 
 **Repo:** https://gitlab.cee.redhat.com/aefrat/rhivos-release-status
 **Container:** quay.io/aefrat/rhivos-release-status:latest
-**Status:** Phase 2 enhancements complete (Aug 2). 9 commits. E2E tested on all 3 releases. Demo to Dana/team not yet scheduled.
+**Status:** Phase 2 complete (Aug 2). E2E tested on all 3 releases. Demo to Dana/team not yet scheduled.
 
 ## Features (Phase 1 + Phase 2)
 
@@ -22,10 +22,13 @@ RHIVOS 2.0 Retro action item: "AI briefs to get a clear state of the release blo
 - **Release-specific Slack digest** - messages filtered by ticket fixVersion
 - **Google Doc output** - `--folder-id` creates new docs, `--doc-id` updates existing, via `gws` CLI
 - **Workflow docs link** - footer links to RHIVOS Jira workflows Confluence page
+- **Release readiness meeting notes** - Google Doc `1MjoxfCEsDWiLFy99wHsS4EWOnVzvlg91NqJcMIHBDbI` auto-loaded from config. Parser handles dateElement smart chips. 7-day window. Content filtered against known Jira blocker set (cross-reference, not keyword heuristics).
+- **Executive brief** - 3-line max summary incorporating all 3 data sources (Jira, Slack, meeting notes). Adapts to released/active/all-clear/has-urgent context.
+- **Data sources footer** - lists all information sources with links + RHIVOS workflows reference
 
 ## Open questions
 
-- Should the weekly release readiness meeting Google Doc be a data source? (user asked Aug 2, unanswered). `fetch-doc` tool exists but isn't wired into the pipeline.
+- None currently. Meeting doc integration (previously open) is resolved.
 
 ## Files
 

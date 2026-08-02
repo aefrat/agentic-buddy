@@ -1,6 +1,6 @@
 ---
 last_accessed: 2026-08-02
-access_count: 47
+access_count: 48
 created: 2026-06-01
 ---
 
@@ -141,6 +141,8 @@ Resolved observations are moved to the bottom.
 - **2026-08-02:** "Jira custom field discovery pattern" - finding the correct custom field for a Jira attribute (AssignedTeam) required: (1) fetch `/rest/api/3/field` for the full field list, (2) grep for candidate names (found 2: customfield_10606 and customfield_11294), (3) fetch a known ticket with both fields to see which has values. Standard field search by name alone is unreliable because multiple fields can have similar names. Generalizable to any Jira integration needing custom fields. (seen: 1)
 - **2026-08-02:** "Workflow-aware triage replaces flat urgency" - dashboard urgency should be derived from (workflow_state, item_type) tuples, not from age or flat categorization. Same-age items in different states need completely different actions. Pattern: define state groups (terminal, QE, dev, not-started), cross with item type (blocker vs exception), produce (urgency_level, action_string) tuples. Applied to RHIVOS blocker dashboard; generalizable to any Jira-backed status dashboard. (seen: 1)
 - **2026-08-02:** "Source authority over mapping tables" - when the authoritative data exists at the source (Jira custom field `customfield_10606` for AssignedTeam), use it directly rather than building a local mapping table (component-to-team YAML). The mapping table was expanded from 7 to 20 entries before being discovered obsolete by the direct field. The source is self-updating and authoritative; the mapping requires manual maintenance and will drift. Generalizable: always check if the upstream system has the data you're trying to derive before building derivation logic. (seen: 1)
+- **2026-08-02:** "Google Docs dateElement smart chips invisible to text extractors" - Google Docs paragraphs can contain `dateElement` (date smart chips), `richLink`, and `person` element types alongside standard `textRun`. Text extraction functions that only handle `textRun` silently drop these, producing text with invisible gaps. The release readiness doc had 64 date smart chips acting as section separators that were completely invisible to the initial parser (43 meetings found vs 107 after fix). Fix: enumerate `dateElement.displayText`, `richLink.richLinkProperties.title/uri`, `person.personProperties.name`. (seen: 1)
+- **2026-08-02:** "Domain-set cross-referencing for content extraction" - when extracting relevant content from a general-purpose source (meeting notes, Slack, email), filter against the specific domain data set (known Jira blockers) rather than keyword heuristics. Keywords produce false positives (any mention of "safety" near a ticket key) and false negatives (blockers discussed without using the word "blocker"). Cross-referencing against the authoritative source eliminates noise. Applied: meeting notes filtered against `all_statuses_data` blocker keys. Three iterations were needed to converge: keyword filter -> ticket filter -> blocker-set cross-reference. Generalizable to any "extract X from mixed-content source" problem. (seen: 1)
 
 ## Structure candidates (tools)
 
