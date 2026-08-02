@@ -17,14 +17,16 @@ Full analysis and meeting notes at `agent_brain/projects/rhivos-2.0-retro.md`.
 - **Design doc:** `agent_brain/projects/release-blocker-agent/design.md`
 - **Requirements:** `agent_brain/projects/release-blocker-agent/requirements.md`
 - **Notes from doc comments:** Petr raised PIA concern for AI+Slack. Avi clarified: RH-wide Slack MCP from DOL is already available and in use. Container can use Slack API directly with bot token.
-- [ ] Scaffold repo from agent-forge skeleton
-- [ ] Implement tools: query-jira, scan-slack, fetch-doc, compute-stats, render-doc
-- [ ] Wire orchestrator (agent.py)
+- [x] Scaffold repo from agent-forge skeleton
+- [x] Implement tools: query-jira, scan-slack, fetch-doc, compute-stats, render-doc
+- [x] Wire orchestrator (agent.py)
+- [x] Create kb/reference/ configs for RHIVOS releases (rhivos-2.0, rhivos-2.0.z, rhivos-2.1)
 - [ ] Containerize + push to quay.io
-- [ ] Create kb/reference/ configs for RHIVOS releases
+- [ ] End-to-end test with live data
 - [ ] Demo to Dana/team
 - **Start date:** 2026-08-02
-- **Status:** Design complete, implementation not started
+- **Repo:** https://gitlab.cee.redhat.com/aefrat/rhivos-release-status
+- **Status:** Implementation complete (Phase 1), needs live testing
 
 ### 2. Fill out retro doc action items
 
