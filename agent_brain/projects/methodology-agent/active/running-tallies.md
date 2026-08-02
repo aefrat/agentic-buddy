@@ -43,4 +43,5 @@ Example:
 2026-07-30|assisted|research|slack-dm-confluence-cross-reference|high
 2026-07-30|assisted|documentation|confluence-5page-gap-updates|high
 2026-07-30|assisted|tool-building|distribution-fa-llm-wiki-creation|high
+2026-08-02|assisted|research|autosd-jumpstarter-gap-research-response-draft|high
 
