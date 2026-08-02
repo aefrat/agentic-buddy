@@ -7,16 +7,24 @@ Full analysis and meeting notes at `agent_brain/projects/rhivos-2.0-retro.md`.
 
 ### 1. AI-powered release blocker summary (PoC)
 
-- **What:** Build a PoC that uses AI to scan the release technical Slack channel and produce clear blocker status summaries for the release readiness channel.
-- **Deadline:** End of August 2026
-- **Approach:** Local PoC using existing RH-wide Slack MCP (no AIA/PIA needed). Already have working Slack MCP integration in agentic-buddy. Can extend scan-slack-channels skill or build a dedicated release-status skill.
-- **Notes from doc comments:** Petr raised PIA concern for AI+Slack. Avi clarified: RH-wide Slack MCP from DOL is already available and in use. PoC runs locally.
-- **Stretch:** Combine with Luigi's dashboard idea - feed AI summary into a static HTML dashboard (same URL per release).
-- [ ] Design the skill/agent (what channels to scan, what format to output, cadence)
-- [ ] Build PoC
+- **What:** Containerized agent that produces a Google Doc dashboard per release showing active blockers, their status, ownership (team + focal), and next steps.
+- **Deadline:** End of Q3 2026 (demo target: end of August)
+- **Approach:** Agent-forge design principles. Containerized (quay.io), runnable anywhere. Phase 1 is pure script (no LLM needed). Three data sources:
+  1. **Jira (source of truth):** VROOM release blocker dropdown + priority=Blocker + impediment flag, scoped by fixVersion
+  2. **Release readiness Slack:** Last 7 days of activity, filtered by blocker keywords and ticket keys
+  3. **RR meeting notes (Google Doc):** Latest meeting sections, action items, next steps
+- **Output:** Google Doc dashboard with: active blockers table, proposed blockers, exceptions, weekly activity summary, computed stats
+- **Design doc:** `agent_brain/projects/release-blocker-agent/design.md`
+- **Requirements:** `agent_brain/projects/release-blocker-agent/requirements.md`
+- **Notes from doc comments:** Petr raised PIA concern for AI+Slack. Avi clarified: RH-wide Slack MCP from DOL is already available and in use. Container can use Slack API directly with bot token.
+- [ ] Scaffold repo from agent-forge skeleton
+- [ ] Implement tools: query-jira, scan-slack, fetch-doc, compute-stats, render-doc
+- [ ] Wire orchestrator (agent.py)
+- [ ] Containerize + push to quay.io
+- [ ] Create kb/reference/ configs for RHIVOS releases
 - [ ] Demo to Dana/team
-- **Start date:** 2026-08-02 (Sunday - reminder set)
-- **Status:** Not started
+- **Start date:** 2026-08-02
+- **Status:** Design complete, implementation not started
 
 ### 2. Fill out retro doc action items
 
