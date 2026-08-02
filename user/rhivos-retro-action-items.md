@@ -21,12 +21,14 @@ Full analysis and meeting notes at `agent_brain/projects/rhivos-2.0-retro.md`.
 - [x] Implement tools: query-jira, scan-slack, fetch-doc, compute-stats, render-doc
 - [x] Wire orchestrator (agent.py)
 - [x] Create kb/reference/ configs for RHIVOS releases (rhivos-2.0, rhivos-2.0.z, rhivos-2.1)
-- [ ] Containerize + push to quay.io
-- [ ] End-to-end test with live data
+- [x] Containerize (built, quay.io push pending auth)
+- [x] End-to-end test with live data (all 3 releases pass: 31/1/1 blockers)
+- [ ] Push container to quay.io (need `podman login quay.io` first)
 - [ ] Demo to Dana/team
 - **Start date:** 2026-08-02
 - **Repo:** https://gitlab.cee.redhat.com/aefrat/rhivos-release-status
-- **Status:** Implementation complete (Phase 1), needs live testing
+- **Container:** `quay.io/aefrat/rhivos-release-status:latest` (built locally)
+- **Status:** Phase 1 complete. Container built and tested. Quay.io push blocked on auth.
 
 ### 2. Fill out retro doc action items
 
