@@ -30,9 +30,13 @@ RHIVOS 2.0 Retro action item: "AI briefs to get a clear state of the release blo
 - **Combined program dashboard** - 4th Google Doc aggregating all releases: program-level LLM outlook, summary table, per-release condensed sections with pie charts
 - **GCP project:** `rhivos-release-blockers-agent` (ID `530839756563`) with Vertex AI API enabled
 
+## Container operation
+
+Tested with podman from quay.io. Required env vars: `JIRA_API_TOKEN`, `JIRA_USER_EMAIL`, `SLACK_XOXC_TOKEN`, `SLACK_XOXD_COOKIE`. For LLM: `VERTEX_PROJECT_ID` + ADC credentials mounted with `:z` flag (SELinux). Meeting notes require Workspace API scopes (not available via default ADC) - pipeline continues gracefully without them.
+
 ## Open questions
 
-- Service account needed for unattended container execution (currently requires `gcloud auth` for Vertex AI ADC)
+- Service account needed for unattended container execution (currently requires `gcloud auth` for Vertex AI ADC + Workspace API scopes for meeting notes)
 
 ## Files
 
