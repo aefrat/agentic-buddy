@@ -27,7 +27,7 @@ Full analysis and meeting notes at `agent_brain/projects/rhivos-2.0-retro.md`.
 - **Start date:** 2026-08-02
 - **Repo:** https://gitlab.cee.redhat.com/aefrat/rhivos-release-status
 - **Container:** `quay.io/aefrat/rhivos-release-status:latest`
-- **Status:** Phase 1 complete. All deliverables done except demo.
+- **Status:** Phase 3 complete. LLM synthesis (Gemini 2.5 Flash via Vertex AI), combined program dashboard, container rebuilt with LLM deps. 4 Google Docs in [Drive folder](https://drive.google.com/drive/folders/1OwzygOZihGEPr18tJFrWS0iQY_fGGySC). All deliverables done except demo.
 
 ### 2. Fill out retro doc action items
 

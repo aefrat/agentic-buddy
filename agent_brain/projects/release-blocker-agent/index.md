@@ -10,7 +10,8 @@ RHIVOS 2.0 Retro action item: "AI briefs to get a clear state of the release blo
 
 **Repo:** https://gitlab.cee.redhat.com/aefrat/rhivos-release-status
 **Container:** quay.io/aefrat/rhivos-release-status:latest
-**Status:** Phase 2 complete (Aug 2). E2E tested on all 3 releases. Demo to Dana/team not yet scheduled.
+**Status:** Phase 3 complete (Aug 2). LLM synthesis + combined dashboard + container rebuilt with LLM deps. E2E tested on all 3 releases with 4 Google Docs output. Demo to Dana/team not yet scheduled.
+**Google Docs:** [Drive folder](https://drive.google.com/drive/folders/1OwzygOZihGEPr18tJFrWS0iQY_fGGySC) | [Program Summary](https://docs.google.com/document/d/1kj6C8JIMyIQmz8WclgWPhHq54d7tvAuQV1zgtLAw5Ps/edit)
 
 ## Features (Phase 1 + Phase 2)
 
@@ -25,10 +26,13 @@ RHIVOS 2.0 Retro action item: "AI briefs to get a clear state of the release blo
 - **Release readiness meeting notes** - Google Doc `1MjoxfCEsDWiLFy99wHsS4EWOnVzvlg91NqJcMIHBDbI` auto-loaded from config. Parser handles dateElement smart chips. 7-day window. Content filtered against known Jira blocker set (cross-reference, not keyword heuristics).
 - **Executive brief** - 3-line max summary incorporating all 3 data sources (Jira, Slack, meeting notes). Adapts to released/active/all-clear/has-urgent context.
 - **Data sources footer** - lists all information sources with links + RHIVOS workflows reference
+- **LLM-powered release outlook** - Gemini 2.5 Flash via Vertex AI (ADC) generates 3-5 sentence release health summary per release. Dual-mode: API key or Vertex AI. Thinking disabled (`thinking_budget=0`) for simple synthesis.
+- **Combined program dashboard** - 4th Google Doc aggregating all releases: program-level LLM outlook, summary table, per-release condensed sections with pie charts
+- **GCP project:** `rhivos-release-blockers-agent` (ID `530839756563`) with Vertex AI API enabled
 
 ## Open questions
 
-- None currently. Meeting doc integration (previously open) is resolved.
+- Service account needed for unattended container execution (currently requires `gcloud auth` for Vertex AI ADC)
 
 ## Files
 
