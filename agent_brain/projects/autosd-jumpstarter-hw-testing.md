@@ -40,12 +40,13 @@ Sandro Bonazzola reported ETAS having trouble booting AutoSD10 daily image on SA
 
 ### Technical blocker analysis
 
-The thread reveals **two distinct issues that were initially conflated:**
+The thread reveals **two distinct systems and the gap between them:**
 
-1. **TC (Testing Farm) is internal-only** - Hubert identified this: the upstream GitLab CI calls Testing Farm, which can provision QEMU VMs but has no path to the physical Jumpstarter boards because TC is an internal service.
-2. **Jumpstarter is publicly accessible** - both Hubert and Paul immediately pointed out the solution: bypass TC entirely and call the Jumpstarter endpoint directly from the upstream pipeline ("jmp should be accessible").
+1. **Testing Farm** - used by the upstream GitLab CI pipeline to run QEMU VM tests. Handles virtual testing only.
+2. **Test Console (TC)** - the internal service that runs smoke tests on real hardware for RHIVOS downstream. Hubert asked "is TC running those tests? I know it does for RHIVOS" - confirming TC is what drives board-level testing in the downstream pipeline. **TC is internal-only and not accessible from upstream.** This is the actual limitation Hubert identified.
+3. **Jumpstarter (jmp)** - publicly accessible board management platform. Hubert immediately proposed it as the alternative: "The other option is to use jmp directly for nightlies." Paul confirmed: "exactly, jmp should be accessible."
 
-So the "technical blocker" is not really a blocker at all - it's an architectural assumption. The upstream pipeline was built around Testing Farm (which is internal-only and VM-only). Jumpstarter is a different path that is publicly reachable and already manages the physical boards. Nobody connected the two because the pipeline was designed before Jumpstarter existed or matured.
+So the situation is: upstream uses Testing Farm (VM-only), downstream uses Test Console (real HW but internal-only). Jumpstarter is the path that bridges this - it manages the same physical boards but is publicly reachable, so the upstream pipeline can call it directly without needing TC access.
 
 **Demonstrated cost:** kernel-automotive-6.12.0-251 issue on Ride4 boards was only caught downstream, breaking the RHIVOS 2.1 nightly (disk_full during kernel module signing - broken msm_hab.ko inflated to 2.6GB). The SA8650P/ETAS issue in the same thread turned out to be ABL firmware (not an image bug), but it surfaced the testing gap discussion.
 
