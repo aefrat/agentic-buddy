@@ -35,4 +35,4 @@ Moved to `archive/2026-06/`: 2026-06-01, 2026-06-10, 2026-06-11, 2026-06-14, 202
 - 2026-07-28: active — RC3 ticket synthesis (VROOM-39028), PitCrew Slack monitoring (Jumpstarter ABL regression, RHAS meeting reschedule)
 - 2026-07-30: active — OSCI requirements meeting (RoG onboarding), Distribution FA LLM wiki build (39 Confluence pages), Confluence gap analysis from Slack DMs
 - 2026-08-02: active — AutoSD upstream nightly HW testing gap research, Jumpstarter integration feasibility for Paul Wallrabe
-- 2026-08-03: active — GitLab CI/CD Podman executor fix, ruff lint cleanup, shared runners discovery
+- 2026-08-03: active — GitLab CI/CD Podman executor fix, ruff lint cleanup, shared runners discovery, AutoSD/Jumpstarter HW testing (Paul Wallrabe conversation, Slack source tracing, TC vs TF vs JMP mapping)
