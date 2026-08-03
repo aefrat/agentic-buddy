@@ -43,7 +43,7 @@ GitLab CI at `gitlab.cee.redhat.com/aefrat/rhivos-release-status`:
 - **GCP SA:** `rhivos-dashboard-agent@rhivos-release-blockers-agent.iam.gserviceaccount.com` (Vertex AI User role, Drive folder writer, meeting notes doc viewer)
 - **9 CI/CD variables:** JIRA_API_TOKEN, JIRA_USER_EMAIL, SLACK_XOXC_TOKEN, SLACK_XOXD_COOKIE, VERTEX_PROJECT_ID, ANTHROPIC_VERTEX_PROJECT_ID, QUAY_USER, QUAY_TOKEN, GOOGLE_SA_KEY_PATH (file-type)
 - **DOCKER_AUTH_CONFIG** CI variable for quay.io image pull auth
-- **Runner:** Docker executor on rootful Podman socket (`/run/podman/podman.sock`), build image: `registry.access.redhat.com/ubi9/buildah`
+- **Runner:** Shared Kubernetes runners (`itup-alm-x86` tag) - no laptop dependency. Local Podman runner also available as fallback.
 - **GCP APIs enabled:** Vertex AI, Google Docs, Google Drive
 
 Per-release doc IDs and combined_doc_id stored in `release-config.yaml` for CI upload without `gws` CLI.
