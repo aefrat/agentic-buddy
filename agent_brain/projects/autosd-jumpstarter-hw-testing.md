@@ -58,6 +58,15 @@ So the situation is: upstream uses Testing Farm (VM-only), downstream uses Test 
 4. **Strong view against pool sharding.** Everything should go in one shared pool with best-effort serving. Long-term solution: associate cost per lease time unit. More sharding = less synergy = more hardware = higher cost. Quotas as middleground acceptable, but Paul would revert the whole idea of dedicated device pools if it were only his decision.
 5. **Start with any board.** TI is essentially unused - adding tests there is a no-op for the cluster. (Avi had suggested QC Ride4 first given the recent miss.)
 
+## Open discussion thread (Aug 4)
+
+Avi opened a discussion in #team-toolchain-automotive ([thread](https://redhat-internal.slack.com/archives/C04JDFLHJN6/p1785752888798369)). Tagged Juanje, Ozan, Roni. Questions posed:
+
+1. What is currently stopping us from running smoke tests for AutoSD upstream?
+2. Can we use Test Console for upstream images (PAC), not just downstream (DPAC)?
+
+**Awaiting answers.** Update this section once replies come in.
+
 ## Agreed next steps
 
 - Topic added to this week's ATC open sync.
