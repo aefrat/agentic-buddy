@@ -18,7 +18,36 @@ Paul Wallrabe (PM, RHAS/Jumpstarter) reached out to Avi (Aug 2-3) asking if it m
 
 AutoSD upstream nightly pipeline (GitLab CI via Testing Farm) builds images for all board variants (QC, Renesas, TI, NXP, QEMU) but only tests on QEMU VMs. No network path from upstream CI to the Jumpstarter board cluster. Not a deliberate decision - never wired up.
 
-**Demonstrated cost:** kernel-automotive-6.12.0-251 issue on Ride4 boards was only caught downstream, breaking the RHIVOS 2.1 nightly (disk_full during kernel module signing - broken msm_hab.ko inflated to 2.6GB).
+### Source: Juanje (Jan 14, 2026)
+
+In #team-toolchain-automotive, Brian Grech asked "Can anyone here tell me where AutoSD images are tested?" Juanje replied:
+
+> "Which images exactly? We test the qemu images in Testing Farm in VMs, but we don't test the board ones for AutoSD, we don't have access from the upstream pipeline to the boards."
+
+Brian confirmed he was wondering about Ride4 specifically.
+
+### Source: #team-cats-automotive thread (Jul 31, 2026)
+
+Sandro Bonazzola reported ETAS having trouble booting AutoSD10 daily image on SA8650P (AVB hash mismatch - turned out to be an ABL firmware issue, not an image issue). This triggered the critical exchange:
+
+- **Hubert:** "The nightly smoke tests passed... Are SA8650P covered in those?"
+- **Ozan:** "This is for upstream, right? We are not doing board testing for upstream. Only the VMs are tested for AutoSD."
+- **Paul Wallrabe:** "i would love to see those tests being executed on real hardware especially since the lab is not really maxed out in terms of capacity."
+- **Hubert:** "Ah.. but TC isn't accessible upstream - it's an internal-only service, which complicates things"
+- **Hubert:** "The other option is to use jmp directly for nightlies"
+- **Ozan:** "We have an issue for the same kernel-automotive-6.12.0-251.el10iv version for Ride4 boards in downstream. Since AutoSD is not tested on real HW, probably we missed this failure."
+- **Paul:** "exactly, jmp should be accessible"
+
+### Technical blocker analysis
+
+The thread reveals **two distinct issues that were initially conflated:**
+
+1. **TC (Testing Farm) is internal-only** - Hubert identified this: the upstream GitLab CI calls Testing Farm, which can provision QEMU VMs but has no path to the physical Jumpstarter boards because TC is an internal service.
+2. **Jumpstarter is publicly accessible** - both Hubert and Paul immediately pointed out the solution: bypass TC entirely and call the Jumpstarter endpoint directly from the upstream pipeline ("jmp should be accessible").
+
+So the "technical blocker" is not really a blocker at all - it's an architectural assumption. The upstream pipeline was built around Testing Farm (which is internal-only and VM-only). Jumpstarter is a different path that is publicly reachable and already manages the physical boards. Nobody connected the two because the pipeline was designed before Jumpstarter existed or matured.
+
+**Demonstrated cost:** kernel-automotive-6.12.0-251 issue on Ride4 boards was only caught downstream, breaking the RHIVOS 2.1 nightly (disk_full during kernel module signing - broken msm_hab.ko inflated to 2.6GB). The SA8650P/ETAS issue in the same thread turned out to be ABL firmware (not an image bug), but it surfaced the testing gap discussion.
 
 ## Key points from Paul's reply (Aug 3)
 
