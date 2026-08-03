@@ -9,7 +9,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 | Date | Description | Session ID |
 |------|-------------|------------|
 | 2026-08-03 | AutoSD/Jumpstarter HW testing: Paul Wallrabe conversation processing, Slack source tracing, TC/TF/JMP mapping, discussion thread opened | (current session) |
-| 2026-08-03 | Release blocker agent: CI/CD fully operational (quay.io auth, Google Docs API, Gemini LLM, meeting notes, shared K8s runners) | 50dd1833-49ac-455a-8e2d-384809a4608d |
+| 2026-08-03 | Release blocker agent: CI/CD fully operational on shared K8s runners, release heading links, quay.io auth, Google Docs API, Gemini LLM, meeting notes (2 context compactions) | 50dd1833-49ac-455a-8e2d-384809a4608d |
 | 2026-08-03 | Release blocker agent: GitLab CI/CD pipeline fix (Podman socket, lint errors, shared runners discovery, quay.io auth) | (earlier session) |
 | 2026-08-02 | Release blocker agent Phase 2-3: triage, pie chart, team field, potential blockers, Google Doc output, meeting doc integration, executive brief, blocker-only filtering, LLM synthesis (Gemini Vertex AI), combined program dashboard, container rebuild + quay.io push, container testing + ADC/SELinux fixes, GitLab CI/CD pipeline setup (8 context compactions) | `9005257f-bd13-4e37-9798-7abaedd40e3a` |
 | 2026-08-02 | Release blocker agent: requirements, design, Phase 1 implementation, live testing, container build (3 context compactions) | `3453bc20-dcb3-45cd-bd53-389c2fb82533` |

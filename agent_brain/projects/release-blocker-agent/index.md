@@ -1,6 +1,6 @@
 ---
 last_accessed: 2026-08-03
-access_count: 4
+access_count: 5
 created: 2026-08-02
 ---
 
@@ -10,7 +10,7 @@ RHIVOS 2.0 Retro action item: "AI briefs to get a clear state of the release blo
 
 **Repo:** https://gitlab.cee.redhat.com/aefrat/rhivos-release-status
 **Container:** quay.io/aefrat/rhivos-release-status:latest
-**Status:** Phase 3 complete + CI operational (Aug 3). LLM synthesis (Gemini 2.5 Flash via Vertex AI) + combined dashboard + meeting notes. GitLab CI/CD pipeline fully green: lint/build/run-daily, weekdays 07:00 UTC. Runner uses rootful Podman socket on local host. Demo to Dana/team not yet scheduled.
+**Status:** Phase 3 complete + CI operational on shared runners (Aug 3). LLM synthesis (Gemini 2.5 Flash via Vertex AI) + combined dashboard + meeting notes. GitLab CI/CD pipeline fully green: lint/build/run-daily on shared K8s runners (`itup-alm-x86`), weekdays 07:00 UTC, no laptop dependency. Release heading links in combined dashboard (h2 links to per-release docs). Demo to Dana/team not yet scheduled.
 **Google Docs:** [Drive folder](https://drive.google.com/drive/folders/1OwzygOZihGEPr18tJFrWS0iQY_fGGySC) | [Program Summary](https://docs.google.com/document/d/1kj6C8JIMyIQmz8WclgWPhHq54d7tvAuQV1zgtLAw5Ps/edit)
 
 ## Features (Phase 1 + Phase 2)
