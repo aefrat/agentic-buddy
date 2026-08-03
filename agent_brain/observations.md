@@ -1,6 +1,6 @@
 ---
 last_accessed: 2026-08-03
-access_count: 49
+access_count: 50
 created: 2026-06-01
 ---
 
@@ -151,6 +151,9 @@ Resolved observations are moved to the bottom.
 - **2026-08-02:** "Pre-created output documents over dynamic creation in CI" - when a CI pipeline needs to upload to Google Docs, pre-creating the documents and storing their IDs in config is more robust than creating new docs per run. Creating requires `gws` CLI (user auth) or Drive createFile. Updating only requires Drive updateFile (simpler auth). Docs become stable shareable links. Applied: 4 Google Docs with IDs in release-config.yaml. (seen: 1)
 
 - **2026-08-03:** "Podman-as-Docker executor for GitLab Runner" - GitLab Runner's Docker executor can use Podman transparently via `podman.socket` (systemd socket-activated Docker-compatible API). Config: add `host = "unix:///run/podman/podman.sock"` to `[runners.docker]` in config.toml. Critical distinction: rootful socket (`/run/podman/podman.sock`) is needed when the runner runs as a system service (user `gitlab-runner`), because rootless socket (`/run/user/<uid>/podman/podman.sock`) is only accessible to the owning user. Also: system-level runner (`/etc/gitlab-runner/config.toml`) vs user-level (`~/.gitlab-runner/config.toml`) - registration writes to whichever config the `register` command was invoked against, but the running service reads only its own config. (seen: 1)
+- **2026-08-03:** "DOCKER_AUTH_CONFIG for private registry pulls in CI" - GitLab Runner reads the `DOCKER_AUTH_CONFIG` CI variable to authenticate image pulls from private registries. The value is a Docker config.json format: `{"auths":{"quay.io":{"auth":"base64(user:token)"}}}`. Critical: `echo -n` for base64 (trailing newline corrupts auth). The runner logs "Authenticating with credentials from $DOCKER_AUTH_CONFIG" when it picks up the variable. Solves the problem of private images in CI without making repos public. (seen: 1)
+- **2026-08-03:** "GitLab pipeline source determines job visibility" - `glab ci run` creates pipelines with `source: api`, not `source: web` (which is the GitLab UI "Run pipeline" button). CI rules that only match `web` won't create jobs from API-triggered pipelines. Must include `api` in rules for CLI/automation triggers. Similarly, `schedule` is distinct from both. Pattern: always check what `CI_PIPELINE_SOURCE` value your trigger method produces. (seen: 1)
+- **2026-08-03:** "Incremental CI pipeline stabilization" - a multi-stage CI pipeline (lint/build/run) may require multiple fix-retry cycles as each stage reveals the next failure. This session: (1) Docker socket missing -> Podman socket fix, (2) buildah image auth -> UBI9 public image, (3) ruff lint errors -> auto-fix + manual fix, (4) quay.io pull auth -> DOCKER_AUTH_CONFIG, (5) Google Docs API disabled -> enable API, (6) HttpError not caught -> error handling fix, (7) Claude Vertex not available -> switch to Gemini, (8) meeting notes 403 -> share with SA, (9) pipeline source mismatch -> add api to rules. 9 iterations to reach full green. Pattern: each fix is trivial in isolation; the complexity is the number of layers, not the difficulty of any one fix. (seen: 1)
 
 ## Structure candidates (tools)
 
