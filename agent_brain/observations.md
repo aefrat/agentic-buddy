@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-08-02
-access_count: 48
+last_accessed: 2026-08-03
+access_count: 49
 created: 2026-06-01
 ---
 
@@ -149,6 +149,8 @@ Resolved observations are moved to the bottom.
 - **2026-08-02:** "SELinux podman volume mount barrier" - on Fedora/RHEL with SELinux enforcing, rootless podman containers cannot read host-mounted files even with correct Unix permissions (644/755). The mount must include `:z` (shared label) or `:Z` (private label) to relabel the file for container access. The `PermissionError` is misleading - looks like Unix permissions but is an SELinux context mismatch. Applied: mounting ADC credentials file into the release blocker agent container. (seen: 1)
 - **2026-08-02:** "GitLab file-type CI/CD variables as credential bridge" - GitLab's file-type CI/CD variable writes content to a temp file and exports the path as the env var value. Maps perfectly to `GOOGLE_APPLICATION_CREDENTIALS` (expects a file path to credentials JSON). No wrapper scripts needed. Same pattern works for kubeconfig, SSH keys, TLS certs. Applied: GCP service account key for Vertex AI + Google Drive in rhivos-release-status CI pipeline. (seen: 1)
 - **2026-08-02:** "Pre-created output documents over dynamic creation in CI" - when a CI pipeline needs to upload to Google Docs, pre-creating the documents and storing their IDs in config is more robust than creating new docs per run. Creating requires `gws` CLI (user auth) or Drive createFile. Updating only requires Drive updateFile (simpler auth). Docs become stable shareable links. Applied: 4 Google Docs with IDs in release-config.yaml. (seen: 1)
+
+- **2026-08-03:** "Podman-as-Docker executor for GitLab Runner" - GitLab Runner's Docker executor can use Podman transparently via `podman.socket` (systemd socket-activated Docker-compatible API). Config: add `host = "unix:///run/podman/podman.sock"` to `[runners.docker]` in config.toml. Critical distinction: rootful socket (`/run/podman/podman.sock`) is needed when the runner runs as a system service (user `gitlab-runner`), because rootless socket (`/run/user/<uid>/podman/podman.sock`) is only accessible to the owning user. Also: system-level runner (`/etc/gitlab-runner/config.toml`) vs user-level (`~/.gitlab-runner/config.toml`) - registration writes to whichever config the `register` command was invoked against, but the running service reads only its own config. (seen: 1)
 
 ## Structure candidates (tools)
 
