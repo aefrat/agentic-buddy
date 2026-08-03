@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-08-02
-access_count: 3
+last_accessed: 2026-08-03
+access_count: 4
 created: 2026-08-02
 ---
 
@@ -10,7 +10,7 @@ RHIVOS 2.0 Retro action item: "AI briefs to get a clear state of the release blo
 
 **Repo:** https://gitlab.cee.redhat.com/aefrat/rhivos-release-status
 **Container:** quay.io/aefrat/rhivos-release-status:latest
-**Status:** Phase 3 complete + CI configured (Aug 2). LLM synthesis + combined dashboard + container rebuilt with LLM deps. E2E tested on all 3 releases with 4 Google Docs output. GitLab CI/CD pipeline: lint/build/run-daily, weekdays 07:00 UTC. Demo to Dana/team not yet scheduled.
+**Status:** Phase 3 complete + CI operational (Aug 3). LLM synthesis (Gemini 2.5 Flash via Vertex AI) + combined dashboard + meeting notes. GitLab CI/CD pipeline fully green: lint/build/run-daily, weekdays 07:00 UTC. Runner uses rootful Podman socket on local host. Demo to Dana/team not yet scheduled.
 **Google Docs:** [Drive folder](https://drive.google.com/drive/folders/1OwzygOZihGEPr18tJFrWS0iQY_fGGySC) | [Program Summary](https://docs.google.com/document/d/1kj6C8JIMyIQmz8WclgWPhHq54d7tvAuQV1zgtLAw5Ps/edit)
 
 ## Features (Phase 1 + Phase 2)
@@ -40,14 +40,13 @@ GitLab CI at `gitlab.cee.redhat.com/aefrat/rhivos-release-status`:
 - **lint:** ruff check on push/MR
 - **build:** buildah to quay.io on main when Containerfile/tools/agent change
 - **run-daily:** weekdays 07:00 UTC (09:00 CEST), also manual trigger via web UI
-- **GCP SA:** `rhivos-dashboard-agent@rhivos-release-blockers-agent.iam.gserviceaccount.com` (Vertex AI User role, Drive folder writer)
-- **8 CI/CD variables:** JIRA_API_TOKEN, JIRA_USER_EMAIL, SLACK_XOXC_TOKEN, SLACK_XOXD_COOKIE, VERTEX_PROJECT_ID, QUAY_USER, QUAY_TOKEN, GOOGLE_SA_KEY_PATH (file-type)
+- **GCP SA:** `rhivos-dashboard-agent@rhivos-release-blockers-agent.iam.gserviceaccount.com` (Vertex AI User role, Drive folder writer, meeting notes doc viewer)
+- **9 CI/CD variables:** JIRA_API_TOKEN, JIRA_USER_EMAIL, SLACK_XOXC_TOKEN, SLACK_XOXD_COOKIE, VERTEX_PROJECT_ID, ANTHROPIC_VERTEX_PROJECT_ID, QUAY_USER, QUAY_TOKEN, GOOGLE_SA_KEY_PATH (file-type)
+- **DOCKER_AUTH_CONFIG** CI variable for quay.io image pull auth
+- **Runner:** Docker executor on rootful Podman socket (`/run/podman/podman.sock`), build image: `registry.access.redhat.com/ubi9/buildah`
+- **GCP APIs enabled:** Vertex AI, Google Docs, Google Drive
 
 Per-release doc IDs and combined_doc_id stored in `release-config.yaml` for CI upload without `gws` CLI.
-
-## Open questions
-
-- Meeting notes in CI: GCP SA needs Workspace API scopes (domain-wide delegation or explicit scopes) to fetch Google Docs content. Currently skipped gracefully in container mode.
 
 ## Files
 
