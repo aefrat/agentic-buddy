@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-08-03
-access_count: 52
+last_accessed: 2026-08-05
+access_count: 53
 created: 2026-06-01
 ---
 
@@ -158,6 +158,10 @@ Resolved observations are moved to the bottom.
 - **2026-08-03:** "Shared K8s runner cold cache penalty" - first container build on shared Kubernetes runners with a large base image (UBI9/buildah) took ~44 minutes vs ~2 minutes on a local runner with cached layers. The bottleneck is blob pull, not build steps. Second build with warm cache: 82 seconds. Pattern: when migrating CI from local to shared infrastructure, expect a significant cold-cache penalty on the first run. For daily scheduled pipelines, the cache usually stays warm between runs unless the runner pool evicts images. (seen: 1)
 
 - **2026-08-03:** "Three-tier testing infrastructure mapping" - upstream uses Testing Farm (VM-only), downstream uses Test Console (real HW, internal-only), Jumpstarter bridges the gap (real HW, publicly accessible). The gap existed because the pipeline was designed around Testing Farm before Jumpstarter matured. Pattern: when two environments use different execution infrastructure, check if a newer service already spans both - the "blocker" may be an architectural assumption, not a real constraint. Applied: AutoSD nightly HW testing gap analysis. (seen: 1)
+
+- **2026-08-05:** "Cross-reference release scoping" - when a cross-reference engine merges data from multiple sources (Jira, Slack, meeting notes), each source may have different scoping granularity. Jira queries are naturally release-scoped (fixVersion IN ...), but channel-wide sources (Slack, meeting notes) carry tickets from all releases. The cross-reference must filter unscoped sources against the release context before merging, or tickets leak across all reports. The fix pattern: pass the release-attribution data (from the scoped source) to the cross-reference function as a filter. Applied: rhivos-release-status synthesize.py needed untracked_lookup from compute_stats.py to filter Slack tickets by release. Generalizable: any multi-source aggregation where sources have different natural scopes. (seen: 1)
+
+- **2026-08-05:** "Prefix matching breaks hierarchical version naming" - using `startswith()` for version comparison causes hierarchical versions to match incorrectly: "rhivos-2.0.z".startswith("rhivos-2.0") returns True. When version names form a prefix hierarchy (2.0, 2.0.z, 2.1), exact match or structured comparison (split on dots/dashes, compare components) is required. Simple string prefix matching only works when no version name is a prefix of another. Applied: 3 locations in compute_stats.py. Generalizable: any software version comparison, semver-like naming, or product variant matching. (seen: 1)
 
 ## Structure candidates (tools)
 
