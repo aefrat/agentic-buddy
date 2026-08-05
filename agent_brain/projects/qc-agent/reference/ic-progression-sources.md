@@ -2,6 +2,16 @@
 
 Reference data sources for development feedback generation. These progression matrices define the expectations for each IC level and are used to assess growth areas and development paths.
 
+## Full Job Descriptions (detailed assessment)
+
+For comprehensive gap assessment, use the full job description files which contain the complete responsibilities and skills per level:
+
+- [SE Job Description](../../talent-architecture/reference/job-description-se.md) - 8 responsibilities + 10 skills per level (L1-L6). Use for SE members.
+- [SRE Job Description](../../talent-architecture/reference/job-description-sre.md) - 9 responsibilities + 8 skills per level (L1-L6). Use for SRE members.
+- [QE Job Description](../../talent-architecture/reference/job-description-qe.md) - 10 responsibilities + 6 skills per level (L1-L5). Use for QE members.
+
+The key differentiators below are a summary. For QC development feedback and talent development briefs, read the full job description file for the member's job family.
+
 ## Software Engineer (IC) Progression
 
 **Source:** [Google Sheets - April 2026](https://docs.google.com/spreadsheets/d/1OAjiTMCBJ4YkBqfh69JwEgW81BJLbAeU8GWanYYCE_4/edit?gid=798132925)

@@ -22,6 +22,12 @@ Navigate by topic. Load only what you need for the task at hand.
 
 - [Engineering Manager Progression](reference/engineering-manager-progression.md) - Manager Levels 2-6 (Associate Manager through Senior Director): job descriptions, core responsibilities, job skills. **Read when:** assessing manager-track development, preparing for a manager's own career conversation, understanding management expectations.
 
+- [Job Description - SE](reference/job-description-se.md) - Full Software Engineer job descriptions: summary, 8 responsibilities, 10 skills per level (L1-L6). **Read when:** assessing SE members against their level's specific responsibilities and skills for gap analysis.
+
+- [Job Description - SRE](reference/job-description-sre.md) - Full SRE job descriptions: summary, 9 responsibilities, 8 skills per level (L1-L6). **Read when:** assessing SRE members against their level's specific responsibilities and skills for gap analysis.
+
+- [Job Description - QE](reference/job-description-qe.md) - Full Quality Engineer job descriptions: summary, 10 responsibilities, 6 skills per level (L1-L5). **Read when:** assessing QE members against their level's specific responsibilities and skills for gap analysis.
+
 - [Talent Architecture Hub](reference/talent-architecture-hub.md) - Overview of Red Hat's Global Engineering Talent Architecture page: where to find each job family's progression matrix, Engineering Competencies (IC-6 only), promotion process, manager resources. **Read when:** navigating to a specific job family matrix not already extracted, or finding source links.
 
 - [Talent Cycle Guidance - July 2026](reference/talent-cycle-july-2026.md) - Current talent cycle guidance from Tashana (July 8, 2026): Engineering Competencies retired (use Skill Progression Matrices), High Potential Flag (replaces Future Talent, top 15%), underperformance documentation requirements, QE-to-SE transition path, promotion requirements. **Read when:** running talent cycle, assessing High Potential candidates, planning QE career paths, or documenting underperformance.

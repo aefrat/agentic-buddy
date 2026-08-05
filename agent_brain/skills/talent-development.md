@@ -33,7 +33,11 @@ You are warm but precise. You write as a thoughtful manager would: specific, con
 2. **Load appropriate reference material.** Read `agent_brain/projects/talent-architecture/index.md` first. Based on the member's job family and track, load:
    - `talent-architecture/reference/job-leveling-framework.md` - the dimension tables for their track (Professional or Management). Focus on their current level and one level above.
    - `talent-architecture/reference/competency-proficiency-levels.md` - the expected proficiency for their specific level (IC or manager).
-   - For ICs: `qc-agent/reference/ic-progression-sources.md` - the job-family-specific progression matrix (SE, QE, or SRE) with key differentiators for their level transition. Fetch from Google Sheets if the extracted content is insufficient.
+   - For ICs: the **full job description** for their job family - the primary assessment reference:
+     - SE members: `talent-architecture/reference/job-description-se.md`
+     - SRE members: `talent-architecture/reference/job-description-sre.md`
+     - QE members: `talent-architecture/reference/job-description-qe.md`
+   - For ICs (supplementary): `qc-agent/reference/ic-progression-sources.md` - key differentiators for their level transition.
    - For Managers: `talent-architecture/reference/engineering-manager-progression.md` - manager-specific responsibilities and level transitions.
 
 3. **Load team priorities.** Read `agent_brain/projects/team-priorities.md`. Identify priorities relevant to this member's team (ATC or PitCrew/RHAS) and program-level priorities. These feed into sections (e) Growth opportunities and (g) Recommended next steps - match framework gaps to real team needs rather than generic advice.
@@ -45,12 +49,20 @@ You are warm but precise. You write as a thoughtful manager would: specific, con
    d. Previous development briefs: `talent-architecture/active/{member_id}/`
    e. If no evidence found: inform the user. Offer to either (a) run a targeted Jira + Slack data pull, or (b) proceed with user-provided context from the 1:1.
 
-5. **Assess current positioning.** For each of the 3 Job Leveling Framework dimensions:
+5. **Assess current positioning.** Two complementary assessments:
+
+   **5a. Job Leveling Framework dimensions** - For each of the 3 dimensions:
    - **Scope:** Map the member's observed reach, responsibilities, and guidance role against their current level's descriptor and the next level's descriptor. Where do they sit?
    - **Complexity:** Map their judgment quality, expertise recognition, and relationship breadth. Are they working on the types of problems expected at their level? Beyond?
    - **Impact:** Map their accountability scope, strategic contribution, and decision impact. Team-level? Functional? Cross-functional?
    - Rate each dimension: "solidly at level" / "stretching toward next" / "gaps to address"
    - For Enterprise competencies: compare observed Multiplier behaviors (from QC Section B if available) to the expected proficiency at their IC level from the competency matrix.
+
+   **5b. Job description responsibilities and skills assessment** - Using the full job description for the member's job family:
+   - For each **responsibility** at their current level: does the available evidence confirm they perform it? Rate: Met / Partially met / Gap. Cite specific evidence (ticket, MR, Slack thread, 1:1 note).
+   - For each **skill** at their current level: does evidence confirm proficiency? Rate: Strong / Adequate / Developing. Cite evidence.
+   - For each responsibility and skill at the **next level**: are they already demonstrating it? Flag as "emerging" or "not yet observed."
+   - This produces two assessment tables (responsibilities + skills) that go into section (b) of the development brief.
 
 6. **Disconfirmation gate.** Before generating the development brief:
    - If the assessment leans "ready for promotion" on all 3 dimensions: actively seek contradicting evidence. Have they demonstrated next-level behaviors consistently or only in isolated instances? Are there dimensions where evidence is strong in one area but weak in another (e.g., technical scope expanded but relationship breadth hasn't)? Is the "stretch" sustained over the quarter or a single event?
@@ -69,6 +81,20 @@ You are warm but precise. You write as a thoughtful manager would: specific, con
    | Scope | [descriptor] | [what they do] | [what next level requires] | [rating] |
    | Complexity | [descriptor] | [what they do] | [what next level requires] | [rating] |
    | Impact | [descriptor] | [what they do] | [what next level requires] | [rating] |
+
+   **b2. Responsibilities assessment table** (from job description)
+
+   | # | Responsibility (current level) | Rating | Evidence |
+   |---|-------------------------------|--------|----------|
+   | 1 | [responsibility text] | Met / Partially met / Gap | [brief evidence] |
+   | ... | ... | ... | ... |
+
+   **b3. Skills assessment table** (from job description)
+
+   | # | Skill (current level) | Rating | Evidence |
+   |---|----------------------|--------|----------|
+   | 1 | [skill text] | Strong / Adequate / Developing | [brief evidence] |
+   | ... | ... | ... | ... |
 
    **c. Competency readiness**
    Which Enterprise competencies are at or above expected proficiency for their level, and which are below. Reference the specific proficiency level (Knowledgeable/Experienced/Advanced/Expert) and what the expected level is.
@@ -97,11 +123,15 @@ You are warm but precise. You write as a thoughtful manager would: specific, con
 
 ## Success criteria
 
-- Development brief generated with all 7 sections (a through g)
-- Every assessment cites a specific framework dimension or competency proficiency level
+- Development brief generated with all sections (a through g, including b2 and b3)
+- Every assessment cites a specific framework dimension, competency proficiency level, or job description responsibility/skill
+- Responsibilities assessment table: every responsibility at current level rated with evidence
+- Skills assessment table: every skill at current level rated with evidence
+- Next-level responsibilities and skills flagged as "emerging" or "not yet observed"
+- Growth opportunities and recommended next steps reference specific job description gaps, not just abstract dimensions
 - Disconfirmation gate documented: what was checked, what was concluded
 - At least 3 actionable 1:1 talking points that reference framework language
-- At least 3 recommended next steps mapped to specific dimensions or competencies
+- At least 3 recommended next steps mapped to specific dimensions, competencies, or job description gaps
 - At least 2 recommended next steps mapped to active team or program priorities
 - Development snapshot saved to episodic active store
 - User offered integration options
@@ -118,12 +148,16 @@ You are warm but precise. You write as a thoughtful manager would: specific, con
 ## Checklist
 
 - [ ] Member identified, job family and level confirmed from members.yaml
-- [ ] Appropriate reference material loaded (Job Leveling Framework + progression matrix + competency levels)
+- [ ] Appropriate reference material loaded (Job Leveling Framework + job description + competency levels)
+- [ ] Full job description loaded for member's job family (SE/SRE/QE)
 - [ ] Team priorities loaded and relevant priorities identified for member's team
 - [ ] Available evidence gathered (QC data, previous briefs, observations)
 - [ ] 3-dimension assessment completed (Scope, Complexity, Impact) with ratings
+- [ ] Responsibilities assessment table: every current-level responsibility rated with evidence
+- [ ] Skills assessment table: every current-level skill rated with evidence
+- [ ] Next-level responsibilities and skills flagged (emerging / not yet observed)
 - [ ] Enterprise competency readiness assessed against expected proficiency
 - [ ] Disconfirmation gate applied and documented
-- [ ] Development brief generated with all 7 sections
+- [ ] Development brief generated with all sections (a-g including b2, b3)
 - [ ] Development snapshot saved to talent-architecture/active/{member_id}/
 - [ ] User offered integration options (QC feed, action items, reminders)
