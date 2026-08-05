@@ -8,7 +8,8 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
-| 2026-08-05 | Release blocker agent: cross-release ticket leakage bug root cause (synthesize.py + compute_stats.py), 3-part fix proposed | (current session) |
+| 2026-08-05 | QC Q2-2026 v2: job description gap analysis (Section D for all 10 members), v2 HTML + Google Docs, GitLab MR collection bug discovered (events API misses authored MRs merged by others) | c88b8ea0-a5bb-41a8-aca9-f0d0c0651067 |
+| 2026-08-05 | Release blocker agent: cross-release ticket leakage bug root cause (synthesize.py + compute_stats.py), 3-part fix proposed | (earlier session) |
 | 2026-08-05 | QC Q2 report: Matt Goldman MR links and merge dates added, MR count corrected (7 to 10) | (earlier session) |
 | 2026-08-03 | AutoSD/Jumpstarter HW testing: Paul Wallrabe conversation processing, Slack source tracing, TC/TF/JMP mapping, discussion thread opened | (prior session) |
 | 2026-08-03 | Release blocker agent: CI/CD fully operational on shared K8s runners, release heading links, quay.io auth, Google Docs API, Gemini LLM, meeting notes (3 context compactions) | 50dd1833-49ac-455a-8e2d-384809a4608d |

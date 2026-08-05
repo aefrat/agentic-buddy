@@ -1,6 +1,6 @@
 ---
 last_accessed: 2026-08-05
-access_count: 54
+access_count: 55
 created: 2026-06-01
 ---
 
@@ -162,6 +162,8 @@ Resolved observations are moved to the bottom.
 - **2026-08-05:** "Cross-reference release scoping" - when a cross-reference engine merges data from multiple sources (Jira, Slack, meeting notes), each source may have different scoping granularity. Jira queries are naturally release-scoped (fixVersion IN ...), but channel-wide sources (Slack, meeting notes) carry tickets from all releases. The cross-reference must filter unscoped sources against the release context before merging, or tickets leak across all reports. The fix pattern: pass the release-attribution data (from the scoped source) to the cross-reference function as a filter. Applied: rhivos-release-status synthesize.py needed untracked_lookup from compute_stats.py to filter Slack tickets by release. Generalizable: any multi-source aggregation where sources have different natural scopes. (seen: 1)
 
 - **2026-08-05:** "Prefix matching breaks hierarchical version naming" - using `startswith()` for version comparison causes hierarchical versions to match incorrectly: "rhivos-2.0.z".startswith("rhivos-2.0") returns True. When version names form a prefix hierarchy (2.0, 2.0.z, 2.1), exact match or structured comparison (split on dots/dashes, compare components) is required. Simple string prefix matching only works when no version name is a prefix of another. Applied: 3 locations in compute_stats.py. Generalizable: any software version comparison, semver-like naming, or product variant matching. (seen: 1)
+
+- **2026-08-05:** "GitLab events API vs authored MRs gap" - the `/users/{id}/events?action=merged` endpoint only captures MRs where the user clicked the merge button, not MRs they authored that someone else merged. For complete MR attribution, must combine: (1) events API for self-merged MRs, and (2) `/merge_requests?author_username=X&state=merged&created_after=...&created_before=...` for authored MRs merged by others. Discovered: Matt Goldman's MR !854 (product-service-config-auto) was authored by matgoldm but merged by mhaluza, making it invisible to the events query. This is a systematic gap affecting all team members' QC data collection. Generalizable: any system that tracks "user actions" (events) separately from "user contributions" (authored work) will undercount when those are conflated. (seen: 1)
 
 ## Structure candidates (tools)
 
