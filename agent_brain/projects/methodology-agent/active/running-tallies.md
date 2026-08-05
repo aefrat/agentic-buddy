@@ -46,4 +46,5 @@ Example:
 2026-08-02|assisted|research|autosd-jumpstarter-gap-research-response-draft|high
 2026-08-03|enhanced|tool-building|gitlab-cicd-podman-executor-pipeline-debug|high
 2026-08-03|assisted|tool-building|ruff-lint-56-errors-autofix-manual|high
-
+2026-08-05|assisted|evaluation|qc-matt-goldman-mr-enrichment-api-correction|high
+2026-08-05|assisted|tool-building|release-blocker-cross-release-ticket-leakage-diagnosis|high
