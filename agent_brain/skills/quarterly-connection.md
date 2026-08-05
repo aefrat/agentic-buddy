@@ -33,10 +33,12 @@ You are an evidence-based narrator of engineering contributions. You surface wha
    - Capture: key, summary, type, story points, resolution date, parent epic
    - **Do NOT poll or paginate** - the MCP tool handles this.
 
-4. **Collect GitLab data.** For each member, fetch merged MRs from internal GitLab (and optionally GitLab.com) within the quarter date range. Use the GitLab API patterns from the original CLI:
-   - Resolve username → user ID
-   - Fetch MRs with `state=merged`, `author_id`, date range
+4. **Collect GitLab data.** For each member, fetch merged MRs authored by that member from internal GitLab (and optionally GitLab.com) within the quarter date range:
+   - Use the `/merge_requests` endpoint with `author_username={username}&state=merged&scope=all`
+   - Use `created_after` set to 3 months before Q start (catches MRs created earlier but merged during Q) and `created_before` set to Q end + 1 day (inclusive)
+   - Filter results by `merged_at` within the quarter date range (the API has no `merged_after`/`merged_before` params)
    - Capture: title, project, URL, merged date
+   - Do NOT use the events API (`/users/{id}/events?action=merged`) - it only returns MRs where the user clicked the merge button, missing authored MRs merged by others and inflating counts with others' MRs the user merge-clicked
 
 5. **Collect Slack activity** (search-first approach):
    - Search Slack: `mcp__slack-mcp__search_messages(query="from:{member_kerberos} after:{start_date} before:{end_date}")` via the community slack-mcp MCP server.
@@ -131,7 +133,7 @@ You are an evidence-based narrator of engineering contributions. You surface wha
 ## Gotchas
 
 - GitLab internal API requires `GITLAB_CEE_TOKEN` - if not set, skip internal MRs and warn
-- GitLab `/merge_requests` API misses cross-project MRs - use `/users/{id}/events?action=merged` instead and filter by date
+- GitLab events API (`/users/{id}/events?action=merged`) has a two-way error: misses authored MRs merged by others AND inflates counts by including others' MRs the user merge-clicked. Always use `/merge_requests?author_username=X&state=merged&scope=all` instead, and filter by `merged_at` within the quarter
 - Jira assignee search may need email format (`user@redhat.com`) not display name - if display name returns 0, retry with `{kerberos}@redhat.com`
 - Story points field varies by Jira project - some use `story_points`, others `customfield_10028`
 - Quarter boundaries: Q1 = Jan 1–Mar 31, Q2 = Apr 1–Jun 30, Q3 = Jul 1–Sep 30, Q4 = Oct 1–Dec 31
