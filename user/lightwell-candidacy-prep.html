@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lightwell - Engineering Manager Candidacy Prep</title>
+<style>
+  body { font-family: 'Segoe UI', Arial, sans-serif; max-width: 900px; margin: 40px auto; padding: 0 20px; color: #1a1a1a; line-height: 1.6; }
+  h1 { color: #c00; border-bottom: 3px solid #c00; padding-bottom: 8px; }
+  h2 { color: #333; border-bottom: 1px solid #ddd; padding-bottom: 4px; margin-top: 32px; }
+  h3 { color: #555; margin-top: 20px; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+  th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; vertical-align: top; }
+  th { background-color: #f5f5f5; font-weight: 600; }
+  .strength { background-color: #e8f5e9; }
+  .gap { background-color: #fff3e0; }
+  .risk { background-color: #fce4ec; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 0.85em; font-weight: 600; margin-right: 4px; }
+  .tag-direct { background: #c8e6c9; color: #2e7d32; }
+  .tag-adjacent { background: #fff9c4; color: #f57f17; }
+  .tag-new { background: #e3f2fd; color: #1565c0; }
+  .question-block { background: #f8f9fa; border-left: 3px solid #c00; padding: 12px 16px; margin: 8px 0; }
+  .question-block strong { color: #333; }
+  .question-block .why { color: #666; font-size: 0.9em; margin-top: 4px; }
+  .callout { background: #fff8e1; border: 1px solid #ffe082; padding: 12px 16px; border-radius: 4px; margin: 12px 0; }
+  .section-intro { color: #555; font-style: italic; margin-bottom: 16px; }
+  ul { margin: 8px 0; }
+  li { margin: 4px 0; }
+  .footer { margin-top: 40px; padding-top: 12px; border-top: 1px solid #ddd; color: #999; font-size: 0.85em; }
+</style>
+</head>
+<body>
+
+<h1>Lightwell - Engineering Manager Candidacy Prep</h1>
+<p><strong>Prepared:</strong> August 6, 2026 | <strong>For:</strong> Avihai Efrat | <strong>Status:</strong> Preparation document - not for distribution</p>
+
+<div class="callout">
+<strong>Purpose:</strong> Map your experience to Lightwell's needs, identify gaps to address, prepare smart questions, and anticipate engineering challenges. This is your briefing book for candidacy conversations.
+</div>
+
+<h2>1. Lightwell at a Glance</h2>
+
+<p>Managed security service that backports vulnerability fixes to the exact open source library versions enterprises run in production - without forcing upgrades. Launches Q3 2026 with Java/Maven, Python/PyPI, JavaScript/npm.</p>
+
+<p><strong>Two-tier model:</strong></p>
+<ul>
+  <li><strong>Network:</strong> Curated catalog of patched, signed artifacts via secure registry. Single config update for customers.</li>
+  <li><strong>Clearinghouse:</strong> Shared intelligence and remediation network (FSI first). Members contribute anonymized vulnerability intel, receive SLA-backed patches, influence priority.</li>
+</ul>
+
+<p><strong>North star metric:</strong> M-0, Weekly Burn-down - vulnerabilities fixed and delivered per week.</p>
+<p><strong>Commercial targets:</strong> 100 customers Q3, 1,000 Q4, 1M package versions by Summit 2027.</p>
+<p><strong>Standalone P&L.</strong> Tooling open-sourced under Apache 2.0 - the value is the operated service.</p>
+
+<h2>2. Your Experience Mapped to Lightwell</h2>
+
+<p class="section-intro">Each row maps a Lightwell need to your existing experience. Tags indicate how direct the mapping is.</p>
+
+<table>
+<tr>
+  <th style="width: 25%;">Lightwell Need</th>
+  <th style="width: 10%;">Fit</th>
+  <th style="width: 35%;">Your Experience</th>
+  <th style="width: 30%;">Talking Points</th>
+</tr>
+<tr class="strength">
+  <td><strong>Backporting at scale</strong><br>Core engineering function. Backporting Lead is TBD.</td>
+  <td><span class="tag tag-direct">Direct</span></td>
+  <td>RHIVOS is RHEL for automotive - the entire product is a managed backporting operation across kernel, systemd, and platform packages. ATC handles the toolchain that enables this.</td>
+  <td>"RHIVOS's entire release model is backport-driven. I've managed the team that builds and operates the toolchain enabling that workflow, and I understand the tension between pinned versions and security currency firsthand."</td>
+</tr>
+<tr class="strength">
+  <td><strong>Konflux build pipeline</strong><br>SLSA L3 builds, Sigstore/cosign signing, SBOM generation.</td>
+  <td><span class="tag tag-direct">Direct</span></td>
+  <td>Konflux integration is a stated ATC Q3 priority. CAIB onboarding is another. You're actively working on the transition from legacy build systems to Konflux.</td>
+  <td>"My team is onboarding to Konflux right now for RHIVOS 2.0.z. I can bring that implementation experience - what works, what breaks, what the migration path looks like."</td>
+</tr>
+<tr class="strength">
+  <td><strong>Release/distribution pipeline</strong><br>Secure registry, artifact distribution, supply chain docs.</td>
+  <td><span class="tag tag-direct">Direct</span></td>
+  <td>ATC manages the full distribution chain: CDN repos, Errata config, Pulp integration, release pipeline. The muscle of getting signed, documented artifacts to consumers is core ATC work.</td>
+  <td>"I manage the team that configures CDN, Errata, and Pulp for RHIVOS releases. The Lightwell secure registry is a different payload but the same operational discipline - reliable, auditable artifact distribution."</td>
+</tr>
+<tr class="strength">
+  <td><strong>Upstream contribution</strong><br>Principle #1: every fix goes upstream.</td>
+  <td><span class="tag tag-direct">Direct</span></td>
+  <td>RHIVOS works with upstream kernel, systemd, and platform communities. Your teams submit patches, negotiate acceptance, and maintain downstream forks when upstream declines.</td>
+  <td>"Upstream engagement is built into how my teams work. We understand the negotiation, the patience, and the relationship maintenance it takes to get patches accepted - and when to maintain a fork."</td>
+</tr>
+<tr class="strength">
+  <td><strong>Cross-org coordination</strong><br>IBM, ProdSec, upstream, partners, customers.</td>
+  <td><span class="tag tag-direct">Direct</span></td>
+  <td>You coordinate across ATC, PitCrew, RHIVOS program office, automotive OEM customers (Nissan, Traton, Porsche), hardware partners (Qualcomm, NXP, Renesas), and Red Hat internal teams.</td>
+  <td>"Lightwell's stakeholder map - IBM, ProdSec, upstream maintainers, FSI customers, scanning vendors - looks like my current coordination load with different names. The muscle is the same."</td>
+</tr>
+<tr class="strength">
+  <td><strong>Building teams during ramp-up</strong><br>New offering, Backporting Lead TBD, aggressive growth targets.</td>
+  <td><span class="tag tag-direct">Direct</span></td>
+  <td>Currently onboarding Aman Vishwakarma (intern conversion), Roderick Kieley (SPSE), managing Hubert Stefanski's transition, and designing Kanitha Chim's Toolchain Architect role. Active team-building in a changing landscape.</td>
+  <td>"I'm currently building and reshaping a team in motion - converting an intern, onboarding a senior engineer, designing a new role for retention. I know how to stand up capability while delivering."</td>
+</tr>
+<tr class="strength">
+  <td><strong>ProdSec coordination</strong><br>Principle #6: coordinate but don't wait. Same-day notification, shorter embargo governs.</td>
+  <td><span class="tag tag-adjacent">Adjacent</span></td>
+  <td>RHIVOS deals with security errata, CVE remediation in product, and coordinated disclosure through RH Product Security. Not identical to Lightwell's model, but the organizational relationship is familiar.</td>
+  <td>"I've worked with ProdSec on RHIVOS security errata. The 'coordinate but don't wait' principle resonates - I've navigated the tension between product release schedules and security timelines."</td>
+</tr>
+<tr class="strength">
+  <td><strong>AI-powered pipeline</strong><br>Scanning from Project Balor, AI triage (planned).</td>
+  <td><span class="tag tag-adjacent">Adjacent</span></td>
+  <td>Active agentic SDLC adoption. Built release blocker dashboard with LLM synthesis (Gemini 2.5 Flash via Vertex AI). Driving AI methodology capture across the team. AAA Team priorities include CTC failure analysis automation.</td>
+  <td>"I'm actively building AI into engineering workflows - not as experiments, but as operational tools. The release blocker dashboard I built uses LLM synthesis for triage. That's the same pattern Lightwell's scanning pipeline needs."</td>
+</tr>
+<tr class="strength">
+  <td><strong>SLA-driven delivery</strong><br>Contractual remediation timelines by severity.</td>
+  <td><span class="tag tag-adjacent">Adjacent</span></td>
+  <td>RHIVOS has CAT deadlines, CTC gates, release milestones. Not contractual SLAs to external customers, but deadline-driven delivery with consequences for misses.</td>
+  <td>"RHIVOS CAT and CTC gates are functionally SLAs - miss them and the release slips. I can adapt that discipline to customer-facing contractual commitments."</td>
+</tr>
+<tr>
+  <td><strong>Language ecosystem depth</strong><br>Java/Maven, Python/PyPI, JavaScript/npm dependency management.</td>
+  <td><span class="tag tag-new">Growth</span></td>
+  <td>Your background is primarily in RPM/OS-layer packaging (kernel, systemd, platform). Application-layer language ecosystems (Maven, PyPI, npm) are a different world with different tooling and conventions.</td>
+  <td>"I'll be honest - my packaging experience is RPM and OS-layer. But the engineering discipline of managing dependency graphs, build reproducibility, and version pinning transfers. The ecosystem-specific knowledge is learnable."</td>
+</tr>
+<tr>
+  <td><strong>Financial services domain</strong><br>FSI compliance, regulatory frameworks (DORA, SEC disclosure).</td>
+  <td><span class="tag tag-new">Growth</span></td>
+  <td>Your customer experience is automotive OEMs and hardware partners. FSI has different compliance drivers (DORA, FedRAMP, SEC), different risk profiles, and different organizational structures.</td>
+  <td>"Automotive has its own regulatory complexity (FuSa, ISO 26262), so I understand regulated-industry engineering. FSI specifics are new, but the pattern of building compliant processes under regulatory pressure is not."</td>
+</tr>
+<tr>
+  <td><strong>Embargo management</strong><br>Coordinated disclosure, legal implications, information controls.</td>
+  <td><span class="tag tag-new">Growth</span></td>
+  <td>No direct embargo management experience. This is operationally sensitive work with legal consequences for mishandling.</td>
+  <td>"This is new territory for me. I'd want to understand the operational playbook and the legal guardrails early. I'd lean heavily on the ProdSec Lead (Ian Murphy) and Clearinghouse Offering Lead (Jen Cavanaugh) while building that muscle."</td>
+</tr>
+</table>
+
+<h2>3. Questions to Ask the Hiring Team</h2>
+
+<p class="section-intro">Organized by what they reveal. Ask the ones most relevant to the conversation; you don't need all of them.</p>
+
+<h3>Engineering Organization and Scope</h3>
+
+<div class="question-block">
+  <strong>"What does the engineering org look like today? How many engineers, and how are they split across backporting, infrastructure, and scanning?"</strong>
+  <div class="why">Why ask: Reveals team size, structure, and where the EM would sit. The Backporting Lead is TBD - this tells you if you'd be building that function.</div>
+</div>
+
+<div class="question-block">
+  <strong>"Who does the engineering manager report to? Where does Lightwell engineering sit in the Red Hat org chart?"</strong>
+  <div class="why">Why ask: The charter lists PMs, business leads, and an architect, but no engineering director. Understanding the reporting line tells you about decision-making authority and organizational support.</div>
+</div>
+
+<div class="question-block">
+  <strong>"How are you sourcing backporting talent? Internal transfers, external hires, or partner engineers?"</strong>
+  <div class="why">Why ask: Backporting to pinned versions across three language ecosystems requires specialized skills. The hiring pipeline tells you how realistic the ramp targets are.</div>
+</div>
+
+<h3>Operational Maturity</h3>
+
+<div class="question-block">
+  <strong>"How mature is the Konflux integration? Is the build pipeline production-ready, or still being stood up?"</strong>
+  <div class="why">Why ask: If the SLSA L3 build pipeline isn't operational yet, that's a major engineering workstream you'd own. If it is, you're inheriting infrastructure. Very different starting positions.</div>
+</div>
+
+<div class="question-block">
+  <strong>"What's the current buildroot coverage? How far are you toward the 100K package version target for Q4?"</strong>
+  <div class="why">Why ask: M-1 (Package Version Coverage) is the leading indicator for the north star metric. The current number tells you how much infrastructure scaling is ahead.</div>
+</div>
+
+<div class="question-block">
+  <strong>"What does the on-call model look like when an embargo is active? Who has authority to make disclosure timing decisions?"</strong>
+  <div class="why">Why ask: Embargo management is operationally intense and legally consequential. Understanding the current model tells you about operational load and decision-making boundaries.</div>
+</div>
+
+<h3>Strategy and Positioning</h3>
+
+<div class="question-block">
+  <strong>"The Trusted Libraries / Calunga fold-in is targeted for mid-August. What's the team impact? Are people transferring in, or just the technology?"</strong>
+  <div class="why">Why ask: This is happening right now. If people are moving, you'd be integrating teams. If it's just technology, you'd be absorbing a codebase. Both have management implications.</div>
+</div>
+
+<div class="question-block">
+  <strong>"Steps 2-4 (Scanning, Discovery, Triage) are listed as planned. What's the timeline, and will the EM own building those capabilities?"</strong>
+  <div class="why">Why ask: These are future engineering workstreams. If they're near-term, the EM role includes building new capabilities, not just operating existing ones. That changes the scope significantly.</div>
+</div>
+
+<div class="question-block">
+  <strong>"How does the IBM coordination work day-to-day? Sarwar Raza is listed for IBM Coordination - what does that look like operationally for engineering?"</strong>
+  <div class="why">Why ask: Lightwell has a standalone P&L but IBM involvement. Understanding the coordination model tells you about autonomy, decision speed, and potential friction.</div>
+</div>
+
+<h3>Success and Growth</h3>
+
+<div class="question-block">
+  <strong>"What does success look like for the EM at 90 days? What's the one thing that would make this hire clearly worth it?"</strong>
+  <div class="why">Why ask: Forces the hiring team to articulate their highest-priority pain point. Their answer tells you what they're really hiring for.</div>
+</div>
+
+<div class="question-block">
+  <strong>"100 customers by end of Q3 is aggressive. What's the biggest risk to that target right now?"</strong>
+  <div class="why">Why ask: Shows you've read the metrics and understand the commercial pressure. Their answer reveals whether the bottleneck is engineering, sales, or something else.</div>
+</div>
+
+<h2>4. Engineering Challenges an EM Would Face</h2>
+
+<p class="section-intro">These are the hard problems. Being able to articulate them shows you've thought past the charter.</p>
+
+<h3>Scaling from Zero to a Million</h3>
+<p>The jump from current state to 100K package versions (Q4 2026) and then 1M (Summit 2027) is not linear. Each language ecosystem (Maven, PyPI, npm) has different dependency resolution, build tooling, and community norms. The buildroot infrastructure needs to handle all three, plus future ecosystems, without per-ecosystem special cases eating engineering bandwidth. An EM needs to design for scale while delivering under commercial pressure.</p>
+
+<h3>Building a Backporting Team</h3>
+<p>The Backporting Lead is TBD. Backporting security fixes to pinned versions across multiple language ecosystems requires engineers who understand both the security domain and the specific ecosystem's packaging conventions. This is a specialized skill set that's hard to hire for. The EM may need to build this capability through a combination of internal transfers (from ProdSec, from ELS), external hires, and potentially partner engineers.</p>
+
+<h3>SLA Before Staffing</h3>
+<p>Clearinghouse members will expect contractual remediation timelines (M-3: Remediation Turnaround). If the team isn't fully staffed when SLAs kick in, every missed target damages trust with the FSI customers who are the initial revenue base. The EM needs to manage this chicken-and-egg problem: you can't hire without revenue, but you can't promise SLAs without engineers.</p>
+
+<h3>Embargo Operations</h3>
+<p>Active embargoes create operational complexity: information compartmentalization, coordinated disclosure timing with upstream communities who may not honor your timeline, and legal exposure if controls fail. This is not standard engineering management - it's closer to incident response crossed with legal compliance. The EM needs operational playbooks, access controls, and a team culture that treats embargo discipline as non-negotiable.</p>
+
+<h3>Multi-Party Coordination at Speed</h3>
+<p>A single vulnerability can involve: the reporting Clearinghouse member, Red Hat ProdSec (if it affects RH products), the upstream maintainer, MITRE/CNA (for CVE assignment), and all other Clearinghouse members (for notification). The EM needs coordination processes that are fast enough for security work but rigorous enough for compliance. Principle #6 says "coordinate but don't wait" - that requires well-designed handoff protocols, not ad-hoc communication.</p>
+
+<h3>Partner Integration at Scale</h3>
+<p>The ecosystem strategy assumes scanning vendors (Snyk, Veracode, Endor Labs) and remediation vendors (HeroDevs, Mend, Sonatype) will integrate with Lightwell's pipeline. Each integration is an engineering project: API contracts, data formats, authentication, SLAs. Managing multiple partner integrations while keeping the core remediation pipeline reliable is a scaling challenge the EM would own.</p>
+
+<h3>Design Phase to GA Transition</h3>
+<p>The current Design Phase is collaborative - customers help shape processes and ceremonies. GA means productized SLAs, predictable delivery, and less flexibility. The EM needs to manage the transition from a small-batch, high-touch model to an operated service that can handle 1,000 members without proportional headcount growth.</p>
+
+<h2>5. Adjacent Offerings You Should Know</h2>
+
+<p class="section-intro">Being able to position Lightwell relative to its neighbors shows strategic understanding.</p>
+
+<table>
+<tr>
+  <th>Offering</th>
+  <th>What It Does</th>
+  <th>Relationship to Lightwell</th>
+  <th>What to Know</th>
+</tr>
+<tr>
+  <td><strong>Project Balor</strong></td>
+  <td>AI-powered vulnerability scanning for RH products</td>
+  <td>Predecessor. Proved the economics of AI-powered scanning. Findings feed Lightwell triage.</td>
+  <td>Lightwell exists because Balor demonstrated that AI scanning works at scale. Balor found vulnerabilities; Lightwell fixes them. If asked about Balor, frame it as "the discovery engine that created the demand for a remediation service."</td>
+</tr>
+<tr>
+  <td><strong>Trusted Libraries / Project Calunga (RHADS)</strong></td>
+  <td>Curates secure, current-version libraries for new development</td>
+  <td>Being folded into Lightwell Network's Validated Repositories. Target: mid-August 2026.</td>
+  <td>This is happening right now. Calunga focuses on current versions for greenfield; Lightwell focuses on pinned versions for production. The fold-in merges the curation infrastructure. Ask about team/technology transfer implications.</td>
+</tr>
+<tr>
+  <td><strong>Project Hummingbird (RHHI)</strong></td>
+  <td>Hardened, zero-CVE container base images</td>
+  <td>Complementary. Hummingbird secures the container; Lightwell secures the libraries inside.</td>
+  <td>Together they form a full-stack supply chain security story. An EM who can articulate the Hummingbird + Lightwell layered value proposition shows they understand the broader portfolio play.</td>
+</tr>
+<tr>
+  <td><strong>ELS / Security Select</strong></td>
+  <td>Extended security support for end-of-life RH products (RHEL 6, 7)</td>
+  <td>No overlap. ELS covers OS-layer RPMs; Lightwell covers app-layer language packages.</td>
+  <td>ELS is a useful analogy: "We already do this for RHEL - backport fixes to old versions so customers don't have to upgrade. Lightwell is the same model applied to application dependencies instead of OS packages."</td>
+</tr>
+<tr>
+  <td><strong>Konflux</strong></td>
+  <td>SLSA L3 build system for reproducible builds</td>
+  <td>Shared infrastructure. Builds Lightwell's patched artifacts.</td>
+  <td>You have direct experience here - ATC is onboarding to Konflux for RHIVOS 2.0.z. This is a concrete credibility point.</td>
+</tr>
+<tr>
+  <td><strong>Gov't Clearinghouse (Gold Eagle, CISA/ONCD)</strong></td>
+  <td>Government-funded vulnerability data coordination platform</td>
+  <td>Lightwell is the private-sector counterpart. RH positioned as implementation partner.</td>
+  <td>If the government issues an RFI, Lightwell could be the implementation. This is a potential future growth vector worth knowing about, but not near-term.</td>
+</tr>
+</table>
+
+<h2>6. Your Narrative</h2>
+
+<p class="section-intro">The through-line that connects your experience to Lightwell's needs.</p>
+
+<div class="callout">
+<p><strong>Core narrative:</strong> "I've spent the last period managing the teams that build and operate the toolchain for RHIVOS - a product that is fundamentally about backporting, upstream engagement, and delivering signed, compliant artifacts on a schedule. Lightwell applies the same engineering discipline to a different layer of the stack: application dependencies instead of OS packages. The problems are structurally the same - version pinning, build reproducibility, upstream negotiation, SLA-driven delivery, and compliance documentation. What's different is the customer (FSI instead of automotive), the ecosystem (Maven/PyPI/npm instead of RPM), and the scale target (1M package versions). I bring the operational experience of running this kind of pipeline, the team-building skills to stand up a new function (like the Backporting Lead role), and the cross-org coordination muscle to work across IBM, ProdSec, upstream, and customers."</p>
+</div>
+
+<h3>Growth areas to own proactively</h3>
+<ul>
+  <li><strong>Language ecosystem depth:</strong> "I'll need to build expertise in Maven, PyPI, and npm dependency management. My RPM background gives me the conceptual framework; the specifics are learnable."</li>
+  <li><strong>FSI domain:</strong> "I understand regulated-industry engineering from automotive (FuSa, ISO 26262). FSI regulatory drivers (DORA, FedRAMP, SEC) are new, but the pattern of building compliant processes is not."</li>
+  <li><strong>Embargo operations:</strong> "This is genuinely new for me. I'd invest early in understanding the legal guardrails and operational playbooks, and lean on Ian Murphy (ProdSec Lead) and Jen Cavanaugh (Clearinghouse Lead) while building that capability."</li>
+</ul>
+
+<h2>7. Key People to Research</h2>
+
+<table>
+<tr><th>Person</th><th>Role</th><th>Why They Matter to You</th></tr>
+<tr><td>Ben Breard</td><td>Product Manager</td><td>Co-owner of the charter. Likely involved in hiring decisions. Understand his vision for the engineering org.</td></tr>
+<tr><td>James Labocki</td><td>Product Manager</td><td>Co-owner of the charter. Second PM suggests enough scope for two product streams.</td></tr>
+<tr><td>Mairin Duffy</td><td>Architect</td><td>Your technical partner. Understanding her architecture vision is critical for an EM role.</td></tr>
+<tr><td>Ian Murphy</td><td>ProdSec Lead</td><td>The ProdSec interface. Principle #6 coordination runs through this person.</td></tr>
+<tr><td>Jen Cavanaugh</td><td>Clearinghouse Offering Lead + Product Ops</td><td>Dual-hatted. Owns the Clearinghouse experience and product ops. Key stakeholder for SLA delivery.</td></tr>
+<tr><td>Amanda Carter</td><td>Program Manager</td><td>Coordinates program execution. Your operational counterpart for delivery tracking.</td></tr>
+<tr><td>Brent Holden</td><td>Field CTO / Clearinghouse Customer Lead</td><td>Customer-facing. C-1 (Field CTO Utilization) is a capacity metric. Understand the onboarding load.</td></tr>
+<tr><td>Francis Chow</td><td>Business Lead</td><td>Owns the P&L. Commercial decisions flow through here.</td></tr>
+<tr><td>Sarwar Raza</td><td>IBM Coordination</td><td>The IBM interface. Understanding this dynamic is critical for autonomy and decision speed.</td></tr>
+</table>
+
+<div class="footer">
+  Prepared August 6, 2026. Based on Lightwell Charter (Google Doc, last updated June 5, 2026). For personal preparation only - not for distribution.
+</div>
+
+</body>
+</html>
