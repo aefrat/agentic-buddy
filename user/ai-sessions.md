@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-08-06 | Lightwell project research and EM candidacy prep (charter ingestion, experience mapping, HTML + Google Doc prep document) | (reflect-only) |
 | 2026-08-06 | Matt Goldman Principal SRE (L4) gap analysis against new job description, two Google Docs (1:1 prep + manager summary) | c0c6df16-c294-4a7d-a4fc-be129b4e670d |
 | 2026-08-05 | Claude usage/cost tracking inquiry - CLI has no usage command, no local skill available, Anthropic Console is the only source | (reflect-only) |
 | 2026-08-05 | Release blocker agent: cross-release ticket leakage fix implemented + pushed + CI triggered, triage logic explanation, RHIVOS workflow mapping | d3fc8187-da03-430c-8a8d-985498f55066 |
