@@ -37,3 +37,4 @@ Moved to `archive/2026-06/`: 2026-06-01, 2026-06-10, 2026-06-11, 2026-06-14, 202
 - 2026-08-02: active — AutoSD upstream nightly HW testing gap research, Jumpstarter integration feasibility for Paul Wallrabe
 - 2026-08-03: active — GitLab CI/CD Podman executor fix, ruff lint cleanup, shared runners discovery, AutoSD/Jumpstarter HW testing (Paul Wallrabe conversation, Slack source tracing, TC vs TF vs JMP mapping)
 - 2026-08-05: active — Matt Goldman QC Q2 report enrichment (MR links + dates), release blocker agent cross-release ticket leakage bug root-caused, **weekly W32 review** (Jul 23 - Aug 5)
+- 2026-08-06: active — Matt Goldman Principal SRE L4 gap analysis (dual Google Docs), Lightwell EM candidacy research and prep

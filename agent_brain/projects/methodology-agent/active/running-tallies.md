@@ -48,3 +48,7 @@ Example:
 2026-08-03|assisted|tool-building|ruff-lint-56-errors-autofix-manual|high
 2026-08-05|assisted|evaluation|qc-matt-goldman-mr-enrichment-api-correction|high
 2026-08-05|assisted|tool-building|release-blocker-cross-release-ticket-leakage-diagnosis|high
+2026-08-06|assisted|evaluation|matt-goldman-l4-gap-analysis-job-description|high
+2026-08-06|assisted|communication|audience-specific-gdocs-1on1-prep-manager-summary|high
+2026-08-06|autonomous|project-tracking|lightwell-charter-ingestion-project-creation|high
+2026-08-06|assisted|research|lightwell-em-candidacy-prep-document|high
