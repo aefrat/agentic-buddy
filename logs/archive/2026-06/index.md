@@ -1,0 +1,12 @@
+# Sessions - 2026-06
+
+Log files: `YYYY-MM-DD.md` (in this directory).
+
+- 2026-06-01: active
+- 2026-06-10: active
+- 2026-06-11: active
+- 2026-06-14: active
+- 2026-06-16: active
+- 2026-06-18: active
+- 2026-06-21: active
+- 2026-06-22: active - Manager report cron auth resolved, Hubert RHAS transition approved, Mabanas backfill confirmed

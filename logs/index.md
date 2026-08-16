@@ -10,7 +10,7 @@ Moved to `archive/2026-06/`: 2026-06-01, 2026-06-10, 2026-06-11, 2026-06-14, 202
 
 ## Active
 
-- 2026-06-22: active — Manager report cron auth resolved, Hubert RHAS transition approved, Mabanas backfill confirmed
+- ~~2026-06-22~~ (archived to `archive/2026-06/`)
 - 2026-06-23: active — Agent-forge email reply draft, principle explanations, ATC tickets synthesis
 - 2026-06-24: active — LP progress tracking (3 changes), Slack access migration (canvas dead-end -> community slack-mcp), weekly W26 addendum
 - 2026-06-25: maintenance
@@ -38,3 +38,4 @@ Moved to `archive/2026-06/`: 2026-06-01, 2026-06-10, 2026-06-11, 2026-06-14, 202
 - 2026-08-03: active — GitLab CI/CD Podman executor fix, ruff lint cleanup, shared runners discovery, AutoSD/Jumpstarter HW testing (Paul Wallrabe conversation, Slack source tracing, TC vs TF vs JMP mapping)
 - 2026-08-05: active — Matt Goldman QC Q2 report enrichment (MR links + dates), release blocker agent cross-release ticket leakage bug root-caused, **weekly W32 review** (Jul 23 - Aug 5)
 - 2026-08-06: active — Matt Goldman Principal SRE L4 gap analysis (dual Google Docs), Lightwell EM candidacy research and prep
+- 2026-08-16: active — AWS cloud cost analysis (3 Toolchain accounts, $26.3k/month), PTO catch-up (Aug 7-16 return)

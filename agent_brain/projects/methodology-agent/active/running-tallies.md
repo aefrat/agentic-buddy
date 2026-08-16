@@ -52,3 +52,8 @@ Example:
 2026-08-06|assisted|communication|audience-specific-gdocs-1on1-prep-manager-summary|high
 2026-08-06|autonomous|project-tracking|lightwell-charter-ingestion-project-creation|high
 2026-08-06|assisted|research|lightwell-em-candidacy-prep-document|high
+2026-08-16|assisted|operations|aws-cost-analysis-terraform-cost-explorer-3-accounts|high
+2026-08-16|assisted|operations|aws-cost-cross-reference-eitan-reduction-plan|high
+2026-08-16|autonomous|reporting|aws-cost-html-gdoc-report-20-recommendations|high
+2026-08-16|autonomous|communication|pto-catchup-slack-mentions-scan-10days|high
+2026-08-16|assisted|communication|pto-catchup-gmail-action-item-prioritization|high

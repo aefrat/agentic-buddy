@@ -25,3 +25,14 @@ Sources: `daily`, `weekly`, `monthly`, `user`.
 - **info** (2026-08-05, daily): **1:1 action items stale (37 days).** `user/1on1-action-items.md` last processed Jun 29. Refresh at next 1:1 processing.
 - **review** (2026-08-05, daily): **RHAS QE deliverables draft v1.0 need review (34 days old).** Test Strategy + Release Criteria HTMLs on Drive and emailed. Review before broader sharing. OCP QE outreach not initiated. RH release terminology gap analysis (Jul 26) identified 9 TP + 9 GA gaps beyond current criteria.
 - **info** (2026-08-03, user): **Paul Wallrabe replied to AutoSD/Jumpstarter thread.** Key new info: Jumpstarter endpoint is public (no Testing Farm needed), lab not at capacity, start with any board (TI unused), strong anti-pool-sharding stance. Topic added to ATC open sync this week. Full context at `agent_brain/projects/autosd-jumpstarter-hw-testing.md`.
+- **reminder** (2026-08-16, daily): **All Manager Meeting Aug 19** (Stef Walter's org), 17:00 Israel time. 3 days away.
+- **reminder** (2026-08-16, daily): **Innovation Days review session Aug 20**, hackathon Sep 2.
+- **reminder** (2026-08-16, daily): **Eitan Raviv 9-year anniversary Aug 21.** Acknowledge.
+- **reminder** (2026-08-16, daily): **GitLab.cee upgrade downtime Aug 22.**
+- **reminder** (2026-08-16, daily): **CY27 Capex requests deadline passed Aug 14.** Check if team submitted while on PTO.
+- **reminder** (2026-08-16, daily): **Old RHIVOS-1/AutoSD-9 AMI removal decision needed.** Eitan + Juanje waiting for response.
+- **reminder** (2026-08-16, daily): **AWS cost reduction findings ready.** HTML at `user/aws-cost-analysis.html`, Google Doc created. Coordinate with Eitan on response to Eliska's 20% reduction directive.
+- **reminder** (2026-08-16, daily): **Lightwell EM screening started.** Stuart Corcoran (Chief of Staff) emailed Aug 14 that outreach from LW team leads expected soon. User's OOO auto-reply went to Stuart. Respond/prepare.
+- **reminder** (2026-08-16, daily): **RHIVOS test cases gap.** Priyanka Verma flagged ~235 test cases missing from formal specs. Mandatory for QE release epics.
+- **reminder** (2026-08-16, daily): **Install NetBird VPN by Aug 31.** Also: renew GitLab SSH key (expiring), Confluence Bot API token expires Sep 9.
+- **reminder** (2026-08-16, daily): **ReportPortal v26.0.3 upgrade scheduling** - Roni/Daniel need input.
