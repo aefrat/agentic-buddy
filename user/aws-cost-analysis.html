@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Cloud Cost Analysis - Auto Toolchain Team | August 2026</title>
+<style>
+  :root {
+    --rh-red: #EE0000;
+    --rh-dark: #1a1a1a;
+    --rh-gray: #6a6e73;
+    --rh-light: #f5f5f5;
+    --rh-green: #3e8635;
+    --rh-yellow: #f0ab00;
+    --rh-blue: #0066cc;
+    --border: #d2d2d2;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', 'Red Hat Text', -apple-system, sans-serif;
+    color: var(--rh-dark);
+    line-height: 1.6;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px;
+    background: #fff;
+  }
+  h1 { font-size: 1.8em; color: var(--rh-dark); margin-bottom: 4px; }
+  h2 { font-size: 1.4em; color: var(--rh-dark); margin-top: 32px; margin-bottom: 12px; border-bottom: 2px solid var(--rh-red); padding-bottom: 6px; }
+  h3 { font-size: 1.15em; color: var(--rh-dark); margin-top: 20px; margin-bottom: 8px; }
+  .subtitle { color: var(--rh-gray); font-size: 0.95em; margin-bottom: 20px; }
+  .executive-summary {
+    background: var(--rh-light);
+    border-left: 4px solid var(--rh-red);
+    padding: 16px 20px;
+    margin: 20px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .executive-summary h3 { margin-top: 0; color: var(--rh-red); }
+  .metric-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .metric-card {
+    background: var(--rh-light);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    text-align: center;
+  }
+  .metric-card .label { font-size: 0.85em; color: var(--rh-gray); text-transform: uppercase; letter-spacing: 0.5px; }
+  .metric-card .value { font-size: 2em; font-weight: 700; color: var(--rh-dark); }
+  .metric-card .detail { font-size: 0.85em; color: var(--rh-gray); margin-top: 4px; }
+  .metric-card.alert { border-color: var(--rh-red); background: #fff5f5; }
+  .metric-card.alert .value { color: var(--rh-red); }
+  .metric-card.success { border-color: var(--rh-green); background: #f0faf0; }
+  .metric-card.success .value { color: var(--rh-green); }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.92em; }
+  th { background: var(--rh-light); color: var(--rh-dark); font-weight: 600; text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); }
+  td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  tr:hover { background: #fafafa; }
+  .cost-bar {
+    display: inline-block;
+    height: 14px;
+    background: var(--rh-blue);
+    border-radius: 2px;
+    vertical-align: middle;
+    margin-left: 8px;
+  }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 0.8em; font-weight: 600; margin: 0 2px; }
+  .tag-done { background: #e6f4ea; color: var(--rh-green); }
+  .tag-new { background: #fff3e0; color: #e65100; }
+  .tag-pending { background: #e3f2fd; color: var(--rh-blue); }
+  .tag-critical { background: #fce4ec; color: #c62828; }
+  .finding { padding: 12px 16px; margin: 8px 0; border-left: 3px solid var(--rh-yellow); background: #fffbf0; border-radius: 0 4px 4px 0; }
+  .finding.critical { border-left-color: var(--rh-red); background: #fff5f5; }
+  .finding.quick-win { border-left-color: var(--rh-green); background: #f0faf0; }
+  .trend-up { color: #c62828; }
+  .trend-down { color: var(--rh-green); }
+  .section-note { font-size: 0.88em; color: var(--rh-gray); font-style: italic; margin: 8px 0; }
+  .footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 0.85em; color: var(--rh-gray); }
+  ul { margin: 8px 0 8px 24px; }
+  li { margin: 4px 0; }
+  @media print { body { padding: 12px; } .metric-cards { grid-template-columns: repeat(3, 1fr); } }
+</style>
+</head>
+<body>
+
+<h1>AWS Cloud Cost Analysis</h1>
+<p class="subtitle">Auto Toolchain Team - 3 Accounts | Data: July 2026 | Prepared: August 16, 2026</p>
+<p class="subtitle">Context: 20% cost reduction directive (Eitan's H2/2026 plan) | Prepared by: Avihai Efrat</p>
+
+<div class="executive-summary">
+  <h3>Executive Summary</h3>
+  <p>Total monthly spend across 3 AWS accounts is <strong>$26,347</strong> (July 2026) - 32% higher than the estimated $20k. The primary account (ateam) has grown <strong>61% over 5 months</strong> ($12.3k to $19.8k), driven by EBS snapshot accumulation ($12k/month, 61% of account). The stage account revealed a ROSA/OCP cluster consuming $2,050/month (79% of that account), with $968/month in provisioned IOPS that may be replaceable by GP3. Eitan's snapshot cleanup (completed early August) should deliver the majority of the 20% reduction target ($5,270/month). Additional savings from IOPS optimization, S3 lifecycle policies, and cleanup of legacy/test resources provide a further buffer.</p>
+</div>
+
+<div class="metric-cards">
+  <div class="metric-card alert">
+    <div class="label">Total Monthly Spend</div>
+    <div class="value">$26.3k</div>
+    <div class="detail">July 2026, all 3 accounts (actual)</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">20% Reduction Target</div>
+    <div class="value">$5.3k</div>
+    <div class="detail">$21.1k target monthly</div>
+  </div>
+  <div class="metric-card alert">
+    <div class="label">5-Month Growth</div>
+    <div class="value">+61%</div>
+    <div class="detail">ateam: $12.3k to $19.8k</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">Biggest Cost Driver</div>
+    <div class="value">$12k</div>
+    <div class="detail">EBS Snapshots (61% of ateam)</div>
+  </div>
+</div>
+
+<h2>1. Account Cost Breakdown</h2>
+
+<table>
+  <tr>
+    <th>Account</th>
+    <th>Account ID</th>
+    <th>July 2026 Actual</th>
+    <th>User Estimate</th>
+    <th>Delta</th>
+  </tr>
+  <tr>
+    <td><strong>it-cloud-aws-ateam</strong></td>
+    <td>587138297281</td>
+    <td><strong>$19,790</strong></td>
+    <td>$15,000</td>
+    <td class="trend-up">+$4,790 (+32%)</td>
+  </tr>
+  <tr>
+    <td><strong>it-cloud-aws-internal-ateam</strong></td>
+    <td>339712814647</td>
+    <td><strong>$3,956</strong></td>
+    <td>$3,000</td>
+    <td class="trend-up">+$956 (+32%)</td>
+  </tr>
+  <tr>
+    <td><strong>it-cloud-aws-ateam-stage</strong></td>
+    <td>203972369401</td>
+    <td><strong>$2,601</strong></td>
+    <td>$2,000</td>
+    <td class="trend-up">+$601 (+30%)</td>
+  </tr>
+  <tr style="font-weight: 700; background: var(--rh-light);">
+    <td>Total</td>
+    <td></td>
+    <td>$26,347</td>
+    <td>$20,000</td>
+    <td class="trend-up">+$6,347 (+32%)</td>
+  </tr>
+</table>
+
+<h3>ateam Account - 5-Month Trend</h3>
+<table>
+  <tr>
+    <th>Month</th>
+    <th>Cost</th>
+    <th>Growth</th>
+    <th>Trend</th>
+  </tr>
+  <tr><td>March 2026</td><td>$12,254</td><td>-</td><td></td></tr>
+  <tr><td>April 2026</td><td>$13,218</td><td class="trend-up">+7.9%</td><td><span class="cost-bar" style="width:61px"></span></td></tr>
+  <tr><td>May 2026</td><td>$15,153</td><td class="trend-up">+14.6%</td><td><span class="cost-bar" style="width:76px"></span></td></tr>
+  <tr><td>June 2026</td><td>$17,412</td><td class="trend-up">+14.9%</td><td><span class="cost-bar" style="width:87px"></span></td></tr>
+  <tr><td>July 2026</td><td>$19,790</td><td class="trend-up">+13.6%</td><td><span class="cost-bar" style="width:99px"></span></td></tr>
+</table>
+<p class="section-note">Consistent monthly growth of ~$1.5-2.4k driven by EBS snapshot accumulation. August data (post-cleanup) will confirm whether Eitan's fix reversed the trend.</p>
+
+<h2>2. it-cloud-aws-ateam (587138297281) - $19,790/month</h2>
+
+<h3>Cost by Service</h3>
+<table>
+  <tr>
+    <th>Service</th>
+    <th>Monthly Cost</th>
+    <th>% of Account</th>
+    <th></th>
+  </tr>
+  <tr>
+    <td>EC2-Other (EBS Snapshots)</td>
+    <td><strong>$12,048</strong></td>
+    <td>60.9%</td>
+    <td><span class="cost-bar" style="width:200px; background:#c62828;"></span></td>
+  </tr>
+  <tr>
+    <td>S3 (Storage + Requests)</td>
+    <td><strong>$6,198</strong></td>
+    <td>31.3%</td>
+    <td><span class="cost-bar" style="width:103px"></span></td>
+  </tr>
+  <tr>
+    <td>EC2-Instances (Compute)</td>
+    <td>$941</td>
+    <td>4.8%</td>
+    <td><span class="cost-bar" style="width:16px"></span></td>
+  </tr>
+  <tr>
+    <td>Tax</td>
+    <td>$375</td>
+    <td>1.9%</td>
+    <td><span class="cost-bar" style="width:6px"></span></td>
+  </tr>
+  <tr>
+    <td>Other (VPC, KMS, etc.)</td>
+    <td>$228</td>
+    <td>1.2%</td>
+    <td><span class="cost-bar" style="width:4px"></span></td>
+  </tr>
+</table>
+
+<h3>EBS Snapshots - $12,048/month <span class="tag tag-critical">Critical</span></h3>
+<div class="finding critical">
+  <strong>Root cause of cost growth.</strong> Thousands of snapshots accumulated across us-east-1 and us-east-2 regions. This single line item is 61% of the account and 47% of total cloud spend across all 3 accounts. Eitan's "Fix AMI and snapshot scheduled cleanup" was completed early August - August data will confirm impact. Expected savings: $6,000-$10,000/month.
+</div>
+
+<h3>S3 Buckets - $6,198/month</h3>
+<table>
+  <tr>
+    <th>Bucket</th>
+    <th>Size</th>
+    <th>Purpose</th>
+    <th>Notes</th>
+  </tr>
+  <tr>
+    <td><strong>auto-product-build-downstream</strong></td>
+    <td><strong>266.5 TB</strong></td>
+    <td>RHIVOS downstream nightly + 3 latest releases</td>
+    <td><span class="tag tag-critical">~$6.1k/month</span> Versioning enabled. Review retention policy</td>
+  </tr>
+  <tr>
+    <td>auto-product-build</td>
+    <td>2.5 TB</td>
+    <td>Upstream builds</td>
+    <td><span class="tag tag-new">No lifecycle policy</span></td>
+  </tr>
+  <tr>
+    <td>ci-workspaces-downstream</td>
+    <td>1.8 TB</td>
+    <td>CI pipeline workspaces</td>
+    <td>3-day lifecycle (default)</td>
+  </tr>
+  <tr>
+    <td>downstream-backup</td>
+    <td>1.4 TB</td>
+    <td>Backup of downstream builds</td>
+    <td><span class="tag tag-new">Review necessity</span></td>
+  </tr>
+  <tr>
+    <td><strong>hstefans-test-bucket</strong></td>
+    <td><strong>1.2 TB</strong></td>
+    <td>Hubert Stefanski's test bucket</td>
+    <td><span class="tag tag-new">Quick win - delete (Hubert transitioning)</span></td>
+  </tr>
+  <tr>
+    <td>ci-workspaces</td>
+    <td>653 GB</td>
+    <td>Upstream CI workspaces</td>
+    <td>3-day lifecycle (default)</td>
+  </tr>
+  <tr>
+    <td>downstream-archive</td>
+    <td>605 GB</td>
+    <td>Archived downstream builds</td>
+    <td>Review retention</td>
+  </tr>
+  <tr>
+    <td>archive</td>
+    <td>328 GB</td>
+    <td>Upstream build archive</td>
+    <td>Review retention</td>
+  </tr>
+  <tr>
+    <td>evidence-warehouse-preprod</td>
+    <td>168 GB</td>
+    <td>Pre-production evidence</td>
+    <td>Review necessity</td>
+  </tr>
+  <tr>
+    <td>auto-qe-upload-staging</td>
+    <td>87 GB</td>
+    <td>QE staging uploads</td>
+    <td>Review retention</td>
+  </tr>
+  <tr>
+    <td>contcert-preprod</td>
+    <td>70 GB</td>
+    <td>ContCert pre-prod</td>
+    <td></td>
+  </tr>
+</table>
+<p><strong>Total: 55 S3 buckets</strong>, including 15 managed-velero-backups (OpenShift backup) and several legacy buckets.</p>
+
+<h3>Running EC2 Instances (eu-west-1)</h3>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Pool/Purpose</th>
+    <th>Cost Est.</th>
+  </tr>
+  <tr>
+    <td>Pipe-x Upstream Runner (x2)</td>
+    <td>r5.xlarge</td>
+    <td>GitLab CI - upstream pipelines (min=2)</td>
+    <td>~$260/mo each</td>
+  </tr>
+  <tr>
+    <td>Pipe-x Upstream Compose (x3)</td>
+    <td>m6a.2xlarge</td>
+    <td>GitLab CI - compose builds (min=3)</td>
+    <td>~$320/mo each</td>
+  </tr>
+  <tr>
+    <td>RedHat Edge Tests Runner</td>
+    <td>r5.xlarge</td>
+    <td>GitLab CI - RH Edge tests (min=1)</td>
+    <td>~$260/mo</td>
+  </tr>
+  <tr>
+    <td>aarch64 runner</td>
+    <td>t4g.small</td>
+    <td>ARM64 GitLab runner</td>
+    <td>~$15/mo</td>
+  </tr>
+  <tr>
+    <td><em>(unnamed)</em></td>
+    <td>t4g.2xlarge</td>
+    <td><span class="tag tag-new">Unknown - investigate</span></td>
+    <td>~$270/mo</td>
+  </tr>
+</table>
+<p class="section-note">Total EC2 compute: $941/month. Partner pools (c8i.8xlarge, c8g.8xlarge) have min=0 and scale on demand only.</p>
+
+<h2>3. it-cloud-aws-internal-ateam (339712814647) - $3,956/month</h2>
+
+<h3>Cost by Service</h3>
+<table>
+  <tr>
+    <th>Service</th>
+    <th>Monthly Cost</th>
+    <th>% of Account</th>
+  </tr>
+  <tr>
+    <td>EC2-Instances (Compute)</td>
+    <td><strong>$2,931</strong></td>
+    <td>74.1%</td>
+  </tr>
+  <tr>
+    <td>EC2-Other (EBS/Network)</td>
+    <td>$488</td>
+    <td>12.3%</td>
+  </tr>
+  <tr>
+    <td>CloudFront</td>
+    <td>$192</td>
+    <td>4.9%</td>
+  </tr>
+  <tr>
+    <td>Tax</td>
+    <td>$156</td>
+    <td>3.9%</td>
+  </tr>
+  <tr>
+    <td>S3</td>
+    <td>$78</td>
+    <td>2.0%</td>
+  </tr>
+  <tr>
+    <td>Other (WAF, KMS, Route53)</td>
+    <td>$111</td>
+    <td>2.8%</td>
+  </tr>
+</table>
+
+<h3>Runner Pools (from Terraform)</h3>
+<table>
+  <tr>
+    <th>Pool</th>
+    <th>Instance Type</th>
+    <th>Min/Desired</th>
+    <th>Est. Cost</th>
+  </tr>
+  <tr>
+    <td>DS Pipeline (downstream)</td>
+    <td>r5.xlarge</td>
+    <td>min=2</td>
+    <td>~$520/mo</td>
+  </tr>
+  <tr>
+    <td>DS Compose</td>
+    <td>m6a.2xlarge</td>
+    <td>min=3</td>
+    <td>~$960/mo</td>
+  </tr>
+  <tr>
+    <td>DS Release</td>
+    <td>r5.xlarge</td>
+    <td>min=1</td>
+    <td>~$260/mo</td>
+  </tr>
+  <tr>
+    <td>Low-frequency</td>
+    <td>m7i.xlarge</td>
+    <td>min=2, desired=4</td>
+    <td>~$520-1040/mo</td>
+  </tr>
+  <tr>
+    <td>FoA Validators</td>
+    <td>m6a.2xlarge</td>
+    <td>min=1, desired=3</td>
+    <td>~$320-960/mo</td>
+  </tr>
+  <tr>
+    <td>Contcert</td>
+    <td>m6a.xlarge</td>
+    <td>min=1, desired=3</td>
+    <td>~$160-480/mo</td>
+  </tr>
+</table>
+
+<h3>BYO Instances</h3>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Purpose</th>
+    <th>Notes</th>
+  </tr>
+  <tr>
+    <td>Basil (BAS-001)</td>
+    <td>t3.medium</td>
+    <td>BYO application</td>
+    <td>API termination disabled</td>
+  </tr>
+  <tr>
+    <td>ASIL-B arm64 tests</td>
+    <td>c7g.large</td>
+    <td>Functional safety testing</td>
+    <td>app_code="TBD" - needs review</td>
+  </tr>
+</table>
+
+<h3>CloudFront Distributions (8 total)</h3>
+<p><strong>Production (5):</strong> auto-product-build-downstream, ci-workspaces-downstream, rhivos-evidence-warehouse, contcert-prod, validator-report-prod</p>
+<p><strong>Pre-production (3):</strong> evidence-warehouse-preprod, contcert-preprod, validator-report-preprod</p>
+
+<h3>Verified Decommissions</h3>
+<div class="finding quick-win">
+  <strong>Confirmed:</strong> Webserver EC2 (i-03938f342dc401554) and download mirror EC2 (i-074eadebc81ab8c75) are no longer running. Eitan's decommission plan items are complete.
+</div>
+<div class="finding quick-win">
+  <strong>Confirmed:</strong> FoA validators show 07:00 UTC scheduled scaling - off-peak optimization is active.
+</div>
+
+<h2>4. it-cloud-aws-ateam-stage (203972369401) - $2,601/month</h2>
+
+<h3>Cost by Service</h3>
+<table>
+  <tr>
+    <th>Service</th>
+    <th>Monthly Cost</th>
+    <th>% of Account</th>
+    <th></th>
+  </tr>
+  <tr>
+    <td>EC2-Other (EBS/IOPS/NAT)</td>
+    <td><strong>$1,143</strong></td>
+    <td>43.9%</td>
+    <td><span class="cost-bar" style="width:150px; background:#c62828;"></span></td>
+  </tr>
+  <tr>
+    <td>EC2-Instances (Compute)</td>
+    <td><strong>$862</strong></td>
+    <td>33.1%</td>
+    <td><span class="cost-bar" style="width:113px"></span></td>
+  </tr>
+  <tr>
+    <td>CentOS 10 ARM (Marketplace)</td>
+    <td>$208</td>
+    <td>8.0%</td>
+    <td><span class="cost-bar" style="width:27px"></span></td>
+  </tr>
+  <tr>
+    <td>Elastic Load Balancing</td>
+    <td>$180</td>
+    <td>6.9%</td>
+    <td><span class="cost-bar" style="width:24px"></span></td>
+  </tr>
+  <tr>
+    <td>VPC (NAT Gateway)</td>
+    <td>$150</td>
+    <td>5.8%</td>
+    <td><span class="cost-bar" style="width:20px"></span></td>
+  </tr>
+  <tr>
+    <td>Other (EFS, S3, KMS, WAF, etc.)</td>
+    <td>$58</td>
+    <td>2.2%</td>
+    <td><span class="cost-bar" style="width:8px"></span></td>
+  </tr>
+</table>
+
+<h3>5-Month Trend</h3>
+<table>
+  <tr><th>Month</th><th>Cost</th><th>Trend</th></tr>
+  <tr><td>March 2026</td><td>$3,290</td><td>-</td></tr>
+  <tr><td>April 2026</td><td>$2,825</td><td class="trend-down">-14.1%</td></tr>
+  <tr><td>May 2026</td><td>$2,872</td><td>+1.7%</td></tr>
+  <tr><td>June 2026</td><td>$2,174</td><td class="trend-down">-24.3%</td></tr>
+  <tr><td>July 2026</td><td>$2,601</td><td class="trend-up">+19.6%</td></tr>
+</table>
+<p class="section-note">Trending down overall from March ($3.3k to $2.6k). The June dip suggests intermittent workload usage (c7gd.8xlarge).</p>
+
+<h3>Provisioned IOPS - $968/month <span class="tag tag-critical">Critical</span></h3>
+<div class="finding critical">
+  <strong>37% of the account is provisioned IOPS storage.</strong> The ROSA/OCP cluster (automotive1-rvgrh) in eu-west-2 uses io2/piops volumes for etcd - $693 in IOPS charges + $275 for volume storage. GP3 volumes provide up to 16,000 IOPS at no extra charge. If the etcd workload fits within GP3 IOPS limits, switching could save $700-900/month.
+</div>
+
+<h3>ROSA/OCP Cluster (eu-west-2) - ~$2,050/month total</h3>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Role</th>
+    <th>Running Since</th>
+  </tr>
+  <tr>
+    <td>automotive1-rvgrh-master-0</td>
+    <td>m6g.2xlarge</td>
+    <td>Control plane</td>
+    <td>Jan 2024</td>
+  </tr>
+  <tr>
+    <td>automotive1-rvgrh-x86-* (x3)</td>
+    <td>m5.2xlarge</td>
+    <td>x86 workers</td>
+    <td>May 2025 / Aug 2026</td>
+  </tr>
+  <tr>
+    <td>automotive1-rvgrh-worker-* (x2)</td>
+    <td>m6g.xlarge</td>
+    <td>ARM workers</td>
+    <td>Aug 2025 / Aug 2026</td>
+  </tr>
+</table>
+<p>Plus 3 load balancers (1 unnamed + 2 cluster int/ext). The cluster is 79% of this account's total cost.</p>
+
+<h3>Stopped Instances (us-west-2) <span class="tag tag-new">Review</span></h3>
+<div class="finding">
+  <strong>5 stopped instances still incurring EBS volume costs (~$28/month):</strong>
+  <ul>
+    <li><strong>asa-dev-model-server</strong> (m8g.metal-24xl) - metal instance, likely has large attached volumes</li>
+    <li>asa-dev-control-server (m6a.2xlarge)</li>
+    <li>autosd-ana-bastion (t2.medium) + bastion2 (m5.large)</li>
+    <li>autosd-ana-license-server (t2.large)</li>
+  </ul>
+  <p>These appear to be old AutoSD ANA and ASA Dev environments. If no longer needed, terminate and release EBS volumes.</p>
+</div>
+
+<h3>Other Compute</h3>
+<div class="finding">
+  <strong>yuki-centos9-x86-flight-control</strong> (t3.xlarge, ap-northeast-1) - $59/month. Personal test instance running since June 2026. <span class="tag tag-new">Identify owner, review need</span>
+</div>
+<div class="finding">
+  <strong>c7gd.8xlarge usage</strong> - $397 in July (eu-west-2). Not currently running - was terminated mid-month. <span class="tag tag-pending">Identify what ran this</span>
+</div>
+
+<h3>S3 Buckets (34 total)</h3>
+<p><strong>Partner/Operational (14):</strong> cats-42dot-seoul, cats-42dot-rhivos-2-core-tp, cats-traton-*, cats-qualcomm, cats-rhivos, bertrandt-input/output, automotive1-rvgrh-image-registry, boa-qe-staging, auto-pe-gcr-workspaces, coff-s3, asa-dev-s3-bucket, pe-tf-audit, toolchain-stage-tfstate, eraviv-stage-tfstate</p>
+<p><strong>Personal/Test (12):</strong></p>
+<table>
+  <tr>
+    <th>Bucket</th>
+    <th>Size</th>
+    <th>Owner</th>
+  </tr>
+  <tr><td>hstefans-meow</td><td>0.56 GB</td><td>Hubert Stefanski (transitioning)</td></tr>
+  <tr><td>hstefans-sandbox</td><td>0 GB</td><td>Hubert Stefanski</td></tr>
+  <tr><td>2-hstefans-2-meow</td><td>0 GB</td><td>Hubert Stefanski</td></tr>
+  <tr><td>juanje-bucket1</td><td>0 GB</td><td>Juanje Ojeda</td></tr>
+  <tr><td>juanje-bucket2</td><td>0 GB</td><td>Juanje Ojeda</td></tr>
+  <tr><td>micho-staging</td><td>1.19 GB</td><td>Unknown</td></tr>
+  <tr><td>bzlotnik-example</td><td>-</td><td>Unknown</td></tr>
+  <tr><td>rmusalay-test</td><td>-</td><td>Unknown</td></tr>
+  <tr><td>leafawsbucket / leafawss3bucket</td><td>-</td><td>Unknown</td></tr>
+  <tr><td>innexis-ana-autosd-bucket</td><td>-</td><td>Innexis/AutoSD</td></tr>
+  <tr><td>ferrous-system-cats</td><td>-</td><td>Ferrous Systems</td></tr>
+</table>
+<p><strong>Other (8):</strong> 5x hw2-bucket-* (hash-named, unknown), etas-openshift-7lpsv-bootstrap (likely orphaned OCP bootstrap)</p>
+<p class="section-note">S3 costs are only $11/month total. Cleanup is hygiene, not savings.</p>
+
+<h2>5. Cross-Reference with Eitan's Cost Reduction Plan</h2>
+
+<h3>Items Done (5 of 10)</h3>
+<table>
+  <tr>
+    <th>#</th>
+    <th>Item</th>
+    <th>Status</th>
+    <th>Verified</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>GitLab runner pool consolidation</td>
+    <td><span class="tag tag-done">Done</span></td>
+    <td>Per Eitan's plan</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Webserver EC2 decommission</td>
+    <td><span class="tag tag-done">Done</span></td>
+    <td>Confirmed - instance not running</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Dashboard decommission</td>
+    <td><span class="tag tag-done">Done</span></td>
+    <td>Per Eitan's plan</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>AMI/snapshot scheduled cleanup</td>
+    <td><span class="tag tag-done">Done (early Aug)</span></td>
+    <td>Need August bill to confirm impact</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>FoA validators off-peak scaling</td>
+    <td><span class="tag tag-done">Done</span></td>
+    <td>Confirmed - 07:00 UTC launch times</td>
+  </tr>
+</table>
+
+<h3>Items In Progress (2)</h3>
+<table>
+  <tr>
+    <th>#</th>
+    <th>Item</th>
+    <th>Expected Impact</th>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>Pipe-x/low-frequency pools off-peak scheduling</td>
+    <td>~$200-400/month (similar to FoA pattern)</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>RHAS-CI cleanup (SNO Jumpstarter)</td>
+    <td>~$100-200/month</td>
+  </tr>
+</table>
+
+<h3>Items Medium/Long-term (3)</h3>
+<table>
+  <tr>
+    <th>#</th>
+    <th>Item</th>
+    <th>Notes</th>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>IT shared runners investigation</td>
+    <td>Potential to offload some pools to IT-managed infra</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>Long-term pricing/autoscaling</td>
+    <td>Reserved Instances or Savings Plans for baseline runners</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>S3 retention review</td>
+    <td><span class="tag tag-critical">High impact</span> - see new findings below</td>
+  </tr>
+</table>
+
+<h2>6. New Findings (Not in Eitan's Plan)</h2>
+
+<div class="finding critical">
+  <h3>Finding 1: auto-product-build-downstream - 266 TB (~$6,130/month) <span class="tag tag-critical">Critical</span></h3>
+  <p>This single S3 bucket accounts for nearly all S3 cost in the ateam account. It stores RHIVOS downstream nightly builds plus the 3 latest releases, with versioning enabled. At S3 Standard pricing ($0.023/GB in eu-west-1), 266 TB costs ~$6,130/month.</p>
+  <p><strong>Recommendation:</strong> (a) Review if all 266 TB is current data or accumulated versions. Versioning + no lifecycle = unlimited growth. (b) Add a lifecycle policy to expire old versions after N days. (c) Consider S3 Intelligent-Tiering or Infrequent Access for archive data. Even moving 50% to IA would save ~$1,800/month.</p>
+  <p><strong>Relates to:</strong> Eitan's item #10 (S3 retention review)</p>
+</div>
+
+<div class="finding quick-win">
+  <h3>Finding 2: hstefans-test-bucket - 1.2 TB <span class="tag tag-new">Quick Win</span></h3>
+  <p>Hubert Stefanski's test bucket. Hubert is transitioning to PitCrew team (day 36). This bucket can be deleted immediately.</p>
+  <p><strong>Savings:</strong> ~$28/month (small but free)</p>
+</div>
+
+<div class="finding">
+  <h3>Finding 3: Legacy/Orphan Buckets <span class="tag tag-new">Review</span></h3>
+  <p>Several buckets appear to be legacy or orphaned:</p>
+  <ul>
+    <li><strong>er1.2-backup</strong> (6.9 GB) + <strong>er1.2.1-backup</strong> (3.8 GB) - old release backups</li>
+    <li><strong>mirrors-20240526</strong> - mirror from May 2024, over 2 years old</li>
+    <li><strong>auto-release-staging</strong> - marked with "TODO DELETE" in terraform</li>
+    <li><strong>auto-review</strong> - marked for deletion in terraform</li>
+    <li><strong>7f028...bucket</strong> (hash-named) - marked for deletion in terraform</li>
+    <li><strong>eraviv-temp-tfstate-upstream</strong> (0 GB) - empty temp bucket</li>
+    <li><strong>tmp-auto-product-evidence-warehouse-downstream</strong> (1.6 GB) - temp</li>
+  </ul>
+  <p><strong>Savings:</strong> Minimal storage cost but reduces management overhead and attack surface.</p>
+</div>
+
+<div class="finding">
+  <h3>Finding 4: auto-product-build-downstream-backup - 1.4 TB <span class="tag tag-pending">Review</span></h3>
+  <p>Backup of the downstream build bucket. If the main bucket already has versioning enabled, this backup may be redundant.</p>
+  <p><strong>Savings:</strong> ~$32/month if redundant</p>
+</div>
+
+<div class="finding">
+  <h3>Finding 5: 15 Managed-Velero-Backups Buckets <span class="tag tag-pending">Review</span></h3>
+  <p>OpenShift cluster backup buckets. Review if all 15 are for active clusters. Stale cluster backups can be cleaned up.</p>
+</div>
+
+<div class="finding">
+  <h3>Finding 6: auto-product-build (2.5 TB) - No Lifecycle <span class="tag tag-pending">Review</span></h3>
+  <p>Upstream build bucket has no lifecycle policy (confirmed in terraform). All other buckets inherit the 3-day default. This bucket's absence of lifecycle means objects accumulate indefinitely.</p>
+  <p><strong>Savings:</strong> ~$58/month potential if lifecycle added</p>
+</div>
+
+<div class="finding">
+  <h3>Finding 7: Unnamed t4g.2xlarge Instance <span class="tag tag-new">Investigate</span></h3>
+  <p>Instance i-08d06de2d92b67d3d (t4g.2xlarge) running since Oct 2025 with no Name tag. Running for 10+ months. Needs identification - could be an orphaned resource.</p>
+  <p><strong>Savings:</strong> ~$270/month if not needed</p>
+</div>
+
+<h2>7. Savings Potential Summary</h2>
+
+<table>
+  <tr>
+    <th>Category</th>
+    <th>Item</th>
+    <th>Monthly Savings</th>
+    <th>Status</th>
+  </tr>
+  <tr>
+    <td>Snapshot Cleanup</td>
+    <td>Eitan's item #4 (done early Aug)</td>
+    <td>$6,000 - $10,000</td>
+    <td><span class="tag tag-done">Done - verify Aug bill</span></td>
+  </tr>
+  <tr>
+    <td>S3 Lifecycle</td>
+    <td>auto-product-build-downstream versioning/retention</td>
+    <td>$1,000 - $3,000</td>
+    <td><span class="tag tag-pending">Needs analysis</span></td>
+  </tr>
+  <tr>
+    <td>Stage IOPS</td>
+    <td>ROSA etcd: provisioned IOPS to GP3</td>
+    <td>$700 - $900</td>
+    <td><span class="tag tag-new">Evaluate GP3 IOPS limits</span></td>
+  </tr>
+  <tr>
+    <td>Off-peak Scaling</td>
+    <td>Pipe-x + low-freq pools (Eitan's #6)</td>
+    <td>$200 - $400</td>
+    <td><span class="tag tag-pending">Coming sprint</span></td>
+  </tr>
+  <tr>
+    <td>Unnamed Instance</td>
+    <td>t4g.2xlarge identification (ateam)</td>
+    <td>$270</td>
+    <td><span class="tag tag-new">Investigate</span></td>
+  </tr>
+  <tr>
+    <td>Stage Cleanup</td>
+    <td>Stopped instances EBS + yuki test instance</td>
+    <td>$28 - $87</td>
+    <td><span class="tag tag-new">Terminate if unused</span></td>
+  </tr>
+  <tr>
+    <td>Quick Wins</td>
+    <td>Test buckets + legacy buckets (all accounts)</td>
+    <td>$30 - $100</td>
+    <td><span class="tag tag-new">Ready to execute</span></td>
+  </tr>
+  <tr style="font-weight: 700; background: var(--rh-light);">
+    <td colspan="2">Potential Total (if all execute)</td>
+    <td>$8,228 - $14,757</td>
+    <td></td>
+  </tr>
+</table>
+
+<div class="executive-summary">
+  <h3>Key Takeaway</h3>
+  <p>The 20% target ($5,270/month) is <strong>likely already achievable</strong> through Eitan's snapshot cleanup alone. The August bill will confirm this. New findings - ROSA provisioned IOPS optimization ($700-900/month), S3 lifecycle for the 266 TB downstream bucket ($1-3k/month), and quick wins across all three accounts - provide a substantial buffer and address root causes of cost growth.</p>
+</div>
+
+<h2>8. Recommended Actions</h2>
+
+<h3>Immediate (This Week)</h3>
+<ol>
+  <li><strong>Verify snapshot cleanup impact</strong> - check August AWS bill for ateam account EBS snapshot costs</li>
+  <li><strong>Delete hstefans-test-bucket</strong> (ateam, 1.2 TB) + hstefans-meow/sandbox/2-meow (stage) - coordinate with Hubert</li>
+  <li><strong>Identify unnamed instance</strong> (i-08d06de2d92b67d3d, ateam) - determine owner and purpose</li>
+  <li><strong>Identify yuki-centos9-x86-flight-control</strong> (stage, ap-northeast-1, $59/month) - determine owner and need</li>
+  <li><strong>Review stopped us-west-2 instances</strong> (stage) - autosd-ana-* and asa-dev-* appear to be old environments. Terminate and release EBS if confirmed unused</li>
+</ol>
+
+<h3>This Sprint</h3>
+<ol start="6">
+  <li><strong>Analyze auto-product-build-downstream</strong> - break down the 266 TB: current vs. old versions? Version count and age distribution?</li>
+  <li><strong>Evaluate ROSA etcd IOPS requirements</strong> (stage) - can provisioned IOPS ($968/month) be replaced with GP3 (up to 16,000 IOPS free)?</li>
+  <li><strong>Delete terraform-marked buckets</strong> (ateam) - auto-release-staging, auto-review, hash-named bucket</li>
+  <li><strong>Clean up legacy buckets</strong> (ateam) - er1.2-backup, er1.2.1-backup, mirrors-20240526, eraviv-temp-*, tmp-*</li>
+  <li><strong>Clean up personal test buckets</strong> (stage) - juanje-bucket1/2, bzlotnik-example, rmusalay-test, leafaws*, micho-staging</li>
+</ol>
+
+<h3>Next Sprint</h3>
+<ol start="11">
+  <li><strong>Implement S3 lifecycle for auto-product-build-downstream</strong> - expire old object versions after 30/60/90 days (coordinate with distribution team)</li>
+  <li><strong>Add lifecycle to auto-product-build</strong> - upstream bucket currently has no lifecycle policy</li>
+  <li><strong>Review velero backups</strong> - identify which of 15 buckets (ateam) are for active clusters</li>
+  <li><strong>Identify hw2-bucket-* purpose</strong> (stage, 5 hash-named buckets) and etas-openshift bootstrap bucket</li>
+  <li><strong>Complete Eitan's items #6 and #7</strong> - Pipe-x/low-freq off-peak, RHAS-CI cleanup</li>
+</ol>
+
+<h3>Medium-term</h3>
+<ol start="16">
+  <li><strong>S3 storage class optimization</strong> - move infrequently accessed data to S3 Intelligent-Tiering or Infrequent Access</li>
+  <li><strong>Reserved Instances analysis</strong> - baseline runners and ROSA cluster run 24/7; RI or Savings Plans could save 30-40%</li>
+  <li><strong>Review ROSA cluster sizing</strong> (stage) - 6 instances for what appears to be a staging cluster. Are all workers needed?</li>
+  <li><strong>Evaluate IT shared runners</strong> (Eitan's #8) - potential to reduce self-managed infra</li>
+  <li><strong>Review CentOS 10 ARM marketplace subscription</strong> (stage, $208/month) - optimize or replace</li>
+</ol>
+
+<div class="footer">
+  <p><strong>Data sources:</strong> AWS Cost Explorer API (July 2026 billing, all 3 accounts), AWS CloudWatch S3 metrics, AWS EC2 API, Terraform IaC configs (GitLab: automotive/pipe-x/infrastructure), Eitan's cost reduction plan (Google Doc), ATC Distribution FA wiki.</p>
+  <p><strong>Limitations:</strong> Snapshot sizes require further enumeration. S3 cost per bucket is estimated from CloudWatch BucketSizeBytes at Standard tier pricing. ROSA etcd IOPS requirements not validated.</p>
+  <p>Report generated: August 16, 2026 | Prepared for: Avihai Efrat, Engineering Manager, Auto Toolchain</p>
+</div>
+
+</body>
+</html>
