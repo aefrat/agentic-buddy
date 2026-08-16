@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-08-05
-access_count: 55
+last_accessed: 2026-08-16
+access_count: 56
 created: 2026-06-01
 ---
 
@@ -164,6 +164,12 @@ Resolved observations are moved to the bottom.
 - **2026-08-05:** "Prefix matching breaks hierarchical version naming" - using `startswith()` for version comparison causes hierarchical versions to match incorrectly: "rhivos-2.0.z".startswith("rhivos-2.0") returns True. When version names form a prefix hierarchy (2.0, 2.0.z, 2.1), exact match or structured comparison (split on dots/dashes, compare components) is required. Simple string prefix matching only works when no version name is a prefix of another. Applied: 3 locations in compute_stats.py. Generalizable: any software version comparison, semver-like naming, or product variant matching. (seen: 1)
 
 - **2026-08-05:** "GitLab events API two-way attribution error" - the `/users/{id}/events?action=merged` endpoint has a two-way error for MR attribution: (1) **undercounts** by missing authored MRs merged by others (Matt's !854, Benny's 12 MRs merged by majopela, Roni's 7, Kanitha's 4, Eitan's 5, Bella's 4), and (2) **overcounts** by including others' MRs the user merge-clicked (Juanje -3, Hubert -2). The correct query is `/merge_requests?author_username=X&state=merged&scope=all` which captures all MRs authored by the user regardless of who merged them. Do NOT combine events API with author query - use author query only. QC skill Step 4 + gotcha fixed. Generalizable: any system that conflates "user actions" (who clicked merge) with "user contributions" (who did the work) will misattribute in both directions. (seen: 1, resolved - skill fixed)
+
+- **2026-08-16:** "AWS cost analysis spike" - multi-step procedure for investigating cloud cost: (1) read IaC configs (terraform) from LLM wiki for workload inventory, (2) authenticate to AWS accounts, (3) pull Cost Explorer data per service and usage type, (4) cross-reference against existing reduction plan, (5) identify gaps, (6) generate HTML + Google Doc output. Applied to Toolchain team's 3 AWS accounts. Repeatable for any team/account cost audit. (seen: 1)
+
+- **2026-08-16:** "Red Hat SAML federation to AWS authentication" - `aws configure sso` doesn't work with Red Hat's SAML URL. Use `aws login --region eu-west-1` (browser-based from Agent Toolkit approach). Account switching requires explicit `aws logout` + re-login + overwrite confirmation. CloudShell metadata endpoint returns 401 (not viable for credential extraction). Session tokens cache in `~/.aws/cli/cache/`. Pattern: when standard AWS auth methods fail with SAML federation, fall back to `aws login` browser-based flow. (seen: 1)
+
+- **2026-08-16:** "Terraform as cost inventory source" - terraform configs are a reliable source for workload inventory (instance types, ASG sizes, S3 buckets, CloudFront distributions) but not for actual cost. The $15k user estimate vs $19.8k actual (32% gap) shows that terraform shows resources but not usage patterns (EBS snapshots accumulating, S3 storage growth). Pattern: use IaC for "what exists", Cost Explorer for "what costs", CloudWatch for "how much is used". All three are needed for cost optimization. (seen: 1)
 
 ## Structure candidates (tools)
 
