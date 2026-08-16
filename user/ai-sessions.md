@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-08-16 | PTO catch-up (Aug 7-16): Slack mentions + Gmail scan, 8 action items prioritized | afc6113c-f7bb-4790-976d-17286ea45086 |
 | 2026-08-16 | AWS cost analysis across 3 Toolchain accounts - all 3 completed (Cost Explorer, S3 sizes, EC2 inventory, terraform cross-ref, Eitan plan cross-ref, stage ROSA/IOPS discovery, HTML + Google Doc output, project file) | c55f5890-3b33-4d01-b17e-28effbe02017 |
 | 2026-08-06 | Lightwell project research and EM candidacy prep (charter ingestion, experience mapping, HTML + Google Doc prep document) | (reflect-only) |
 | 2026-08-06 | Matt Goldman Principal SRE (L4) gap analysis against new job description, two Google Docs (1:1 prep + manager summary) | c0c6df16-c294-4a7d-a4fc-be129b4e670d |
