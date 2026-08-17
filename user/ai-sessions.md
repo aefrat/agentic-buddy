@@ -9,6 +9,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 | Date | Description | Session ID |
 |------|-------------|------------|
 | 2026-08-17 | Shawn Davis cloud spend quote origin trace (Slack + Gmail search, traced to Aug 6 managers meeting) | (reflect-only) |
+| 2026-08-17 | AWS cost correction (BlendedCost->UnblendedCost), Agent Toolkit setup (MCP server + 22 skills), cost monitor project file | c55f5890-3b33-4d01-b17e-28effbe02017 |
 | 2026-08-17 | AWS Agent Toolkit research (96 skills available, MCP server not configured, deferred), GP3 vs io2 explanation delivered | c55f5890-3b33-4d01-b17e-28effbe02017 |
 | 2026-08-16 | PTO catch-up (Aug 7-16): Slack mentions + Gmail scan, 8 action items prioritized | afc6113c-f7bb-4790-976d-17286ea45086 |
 | 2026-08-16 | AWS cost analysis across 3 Toolchain accounts - all 3 completed (Cost Explorer, S3 sizes, EC2 inventory, terraform cross-ref, Eitan plan cross-ref, stage ROSA/IOPS discovery, HTML + Google Doc output, project file, GP3 vs io2 evaluation) | c55f5890-3b33-4d01-b17e-28effbe02017 |

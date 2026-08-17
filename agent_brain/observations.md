@@ -1,6 +1,6 @@
 ---
 last_accessed: 2026-08-17
-access_count: 57
+access_count: 58
 created: 2026-06-01
 ---
 
@@ -170,6 +170,8 @@ Resolved observations are moved to the bottom.
 - **2026-08-16:** "Red Hat SAML federation to AWS authentication" - `aws configure sso` doesn't work with Red Hat's SAML URL. Use `aws login --region eu-west-1` (browser-based from Agent Toolkit approach). Account switching requires explicit `aws logout` + re-login + overwrite confirmation. CloudShell metadata endpoint returns 401 (not viable for credential extraction). Session tokens cache in `~/.aws/cli/cache/`. Pattern: when standard AWS auth methods fail with SAML federation, fall back to `aws login` browser-based flow. (seen: 1)
 
 - **2026-08-16:** "Terraform as cost inventory source" - terraform configs are a reliable source for workload inventory (instance types, ASG sizes, S3 buckets, CloudFront distributions) but not for actual cost. The $15k user estimate vs $19.8k actual (32% gap) shows that terraform shows resources but not usage patterns (EBS snapshots accumulating, S3 storage growth). Pattern: use IaC for "what exists", Cost Explorer for "what costs", CloudWatch for "how much is used". All three are needed for cost optimization. (seen: 1)
+
+- **2026-08-17:** "BlendedCost vs UnblendedCost metric selection" - AWS Cost Explorer defaults to BlendedCost in API queries, which averages pricing across all linked accounts in an AWS organization. For multi-account orgs with enterprise discounts (like Red Hat, ~28-37% below list), BlendedCost overstates per-account costs significantly ($26.3k vs $19.9k actual). Always specify `UnblendedCost` in the `Metrics` parameter for per-account analysis. The AWS Console shows UnblendedCost by default, creating a confusing gap when API results don't match the UI. Pattern: when querying cost APIs, explicitly specify the metric - never rely on defaults. Validate against the AWS Console before publishing. (seen: 1)
 
 ## Structure candidates (tools)
 
