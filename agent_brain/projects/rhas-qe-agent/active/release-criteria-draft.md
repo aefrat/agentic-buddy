@@ -38,7 +38,7 @@
 </tr>
 <tr>
 <td style="text-align: center; padding-top: 14px;">
-<span style="font-size: 13px; color: #8892b0;">July 21, 2026 (refreshed from July 2 draft)</span>
+<span style="font-size: 13px; color: #8892b0;">August 17, 2026 (refreshed from July 21 draft)</span>
 </td>
 </tr>
 </table>
@@ -258,8 +258,8 @@ These criteria must be met for every monthly release. They represent the baselin
 <td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; text-align: center; font-weight: 600; color: #24292f;">M-07</td>
 <td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #24292f;">Builder-to-Jumpstarter handoff</td>
 <td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #24292f;">OCI artifact from Builder consumed by Jumpstarter, board provisioned</td>
-<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; text-align: center;"><span style="display: inline-block; background-color: #c44b00; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 8px; text-transform: uppercase;">Not Met</span></td>
-<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #57606a; font-size: 12px;">E2E integration not tested</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; text-align: center;"><span style="display: inline-block; background-color: #1a7a3e; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 8px; text-transform: uppercase;">Met</span></td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #57606a; font-size: 12px;">E2E downstream testing builder+jumpstarter operational (PITCREW-393 resolved)</td>
 <td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; text-align: center; color: #24292f;">Yes</td>
 </tr>
 <!-- M-08 -->
@@ -352,8 +352,8 @@ Tech Preview includes all 8 Monthly criteria (Section 3) plus the 7 additional c
 <td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; text-align: center; font-weight: 600; color: #24292f;">TP-05</td>
 <td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #24292f;">DS CI pipeline operational</td>
 <td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #24292f;">Ephemeral IPI SNO provisions and runs test suite</td>
-<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; text-align: center;"><span style="display: inline-block; background-color: #57606a; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 8px; text-transform: uppercase;">Not Yet Testable</span></td>
-<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #57606a; font-size: 12px;">Blocked: DNS approach invalid for OCP ELBs (Jul 13). Needs architectural rethink.</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; text-align: center;"><span style="display: inline-block; background-color: #b08800; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 8px; text-transform: uppercase;">Partially Met</span></td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #57606a; font-size: 12px;">DNS resolved (PITCREW-393). E2E builder+jumpstarter operational. Full IPI SNO test suite validation pending.</td>
 <td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; text-align: center; font-weight: 600; color: #c44b00;">No</td>
 </tr>
 <!-- TP-06 -->
@@ -591,27 +591,27 @@ Aggregate view of how many criteria are currently met at each milestone level. R
 <tr>
 <td style="border-bottom: 1px solid #d0d7de; padding: 12px 16px; font-weight: 600; color: #24292f;">Monthly Release</td>
 <td style="border-bottom: 1px solid #d0d7de; padding: 12px 16px; text-align: center; color: #57606a;">Rolling</td>
-<td style="border-bottom: 1px solid #d0d7de; padding: 12px 16px; text-align: center; font-weight: 600; color: #24292f;">4 / 8</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 12px 16px; text-align: center; font-weight: 600; color: #24292f;">5 / 8</td>
 <td style="border-bottom: 1px solid #d0d7de; padding: 12px 16px; text-align: center;">
-<span style="display: inline-block; background-color: #b08800; color: #ffffff; font-size: 13px; font-weight: 700; padding: 4px 16px;">50%</span>
+<span style="display: inline-block; background-color: #b08800; color: #ffffff; font-size: 13px; font-weight: 700; padding: 4px 16px;">63%</span>
 </td>
 </tr>
 <!-- Tech Preview -->
 <tr>
 <td style="border-bottom: 1px solid #d0d7de; padding: 12px 16px; font-weight: 600; color: #24292f; background-color: #f6f8fa;">Tech Preview</td>
 <td style="border-bottom: 1px solid #d0d7de; padding: 12px 16px; text-align: center; color: #57606a; background-color: #f6f8fa;">Sep 29, 2026</td>
-<td style="border-bottom: 1px solid #d0d7de; padding: 12px 16px; text-align: center; font-weight: 600; color: #24292f; background-color: #f6f8fa;">4 / 15</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 12px 16px; text-align: center; font-weight: 600; color: #24292f; background-color: #f6f8fa;">5 / 15</td>
 <td style="border-bottom: 1px solid #d0d7de; padding: 12px 16px; text-align: center; background-color: #f6f8fa;">
-<span style="display: inline-block; background-color: #c44b00; color: #ffffff; font-size: 13px; font-weight: 700; padding: 4px 16px;">27%</span>
+<span style="display: inline-block; background-color: #c44b00; color: #ffffff; font-size: 13px; font-weight: 700; padding: 4px 16px;">33%</span>
 </td>
 </tr>
 <!-- GA -->
 <tr>
 <td style="border-bottom: 1px solid #d0d7de; padding: 12px 16px; font-weight: 600; color: #24292f;">GA</td>
 <td style="border-bottom: 1px solid #d0d7de; padding: 12px 16px; text-align: center; color: #57606a;">Dec 22, 2026</td>
-<td style="border-bottom: 1px solid #d0d7de; padding: 12px 16px; text-align: center; font-weight: 600; color: #24292f;">4 / 23</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 12px 16px; text-align: center; font-weight: 600; color: #24292f;">5 / 23</td>
 <td style="border-bottom: 1px solid #d0d7de; padding: 12px 16px; text-align: center;">
-<span style="display: inline-block; background-color: #c44b00; color: #ffffff; font-size: 13px; font-weight: 700; padding: 4px 16px;">17%</span>
+<span style="display: inline-block; background-color: #c44b00; color: #ffffff; font-size: 13px; font-weight: 700; padding: 4px 16px;">22%</span>
 </td>
 </tr>
 </table>
@@ -619,7 +619,7 @@ Aggregate view of how many criteria are currently met at each milestone level. R
 <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 16px;">
 <tr>
 <td style="padding: 12px 16px; background-color: #fff8c5; border: 1px solid #d4a72c; font-size: 13px; color: #24292f; line-height: 1.5;">
-<span style="font-weight: 700;">Assessment (Jul 21):</span> No change in readiness percentages since Jul 2. Monthly at 50%, Tech Preview at 27%, GA at 17%. The two biggest blockers - no QE lead (PITCREW-337, 3+ months unassigned with zero comments) and the DS pipeline DNS issue (PITCREW-393, DNS approach itself now identified as architecturally wrong for OpenShift ELBs) - have not improved. PITCREW-403 (flaky E2E) was closed, which is positive but does not move any criterion. With 70 days to Tech Preview, the gap between current state and target is widening.
+<span style="font-weight: 700;">Assessment (Aug 17):</span> Readiness improved since Jul 21. Monthly at 63% (was 50%), Tech Preview at 33% (was 27%), GA at 22% (was 17%). Key progress: DS pipeline DNS blocker (PITCREW-393) resolved - e2e downstream testing with builder+jumpstarter now operational, which moves M-07 to Met and TP-05 to Partially Met. Remaining biggest blocker: no QE lead (PITCREW-337, 4+ months unassigned with zero comments). With 43 days to Tech Preview, the unblocked DS pipeline significantly improves the path to TP-01 (full workflow E2E) and TP-02 (multi-component integration).
 </td>
 </tr>
 </table>
@@ -671,11 +671,11 @@ These are the issues that must be resolved before significant progress can be ma
 </tr>
 <!-- Blocker 2 -->
 <tr>
-<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #24292f; font-weight: 600; background-color: #f6f8fa;">DNS blocking DS pipeline (approach invalid)</td>
-<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #24292f; background-color: #f6f8fa;">TP-05, TP-01</td>
-<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #57606a; background-color: #f6f8fa;">PITCREW-393 / VROOM-44573</td>
-<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #57606a; background-color: #f6f8fa;">Evgeni Vakhonin / Eitan Raviv</td>
-<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #24292f; background-color: #f6f8fa;">Jul target missed; needs rethink</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #1a7a3e; font-weight: 600; background-color: #dafbe1;">DNS blocking DS pipeline - RESOLVED</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #1a7a3e; background-color: #dafbe1;">TP-05, TP-01</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #1a7a3e; background-color: #dafbe1;">PITCREW-393 / VROOM-44573</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #1a7a3e; background-color: #dafbe1;">Evgeni Vakhonin / Eitan Raviv</td>
+<td style="border-bottom: 1px solid #d0d7de; padding: 10px 8px; color: #1a7a3e; background-color: #dafbe1;">Resolved Aug 17. E2E builder+jumpstarter operational.</td>
 </tr>
 <!-- Blocker 3 -->
 <tr>
@@ -758,7 +758,7 @@ Some criteria cannot be satisfied until prerequisites are in place. Understandin
 <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 16px;">
 <tr>
 <td style="padding: 12px 16px; background-color: #ddf4ff; border: 1px solid #54aeff; font-size: 13px; color: #24292f; line-height: 1.5;">
-<span style="font-weight: 700;">Critical path:</span> The longest dependency chain runs TP-05 (DS pipeline) -> M-07 (handoff) -> TP-01 (E2E) -> TP-02 (multi-component). Unblocking TP-05 remains the single highest-leverage action, but as of Jul 13 the DNS approach itself is invalid for OpenShift (needs wildcard DNS for ELBs). This requires an architectural rethink, not just an IT ticket resolution.
+<span style="font-weight: 700;">Critical path:</span> The longest dependency chain runs TP-05 (DS pipeline) -> M-07 (handoff) -> TP-01 (E2E) -> TP-02 (multi-component). TP-05 is now unblocked (PITCREW-393 resolved, Aug 17) and M-07 is Met. The critical path now starts at TP-01: building the full workflow E2E test (code commit -> build -> deploy -> test-on-board in a single pipeline run) using the now-operational builder+jumpstarter e2e infrastructure.
 </td>
 </tr>
 </table>
@@ -778,8 +778,8 @@ Some criteria cannot be satisfied until prerequisites are in place. Understandin
 <tr>
 <td style="background-color: #f6f8fa; border-top: 1px solid #d0d7de; padding: 20px 32px; text-align: center;">
 <span style="font-size: 12px; color: #57606a; line-height: 1.6;">
-Generated by RHAS QE Expert Lead Agent on July 2, 2026. Refreshed July 21, 2026. Version: DRAFT v1.1.<br>
-Companion document: RHAS Test Strategy (rhas-test-strategy-2026-07-21.html)
+Generated by RHAS QE Expert Lead Agent on July 2, 2026. Refreshed August 17, 2026. Version: DRAFT v1.2.<br>
+Companion document: RHAS Test Strategy (rhas-test-strategy-2026-08-17.html)
 </span>
 </td>
 </tr>
