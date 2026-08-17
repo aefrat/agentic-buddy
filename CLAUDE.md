@@ -75,7 +75,7 @@ Factual updates to Right now (changed dates, flipped statuses) are allowed mid-s
 
 Promotion is gradual — files climb through layers of visibility based on sustained use, not jumps. Structural context (team, primary project) lives in `USER.md`, not here. Most knowledge is reachable through directory indexes in "Where to find things." Only files that are genuinely hot from current work need to be here.
 
-- [Release Blocker Dashboard Agent](agent_brain/projects/release-blocker-agent/index.md) -- PoC Phase 3 complete, cross-release ticket leakage bug (3-part fix pending), CI/CD green on shared runners. Read when working on blocker dashboard, release status, or the AI summary retro action item. Promoted 2026-08-05, reinforced W32 weekly (6 accesses across all sessions since creation).
+No files currently at hot level. Recent projects (AWS cost reduction, release blocker agent, RHAS QE, Lightwell) accessible via "Where to find things."
 
 ## Where to find things
 
