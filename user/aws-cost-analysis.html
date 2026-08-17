@@ -89,34 +89,35 @@
 <body>
 
 <h1>AWS Cloud Cost Analysis</h1>
-<p class="subtitle">Auto Toolchain Team - 3 Accounts | Data: July 2026 | Prepared: August 16, 2026</p>
+<p class="subtitle">Auto Toolchain Team - 3 Accounts | Data: July 2026 | Prepared: August 16, 2026 | Revised: August 17, 2026</p>
 <p class="subtitle">Context: 20% cost reduction directive (Eitan's H2/2026 plan) | Prepared by: Avihai Efrat</p>
+<p class="subtitle" style="color: var(--rh-green); font-weight: 600;">Revision note: All figures corrected from BlendedCost to UnblendedCost (actual charges). Original report overstated costs by ~25% due to using blended rates averaged across the Red Hat AWS organization.</p>
 
 <div class="executive-summary">
   <h3>Executive Summary</h3>
-  <p>Total monthly spend across 3 AWS accounts is <strong>$26,347</strong> (July 2026) - 32% higher than the estimated $20k. The primary account (ateam) has grown <strong>61% over 5 months</strong> ($12.3k to $19.8k), driven by EBS snapshot accumulation ($12k/month, 61% of account). The stage account revealed a ROSA/OCP cluster consuming $2,050/month (79% of that account), with $968/month in provisioned IOPS that may be replaceable by GP3. Eitan's snapshot cleanup (completed early August) should deliver the majority of the 20% reduction target ($5,270/month). Additional savings from IOPS optimization, S3 lifecycle policies, and cleanup of legacy/test resources provide a further buffer.</p>
+  <p>Total monthly spend across 3 AWS accounts is <strong>$19,855</strong> (July 2026), closely matching the estimated $20k. The primary account (ateam) has grown <strong>71% over 5 months</strong> ($8.3k to $14.2k), driven by EBS snapshot accumulation ($9.2k/month, 64% of account). The stage account revealed a ROSA/OCP cluster consuming $2,050/month (79% of that account), with $968/month in provisioned IOPS that may be replaceable by GP3. Eitan's snapshot cleanup (completed early August) should deliver the majority of the 20% reduction target ($3,971/month). Additional savings from IOPS optimization, S3 lifecycle policies, and cleanup of legacy/test resources provide a further buffer.</p>
 </div>
 
 <div class="metric-cards">
   <div class="metric-card alert">
     <div class="label">Total Monthly Spend</div>
-    <div class="value">$26.3k</div>
-    <div class="detail">July 2026, all 3 accounts (actual)</div>
+    <div class="value">$19.9k</div>
+    <div class="detail">July 2026, all 3 accounts (UnblendedCost)</div>
   </div>
   <div class="metric-card">
     <div class="label">20% Reduction Target</div>
-    <div class="value">$5.3k</div>
-    <div class="detail">$21.1k target monthly</div>
+    <div class="value">$4.0k</div>
+    <div class="detail">$15.9k target monthly</div>
   </div>
   <div class="metric-card alert">
     <div class="label">5-Month Growth</div>
-    <div class="value">+61%</div>
-    <div class="detail">ateam: $12.3k to $19.8k</div>
+    <div class="value">+71%</div>
+    <div class="detail">ateam: $8.3k to $14.2k</div>
   </div>
   <div class="metric-card">
     <div class="label">Biggest Cost Driver</div>
-    <div class="value">$12k</div>
-    <div class="detail">EBS Snapshots (61% of ateam)</div>
+    <div class="value">$9.2k</div>
+    <div class="detail">EBS Snapshots (64% of ateam)</div>
   </div>
 </div>
 
@@ -133,16 +134,16 @@
   <tr>
     <td><strong>it-cloud-aws-ateam</strong></td>
     <td>587138297281</td>
-    <td><strong>$19,790</strong></td>
+    <td><strong>$14,245</strong></td>
     <td>$15,000</td>
-    <td class="trend-up">+$4,790 (+32%)</td>
+    <td class="trend-down">-$755 (-5%)</td>
   </tr>
   <tr>
     <td><strong>it-cloud-aws-internal-ateam</strong></td>
     <td>339712814647</td>
-    <td><strong>$3,956</strong></td>
+    <td><strong>$3,009</strong></td>
     <td>$3,000</td>
-    <td class="trend-up">+$956 (+32%)</td>
+    <td class="trend-up">+$9 (0%)</td>
   </tr>
   <tr>
     <td><strong>it-cloud-aws-ateam-stage</strong></td>
@@ -154,9 +155,9 @@
   <tr style="font-weight: 700; background: var(--rh-light);">
     <td>Total</td>
     <td></td>
-    <td>$26,347</td>
+    <td>$19,855</td>
     <td>$20,000</td>
-    <td class="trend-up">+$6,347 (+32%)</td>
+    <td class="trend-down">-$145 (-1%)</td>
   </tr>
 </table>
 
@@ -168,15 +169,15 @@
     <th>Growth</th>
     <th>Trend</th>
   </tr>
-  <tr><td>March 2026</td><td>$12,254</td><td>-</td><td></td></tr>
-  <tr><td>April 2026</td><td>$13,218</td><td class="trend-up">+7.9%</td><td><span class="cost-bar" style="width:61px"></span></td></tr>
-  <tr><td>May 2026</td><td>$15,153</td><td class="trend-up">+14.6%</td><td><span class="cost-bar" style="width:76px"></span></td></tr>
-  <tr><td>June 2026</td><td>$17,412</td><td class="trend-up">+14.9%</td><td><span class="cost-bar" style="width:87px"></span></td></tr>
-  <tr><td>July 2026</td><td>$19,790</td><td class="trend-up">+13.6%</td><td><span class="cost-bar" style="width:99px"></span></td></tr>
+  <tr><td>March 2026</td><td>$8,314</td><td>-</td><td></td></tr>
+  <tr><td>April 2026</td><td>$8,913</td><td class="trend-up">+7.2%</td><td><span class="cost-bar" style="width:45px"></span></td></tr>
+  <tr><td>May 2026</td><td>$10,961</td><td class="trend-up">+23.0%</td><td><span class="cost-bar" style="width:55px"></span></td></tr>
+  <tr><td>June 2026</td><td>$12,701</td><td class="trend-up">+15.9%</td><td><span class="cost-bar" style="width:64px"></span></td></tr>
+  <tr><td>July 2026</td><td>$14,245</td><td class="trend-up">+12.2%</td><td><span class="cost-bar" style="width:71px"></span></td></tr>
 </table>
-<p class="section-note">Consistent monthly growth of ~$1.5-2.4k driven by EBS snapshot accumulation. August data (post-cleanup) will confirm whether Eitan's fix reversed the trend.</p>
+<p class="section-note">Consistent monthly growth of ~$0.6-2.0k driven by EBS snapshot accumulation. August data (post-cleanup) will confirm whether Eitan's fix reversed the trend.</p>
 
-<h2>2. it-cloud-aws-ateam (587138297281) - $19,790/month</h2>
+<h2>2. it-cloud-aws-ateam (587138297281) - $14,245/month</h2>
 
 <h3>Cost by Service</h3>
 <table>
@@ -187,43 +188,43 @@
     <th></th>
   </tr>
   <tr>
-    <td>EC2-Other (EBS Snapshots)</td>
-    <td><strong>$12,048</strong></td>
-    <td>60.9%</td>
+    <td>EC2-Other (EBS Snapshots + Volumes)</td>
+    <td><strong>$9,443</strong></td>
+    <td>66.3%</td>
     <td><span class="cost-bar" style="width:200px; background:#c62828;"></span></td>
   </tr>
   <tr>
     <td>S3 (Storage + Requests)</td>
-    <td><strong>$6,198</strong></td>
-    <td>31.3%</td>
-    <td><span class="cost-bar" style="width:103px"></span></td>
+    <td><strong>$3,921</strong></td>
+    <td>27.5%</td>
+    <td><span class="cost-bar" style="width:83px"></span></td>
   </tr>
   <tr>
     <td>EC2-Instances (Compute)</td>
-    <td>$941</td>
-    <td>4.8%</td>
-    <td><span class="cost-bar" style="width:16px"></span></td>
+    <td>$706</td>
+    <td>5.0%</td>
+    <td><span class="cost-bar" style="width:15px"></span></td>
   </tr>
   <tr>
-    <td>Tax</td>
-    <td>$375</td>
-    <td>1.9%</td>
-    <td><span class="cost-bar" style="width:6px"></span></td>
+    <td>CloudFront</td>
+    <td>$141</td>
+    <td>1.0%</td>
+    <td><span class="cost-bar" style="width:3px"></span></td>
   </tr>
   <tr>
-    <td>Other (VPC, KMS, etc.)</td>
-    <td>$228</td>
-    <td>1.2%</td>
-    <td><span class="cost-bar" style="width:4px"></span></td>
+    <td>Other (VPC, KMS, CloudWatch)</td>
+    <td>$33</td>
+    <td>0.2%</td>
+    <td><span class="cost-bar" style="width:1px"></span></td>
   </tr>
 </table>
 
-<h3>EBS Snapshots - $12,048/month <span class="tag tag-critical">Critical</span></h3>
+<h3>EBS Snapshots - $9,156/month <span class="tag tag-critical">Critical</span></h3>
 <div class="finding critical">
-  <strong>Root cause of cost growth.</strong> Thousands of snapshots accumulated across us-east-1 and us-east-2 regions. This single line item is 61% of the account and 47% of total cloud spend across all 3 accounts. Eitan's "Fix AMI and snapshot scheduled cleanup" was completed early August - August data will confirm impact. Expected savings: $6,000-$10,000/month.
+  <strong>Root cause of cost growth.</strong> Thousands of snapshots accumulated across eu-west-1 ($6,350), us-east-1 ($2,331), and us-east-2 ($475). This single line item is 64% of the account and 46% of total cloud spend across all 3 accounts. Eitan's "Fix AMI and snapshot scheduled cleanup" was completed early August - August data will confirm impact. Expected savings: $4,000-$7,000/month.
 </div>
 
-<h3>S3 Buckets - $6,198/month</h3>
+<h3>S3 Buckets - $3,921/month</h3>
 <table>
   <tr>
     <th>Bucket</th>
@@ -235,7 +236,7 @@
     <td><strong>auto-product-build-downstream</strong></td>
     <td><strong>266.5 TB</strong></td>
     <td>RHIVOS downstream nightly + 3 latest releases</td>
-    <td><span class="tag tag-critical">~$6.1k/month</span> Versioning enabled. Review retention policy</td>
+    <td><span class="tag tag-critical">Dominant S3 cost</span> Versioning enabled. Review retention policy</td>
   </tr>
   <tr>
     <td>auto-product-build</td>
@@ -339,9 +340,9 @@
     <td>~$270/mo</td>
   </tr>
 </table>
-<p class="section-note">Total EC2 compute: $941/month. Partner pools (c8i.8xlarge, c8g.8xlarge) have min=0 and scale on demand only.</p>
+<p class="section-note">Total EC2 compute: $706/month. Partner pools (c8i.8xlarge, c8g.8xlarge) have min=0 and scale on demand only.</p>
 
-<h2>3. it-cloud-aws-internal-ateam (339712814647) - $3,956/month</h2>
+<h2>3. it-cloud-aws-internal-ateam (339712814647) - $3,009/month</h2>
 
 <h3>Cost by Service</h3>
 <table>
@@ -352,33 +353,38 @@
   </tr>
   <tr>
     <td>EC2-Instances (Compute)</td>
-    <td><strong>$2,931</strong></td>
-    <td>74.1%</td>
+    <td><strong>$2,203</strong></td>
+    <td>73.2%</td>
   </tr>
   <tr>
     <td>EC2-Other (EBS/Network)</td>
-    <td>$488</td>
-    <td>12.3%</td>
+    <td>$228</td>
+    <td>7.6%</td>
+  </tr>
+  <tr>
+    <td>VPC</td>
+    <td>$176</td>
+    <td>5.9%</td>
+  </tr>
+  <tr>
+    <td>Route 53</td>
+    <td>$150</td>
+    <td>5.0%</td>
   </tr>
   <tr>
     <td>CloudFront</td>
-    <td>$192</td>
-    <td>4.9%</td>
+    <td>$122</td>
+    <td>4.1%</td>
   </tr>
   <tr>
-    <td>Tax</td>
-    <td>$156</td>
-    <td>3.9%</td>
-  </tr>
-  <tr>
-    <td>S3</td>
+    <td>WAF</td>
     <td>$78</td>
-    <td>2.0%</td>
+    <td>2.6%</td>
   </tr>
   <tr>
-    <td>Other (WAF, KMS, Route53)</td>
-    <td>$111</td>
-    <td>2.8%</td>
+    <td>Other (ELB, KMS, S3, CloudWatch)</td>
+    <td>$52</td>
+    <td>1.7%</td>
   </tr>
 </table>
 
@@ -519,7 +525,7 @@
   <tr><td>June 2026</td><td>$2,174</td><td class="trend-down">-24.3%</td></tr>
   <tr><td>July 2026</td><td>$2,601</td><td class="trend-up">+19.6%</td></tr>
 </table>
-<p class="section-note">Trending down overall from March ($3.3k to $2.6k). The June dip suggests intermittent workload usage (c7gd.8xlarge).</p>
+<p class="section-note">Stage account was already correct (UnblendedCost used in original query). Trending down overall from March ($3.3k to $2.6k). The June dip suggests intermittent workload usage (c7gd.8xlarge).</p>
 
 <h3>Provisioned IOPS - $968/month <span class="tag tag-critical">Critical</span></h3>
 <div class="finding critical">
@@ -687,9 +693,9 @@
 <h2>6. New Findings (Not in Eitan's Plan)</h2>
 
 <div class="finding critical">
-  <h3>Finding 1: auto-product-build-downstream - 266 TB (~$6,130/month) <span class="tag tag-critical">Critical</span></h3>
-  <p>This single S3 bucket accounts for nearly all S3 cost in the ateam account. It stores RHIVOS downstream nightly builds plus the 3 latest releases, with versioning enabled. At S3 Standard pricing ($0.023/GB in eu-west-1), 266 TB costs ~$6,130/month.</p>
-  <p><strong>Recommendation:</strong> (a) Review if all 266 TB is current data or accumulated versions. Versioning + no lifecycle = unlimited growth. (b) Add a lifecycle policy to expire old versions after N days. (c) Consider S3 Intelligent-Tiering or Infrequent Access for archive data. Even moving 50% to IA would save ~$1,800/month.</p>
+  <h3>Finding 1: auto-product-build-downstream - 266 TB (dominant S3 cost) <span class="tag tag-critical">Critical</span></h3>
+  <p>This single S3 bucket accounts for nearly all S3 cost in the ateam account ($3,921/month total S3). It stores RHIVOS downstream nightly builds plus the 3 latest releases, with versioning enabled. The effective S3 rate (~$0.015/GB) reflects enterprise discounts below the standard $0.023/GB list price.</p>
+  <p><strong>Recommendation:</strong> (a) Review if all 266 TB is current data or accumulated versions. Versioning + no lifecycle = unlimited growth. (b) Add a lifecycle policy to expire old versions after N days. (c) Consider S3 Intelligent-Tiering or Infrequent Access for archive data. Even modest lifecycle changes could save $500-1,500/month.</p>
   <p><strong>Relates to:</strong> Eitan's item #10 (S3 retention review)</p>
 </div>
 
@@ -749,13 +755,13 @@
   <tr>
     <td>Snapshot Cleanup</td>
     <td>Eitan's item #4 (done early Aug)</td>
-    <td>$6,000 - $10,000</td>
+    <td>$4,000 - $7,000</td>
     <td><span class="tag tag-done">Done - verify Aug bill</span></td>
   </tr>
   <tr>
     <td>S3 Lifecycle</td>
     <td>auto-product-build-downstream versioning/retention</td>
-    <td>$1,000 - $3,000</td>
+    <td>$500 - $1,500</td>
     <td><span class="tag tag-pending">Needs analysis</span></td>
   </tr>
   <tr>
@@ -790,14 +796,14 @@
   </tr>
   <tr style="font-weight: 700; background: var(--rh-light);">
     <td colspan="2">Potential Total (if all execute)</td>
-    <td>$8,228 - $14,757</td>
+    <td>$5,528 - $10,257</td>
     <td></td>
   </tr>
 </table>
 
 <div class="executive-summary">
   <h3>Key Takeaway</h3>
-  <p>The 20% target ($5,270/month) is <strong>likely already achievable</strong> through Eitan's snapshot cleanup alone. The August bill will confirm this. New findings - ROSA provisioned IOPS optimization ($700-900/month), S3 lifecycle for the 266 TB downstream bucket ($1-3k/month), and quick wins across all three accounts - provide a substantial buffer and address root causes of cost growth.</p>
+  <p>The 20% target ($3,971/month) is <strong>likely already achievable</strong> through Eitan's snapshot cleanup alone. The August bill will confirm this. New findings - ROSA provisioned IOPS optimization ($700-900/month), S3 lifecycle for the 266 TB downstream bucket ($500-1.5k/month), and quick wins across all three accounts - provide a further buffer and address root causes of cost growth.</p>
 </div>
 
 <h2>8. Recommended Actions</h2>
@@ -839,9 +845,10 @@
 </ol>
 
 <div class="footer">
-  <p><strong>Data sources:</strong> AWS Cost Explorer API (July 2026 billing, all 3 accounts), AWS CloudWatch S3 metrics, AWS EC2 API, Terraform IaC configs (GitLab: automotive/pipe-x/infrastructure), Eitan's cost reduction plan (Google Doc), ATC Distribution FA wiki.</p>
-  <p><strong>Limitations:</strong> Snapshot sizes require further enumeration. S3 cost per bucket is estimated from CloudWatch BucketSizeBytes at Standard tier pricing. ROSA etcd IOPS requirements not validated.</p>
-  <p>Report generated: August 16, 2026 | Prepared for: Avihai Efrat, Engineering Manager, Auto Toolchain</p>
+  <p><strong>Data sources:</strong> AWS Cost Explorer API (July 2026 billing, UnblendedCost metric, all 3 accounts), AWS CloudWatch S3 metrics, AWS EC2 API, Terraform IaC configs (GitLab: automotive/pipe-x/infrastructure), Eitan's cost reduction plan (Google Doc), ATC Distribution FA wiki.</p>
+  <p><strong>Limitations:</strong> Snapshot sizes require further enumeration. S3 cost per bucket is estimated from CloudWatch BucketSizeBytes; actual per-GB rate is ~$0.015 (enterprise discount) vs $0.023 list price. ROSA etcd IOPS requirements not validated.</p>
+  <p><strong>Revision history:</strong> v1 (Aug 16) used BlendedCost metric, overstating all figures by ~25%. v2 (Aug 17) corrected to UnblendedCost (actual charges).</p>
+  <p>Report generated: August 16, 2026 | Revised: August 17, 2026 | Prepared for: Avihai Efrat, Engineering Manager, Auto Toolchain</p>
 </div>
 
 </body>

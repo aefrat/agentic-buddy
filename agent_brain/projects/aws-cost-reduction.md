@@ -10,18 +10,19 @@ Context: 20% cost reduction directive from Eitan's plan for H2/2026 across 3 Too
 
 ## Key Facts
 
-- **Total July 2026 spend**: $26,347/month (32% over the $20k estimate)
-- **20% reduction target**: $5,270/month reduction to reach $21,078
-- **Primary cost driver**: EBS snapshots in ateam account ($12,048/month = 46% of total)
-- **Secondary cost driver**: S3 storage in ateam ($6,198/month), specifically auto-product-build-downstream at 266 TB
+- **Total July 2026 spend**: $19,855/month (UnblendedCost, matching $20k estimate)
+- **20% reduction target**: $3,971/month reduction to reach $15,884
+- **Primary cost driver**: EBS snapshots in ateam account ($9,156/month = 46% of total)
+- **Secondary cost driver**: S3 storage in ateam ($3,921/month), specifically auto-product-build-downstream at 266 TB
 - **Stage account surprise**: ROSA/OCP cluster is 79% of stage costs; provisioned IOPS at $968/month
+- **v1 report used BlendedCost (wrong)**: overstated all figures by ~25%. Corrected to UnblendedCost on Aug 17.
 
 ## Account Summary
 
 | Account | ID | July 2026 | Main Costs |
 |---|---|---|---|
-| it-cloud-aws-ateam | 587138297281 | $19,790 | EBS snapshots ($12k), S3 ($6.2k), EC2 ($941) |
-| it-cloud-aws-internal-ateam | 339712814647 | $3,956 | EC2 runners ($2.9k), CloudFront ($192) |
+| it-cloud-aws-ateam | 587138297281 | $14,245 | EBS snapshots ($9.2k), S3 ($3.9k), EC2 ($706) |
+| it-cloud-aws-internal-ateam | 339712814647 | $3,009 | EC2 runners ($2.2k), Route53 ($150), CloudFront ($122) |
 | it-cloud-aws-ateam-stage | 203972369401 | $2,601 | ROSA cluster ($2,050), provisioned IOPS ($968) |
 
 ## Eitan's Plan Status (as of Aug 16)
@@ -47,4 +48,4 @@ Snapshot cleanup (#4, done early Aug) expected to deliver $6-10k/month savings -
 
 ## Potential Savings
 
-Total potential: $8,228 - $14,757/month (if all items execute). 20% target ($5,270) likely achievable through snapshot cleanup alone.
+Total potential: $5,528 - $10,257/month (if all items execute). 20% target ($3,971) likely achievable through snapshot cleanup alone.
