@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-08-20 | Claude Code login configuration check (Vertex AI auth status, config file locations) | (reflect-only) |
 | 2026-08-20 | Eitan Raviv 9-year anniversary note drafted | (reflect-only) |
 | 2026-08-20 | RHAS testing/quality review meeting capture (Aug 18), meeting log, RHAS QE KB updates, Google Doc update | (reflect-only) |
 | 2026-08-20 | Slack + Gmail 2-day scan, daily triage and action item prioritization | (reflect-only) |
