@@ -52,6 +52,12 @@ created: 2026-07-02
 | Automotive | 196276995 | Release Checklist Template |
 | Automotive | 387157013 | RHEL & RHIVOS Gating Process |
 
+## Meeting records
+
+| Meeting | Date | Source | Key content |
+|---------|------|--------|-------------|
+| RHAS Testing/Quality Review | 2026-08-18 | [Google Doc (2 tabs)](https://docs.google.com/document/d/1tLn_rLT1GnYGj3sTvxGtDgUDZSr2lXNe7jd_MgeCye8/edit) | Current test state, infrastructure roadmap (3 phases), mock device decision, downstream testing deferral, QE requirements from Pablo/Rachel |
+
 ## Test infrastructure
 
 | System | URL | Purpose |
