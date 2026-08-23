@@ -91,9 +91,18 @@
       "mcp__notebooklm-mcp__refresh_auth",
       "mcp__notebooklm-mcp__source_add",
       "mcp__notebooklm-mcp__source_delete",
-      "WebFetch(domain:redhat.atlassian.net)"
+      "WebFetch(domain:redhat.atlassian.net)",
+      "Bash(gcloud auth list *)",
+      "Bash(gcloud config get-value project *)",
+      "Bash(gcloud billing projects describe *)",
+      "Bash(gcloud services list *)",
+      "Bash(bq ls *)",
+      "Bash(gcloud billing *)"
     ]
   },
+  "enabledMcpjsonServers": [
+    "slack-mcp"
+  ],
   "hooks": {
     "SessionStart": [
       {
@@ -132,8 +141,5 @@
         ]
       }
     ]
-  },
-  "enabledMcpjsonServers": [
-    "slack-mcp"
-  ]
+  }
 }

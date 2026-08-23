@@ -1,109 +1,345 @@
-﻿PitCrew / RHAS - Daily Sprint Status
-June 29, 2026 - Release: RHAS-0626 - Sprint 13
-	ON TRACK
-	Executive Summary
-________________
-Overall: On Track. Sprint 13 velocity jumped to 75% (21/28 closed, up from 64% yesterday). Major milestone: Jumpstarter 0.9.0 release (PITCREW-440) closed along with three critical blocking bugs (PITCREW-435, -436, -437) - all resolved by majopela. The beforeLease/endLease hook issues that had been stuck in Review are now fully resolved and the lab has been updated to 0.9.0 (PITCREW-438 closed).
-Three items remain in Review: PITCREW-417 (Python bump to 3.12-3.14), PITCREW-393 (e2e downstream testing prerequisites), and PITCREW-119 (Konflux onboarding). Two new sprint items: PITCREW-450 (lab TI board boot failure) and PITCREW-449 (sdwire driver verification).
-________________
-Changes Since Last Report
-________________
-Jun 28 -> Jun 29
-
-
-	PITCREW-440 (jumpstarter: release 0.9.0): In Progress -> Closed - 0.9.0 released, lab updated, operator PRs merged. Major delivery milestone.
+﻿DRAFT
+	RHAS Test Release Criteria
+	Red Hat Automotive Suite - Measurable Quality Gates
+	July 20, 2026 (updated)
 	
 
-
-
-	PITCREW-435 (beforeLease hook endLease stuck): Review -> Closed - Hook failure no longer leaves exporter stuck in BeforeLeaseHookFailed.
 	
 
+1. Purpose
+	This document defines the measurable pass/fail conditions for each RHAS release milestone. Criteria are layered progressively: each higher milestone is a strict superset of the one below it. The approach is adapted from RHIVOS CTC two-phase gating and the OCP Feature Quality Strategy.
+	Three milestones govern release readiness:
+Monthly Release (RHAS-MMYY) - Rolling monthly drops with baseline quality gates.
+	Tech Preview (Sep 29, 2026) - First external-facing release. All monthly criteria plus integration, documentation, and pipeline readiness.
+	GA (Dec 22, 2026) - General Availability. All Tech Preview criteria plus scale, security, compliance, and customer validation.
+	
 
+	
 
-	PITCREW-438 (Update lab to Jumpstarter 0.9.0): New -> Closed - Lab infrastructure updated to 0.9.0 post-release.
-	Sprint Movement
-Metric
-	Jun 28
-	Jun 29
-	Delta
-	Closed
-	18
-	21
-	+3
-	In Progress
-	4
-	2
-	-2
-	Review
-	3
-	3
-	0
-	New
-	3
-	2
-	-1
-	% Complete
-	64%
-	75%
-	+11pp
-	Epic Movement
-No epic status changes since Jun 28. All 10 In Progress and 17 New epics unchanged.
-________________
-Sprint 13 - Current Status
-________________
+	
 
+2. How to Read This Document
+	
 
-Closed: 21
-	IP: 2
-	Rev: 3
-	New: 2
-	Open Sprint Items (7)
-Key
-	Summary
+ID - Each criterion has a unique identifier (e.g., M-01, TP-01, GA-01) for traceability.
+	Pass Condition - A specific, measurable outcome. No subjective judgment - either the condition is met or it is not.
+	Status - Current state of the criterion:
+	
+
+Met Criterion satisfied with evidence.
+	Partially Met Some evidence exists but gaps remain.
+	Not Met Criterion not yet satisfied.
+	Not Yet Testable Infrastructure or prerequisites not in place to evaluate.
+	
+
+	Evidence - Jira ticket, test result, or infrastructure reference supporting the status.
+	Waivable - Whether the criterion can be deferred via the waiver process (Section 6). "No" means the criterion cannot be waived under any circumstances.
+	
+
+	
+
+	
+
+3. Monthly Release Criteria (RHAS-MMYY)
+	These criteria must be met for every monthly release. They represent the baseline quality bar for any RHAS drop.
+	
+
+ID
+	Criterion
+	Pass Condition
 	Status
-	Assignee
-	PITCREW-416
-	C2 Recovery: add Automotive Operator to ArgoCD
-	In Progress
-	Mohamad Abo Ras
-	PITCREW-227
-	Runbook for service rebuild from zero
-	In Progress
-	Miguel Angel Ajo Pelayo
-	PITCREW-417
-	Bump Python to [3.12-3.14]
-	Review
-	Jeff Ligon
+	Evidence
+	Waivable
+	M-01
+	Builder operator deploys
+	Pod running on OCP, no CrashLoopBackOff for 30 min
+	Partially Met
+	Builder tests exist upstream
+	Yes
+	M-02
+	OCI image build completes
+	Image pushed to registry, pull succeeds
+	Partially Met
+	Builder E2E on kind
+	Yes
+	M-03
+	bootc image build completes
+	Image boots on target board within 5 min
+	Partially Met
+	RHIVOS nightly covers this
+	Yes
+	M-04
+	Jumpstarter exporter connectivity
+	All configured exporters report healthy status
+	Met
+	RHIVOS HiL monitoring
+	Yes
+	M-05
+	Board lease/release cycle
+	Lease acquired within 60s, test executed, released cleanly within 5 min
+	Met
+	RHIVOS CTC tests
+	Yes
+	M-06
+	Smoke tests pass
+	>= 2 board families pass smoke suite (QC 8650 + QC 8775)
+	Met
+	RHIVOS nightly results
+	Yes
+	M-07
+	Builder-to-Jumpstarter handoff
+	OCI artifact from Builder consumed by Jumpstarter, board provisioned
+	Not Met
+	RHAS CI Testing Proposal defines jumpstarter-tests stage for this handoff (caib build + flash). Not yet implemented pending DS pipeline
+	Yes
+	M-08
+	No P1/P2 regressions
+	Zero P1/P2 bugs introduced since previous release
+	Met
+	Jira query (no new P1/P2)
+	No
+	
+
+	
+
+	
+
+4. Tech Preview Criteria (RHAS-0926)
+	Tech Preview includes all 8 Monthly criteria (Section 3) plus the 7 additional criteria below. Target date: September 29, 2026.
+	
+
+ID
+	Criterion
+	Pass Condition
+	Status
+	Evidence
+	Waivable
+	TP-01
+	Full workflow E2E
+	Code commit -> build -> deploy -> test-on-board completes in single pipeline run
+	Not Met
+	RHAS CI Testing Proposal Phase 1 designed (caib build + flash via CI Jumpstarter account). Upstream E2E suite: 40/61 tests implemented (47 Ginkgo specs). Pipeline not yet operational
+	No
+	TP-02
+	Multi-component integration
+	Builder + Jumpstarter + GitOps deploy and function together
+	Not Met
+	Upstream E2E suite supports OpenShift (route detection, registry patching, ORAS compat). DS pipeline needed to run integration tests
+	No
+	TP-03
+	No critical/high CVEs
+	Zero critical or high CVEs in shipped container images
+	Not Yet Testable
+	Security scanning not in pipeline
+	No
+	TP-04
+	Documentation validated
+	Installation/usage walkthrough completed by non-author
+	Not Met
+	Docs not yet written
+	Yes
+	TP-05
+	DS CI pipeline operational
+	Ephemeral IPI SNO provisions and runs test suite
+	Not Yet Testable
+	Prerequisites ready (operator, pipelines, pull secret, registry, kubeconfig). Cluster install/destroy working. Pipeline design detailed in RHAS CI Testing Proposal. DNS blocker remains (PITCREW-393)
+	No
+	TP-06
+	Build time baseline
+	OCI + bootc build times measured and recorded (baseline, not threshold)
+	Not Met
+	No measurement infrastructure
+	Yes
+	TP-07
+	Operator upgrade
+	Upgrade from previous monthly to current version succeeds without downtime
+	Not Met
+	Upgrade tests don't exist
+	Yes
+	
+
+	
+
+	
+
+5. GA Criteria (RHAS-1226)
+	GA includes all 15 Tech Preview criteria (Sections 3 + 4) plus the 8 additional criteria below. Target date: December 22, 2026.
+	
+
+ID
+	Criterion
+	Pass Condition
+	Status
+	Evidence
+	Waivable
+	GA-01
+	Concurrent builds
+	>= 5 simultaneous OCI builds complete successfully
+	Not Met
+	Scale testing not started
+	Yes
+	GA-02
+	Multi-board HiL
+	>= 4 boards running tests simultaneously without interference
+	Partially Met
+	RHIVOS runs multi-board but not RHAS-specific
+	Yes
+	GA-03
+	7-day soak test
+	System under continuous operation for 7 days, no crashes or resource leaks
+	Not Met
+	Soak test not designed
+	Yes
+	GA-04
+	Security audit
+	Independent security review completed, all critical findings resolved
+	Not Met
+	Audit not started
+	No
+	GA-05
+	Keycloak SSO validation
+	Login -> token -> API access across Builder + Jumpstarter + console
+	Not Met
+	SSO integration not tested
+	Yes
+	GA-06
+	CDN distribution
+	Product available via configured distribution channels
+	Not Yet Testable
+	PITCREW-336 (Distribution) in progress
+	No
+	GA-07
+	RH-SDLC compliance
+	All required evidence artifacts collected per RH-SDLC process
+	Not Met
+	PITCREW-334 in progress
+	No
+	GA-08
+	Customer scenario
+	At least 1 end-to-end customer use case validated
+	Not Met
+	No customer validation planned yet
+	Yes
+	
+
+	
+
+	
+
+6. Waiver Process
+	Not every criterion will be fully met by every milestone. The waiver process provides a controlled way to proceed when a criterion marked "Waivable: Yes" cannot be satisfied in time.
+Who can approve: Product Manager (Paul Wallrabe) and QE Lead must both agree. Neither can unilaterally waive a criterion.
+	Waiver request must include:
+	- Jira ticket link for the waiver request
+- Impact assessment: what risk does the gap introduce?
+- Timeline to fix: when will the criterion be met?
+- Customer impact analysis: how does this affect users?
+	Tracking: Each waiver is tracked as a Jira ticket linked to the release version. This ensures visibility and accountability.
+	Limits: A maximum of 3 waivers per GA release. This forces prioritization - if more than 3 criteria are unmet, the release cannot proceed.
+	Non-waivable criteria: Any criterion marked "Waivable: No" cannot be waived under any circumstances. These represent hard quality gates where the risk of proceeding without meeting them is unacceptable.
+	Deferral, not removal: A waiver does not remove the criterion from the release. It defers enforcement to the next release. The criterion remains on the list and must be satisfied before the subsequent milestone.
+	
+
+	
+
+	
+
+7. Current Readiness Summary
+	Aggregate view of how many criteria are currently met at each milestone level. Remember: each higher milestone includes all criteria from the levels below it.
+	
+
+Milestone
+	Target Date
+	Criteria Met
+	Readiness
+	Monthly Release
+	Rolling
+	4 / 8
+	50%
+	Tech Preview
+	Sep 29, 2026
+	4 / 15
+	27%
+	GA
+	Dec 22, 2026
+	4 / 23
+	17%
+	
+
+Assessment: Monthly readiness is at 50% with the main gap being the Builder-to-Jumpstarter E2E handoff (M-07). Tech Preview and GA are at 27% and 17% respectively, reflecting the early stage of integration testing, pipeline infrastructure, and compliance work. The biggest risk is the absence of a QE lead (PITCREW-337) to drive these criteria forward.
+	
+
+	
+
+	
+
+8. Critical Blockers
+	These are the issues that must be resolved before significant progress can be made on the release criteria. Listed in order of impact.
+	
+
+Blocker
+	Criterion Affected
+	Jira
+	Owner
+	Resolution Target
+	No QE lead
+	All criteria
+	PITCREW-337
+	(unassigned)
+	Jul 2026
+	DNS blocking DS pipeline
+	TP-05, TP-01
 	PITCREW-393
-	e2e downstream testing: acquire prerequisites and credentials
-	Review
 	Evgeni Vakhonin
-	PITCREW-119
-	productization: onboard builder upstream project to Konflux
-	Review
-	Bella Khizgiyaev
-	PITCREW-450
-	[Lab] ti-jacinto-j784s4xevm-06: ukiboot "Unable to find active slot" boot failure
-	New
-	Shawn Doherty
-	PITCREW-449
-	Verify sdwire driver changes do not regress on Linux
-	New
-	-
-	Recently Closed (since last report)
-Key
-	Summary
-	Assignee
-	PITCREW-440
-	jumpstarter: release 0.9.0
-	Miguel Angel Ajo Pelayo
-	PITCREW-435
-	beforeLease hook with onFailure endLease stuck
-	Miguel Angel Ajo Pelayo
-	PITCREW-438
-	Update lab to Jumpstarter 0.9.0 after release
-	Miguel Angel Ajo Pelayo
-	________________
-PitCrew / RHAS Daily Report - Generated June 29, 2026 - Data sources: Jira (PITCREW)
-Previous report: Jun 28, 2026 (full) - Next scheduled: Jun 30, 2026
+	Jul 2026
+	Distribution incomplete
+	GA-06
+	PITCREW-336
+	
+
+	Aug 2026
+	No E2E test infrastructure
+	TP-01, TP-02
+	PITCREW-275
+	
+
+	Sep 2026
+	
+
+	
+
+	
+
+9. Criterion Dependency Map
+	Some criteria cannot be satisfied until prerequisites are in place. Understanding these dependencies is critical for planning the work sequence.
+	
+
+Criterion
+	Depends On
+	Implication
+	M-07 (Builder-to-Jumpstarter)
+	TP-05 (DS pipeline)
+	Cannot test the handoff without a working pipeline to run it in.
+	TP-01 (Full workflow E2E)
+	M-07 + TP-05
+	E2E workflow requires both the handoff mechanism and the CI pipeline.
+	TP-02 (Multi-component)
+	TP-01
+	Multi-component integration is a superset of the E2E workflow.
+	GA-06 (CDN distribution)
+	PITCREW-336 (Distribution)
+	Distribution channels must be configured before CDN delivery can be validated.
+	GA-07 (RH-SDLC compliance)
+	GA-04 (Security audit) + GA-06 (CDN)
+	SDLC evidence collection requires completed security audit results and distribution artifacts.
+	
+
+Critical path: The longest dependency chain runs TP-05 (DS pipeline) -> M-07 (handoff) -> TP-01 (E2E) -> TP-02 (multi-component). Unblocking TP-05 (DNS resolution via PITCREW-393) is the single highest-leverage action for improving overall readiness.
+	
+
+	
+
+	
+
+Generated by RHAS QE Expert Lead Agent on July 20, 2026 (updated). Version: DRAFT v1.0.
+Companion document: RHAS Test Strategy (rhas-test-strategy-2026-07-02.html)
