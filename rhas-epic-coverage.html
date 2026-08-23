@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RHAS EPICs Per Release vs Test Coverage Analysis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #0f172a;
+      --color-accent: #3b82f6;
+      --color-success: #10b981;
+      --color-warning: #f59e0b;
+      --color-error: #ef4444;
+      --color-neutral-100: #f8fafc;
+      --color-neutral-200: #e2e8f0;
+      --color-neutral-300: #cbd5e1;
+      --color-neutral-700: #334155;
+      --color-neutral-800: #1e293b;
+      --color-neutral-900: #0f172a;
+
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --space-1: 0.5rem;
+      --space-2: 1rem;
+      --space-3: 1.5rem;
+      --space-4: 2rem;
+      --space-6: 3rem;
+      --space-8: 4rem;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--color-neutral-900);
+      line-height: 1.6;
+      background: var(--color-neutral-100);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--space-4);
+    }
+
+    /* Header */
+    .doc-header {
+      background: var(--color-primary);
+      color: white;
+      padding: var(--space-6) var(--space-4);
+      margin: calc(-1 * var(--space-4)) calc(-1 * var(--space-4)) var(--space-6);
+    }
+
+    .doc-header h1 {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: var(--space-2);
+      letter-spacing: -0.02em;
+    }
+
+    .doc-meta {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      opacity: 0.8;
+      letter-spacing: 0.02em;
+    }
+
+    /* Executive Summary */
+    .exec-summary {
+      background: white;
+      border-left: 4px solid var(--color-accent);
+      padding: var(--space-4);
+      margin-bottom: var(--space-6);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .exec-summary h2 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: var(--space-3);
+      color: var(--color-primary);
+    }
+
+    .critical-finding {
+      background: #fef2f2;
+      border-left: 3px solid var(--color-error);
+      padding: var(--space-3);
+      margin-top: var(--space-3);
+      font-weight: 500;
+    }
+
+    .critical-finding strong {
+      color: var(--color-error);
+    }
+
+    /* Section Headers */
+    h2 {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin: var(--space-6) 0 var(--space-3);
+      color: var(--color-primary);
+      padding-bottom: var(--space-2);
+      border-bottom: 2px solid var(--color-neutral-200);
+    }
+
+    h3 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: var(--space-4) 0 var(--space-2);
+      color: var(--color-neutral-800);
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-3);
+      margin: var(--space-4) 0;
+    }
+
+    .stat-card {
+      background: white;
+      padding: var(--space-4);
+      text-align: center;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .stat-number {
+      font-family: var(--font-mono);
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: var(--space-1);
+    }
+
+    .stat-number.critical { color: var(--color-error); }
+    .stat-number.warning { color: var(--color-warning); }
+    .stat-number.success { color: var(--color-success); }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--color-neutral-700);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+
+    /* Status Table */
+    .status-table {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      margin: var(--space-4) 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .status-table table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .status-table th {
+      background: var(--color-neutral-900);
+      color: white;
+      text-align: left;
+      padding: var(--space-3);
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .status-table td {
+      padding: var(--space-3);
+      border-bottom: 1px solid var(--color-neutral-200);
+    }
+
+    .status-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .status-table tr:hover {
+      background: var(--color-neutral-100);
+    }
+
+    /* Status Badges */
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-success {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .badge-warning {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .badge-error {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    /* Release Sections */
+    .release-section {
+      margin: var(--space-6) 0;
+    }
+
+    .release-header {
+      background: var(--color-neutral-900);
+      color: white;
+      padding: var(--space-3) var(--space-4);
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      border-radius: 8px 8px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .release-header.tech-preview {
+      background: linear-gradient(135deg, var(--color-error) 0%, #dc2626 100%);
+    }
+
+    .release-header.ga {
+      background: linear-gradient(135deg, var(--color-success) 0%, #059669 100%);
+    }
+
+    .release-tag {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      opacity: 0.9;
+    }
+
+    .epic-grid {
+      display: grid;
+      gap: var(--space-3);
+      background: white;
+      padding: var(--space-4);
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    /* EPIC Cards */
+    .epic-card {
+      border: 1px solid var(--color-neutral-200);
+      border-radius: 6px;
+      padding: var(--space-3);
+      transition: all 0.2s ease;
+    }
+
+    .epic-card:hover {
+      border-color: var(--color-accent);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+    }
+
+    .epic-header {
+      display: flex;
+      gap: var(--space-2);
+      align-items: baseline;
+      margin-bottom: var(--space-2);
+    }
+
+    .epic-key {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--color-accent);
+    }
+
+    .epic-title {
+      font-weight: 600;
+      color: var(--color-neutral-900);
+      flex: 1;
+    }
+
+    .epic-feature {
+      color: var(--color-neutral-700);
+      font-size: 0.9375rem;
+      margin-bottom: var(--space-2);
+    }
+
+    .epic-coverage {
+      display: flex;
+      gap: var(--space-3);
+      font-size: 0.875rem;
+    }
+
+    .coverage-item {
+      display: flex;
+      gap: var(--space-1);
+      align-items: center;
+    }
+
+    .coverage-label {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--color-neutral-700);
+    }
+
+    /* Alert Box */
+    .alert-box {
+      background: #fef2f2;
+      border: 2px solid var(--color-error);
+      border-radius: 8px;
+      padding: var(--space-4);
+      margin: var(--space-4) 0;
+    }
+
+    .alert-box h3 {
+      color: var(--color-error);
+      margin-top: 0;
+    }
+
+    /* Recommendations */
+    .rec-section {
+      background: white;
+      border-left: 4px solid var(--color-neutral-300);
+      padding: var(--space-4);
+      margin: var(--space-3) 0;
+      border-radius: 4px;
+    }
+
+    .rec-section.urgent {
+      border-left-color: var(--color-error);
+      background: #fef2f2;
+    }
+
+    .rec-section.high {
+      border-left-color: var(--color-warning);
+      background: #fffbeb;
+    }
+
+    .rec-section h3 {
+      margin-top: 0;
+    }
+
+    .rec-section ol {
+      margin-left: var(--space-4);
+    }
+
+    .rec-section li {
+      margin: var(--space-2) 0;
+    }
+
+    /* Component Table */
+    .component-section {
+      background: white;
+      padding: var(--space-4);
+      border-radius: 8px;
+      margin: var(--space-4) 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .component-item {
+      border-bottom: 1px solid var(--color-neutral-200);
+      padding: var(--space-3) 0;
+    }
+
+    .component-item:last-child {
+      border-bottom: none;
+    }
+
+    .component-name {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.125rem;
+      color: var(--color-neutral-900);
+      margin-bottom: var(--space-1);
+    }
+
+    .component-tests {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: var(--space-2) var(--space-3);
+      font-size: 0.9375rem;
+      margin-top: var(--space-2);
+    }
+
+    .component-tests dt {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--color-neutral-700);
+    }
+
+    /* Footer */
+    .doc-footer {
+      margin-top: var(--space-8);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--color-neutral-300);
+      font-size: 0.875rem;
+      color: var(--color-neutral-700);
+    }
+
+    .doc-footer h3 {
+      font-size: 1rem;
+      margin-bottom: var(--space-2);
+    }
+
+    .doc-footer ul {
+      list-style: none;
+    }
+
+    .doc-footer li {
+      margin: var(--space-1) 0;
+    }
+
+    .doc-footer a {
+      color: var(--color-accent);
+      text-decoration: none;
+    }
+
+    .doc-footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media print {
+      .container {
+        max-width: none;
+      }
+      .epic-card {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="doc-header">
+    <div class="container">
+      <h1>RHAS EPICs Per Release vs Test Coverage Analysis</h1>
+      <div class="doc-meta">Generated: August 23, 2026 | Source: RHAS QE Knowledge Base</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Executive Summary -->
+    <section class="exec-summary">
+      <h2>Executive Summary</h2>
+      <p>Analysis of 28 RHAS EPICs across 8 releases (RHAS-0226 through RHAS-1226) reveals a critical gap between feature development and test coverage. While component-level testing is operational for Builder and Jumpstarter, <strong>no EPIC-level test plans exist</strong>.</p>
+
+      <div class="critical-finding">
+        <strong>Critical Finding:</strong> Downstream product bits do not exist yet (expected before GA, not for Tech Preview). No EPIC-to-test mapping exists in Jira. PITCREW-337 (QE Readiness) remains unassigned after 3+ months with zero comments.
+      </div>
+    </section>
+
+    <!-- Stats Grid -->
+    <section>
+      <h2>Summary Statistics</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">28</div>
+          <div class="stat-label">Total EPICs</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number critical">0</div>
+          <div class="stat-label">With EPIC-Level Tests</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number warning">3</div>
+          <div class="stat-label">Component-Level Only</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number critical">25</div>
+          <div class="stat-label">No Coverage</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Current Testing State -->
+    <section>
+      <h2>Current Testing State</h2>
+      <div class="status-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Testing Type</th>
+              <th>Status</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Upstream (US) Testing</strong></td>
+              <td><span class="badge badge-success">Operational</span></td>
+              <td>Per-PR testing on GitHub for Builder and Jumpstarter components</td>
+            </tr>
+            <tr>
+              <td><strong>Downstream (DS) Testing</strong></td>
+              <td><span class="badge badge-warning">Infra Ready</span></td>
+              <td>Ephemeral cluster operational (Jul 31). One test working (build+flash). Product bits do not exist.</td>
+            </tr>
+            <tr>
+              <td><strong>EPIC-Level Test Plans</strong></td>
+              <td><span class="badge badge-error">Do Not Exist</span></td>
+              <td>No formal test-to-feature mapping in place</td>
+            </tr>
+            <tr>
+              <td><strong>Jira Feature Mapping (TP/GA)</strong></td>
+              <td><span class="badge badge-error">Do Not Exist</span></td>
+              <td>Recommended by Rachel Sibley (Aug 18 Quality Review)</td>
+            </tr>
+            <tr>
+              <td><strong>Polarion Test Cases</strong></td>
+              <td><span class="badge badge-error">Do Not Exist</span></td>
+              <td>Standard QE requirement, not yet created</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Release Naming Convention -->
+    <section>
+      <h2>Release Naming Convention</h2>
+      <p>RHAS uses <code style="font-family: var(--font-mono); background: var(--color-neutral-200); padding: 0.125rem 0.375rem; border-radius: 3px;">RHAS-MMYY</code> format where MM = month (01-12), YY = year (last 2 digits).</p>
+      <ul style="margin: var(--space-2) 0 0 var(--space-4);">
+        <li>RHAS-0226 = February 2026</li>
+        <li>RHAS-0426 = April 2026 (Dev Preview)</li>
+        <li>RHAS-0926 = September 2026 (Tech Preview)</li>
+        <li>RHAS-1226 = December 2026 (GA)</li>
+      </ul>
+    </section>
+
+    <!-- EPIC Test Coverage by Release -->
+    <section>
+      <h2>EPIC Test Coverage by Release</h2>
+
+      <!-- RHAS-0226 -->
+      <div class="release-section">
+        <div class="release-header">
+          <span>RHAS-0226 (February 2026)</span>
+          <span class="release-tag">Past Due</span>
+        </div>
+        <div class="epic-grid">
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-172</span>
+              <span class="epic-title">RHAD Program Requirements</span>
+            </div>
+            <div class="epic-feature">Program-level requirements for RHAD product release</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-173</span>
+              <span class="epic-title">RHAD BU/PM Requirements</span>
+            </div>
+            <div class="epic-feature">Business unit and product management requirements</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-176</span>
+              <span class="epic-title">RHAS Engineering Requirements</span>
+            </div>
+            <div class="epic-feature">Engineering-level requirements for RHAS</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RHAS-0426 -->
+      <div class="release-section">
+        <div class="release-header">
+          <span>RHAS-0426 (April 2026)</span>
+          <span class="release-tag">Dev Preview</span>
+        </div>
+        <div class="epic-grid">
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-180</span>
+              <span class="epic-title">Complete Product Experience</span>
+            </div>
+            <div class="epic-feature">End-to-end product experience for developers</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-185</span>
+              <span class="epic-title">Internal RHIVOS usage of Dev Cluster</span>
+            </div>
+            <div class="epic-feature">Internal team usage validation of development cluster</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-200</span>
+              <span class="epic-title">Easy-Peasy Developer onboarding for RHAD</span>
+            </div>
+            <div class="epic-feature">Simplified developer onboarding experience</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-195</span>
+              <span class="epic-title">Build developer flow with devspaces on remote VM</span>
+            </div>
+            <div class="epic-feature">Remote development environment setup and workflow</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-196</span>
+              <span class="epic-title">Automotive-dev operator</span>
+            </div>
+            <div class="epic-feature">Kubernetes operator for automotive development</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-208</span>
+              <span class="epic-title">RHIVOS Developer Story - MVP</span>
+            </div>
+            <div class="epic-feature">Minimum viable product for RHIVOS developer experience</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RHAS-0626 -->
+      <div class="release-section">
+        <div class="release-header">
+          <span>RHAS-0626 (June 2026)</span>
+          <span class="release-tag">Past Due</span>
+        </div>
+        <div class="epic-grid">
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-335</span>
+              <span class="epic-title">Konflux Onboarding</span>
+            </div>
+            <div class="epic-feature">Pipeline creation, artifact builds, SDLC gates</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-298</span>
+              <span class="epic-title">Android Virtual Target Deployment</span>
+            </div>
+            <div class="epic-feature">Virtual target provisioning, Android image deployment</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RHAS-0726 -->
+      <div class="release-section">
+        <div class="release-header">
+          <span>RHAS-0726 (July 2026)</span>
+          <span class="release-tag">Past Due</span>
+        </div>
+        <div class="epic-grid">
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-334</span>
+              <span class="epic-title">RH-SDLC Compliance</span>
+            </div>
+            <div class="epic-feature">Compliance validation, audit trail, evidence collection</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-331</span>
+              <span class="epic-title">CTC (Continuous Testing Cycle)</span>
+            </div>
+            <div class="epic-feature">Test infrastructure, gating criteria, automated regression</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-warning">Partial (RHIVOS)</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-330</span>
+              <span class="epic-title">Lab Infrastructure</span>
+            </div>
+            <div class="epic-feature">Lab provisioning, C2 recovery, board management at scale</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-warning">Component-Level</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-294</span>
+              <span class="epic-title">Autonomous Platform Reactions</span>
+            </div>
+            <div class="epic-feature">Self-healing triggers, reaction correctness, false-positive rate</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-291</span>
+              <span class="epic-title">End-to-End Trace</span>
+            </div>
+            <div class="epic-feature">Distributed tracing across platform components</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RHAS-0826 -->
+      <div class="release-section">
+        <div class="release-header">
+          <span>RHAS-0826 (August 2026)</span>
+          <span class="release-tag">Current</span>
+        </div>
+        <div class="epic-grid">
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-299</span>
+              <span class="epic-title">Virtual Target Orchestration</span>
+            </div>
+            <div class="epic-feature">QEMU targets, multi-target scheduling, resource management</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-295</span>
+              <span class="epic-title">Seconds-per-Iteration</span>
+            </div>
+            <div class="epic-feature">Build/deploy/test cycle time, performance benchmarks</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RHAS-0926 Tech Preview -->
+      <div class="release-section">
+        <div class="release-header tech-preview">
+          <span>RHAS-0926 (September 2026)</span>
+          <span class="release-tag">Tech Preview - 37 Days Away</span>
+        </div>
+        <div class="epic-grid">
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-329</span>
+              <span class="epic-title">External Dependency Resilience</span>
+            </div>
+            <div class="epic-feature">Failure injection, dependency isolation, recovery paths</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-336</span>
+              <span class="epic-title">Distribution</span>
+            </div>
+            <div class="epic-feature">Product distribution channels, content delivery validation</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">Product Bits Missing</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RHAS-1026 -->
+      <div class="release-section">
+        <div class="release-header">
+          <span>RHAS-1026 (October 2026)</span>
+        </div>
+        <div class="epic-grid">
+          <div class="alert-box">
+            <h3>⚠ CRITICAL: PITCREW-337 (QE Readiness)</h3>
+            <p><strong>Status:</strong> UNASSIGNED for 3+ months, 0 comments, blocked by PITCREW-336</p>
+            <p><strong>Impact:</strong> No QE lead, no test strategy, no release criteria. Single biggest blocker to Tech Preview and GA timelines.</p>
+          </div>
+
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-292</span>
+              <span class="epic-title">Unified Developer Session</span>
+            </div>
+            <div class="epic-feature">End-to-end developer workflow, UX validation</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-338</span>
+              <span class="epic-title">Product Documentation</span>
+            </div>
+            <div class="epic-feature">Doc accuracy, procedure validation, tutorial completeness</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RHAS-1126 -->
+      <div class="release-section">
+        <div class="release-header">
+          <span>RHAS-1126 (November 2026)</span>
+        </div>
+        <div class="epic-grid">
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-300</span>
+              <span class="epic-title">Virtual Interface Simulation</span>
+            </div>
+            <div class="epic-feature">Simulated hardware interfaces, fidelity validation</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-332</span>
+              <span class="epic-title">ATC Integration</span>
+            </div>
+            <div class="epic-feature">ATC integration testing</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RHAS-1226 GA -->
+      <div class="release-section">
+        <div class="release-header ga">
+          <span>RHAS-1226 (December 2026)</span>
+          <span class="release-tag">General Availability</span>
+        </div>
+        <div class="epic-grid">
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-290</span>
+              <span class="epic-title">Agentic Platform</span>
+            </div>
+            <div class="epic-feature">AI agent reliability, prompt/response validation</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="epic-card">
+            <div class="epic-header">
+              <span class="epic-key">PITCREW-293</span>
+              <span class="epic-title">Ask the Platform</span>
+            </div>
+            <div class="epic-feature">Query accuracy, response relevance, hallucination rate</div>
+            <div class="epic-coverage">
+              <div class="coverage-item">
+                <span class="coverage-label">Upstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+              <div class="coverage-item">
+                <span class="coverage-label">Downstream:</span>
+                <span class="badge badge-error">None</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Component-Level Testing -->
+    <section>
+      <h2>Component-Level Testing (What Actually Exists)</h2>
+      <div class="component-section">
+        <div class="component-item">
+          <div class="component-name">Builder (automotive-image-builder)</div>
+          <dl class="component-tests">
+            <dt>Upstream:</dt>
+            <dd><span class="badge badge-success">Unit + Integration per PR</span> (GitHub Actions, Packit)</dd>
+            <dt>Downstream:</dt>
+            <dd><span class="badge badge-warning">1 Test (build+flash)</span> on ephemeral cluster</dd>
+          </dl>
+        </div>
+
+        <div class="component-item">
+          <div class="component-name">Jumpstarter</div>
+          <dl class="component-tests">
+            <dt>Upstream:</dt>
+            <dd><span class="badge badge-success">E2E Tests per PR</span> (GitHub Actions, pytest)</dd>
+            <dt>Downstream:</dt>
+            <dd><span class="badge badge-warning">1 Test (build+flash)</span> on ephemeral cluster</dd>
+          </dl>
+        </div>
+
+        <div class="component-item">
+          <div class="component-name">bootc Images</div>
+          <dl class="component-tests">
+            <dt>Upstream:</dt>
+            <dd><span class="badge badge-warning">Partial Coverage</span> (GitLab CEE: automotive/tests/all)</dd>
+            <dt>Downstream:</dt>
+            <dd><span class="badge badge-error">Not Yet</span></dd>
+          </dl>
+        </div>
+
+        <div class="component-item">
+          <div class="component-name">RHIVOS CTC (reused for RHAS)</div>
+          <dl class="component-tests">
+            <dt>Upstream:</dt>
+            <dd>N/A</dd>
+            <dt>Downstream:</dt>
+            <dd><span class="badge badge-success">Nightly: 55 PASS / 4 FAIL / 6 XFAIL</span> (test-console.corp.redhat.com)</dd>
+          </dl>
+        </div>
+
+        <div class="component-item">
+          <div class="component-name">Hardware-in-the-Loop (HiL)</div>
+          <dl class="component-tests">
+            <dt>Upstream:</dt>
+            <dd><span class="badge badge-success">Board Provisioning Tests</span></dd>
+            <dt>Downstream:</dt>
+            <dd><span class="badge badge-success">Operational on 6+ SoC families</span> (ROSA → Jumpstarter → boards)</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- Critical Gaps -->
+    <section>
+      <h2>Critical Gaps (Aug 18, 2026 Quality Review)</h2>
+      <div class="status-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Gap</th>
+              <th>Owner</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>No formal test list with entry/exit criteria</td>
+              <td>Mohamad Abo Ras</td>
+              <td><span class="badge badge-warning">Assigned</span></td>
+            </tr>
+            <tr>
+              <td>No Jira feature mapping for TP or GA releases</td>
+              <td>Team</td>
+              <td><span class="badge badge-error">Not Started</span></td>
+            </tr>
+            <tr>
+              <td>No Polarion test cases or results tracking</td>
+              <td>Unassigned</td>
+              <td><span class="badge badge-error">Not Started</span></td>
+            </tr>
+            <tr>
+              <td>No hardware-specific test evidence</td>
+              <td>Unassigned</td>
+              <td><span class="badge badge-error">GA Requirement</span></td>
+            </tr>
+            <tr>
+              <td>Downstream product bits don't exist yet</td>
+              <td>N/A</td>
+              <td><span class="badge badge-warning">Expected Before GA</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Recommendations -->
+    <section>
+      <h2>Recommendations</h2>
+
+      <div class="rec-section urgent">
+        <h3>URGENT (Before Tech Preview - 37 Days)</h3>
+        <ol>
+          <li>Assign PITCREW-337 (QE Readiness) immediately - unassigned for 3+ months</li>
+          <li>Mohamad to deliver formal test list with entry/exit criteria (action item from Aug 18)</li>
+          <li>Create EPIC-to-test-case mapping in Jira (Rachel's recommendation)</li>
+        </ol>
+      </div>
+
+      <div class="rec-section high">
+        <h3>Before Tech Preview (RHAS-0926)</h3>
+        <ol start="4">
+          <li>Create Polarion test cases for traceability</li>
+          <li>Complete Jira feature mapping for TP release scope</li>
+        </ol>
+      </div>
+
+      <div class="rec-section">
+        <h3>Before GA (RHAS-1226)</h3>
+        <ol start="6">
+          <li>Hardware-specific testing on customer platforms (Qualcomm SA8650/SA8775, NXP S32N79, TI)</li>
+          <li>Map all EPICs to test coverage with US/DS split</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <section class="doc-footer">
+      <h3>References</h3>
+      <ul>
+        <li><a href="https://docs.google.com/spreadsheets/d/19ZjSH4OzcssFI0tH-WTcqzgmUi5ILc18I2PO_2WRrhQ">RHAS Roadmap Spreadsheet</a></li>
+        <li>Knowledge Base: <code style="font-family: var(--font-mono);">agentic-buddy/agent_brain/projects/rhas-qe-agent/</code></li>
+        <li>Aug 18, 2026 Quality Review: Avihai Efrat, Pablo Ridolfi, Rachel Sibley, Benny Zlotnik, Mohamad Abo Ras, Miguel Angel Ajo Pelayo, Paul Wallrabe</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>
