@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>RHAS Test Strategy - 2026-08-23</title>
+</head>
+<body>
+
+<table style="width: 100%; max-width: 900px; margin: 0 auto; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6;">
+<!-- Hero Banner -->
+<tr>
+<td colspan="2" style="background-color: #1a1a2e; color: #ffffff; padding: 24px; text-align: left;">
+<h1 style="margin: 0 0 8px 0; font-size: 28px; font-weight: bold;">RHAS Test Strategy</h1>
+<p style="margin: 0; font-size: 16px; color: #d0d7de;">Red Hat Automotive Suite - Quality Engineering Strategy</p>
+</td>
+</tr>
+
+<!-- Status Badge Row -->
+<tr>
+<td colspan="2" style="padding: 16px; background-color: #f6f8fa;">
+<table style="width: 100%; border-collapse: collapse;">
+<tr>
+<td style="width: 25%; padding: 8px; background-color: #0550ae; color: #ffffff; text-align: center; font-weight: bold;">Generated</td>
+<td style="width: 75%; padding: 8px; background-color: #ffffff; border: 1px solid #d0d7de;">2026-08-23</td>
+</tr>
+<tr>
+<td style="padding: 8px; background-color: #0550ae; color: #ffffff; text-align: center; font-weight: bold;">Tech Preview</td>
+<td style="padding: 8px; background-color: #ffffff; border: 1px solid #d0d7de;">2026-09-29 (37 days)</td>
+</tr>
+<tr>
+<td style="padding: 8px; background-color: #0550ae; color: #ffffff; text-align: center; font-weight: bold;">GA</td>
+<td style="padding: 8px; background-color: #ffffff; border: 1px solid #d0d7de;">2026-12-22 (121 days)</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- Executive Summary -->
+<tr>
+<td colspan="2" style="padding: 24px 16px 8px 16px;">
+<h2 style="margin: 0; padding-bottom: 8px; border-bottom: 2px solid #0550ae; color: #0550ae; font-size: 20px;">1. Executive Summary</h2>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 8px 16px 16px 16px;">
+<p><strong>Current State (Aug 23, 2026):</strong> RHAS testing has made significant progress since June. The downstream testing pipeline is now operational (PITCREW-393 CLOSED Jul 30, PITCREW-394 IN PROGRESS with Mohamad Abo Ras). CTC has adopted RHAS as their validation platform (PITCREW-331 CLOSED Jul 28). Upstream per-PR testing is running (Mohamad Abo Ras). However, <span style="background-color: #c44b00; color: #ffffff; padding: 2px 6px;">QE Readiness (PITCREW-337) remains unassigned with 0 comments after 3+ months</span>, and Distribution (PITCREW-336) is still NEW.</p>
+
+<p><strong>Timeline:</strong> Tech Preview is 37 days away (Sep 29), GA is 121 days away (Dec 22). QE Readiness target is Oct 27 but depends on Distribution (no progress yet).</p>
+
+<p><strong>Critical Gaps:</strong></p>
+<ul style="margin: 8px 0;">
+<li><span style="background-color: #c44b00; color: #ffffff; padding: 2px 6px;">No QE owner or test plan</span> - PITCREW-337 unassigned for 3+ months</li>
+<li><span style="background-color: #c44b00; color: #ffffff; padding: 2px 6px;">No release qualification criteria</span> - What "ready to ship" means is undefined</li>
+<li><span style="background-color: #c44b00; color: #ffffff; padding: 2px 6px;">No regression suites</span> - Only component tests exist, no integration QE</li>
+<li><span style="background-color: #b08800; color: #ffffff; padding: 2px 6px;">Distribution epic NEW</span> - PITCREW-336 blocks QE Readiness, no owner</li>
+</ul>
+
+<p><strong>What Exists Today:</strong></p>
+<ul style="margin: 8px 0;">
+<li><strong>Upstream testing:</strong> Per-PR GitHub Actions + pytest on kind clusters (Builder, Jumpstarter)</li>
+<li><strong>Downstream testing:</strong> Ephemeral IPI SNO arm64 pipeline operational (GitLab CEE, AWS)</li>
+<li><strong>HiL testing:</strong> Jumpstarter on ROSA with 6+ board families, CTC integration, automated lab maintenance</li>
+<li><strong>bootc testing:</strong> Active development at gitlab.cee.redhat.com/automotive/tests/all (Martin Perina)</li>
+</ul>
+</td>
+</tr>
+
+<!-- Scope -->
+<tr>
+<td colspan="2" style="padding: 24px 16px 8px 16px;">
+<h2 style="margin: 0; padding-bottom: 8px; border-bottom: 2px solid #0550ae; color: #0550ae; font-size: 20px;">2. Scope - RHAS Tier 2 Platform Components</h2>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 8px 16px 16px 16px;">
+<p>RHAS is a <strong>Tier 2 integrated platform</strong> targeting platform engineers at automotive OEMs. It is OpenShift-based with 5 primary components plus supporting services.</p>
+
+<table style="width: 100%; border-collapse: collapse; margin-top: 12px;">
+<tr style="background-color: #0550ae; color: #ffffff;">
+<th style="padding: 8px; border: 1px solid #d0d7de; text-align: left;">Component</th>
+<th style="padding: 8px; border: 1px solid #d0d7de; text-align: left;">What It Does</th>
+<th style="padding: 8px; border: 1px solid #d0d7de; text-align: left;">3-Layer Mapping</th>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Automotive Image Builder</strong> (Builder Operator)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">OCI image builds, bootc images, RPMs, ISOs, Safe Rust/C/C++</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">L2 (kind), L3 (OCP)</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Jumpstarter</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Hardware-in-the-Loop testing, board management, firmware updates</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">L1 (kind), L3 (HiL)</td>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Konflux</strong> (OpenShift Pipelines)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">CI-CD pipelines, artifact signing, RH-SDLC compliance</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">L3 (OCP)</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>GitOps</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">GitLab/GitHub CI/IDE integration, no rip-and-replace</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">L3 (integration)</td>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Keycloak</strong> (SSO)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Authentication flows, cert management, multi-tenant access control</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">L3 (integration)</td>
+</tr>
+</table>
+
+<p style="margin-top: 16px;"><strong>3-Layer Test Architecture (Benny Zlotnik):</strong></p>
+<ul style="margin: 8px 0;">
+<li><strong>Layer 1:</strong> Jumpstarter E2E tests on kind clusters (suitable for Jumpstarter)</li>
+<li><strong>Layer 2:</strong> Builder E2E tests on kind clusters (less ideal - Builder is tailored for OpenShift)</li>
+<li><strong>Layer 3:</strong> Black-box integration testing on real OpenShift (RHAS CI - PITCREW-275)
+<ul>
+<li>Phase 1: Builder + Jumpstarter CI account + ROSA dev cluster</li>
+<li>Phase 2: In-cluster Jumpstarter with physical boards</li>
+<li>Phase 3: Upstream E2E tests running on OpenShift</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+
+<!-- Test Types Matrix -->
+<tr>
+<td colspan="2" style="padding: 24px 16px 8px 16px;">
+<h2 style="margin: 0; padding-bottom: 8px; border-bottom: 2px solid #0550ae; color: #0550ae; font-size: 20px;">3. Test Types Matrix</h2>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 8px 16px 16px 16px;">
+<table style="width: 100%; border-collapse: collapse;">
+<tr style="background-color: #0550ae; color: #ffffff;">
+<th style="padding: 8px; border: 1px solid #d0d7de;">Test Type</th>
+<th style="padding: 8px; border: 1px solid #d0d7de;">Builder</th>
+<th style="padding: 8px; border: 1px solid #d0d7de;">Jumpstarter</th>
+<th style="padding: 8px; border: 1px solid #d0d7de;">Integration</th>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Unit</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Go unit tests (per PR)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Python unit tests (per PR)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">N/A</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Integration</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Operator reconciliation, OCI builds</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Board lease/release, exporter connectivity</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Builder-to-Jumpstarter handoff (M-07)</td>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>E2E</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">47 Ginkgo specs (kind + OCP)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">HiL board provisioning</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Code-commit -> build -> deploy -> test-on-board</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Performance</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Build time baseline, concurrent builds (>=5)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Flash time, multi-board HiL (>=4)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Iteration speed (PITCREW-295)</td>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Security</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">CVE scanning, artifact signing, RH-SDLC</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Cert renewal, least privilege</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Supply chain, ISO 21434</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Reliability</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Operator upgrade, 7-day soak</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Lab health (smoke tests), auto-recovery</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">External dependency resilience (PITCREW-329)</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- Test Environments -->
+<tr>
+<td colspan="2" style="padding: 24px 16px 8px 16px;">
+<h2 style="margin: 0; padding-bottom: 8px; border-bottom: 2px solid #0550ae; color: #0550ae; font-size: 20px;">4. Test Environments</h2>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 8px 16px 16px 16px;">
+<table style="width: 100%; border-collapse: collapse;">
+<tr style="background-color: #0550ae; color: #ffffff;">
+<th style="padding: 8px; border: 1px solid #d0d7de;">Environment</th>
+<th style="padding: 8px; border: 1px solid #d0d7de;">What Runs There</th>
+<th style="padding: 8px; border: 1px solid #d0d7de;">Status</th>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>kind clusters (L1/L2)</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Upstream E2E (Builder, Jumpstarter) per PR</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #1a7a3e; color: #ffffff;">Operational</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Ephemeral IPI SNO (L3)</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">DS pipeline: install -> deploy operators -> test -> destroy<br>m7g.4xlarge (16 vCPU / 64 GB, arm64, AWS Graviton3)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #b08800; color: #ffffff;">Operational (hand-off to Mohamad Aug 11)</td>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>ROSA dev cluster</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Phase 1: Builder + CI Jumpstarter account</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #1a7a3e; color: #ffffff;">Operational</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Physical boards (HiL)</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">QC 8650/8775/8979/8255, NXP S32N79/iMX8, Renesas R-Car X5H<br>Jumpstarter controller on ROSA, automated lab maintenance</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #1a7a3e; color: #ffffff;">Operational (CTC uses for RHIVOS)</td>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>GitLab CEE (tests/all)</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">bootc test development, pytest integration with Jumpstarter</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #1a7a3e; color: #ffffff;">Active (Martin Perina)</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- Features by Release -->
+<tr>
+<td colspan="2" style="padding: 24px 16px 8px 16px;">
+<h2 style="margin: 0; padding-bottom: 8px; border-bottom: 2px solid #0550ae; color: #0550ae; font-size: 20px;">5. RHAS Features by Release - Tech Preview vs GA</h2>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 8px 16px 16px 16px;">
+<p><strong>Tech Preview Features (RHAS-0926, Sep 29, 2026):</strong></p>
+
+<p style="margin: 8px 0; padding: 12px; background-color: #f6f8fa; border-left: 4px solid #0550ae; font-family: monospace; font-size: 13px;">
+<strong>Jira Query:</strong><br>
+project = PITCREW AND fixVersion = "RHAS-0926" AND type = Epic<br>
+<a href="https://redhat.atlassian.net/issues/?jql=project%20%3D%20PITCREW%20AND%20fixVersion%20%3D%20%22RHAS-0926%22%20AND%20type%20%3D%20Epic">View in Jira</a>
+</p>
+
+<table style="width: 100%; border-collapse: collapse; margin-top: 12px;">
+<tr style="background-color: #0550ae; color: #ffffff;">
+<th style="padding: 8px; border: 1px solid #d0d7de; text-align: left;">Epic</th>
+<th style="padding: 8px; border: 1px solid #d0d7de; text-align: left;">Feature</th>
+<th style="padding: 8px; border: 1px solid #d0d7de; text-align: left;">Testing Focus</th>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;">PITCREW-329</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">External Dependency Resilience</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Failure injection, dependency isolation, recovery paths</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;">PITCREW-336</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Distribution</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Product distribution channels, content delivery validation</td>
+</tr>
+</table>
+
+<p style="margin-top: 20px;"><strong>GA Features (RHAS-1226, Dec 22, 2026):</strong></p>
+
+<p style="margin: 8px 0; padding: 12px; background-color: #f6f8fa; border-left: 4px solid #0550ae; font-family: monospace; font-size: 13px;">
+<strong>Jira Query:</strong><br>
+project = PITCREW AND fixVersion = "RHAS-1226" AND type = Epic<br>
+<a href="https://redhat.atlassian.net/issues/?jql=project%20%3D%20PITCREW%20AND%20fixVersion%20%3D%20%22RHAS-1226%22%20AND%20type%20%3D%20Epic">View in Jira</a>
+</p>
+
+<table style="width: 100%; border-collapse: collapse; margin-top: 12px;">
+<tr style="background-color: #0550ae; color: #ffffff;">
+<th style="padding: 8px; border: 1px solid #d0d7de; text-align: left;">Epic</th>
+<th style="padding: 8px; border: 1px solid #d0d7de; text-align: left;">Feature</th>
+<th style="padding: 8px; border: 1px solid #d0d7de; text-align: left;">Testing Focus</th>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;">PITCREW-290</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Agentic Platform</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">AI agent reliability, prompt/response validation</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;">PITCREW-293</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Ask the Platform</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Query accuracy, response relevance, hallucination rate</td>
+</tr>
+</table>
+
+<p style="margin-top: 16px;"><strong>Core Platform Components (Both TP and GA):</strong></p>
+<ul style="margin: 8px 0;">
+<li><strong>Automotive Image Builder:</strong> OCI/bootc images, RPMs, ISOs, Safe Rust/C/C++, SSO, Telemetry</li>
+<li><strong>Jumpstarter:</strong> Board management (QC/NXP/Renesas), DUT networking, firmware updates, pytest integration</li>
+<li><strong>Konflux:</strong> Pipeline execution, artifact signing, RH-SDLC compliance, x86/arm64 cross-arch</li>
+<li><strong>GitOps:</strong> GitLab/GitHub CI/IDE integration</li>
+<li><strong>Keycloak:</strong> Authentication flows, cert management, multi-tenant access</li>
+</ul>
+</td>
+</tr>
+
+<!-- Gating Model -->
+<tr>
+<td colspan="2" style="padding: 24px 16px 8px 16px;">
+<h2 style="margin: 0; padding-bottom: 8px; border-bottom: 2px solid #0550ae; color: #0550ae; font-size: 20px;">6. Gating Model - Per Milestone Criteria Summary</h2>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 8px 16px 16px 16px;">
+<p><span style="background-color: #c44b00; color: #ffffff; padding: 2px 6px;">CRITICAL GAP:</span> Release criteria do not exist yet. PITCREW-337 (QE Readiness) is the epic defining what "ready to ship" means - it is unassigned after 3+ months. Criteria below are recommendations based on RHIVOS CTC patterns and OCP Quality Strategy.</p>
+
+<p style="margin-top: 16px;"><strong>Monthly Release (RHAS-MMYY):</strong></p>
+<ul style="margin: 8px 0;">
+<li>Builder operator deploys (pod running, no CrashLoopBackOff)</li>
+<li>OCI image build completes (image pushed, pull succeeds)</li>
+<li>bootc image build completes (image boots on target board)</li>
+<li>Jumpstarter exporter connectivity (all configured exporters healthy)</li>
+<li>Board lease/release cycle (lease acquired, test executed, released cleanly)</li>
+<li>Smoke tests pass on >= 2 board families (QC 8650 + QC 8775)</li>
+<li>Builder-to-Jumpstarter handoff (OCI artifact consumed by Jumpstarter) - M-07</li>
+<li>No P1/P2 regressions from previous release</li>
+</ul>
+
+<p style="margin-top: 16px;"><strong>Tech Preview (RHAS-0926, Sep 29) - Superset of Monthly:</strong></p>
+<ul style="margin: 8px 0;">
+<li>All Monthly criteria PLUS:</li>
+<li>Full workflow E2E (code-commit -> build -> deploy -> test-on-board)</li>
+<li>Multi-component integration (Builder + Jumpstarter + GitOps)</li>
+<li>No critical/high CVEs in shipped components</li>
+<li>Documentation walkthrough validated by non-author</li>
+<li>DS CI pipeline operational (ephemeral IPI SNO)</li>
+<li>Build time baseline established</li>
+<li>Operator upgrade from previous version succeeds</li>
+</ul>
+
+<p style="margin-top: 16px;"><strong>GA (RHAS-1226, Dec 22) - Superset of Tech Preview:</strong></p>
+<ul style="margin: 8px 0;">
+<li>All Tech Preview criteria PLUS:</li>
+<li>Concurrent builds (>=5) succeed</li>
+<li>Multi-board HiL (>=4 boards simultaneous)</li>
+<li>7-day soak test passes</li>
+<li>Security audit completed</li>
+<li>Keycloak SSO flow validated across components</li>
+<li>Product available via configured CDN channels</li>
+<li>RH-SDLC evidence collected</li>
+<li>At least 1 customer scenario validated</li>
+</ul>
+
+<p style="margin-top: 16px;"><em>Note: Full release criteria document (3-tier gates, waiver process) is in development. See companion document "RHAS Release Criteria - DRAFT".</em></p>
+</td>
+</tr>
+
+<!-- Ownership Matrix -->
+<tr>
+<td colspan="2" style="padding: 24px 16px 8px 16px;">
+<h2 style="margin: 0; padding-bottom: 8px; border-bottom: 2px solid #0550ae; color: #0550ae; font-size: 20px;">7. Ownership Matrix</h2>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 8px 16px 16px 16px;">
+<table style="width: 100%; border-collapse: collapse;">
+<tr style="background-color: #0550ae; color: #ffffff;">
+<th style="padding: 8px; border: 1px solid #d0d7de;">Testing Area</th>
+<th style="padding: 8px; border: 1px solid #d0d7de;">Current Owner</th>
+<th style="padding: 8px; border: 1px solid #d0d7de;">Status</th>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Upstream E2E (Builder, Jumpstarter)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Mohamad Abo Ras</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #1a7a3e; color: #ffffff;">Operational</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;">Downstream CI Pipeline (L3)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Mohamad Abo Ras (handed off from Evgeni Aug 11)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #b08800; color: #ffffff;">In Progress (PITCREW-394)</td>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;">HiL / Jumpstarter Lab</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Miguel Angel Ajo Pelayo</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #1a7a3e; color: #ffffff;">Operational (PITCREW-384)</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;">bootc Testing</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Martin Perina</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #1a7a3e; color: #ffffff;">Active</td>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;">CTC Integration</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Miguel Angel, Rachel Sibley (coordinator)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #1a7a3e; color: #ffffff;">Operational (PITCREW-331 CLOSED)</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>QE Lead / Test Strategy</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><span style="background-color: #c44b00; color: #ffffff; padding: 2px 6px;">UNASSIGNED</span></td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #c44b00; color: #ffffff;">CRITICAL GAP (PITCREW-337)</td>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Distribution / Productization</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><span style="background-color: #c44b00; color: #ffffff; padding: 2px 6px;">UNASSIGNED</span></td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #c44b00; color: #ffffff;">NEW (PITCREW-336)</td>
+</tr>
+</table>
+
+<p style="margin-top: 16px;"><strong>Needed Roles:</strong></p>
+<ul style="margin: 8px 0;">
+<li><strong>QE Lead:</strong> Owns test strategy, release criteria, regression suites, QE sign-off</li>
+<li><strong>Distribution Lead:</strong> Owns productization, CDN channels, documentation publishing</li>
+<li><strong>Integration QE:</strong> Multi-component E2E testing across Builder + Jumpstarter + Konflux + GitOps + Keycloak</li>
+</ul>
+</td>
+</tr>
+
+<!-- Tool Chain -->
+<tr>
+<td colspan="2" style="padding: 24px 16px 8px 16px;">
+<h2 style="margin: 0; padding-bottom: 8px; border-bottom: 2px solid #0550ae; color: #0550ae; font-size: 20px;">8. Tool Chain</h2>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 8px 16px 16px 16px;">
+<table style="width: 100%; border-collapse: collapse;">
+<tr style="background-color: #0550ae; color: #ffffff;">
+<th style="padding: 8px; border: 1px solid #d0d7de;">Tool</th>
+<th style="padding: 8px; border: 1px solid #d0d7de;">Purpose</th>
+<th style="padding: 8px; border: 1px solid #d0d7de;">Layer</th>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;">pytest</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Test harness for Jumpstarter, bootc tests</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">L1, L3</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;">Ginkgo</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">BDD test framework for Builder (47 specs)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">L2, L3</td>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;">kind</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Local Kubernetes clusters for upstream E2E</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">L1, L2</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;">GitHub Actions</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Upstream per-PR testing</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">L1, L2</td>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;">GitLab CEE</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">DS pipeline (rhas-ci), bootc tests (tests/all)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">L3</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;">Packit</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Upstream RPM builds (AIB)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">L2</td>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Testing Farm</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">VM-based test execution</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">L1, L2</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;">Jumpstarter</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">HiL test execution, board management</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">L1, L3</td>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Test Console</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Central test result dashboard (test-console.corp.redhat.com)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">CTC</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;">Greenwave / WaiverDB</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Automated policy evaluation, waiver tracking (RHIVOS pattern)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Future (not yet for RHAS)</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<!-- Cadence -->
+<tr>
+<td colspan="2" style="padding: 24px 16px 8px 16px;">
+<h2 style="margin: 0; padding-bottom: 8px; border-bottom: 2px solid #0550ae; color: #0550ae; font-size: 20px;">9. Cadence</h2>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 8px 16px 16px 16px;">
+<table style="width: 100%; border-collapse: collapse;">
+<tr style="background-color: #0550ae; color: #ffffff;">
+<th style="padding: 8px; border: 1px solid #d0d7de;">Test Suite</th>
+<th style="padding: 8px; border: 1px solid #d0d7de;">Trigger</th>
+<th style="padding: 8px; border: 1px solid #d0d7de;">Duration</th>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Upstream E2E (Builder, Jumpstarter)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Per-PR (GitHub Actions)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">~15 min</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;">Downstream CI Pipeline (DS)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Nightly (recommended - large commit volume)<br>On-demand (web/api)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">~95 min total<br>(50 min provision + 15 min test + 30 min destroy)</td>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;">HiL Lab Health</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Nightly (automated smoke tests, firmware reflashes)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Varies</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;">bootc Tests</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Per MR (gitlab.cee.redhat.com/automotive/tests/all)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Varies</td>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;">CTC Validation</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Release gates (Reduced CTC, Full ASIL CTC)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Varies (RHIVOS pattern)</td>
+</tr>
+</table>
+
+<p style="margin-top: 16px;"><strong>Cadence Decision (Benny's doc):</strong> Large commit volume suggests nightly runs, but nightly makes it harder to identify the offending commit. No final decision recorded yet. Recommendation: nightly for DS pipeline (expensive), per-PR for upstream (cheap).</p>
+</td>
+</tr>
+
+<!-- RHIVOS vs OpenShift Comparison -->
+<tr>
+<td colspan="2" style="padding: 24px 16px 8px 16px;">
+<h2 style="margin: 0; padding-bottom: 8px; border-bottom: 2px solid #0550ae; color: #0550ae; font-size: 20px;">10. RHIVOS vs OpenShift QE Comparison</h2>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 8px 16px 16px 16px;">
+<p><strong>What RHAS Can Adopt from RHIVOS:</strong></p>
+<ul style="margin: 8px 0;">
+<li><strong>Two-phase CTC:</strong> Reduced CTC (smoke tests, fast feedback) -> Full ASIL Release CTC (comprehensive validation)</li>
+<li><strong>Gated promotion with Greenwave:</strong> Automated policy evaluation before tag promotion. Removes human bottleneck from go/no-go decisions.</li>
+<li><strong>WaiverDB discipline:</strong> All waivers require BTS links. Prevents "waive and forget" anti-pattern.</li>
+<li><strong>HiL automation via Jumpstarter:</strong> Physical board testing without manual intervention. RHAS already uses this (CTC integration operational).</li>
+<li><strong>Nightly pipeline with known-issue tracking:</strong> Nightly builds catch regressions early. Known issues tracked explicitly rather than silently waived.</li>
+</ul>
+
+<p style="margin-top: 16px;"><strong>What RHAS Can Adopt from OpenShift QE:</strong></p>
+<ul style="margin: 8px 0;">
+<li><strong>Four-phase quality strategy:</strong> Planning (sizing, Definition of Ready, test plans) -> Development (parallel code + test writing, pre-merge validation) -> Stabilization (EC/RC/GA builds, Component Readiness dashboards) -> Ongoing Maintenance (z-stream, bug escape analysis)</li>
+<li><strong>Pre-merge vs periodic E2E split:</strong> Pre-merge: unit + integration tests (fast, cheap). E2E: run in periodics only (expensive, use sparingly).</li>
+<li><strong>Component Readiness and Sippy:</strong> Release quality monitoring dashboards (OCP uses Sippy for test result trends)</li>
+<li><strong>Test case management in Jira/Confluence:</strong> OCP is migrating from Polarion to Jira/Confluence (PLMORG-249, Suyun leading)</li>
+</ul>
+
+<p style="margin-top: 16px;"><strong>OCP QE Contacts for RHAS Alignment:</strong></p>
+<ul style="margin: 8px 0;">
+<li><strong>Cameron Meadors (cmeadors@redhat.com):</strong> OCP Quality Strategy owner (OCPQE-32074)</li>
+<li><strong>John George:</strong> Next-gen QE working group (#wg-openshift-next-gen-quality)</li>
+<li><strong>David Kutalek:</strong> Test Case Management lead (OCPQE-32075)</li>
+<li><strong>Devan Goodwin:</strong> OCPSTRAT reporter, QE strategy direction</li>
+</ul>
+</td>
+</tr>
+
+<!-- Agentic Testing Options -->
+<tr>
+<td colspan="2" style="padding: 24px 16px 8px 16px;">
+<h2 style="margin: 0; padding-bottom: 8px; border-bottom: 2px solid #0550ae; color: #0550ae; font-size: 20px;">11. Agentic Testing Options</h2>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 8px 16px 16px 16px;">
+<p><strong>Open Source Tools Applicable to RHAS:</strong></p>
+
+<table style="width: 100%; border-collapse: collapse; margin-top: 12px;">
+<tr style="background-color: #0550ae; color: #ffffff;">
+<th style="padding: 8px; border: 1px solid #d0d7de;">Tool</th>
+<th style="padding: 8px; border: 1px solid #d0d7de;">What It Does</th>
+<th style="padding: 8px; border: 1px solid #d0d7de;">RHAS Applicability</th>
+<th style="padding: 8px; border: 1px solid #d0d7de;">Recommendation</th>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Qodo Cover</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Unit test generation (Meta's TestGen-LLM), validates coverage increase</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Generate unit tests for Builder and Jumpstarter components</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #1a7a3e; color: #ffffff;">Adopt</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Playwright + MCP</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">AI-powered browser automation, self-healing selectors</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">E2E acceptance tests for RHAS web console. Proven at Red Hat via Console-harness (ACM-36044, Almen Ng)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #b08800; color: #ffffff;">Trial</td>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Schemathesis</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Property-based API testing driven from OpenAPI specs</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">API contract testing for Builder operator REST endpoints</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #b08800; color: #ffffff;">Assess</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Full AI-native</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">LLM agent is primary test author (autonomous)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Not yet mature for safety-critical automotive context</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #57606a; color: #ffffff;">Hold (revisit 6-12 mo)</td>
+</tr>
+</table>
+
+<p style="margin-top: 16px;"><strong>Key Takeaway:</strong> Start with tools that augment human testers (Qodo Cover, Schemathesis) rather than replace them. Automotive safety context demands human oversight of test adequacy. Console-harness pattern (Playwright + MCP) is the closest proven internal reference architecture.</p>
+</td>
+</tr>
+
+<!-- Gap Analysis -->
+<tr>
+<td colspan="2" style="padding: 24px 16px 8px 16px;">
+<h2 style="margin: 0; padding-bottom: 8px; border-bottom: 2px solid #0550ae; color: #0550ae; font-size: 20px;">12. Gap Analysis - What Exists vs What's Needed</h2>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 8px 16px 16px 16px;">
+<table style="width: 100%; border-collapse: collapse;">
+<tr style="background-color: #0550ae; color: #ffffff;">
+<th style="padding: 8px; border: 1px solid #d0d7de;">Area</th>
+<th style="padding: 8px; border: 1px solid #d0d7de;">Exists Today</th>
+<th style="padding: 8px; border: 1px solid #d0d7de;">Needed by Tech Preview</th>
+<th style="padding: 8px; border: 1px solid #d0d7de;">Needed by GA</th>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Test Infrastructure</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">kind (L1/L2), ephemeral IPI SNO (L3), ROSA, HiL boards</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">DS pipeline fully operational with test execution</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">In-cluster Jumpstarter (Phase 2), upstream E2E on OCP (Phase 3)</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Test Suites</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Upstream E2E (47 Ginkgo specs), bootc tests, HiL smoke tests</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Integration tests (multi-component), DS pipeline jumpstarter-tests lane</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Regression suites, performance baselines, 7-day soak</td>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>QE Process</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><span style="background-color: #c44b00; color: #ffffff; padding: 2px 6px;">NONE - PITCREW-337 unassigned</span></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Test strategy, release criteria, QE lead assigned</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Formal QE plan, regression tracking, waiver process</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Release Gating</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">CTC uses RHAS for RHIVOS validation (closed loop)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Release qualification criteria defined</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Greenwave integration, automated gating</td>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Distribution</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><span style="background-color: #c44b00; color: #ffffff; padding: 2px 6px;">NONE - PITCREW-336 NEW</span></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Product distribution channels defined, CDN config</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Full productization, documentation published, SKUs</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Documentation</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Upstream docs (GitHub), Benny's minimal testing doc</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Tech Preview documentation walkthrough validated</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Production-quality full doc sets, all critical doc issues resolved</td>
+</tr>
+</table>
+
+<p style="margin-top: 16px;"><strong>Critical Path for Tech Preview (37 days):</strong></p>
+<ol style="margin: 8px 0;">
+<li><strong>Assign QE Readiness (PITCREW-337) immediately</strong> - No plan, no owner, no movement for 3+ months</li>
+<li><strong>Complete DS pipeline test execution (PITCREW-394)</strong> - Mohamad has it, infrastructure is operational</li>
+<li><strong>Define release criteria for Tech Preview</strong> - What must pass before Sep 29 ship</li>
+<li><strong>Assign Distribution (PITCREW-336)</strong> - Blocks QE Readiness, no progress yet</li>
+<li><strong>Validate documentation walkthrough</strong> - Non-author validation required for TP</li>
+</ol>
+</td>
+</tr>
+
+<!-- Timeline -->
+<tr>
+<td colspan="2" style="padding: 24px 16px 8px 16px;">
+<h2 style="margin: 0; padding-bottom: 8px; border-bottom: 2px solid #0550ae; color: #0550ae; font-size: 20px;">13. Timeline</h2>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 8px 16px 16px 16px;">
+<table style="width: 100%; border-collapse: collapse;">
+<tr style="background-color: #0550ae; color: #ffffff;">
+<th style="padding: 8px; border: 1px solid #d0d7de;">Milestone</th>
+<th style="padding: 8px; border: 1px solid #d0d7de;">Date</th>
+<th style="padding: 8px; border: 1px solid #d0d7de;">Days From Now</th>
+<th style="padding: 8px; border: 1px solid #d0d7de;">Testing Readiness Gates</th>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>RHAS-0926 Tech Preview</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Sep 29, 2026</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">37 days</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">DS pipeline operational, integration tests pass, QE sign-off, documentation validated</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>RHAS-1026 (QE Readiness target)</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Oct 27, 2026</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">65 days</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Formal QE plan exists, regression suites operational, release qualification criteria defined</td>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>RHAS-1226 GA</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Dec 22, 2026</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">121 days</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">All GA criteria met, zero blocker bugs, QE lead sign-off, distribution channels operational, security audit complete</td>
+</tr>
+</table>
+
+<p style="margin-top: 16px;"><strong>Key Dependencies:</strong></p>
+<ul style="margin: 8px 0;">
+<li>PITCREW-337 (QE Readiness) depends on PITCREW-336 (Distribution)</li>
+<li>PITCREW-336 (Distribution) depends on PITCREW-335 (Konflux Onboarding) and PITCREW-334 (RH-SDLC Compliance)</li>
+<li>Tech Preview (Sep 29) is 37 days away with QE Readiness unassigned - critical timeline risk</li>
+</ul>
+</td>
+</tr>
+
+<!-- Risks -->
+<tr>
+<td colspan="2" style="padding: 24px 16px 8px 16px;">
+<h2 style="margin: 0; padding-bottom: 8px; border-bottom: 2px solid #0550ae; color: #0550ae; font-size: 20px;">14. Risks - Ranked by Severity and Timeline Impact</h2>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 8px 16px 16px 16px;">
+<table style="width: 100%; border-collapse: collapse;">
+<tr style="background-color: #0550ae; color: #ffffff;">
+<th style="padding: 8px; border: 1px solid #d0d7de;">Risk</th>
+<th style="padding: 8px; border: 1px solid #d0d7de;">Impact</th>
+<th style="padding: 8px; border: 1px solid #d0d7de;">Mitigation</th>
+<th style="padding: 8px; border: 1px solid #d0d7de;">Severity</th>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>No QE owner or plan</strong> (PITCREW-337)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Tech Preview ships without defined quality criteria. Every release is a gamble.</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Assign QE lead immediately. Draft release criteria by Sep 1.</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #c44b00; color: #ffffff;">CRITICAL</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Distribution epic unstarted</strong> (PITCREW-336)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Blocks QE Readiness (dependency). Tech Preview cannot ship without distribution channels.</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Assign owner. Define distribution channels by mid-Sep.</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #c44b00; color: #ffffff;">CRITICAL</td>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>No integration test strategy</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">RHAS is a suite (Builder + Jumpstarter + Konflux + GitOps + Keycloak) but only component tests exist. Multi-component failures will escape to customers.</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Define integration test scenarios by Sep 15. Implement E2E workflow test (code-commit -> board) by TP.</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #c44b00; color: #ffffff;">HIGH</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>DS pipeline test execution incomplete</strong> (PITCREW-394)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Infrastructure is operational but no real tests running yet (placeholder sleeps). Tech Preview needs DS validation.</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Mohamad has it (Aug 11 handoff). Implement jumpstarter-tests lane by Sep 15.</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #b08800; color: #ffffff;">MEDIUM</td>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Benny's testing doc is minimal</strong></td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Architecture is defined (3 layers) but no test case details, pass/fail criteria, operational runbook.</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Expand doc to include test cases, coverage matrix, cadence decision, runbook.</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #b08800; color: #ffffff;">MEDIUM</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Miguel Angel load</strong> (key-person risk)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Carries lab ops, cluster management, customer escalations, documentation for HiL. Single point of failure.</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Document HiL operational runbook. Cross-train backup for lab maintenance.</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #b08800; color: #ffffff;">MEDIUM</td>
+</tr>
+</table>
+
+<p style="margin-top: 16px;"><strong>Timeline Risk Summary:</strong> Tech Preview is 37 days away with no QE owner, no release criteria, and Distribution epic unstarted. QE Readiness (PITCREW-337) target is Oct 27 (65 days) but it depends on Distribution (PITCREW-336) which has 0 comments and no owner. The critical path is blocked at the organizational level, not the technical level.</p>
+</td>
+</tr>
+
+<!-- Footer -->
+<tr>
+<td colspan="2" style="padding: 16px; background-color: #f6f8fa; border-top: 2px solid #d0d7de; text-align: center; color: #57606a; font-size: 12px;">
+<p style="margin: 0;">Generated 2026-08-23 | For questions: aefrat@redhat.com</p>
+<p style="margin: 4px 0 0 0;">Related Documents: RHAS Release Criteria (DRAFT), RHAS Testing Landscape Report (Jun 30, refreshed Jul 21)</p>
+</td>
+</tr>
+
+</table>
+
+</body>
+</html>
