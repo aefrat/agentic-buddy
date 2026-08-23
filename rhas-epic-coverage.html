@@ -462,7 +462,7 @@
     <!-- Executive Summary -->
     <section class="exec-summary">
       <h2>Executive Summary</h2>
-      <p>Analysis of 28 RHAS EPICs across 8 releases (RHAS-0226 through RHAS-1226) reveals a critical gap between feature development and test coverage. While component-level testing is operational for Builder and Jumpstarter, <strong>no EPIC-level test plans exist</strong>.</p>
+      <p>Analysis of 28 RHAS EPICs across 8 releases (RHAS-0226 through RHAS-1226) reveals a critical gap between feature development and test coverage. While operator/service-level testing is operational for Builder Operator and Jumpstarter Operator, <strong>no EPIC-level test plans exist</strong>.</p>
 
       <div class="critical-finding">
         <strong>Critical Finding:</strong> Downstream product bits do not exist yet (expected before GA, not for Tech Preview). No EPIC-to-test mapping exists in Jira. PITCREW-337 (QE Readiness) remains unassigned after 3+ months with zero comments.
@@ -483,7 +483,7 @@
         </div>
         <div class="stat-card">
           <div class="stat-number warning">3</div>
-          <div class="stat-label">Component-Level Only</div>
+          <div class="stat-label">Operator/Service-Level Only</div>
         </div>
         <div class="stat-card">
           <div class="stat-number critical">25</div>
@@ -1105,12 +1105,12 @@
       </div>
     </section>
 
-    <!-- Component-Level Testing -->
+    <!-- Operator/Service-Level Testing -->
     <section>
-      <h2>Component-Level Testing (What Actually Exists)</h2>
+      <h2>Operator/Service-Level Testing (What Actually Exists)</h2>
       <div class="component-section">
         <div class="component-item">
-          <div class="component-name">Builder (automotive-image-builder)</div>
+          <div class="component-name">Builder Operator (automotive-image-builder)</div>
           <dl class="component-tests">
             <dt>Upstream:</dt>
             <dd><span class="badge badge-success">Unit + Integration per PR</span> (GitHub Actions, Packit)</dd>
@@ -1120,7 +1120,7 @@
         </div>
 
         <div class="component-item">
-          <div class="component-name">Jumpstarter</div>
+          <div class="component-name">Jumpstarter Operator</div>
           <dl class="component-tests">
             <dt>Upstream:</dt>
             <dd><span class="badge badge-success">E2E Tests per PR</span> (GitHub Actions, pytest)</dd>
@@ -1130,7 +1130,7 @@
         </div>
 
         <div class="component-item">
-          <div class="component-name">bootc Images</div>
+          <div class="component-name">bootc (Service)</div>
           <dl class="component-tests">
             <dt>Upstream:</dt>
             <dd><span class="badge badge-warning">Partial Coverage</span> (GitLab CEE: automotive/tests/all)</dd>

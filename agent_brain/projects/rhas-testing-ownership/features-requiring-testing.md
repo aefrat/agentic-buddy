@@ -9,9 +9,9 @@ created: 2026-06-29
 Based on the PitCrew Full Status Report (Jun 1, 2026), RHAS Strategic Guide,
 and 2026 Roadmap. Organized by testing domain.
 
-## 1. Core Platform Components
+## 1. Core Platform Operators and Services
 
-### Automotive Image Builder (AIB) / Builder Operator
+### Automotive Image Builder (AIB) / Builder Operator (Operator)
 - OCI image builds, bootc images, RPMs, ISOs
 - Safe Rust / C / C++ binary compilation
 - Satellite OS update delivery
@@ -19,7 +19,7 @@ and 2026 Roadmap. Organized by testing domain.
 - SSO integration (Q3 target)
 - Telemetry integration (in progress)
 
-### Jumpstarter - Hardware-in-the-Loop Testing
+### Jumpstarter (Operator) - Hardware-in-the-Loop Testing
 - Board management and lease policies (QC 8650/8775/8979/8255, NXP S32N79/iMX8, Renesas R-Car X5H)
 - DUT networking and firmware updates (fastboot, A/B boot)
 - Exporter connectivity (e.g., Nissan cluster)
@@ -27,18 +27,18 @@ and 2026 Roadmap. Organized by testing domain.
 - pytest integration with bootc tests
 - Documentation accuracy
 
-### Konflux / CI-CD Pipelines
+### Konflux (Service) / CI-CD Pipelines
 - Pipeline execution on OCP (Tekton)
 - Artifact signing and supply chain provenance
 - RH-SDLC compliance gates (PITCREW-334, target RHAS-0726)
 - x86 and arm64 cross-architecture scheduling
 
-### GitOps / Git Forge Integration
+### GitOps (Service) / Git Forge Integration
 - GitLab CI/IDE integration
 - GitHub CI/IDE integration
 - Source forge connectivity without rip-and-replace
 
-### Keycloak / SSO
+### Keycloak (Service) / SSO
 - Authentication flows
 - Certificate management (annual renewal)
 - Multi-tenant access control
@@ -107,7 +107,7 @@ and 2026 Roadmap. Organized by testing domain.
 4. **Image builds** - bootc, OCI, RPMs, ISOs, Safe Rust/C/C++ binaries
 5. **Security** - Supply chain, cert management, ISO 21434, ProdSec, CVE process
 6. **Performance** - Boot time, build time, iteration speed, scalability
-7. **Integration** - Multi-component (Builder+Jumpstarter+GitOps+Keycloak), end-to-end flows
+7. **Integration** - Multi-service/operator (Builder Operator + Jumpstarter Operator + GitOps + Keycloak), end-to-end flows
 8. **Virtual targets** - QEMU, Android virtual targets, interface simulation
 9. **Customer environments** - Ford, Nissan, HATCI, Applied (varied HW + configs)
 10. **Observability** - OpenTelemetry, monitoring, alerting, metrics

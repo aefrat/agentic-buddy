@@ -32,7 +32,7 @@ primary risk for Tech Preview (RHAS-0926, September 2026) and GA (RHAS-1226, Dec
 
 **Owner:** Mohamad Abo Ras
 **Status:** Operational - running per PR
-**What's tested:** Builder and Jumpstarter upstream components
+**What's tested:** Builder Operator and Jumpstarter Operator (upstream)
 
 ### What We Know
 
@@ -336,9 +336,9 @@ CTC GATING (Operational, rough)
 4. **Mohamad console access blocked** - Wrong org assignment prevents cluster
    access. Basic operational blocker. (Status unknown - not re-verified Jul 21.)
 5. ~~**Flaky E2E tests** (PITCREW-403)~~ - **RESOLVED.** Closed as of Jun 26.
-6. **No formal test plan** for RHAS as a product - individual component tests
-   exist but no integration test strategy spanning Builder + Jumpstarter +
-   Konflux + GitOps + Keycloak.
+6. **No formal test plan** for RHAS as a product - individual operator/service tests
+   exist but no integration test strategy spanning Builder Operator + Jumpstarter Operator +
+   Konflux + GitOps + Keycloak services.
 7. **DNS resolution approach is wrong** - Evgeni's Jul 13 analysis on
    VROOM-44573 shows the proposed DNS fix won't work for OpenShift (needs
    wildcard DNS for ELBs, not static EC2 records). This may require a
@@ -367,9 +367,9 @@ CTC GATING (Operational, rough)
    escalation. This has been grinding since March.
 4. **Fix Mohamad's org/console access** - Basic blocker, should be resolved
    in days not weeks.
-5. **Create an integration test strategy** - Currently testing is per-component.
-   The product is a suite (Builder + Jumpstarter + Konflux + GitOps + Keycloak) -
-   integration testing across components is not covered.
+5. **Create an integration test strategy** - Currently testing is per-operator/service.
+   The product (RHAS) integrates multiple operators (Builder, Jumpstarter) and services (Konflux, GitOps, Keycloak) -
+   integration testing across operators and services is not covered.
 6. **Define what "tested" means for each RHAS release** - No release
    qualification criteria exist. Every release before GA should have explicit
    pass/fail gates.
