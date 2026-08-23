@@ -37,7 +37,10 @@ to the relevant store.
 
 ## Key Google Docs
 
-- RHAS EPICs Per Release vs Test Coverage Analysis (`1M2ON8WedyWO-UztdZYeXTl7nobLJ9SJWY86Ar5F_GJE`) - Comprehensive EPIC-by-EPIC test coverage mapping (Aug 23, 2026). 18 EPICs analyzed, critical gaps, component-level testing status, Aug 18 Quality Review findings.
+- RHAS EPICs Per Release vs Test Coverage Analysis - Comprehensive EPIC-by-EPIC test coverage mapping (Aug 23, 2026). 28 EPICs across 8 releases, critical gaps, component-level testing status, Aug 18 Quality Review findings.
+  - Google Doc: `1M2ON8WedyWO-UztdZYeXTl7nobLJ9SJWY86Ar5F_GJE`
+  - PDF (Google Drive): `1xZqno57acGTd_LGu9HOHuVlNt6pTXko5` - https://drive.google.com/file/d/1xZqno57acGTd_LGu9HOHuVlNt6pTXko5/view
+  - HTML/PDF (local): `rhas-epic-coverage.html` / `rhas-epic-coverage.pdf`
 - Benny's Testing Architecture (`1NEzWHE1K4CiGkEDjhL5gpQUpcnepsiBvMDWPXUxLOHQ`) - 3-layer test architecture, cadence decisions.
 - RHAS CI Testing Proposal (`1Txk4PQC9pGvNrNE9VViN8EMI8o94KpJa_kLMscBthAI`) - 3-phase rollout, DS pipeline design, ephemeral IPI SNO specs, upstream E2E suite scope (40/61 tests, 47 Ginkgo specs), prerequisites, trigger strategy, open questions.
 
