@@ -1,160 +1,130 @@
 ---
 last_accessed: 2026-08-23
-access_count: 1
+access_count: 2
 created: 2026-08-23
 ---
 
 # Google Docs Formatting Standard
 
-User preference (established Aug 23, 2026): **Always create Google Docs with professional formatting** - proper headings, tables, colors, and structure.
+User preference (established Aug 23, 2026): **Always create Google Docs with clean, professional formatting suitable for sharing with engineering teams.**
 
 ## Implementation Method
 
-Create HTML files with professional styling, then upload to Google Docs using the Drive API:
+**Use Google Docs native API (batchUpdate) - NOT HTML upload.**
 
-```bash
-gws drive files update \
-  --params '{"fileId": "DOC_ID", "uploadType": "media"}' \
-  --upload filename.html \
-  --upload-content-type "text/html"
-```
+HTML upload causes boundary markers and formatting issues. Instead:
 
-For new docs:
-```bash
-# Create blank doc first
-gws docs documents create --json '{"title": "Document Title"}'
-# Then upload HTML content via Drive API
+1. Create document: `gws docs documents create --json '{"title": "Document Title"}'`
+2. Add content as plain text: `gws docs +write --document "DOC_ID" --text "$(cat content.txt)"`
+3. Apply styles with batchUpdate: `gws docs documents batchUpdate --params '{"documentId": "DOC_ID"}' --json '{"requests": [...]}'`
+
+### Example: Apply HEADING_1 to title
+```json
+{
+  "requests": [
+    {
+      "updateParagraphStyle": {
+        "range": {"startIndex": 1, "endIndex": 50},
+        "paragraphStyle": {"namedStyleType": "HEADING_1"},
+        "fields": "namedStyleType"
+      }
+    }
+  ]
+}
 ```
 
 ## Professional Styling Standards
 
-**Design Philosophy:** Clean, minimal, professional. Optimized for readability and scan-ability by engineering teams.
+**Design Philosophy:** Clean, simple, minimal. Use Google Docs' default styles. Easy to read and navigate.
 
-### Color Palette (Refined for Professional Docs)
-- Primary blue: `#4285f4` (accent borders, links)
-- Black: `#1a1a1a` (headings)
-- Dark gray: `#333` (body text)
-- Medium gray: `#666` (labels, metadata)
-- Light gray: `#e0e0e0` (borders, dividers)
-- Background gray: `#f8f9fa` / `#f5f5f5` (cards, tables)
-- Success green: `#1e8e3e` (backgrounds: `#e6f4ea`)
-- Warning orange: `#f29900` (backgrounds: `#fef7e0`)
-- Error red: `#d93025` / `#ea4335` (backgrounds: `#fce8e6`)
+### Typography (Google Docs Default Styles)
+Use namedStyleType for all headings - don't override colors or fonts:
 
-### Typography
-- Font family: `Arial, sans-serif` (clean, universally readable)
-- H1: 28px, color `#1a1a1a`, weight 600, letter-spacing -0.5px
-- H2: 20px, color `#1a1a1a`, weight 600, bottom border 2px `#e0e0e0`
-- H3: 16px, color `#1a1a1a`, weight 600
-- Body: 13-14px, line-height 1.6-1.7, color `#333`
-- Metadata: 13px, color `#666`
+- **HEADING_1**: Document title (24pt, bold)
+- **HEADING_2**: Major sections (18pt, bold)
+- **HEADING_3**: Subsections (14pt, bold)
+- **SUBTITLE**: Metadata under title (15pt, gray)
+- **NORMAL_TEXT**: Body text (11pt, normal)
+
+### Status Indicators
+Use simple unicode symbols inline with text:
+- ✓ Success/Operational (green context)
+- ⚠ Warning/Partial (orange context)
+- ✗ Error/Missing (red context)
 
 ### Tables
-- Header background: `#f5f5f5` (subtle gray, not bright colors)
-- Header text: `#1a1a1a`, weight 600, uppercase, 13px, letter-spacing 0.5px
-- Header border: 2px solid `#e0e0e0`
-- Row hover: `#fafafa` (very subtle)
-- Cell padding: 12-16px
-- Border: 1px solid `#e0e0e0` (outer), 1px solid `#f0f0f0` (row dividers)
-- Clean, minimal design - no heavy shadows
+- Use insertTable request: `{"insertTable": {"location": {"index": N}, "rows": R, "columns": C}}`
+- Populate cells with insertText requests
+- Apply header styling to first row if needed
+- Keep it simple - Google Docs will apply default table styling
 
-### Status Badges (Pill-Style Indicators)
-Use inline badge elements instead of plain symbols:
-- Success: background `#e6f4ea`, color `#1e8e3e`, text "Operational"
-- Warning: background `#fef7e0`, color `#f29900`, text "Partial" or "Infrastructure Ready"
-- Error: background `#fce8e6`, color `#d93025`, text "None" or "Do Not Exist"
-- Badge style: 4px/10px padding, 3px border-radius, 11px font-size, uppercase, weight 600
+## Document Structure Pattern
 
-### Cards and Boxes
-- **EPIC cards**: White background, 1px border `#e0e0e0`, 16px padding, 4px border-radius
-  - Hover: subtle shadow `0 2px 8px rgba(0,0,0,0.08)`
-  - EPIC key in blue (`#4285f4`)
-  - Details in gray (`#666`)
-  - Status badges inline
-- **Summary boxes**: `#f8f9fa` background, 4px left border `#4285f4`, 24px padding
-- **Alert boxes**: `#fce8e6` background (critical) or `#fef7e0` (warning), 4px left border
-- **Stat cards**: White background, 1px border `#e0e0e0`, centered text, large number (36px bold)
-- **Release headers**: `#f5f5f5` background, 4px left border `#4285f4`, 12px/16px padding
-  - Tech Preview: border `#ea4335`, background `#fef7e0`
-  - GA: border `#1e8e3e`, background `#e6f4ea`
+```
+TITLE (HEADING_1)
 
-### Spacing and Layout
-- Document padding: 40px all sides
-- Section margins: 40px top for H2, 28px for H3
-- Paragraph margins: 12px between paragraphs
-- Table margins: 20px top/bottom
-- Card margins: 12-16px between cards
-- Max width: 900px (readable line length)
+Generated: [Date] | Source: [Source] (SUBTITLE)
 
-## Document Structure Template
+Executive Summary (HEADING_2)
 
-1. **Header Section** (top border, not centered)
-   - H1 title: 28px, black, weight 600
-   - Metadata below: 13px gray, author + date
-   - Bottom border: 3px `#4285f4`
+[Summary paragraph]
 
-2. **Executive Summary** (gray box with left border)
-   - Background `#f8f9fa`, 4px blue left border
-   - H2 inside with margin-top 0
-   - Key finding in white sub-box with red left border
+Key Finding: [Critical finding paragraph]
 
-3. **Content Sections**
-   - H2: bottom border 2px `#e0e0e0`
-   - Tables: subtle gray headers (not bright colors)
-   - Badge-style status indicators (pill design)
+Current Testing State (HEADING_2)
 
-4. **EPIC Cards** (for repeated structured items)
-   - Clean white cards with 1px border
-   - EPIC key in blue, details in gray
-   - Inline coverage badges
-   - Hover effect for interaction
+[Status items with unicode symbols]
+✓ Item 1: Details
+⚠ Item 2: Details
+✗ Item 3: Details
 
-5. **Release Sections**
-   - Header bar with left border (color-coded by milestone)
-   - EPIC cards nested inside
-   - Clean separation between releases
+Section Name (HEADING_2)
 
-6. **Stats Grid** (4-column for key metrics)
-   - Large numbers (36px bold)
-   - Small labels (12px uppercase)
-   - Color-coded for severity (red=critical, orange=warning)
+Subsection (HEADING_3)
 
-7. **Alert Boxes** (for critical info)
-   - Colored background + left border
-   - Urgent items stand out visually
+[Content organized by subsections]
 
-8. **Footer** (references, metadata)
-   - Top border separator
-   - Small gray text
-   - Links to source documents
+References (HEADING_2)
+
+[Links and sources]
+```
+
+## Content Organization Principles
+
+1. **Clear hierarchy** - H1 → H2 → H3, no skipping levels
+2. **Scannable sections** - Each H2 is a major topic
+3. **Consistent formatting** - Same pattern for similar items
+4. **Minimal decoration** - Let content and structure speak
+5. **Professional tone** - Suitable for technical stakeholders
+
+## Building Documents Step-by-Step
+
+1. **Write plain text version** - All content in a .txt file with clear section markers
+2. **Upload as plain text** - `gws docs +write`
+3. **Apply heading styles** - batchUpdate with updateParagraphStyle for each heading
+4. **Add tables if needed** - insertTable + populate cells
+5. **No colors, no fancy styling** - Keep it clean and professional
 
 ## Why This Approach
 
-1. **HTML → Google Docs** preserves rich formatting better than plain text or batchUpdate API
-2. **Clean, minimal design** - professional without being overwhelming
-3. **Engineering-team optimized** - easy to scan, clear hierarchy, actionable insights
-4. **Subtle colors** - gray headers instead of bright blues, status badges instead of symbols
-5. **Print-friendly** - works well on screen and paper
-6. **User preference** - "professional looking G-doc that I can share with an engineering team"
-
-## Design Principles
-
-- **Clarity over decoration** - no unnecessary gradients or heavy shadows
-- **Hierarchy through spacing** - generous whitespace, clear sections
-- **Scannable content** - badges, cards, tables optimized for quick reading
-- **Professional polish** - suitable for stakeholder presentations and technical reviews
-- **Consistent patterns** - EPIC cards, release sections, stat grids reusable across docs
+- **No HTML boundary markers** - Native API avoids upload artifacts
+- **Clean, simple design** - Uses Google Docs' default styles
+- **Easy to maintain** - No custom CSS or complex formatting
+- **Professional appearance** - Suitable for engineering teams
+- **Accessible** - Works well in all viewing modes
+- **User preference** - "professional looking G-doc that I can share with an engineering team"
 
 ## Example Use Cases
 
-- Status reports (manager reports, QE reports, weekly updates)
-- Analysis documents (EPIC coverage, gap analysis, technical assessments)
-- Meeting notes (with action items in colored alert boxes)
-- Technical documentation (with tables and structured data)
-- Executive summaries (with stat cards and key findings)
+- Status reports (manager reports, QE reports)
+- Analysis documents (EPIC coverage, gap analysis)
+- Meeting notes (with action items)
+- Technical documentation
+- Executive summaries
 
 ## Reference Implementation
 
 RHAS EPICs Per Release vs Test Coverage Analysis (Aug 23, 2026):
 - Document ID: `1M2ON8WedyWO-UztdZYeXTl7nobLJ9SJWY86Ar5F_GJE`
-- Demonstrates: Clean header, executive summary, professional tables, EPIC cards, stats grid, alert boxes, recommendations sections, footer
+- Method: Plain text → batchUpdate for headings
+- Style: Clean, simple, professional - uses default Google Docs styles
