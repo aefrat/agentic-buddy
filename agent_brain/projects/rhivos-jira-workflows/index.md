@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-07-15
-access_count: 1
+last_accessed: 2026-08-23
+access_count: 2
 created: 2026-07-15
 ---
 
@@ -19,6 +19,7 @@ the Confluence wiki: [RHIVOS in Jira](https://redhat.atlassian.net/wiki/spaces/A
 - [issue-type-mapping.md](issue-type-mapping.md) - Which workflow, team, component for each issue category (product + non-product)
 - [milestones.md](milestones.md) - Dev Complete vs Release Complete milestone timing
 - [automations.md](automations.md) - RHEL mirroring, component auto-assignment, blocker process, ProdSec CVE handling
+- [errata-rhel-packages.md](errata-rhel-packages.md) - Errata workflow gaps for RHEL Userspace Packages: automation limitations, manual steps, multi-release cloning, ownership questions (Aug 23 Slack discussion)
 - [components.md](components.md) - Package components, Component Awaiting Approval, kernel vs userspace
 - [faq.md](faq.md) - Common questions and answers
 
