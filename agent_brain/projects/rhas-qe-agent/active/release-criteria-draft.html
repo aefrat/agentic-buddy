@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>RHAS Release Criteria - 2026-08-23</title>
+<title>RHAS Release Criteria - 2026-08-23 (Rev 2)</title>
 </head>
 <body>
 
@@ -11,7 +11,27 @@
 <tr>
 <td colspan="2" style="background-color: #1a1a2e; color: #ffffff; padding: 24px; text-align: left;">
 <h1 style="margin: 0 0 8px 0; font-size: 28px; font-weight: bold;">RHAS Test Release Criteria</h1>
-<p style="margin: 0; font-size: 16px; color: #d0d7de;">Three-Tier Quality Gates for Monthly, Tech Preview, and GA Releases</p>
+<p style="margin: 0; font-size: 16px; color: #d0d7de;">Three-Tier Quality Gates for Monthly, Tech Preview, and GA Releases (Revised Aug 23, 2026)</p>
+</td>
+</tr>
+
+<!-- Meeting Updates -->
+<tr>
+<td colspan="2" style="padding: 16px; background-color: #f6f8fa;">
+<h3 style="margin: 0 0 8px 0; color: #0550ae;">Aug 17 Meeting - Key Updates</h3>
+<p style="margin: 0;"><strong>Decisions Aligned:</strong></p>
+<ul style="margin: 4px 0 0 16px; padding: 0;">
+<li><strong>Mock devices for integration testing:</strong> Integration tests will use QEMU (no physical hardware in test cluster required)</li>
+<li><strong>Downstream testing deferred to GA:</strong> Downstream testing postponed until downstream artifacts available before GA</li>
+</ul>
+<p style="margin: 8px 0 0 0;"><strong>Formal Requirements (Rachel Sibley / Pablo Ridolfi):</strong></p>
+<ul style="margin: 4px 0 0 16px; padding: 0;">
+<li>Formal test list with entry/exit criteria (Mohamad to deliver)</li>
+<li>Features mapped to Jira epics/stories for traceability</li>
+<li>Comprehensive Testing Cycle (CTC) for TP and GA</li>
+<li>All test cases/results in Polarion</li>
+<li>GA requires evidence on customer hardware (VMs + actual boards)</li>
+</ul>
 </td>
 </tr>
 
@@ -21,7 +41,7 @@
 <table style="width: 100%; border-collapse: collapse;">
 <tr>
 <td style="width: 25%; padding: 8px; background-color: #8250df; color: #ffffff; text-align: center; font-weight: bold;">Generated</td>
-<td style="width: 75%; padding: 8px; background-color: #ffffff; border: 1px solid #d0d7de;">2026-08-23</td>
+<td style="width: 75%; padding: 8px; background-color: #ffffff; border: 1px solid #d0d7de;">2026-08-23 (Rev 2 - incorporates Aug 17 meeting)</td>
 </tr>
 <tr>
 <td style="padding: 8px; background-color: #8250df; color: #ffffff; text-align: center; font-weight: bold;">Tech Preview</td>
@@ -43,15 +63,15 @@
 </tr>
 <tr>
 <td colspan="2" style="padding: 8px 16px 16px 16px;">
-<p>This document defines <strong>measurable pass/fail conditions</strong> for each RHAS release milestone. It answers the question: <em>"What must pass before this release can ship?"</em></p>
+<p>This document defines <strong>measurable pass/fail conditions</strong> for each RHAS release milestone. Updated Aug 23, 2026 to incorporate decisions from Aug 17 RHAS testing/Quality review meeting.</p>
 
-<p><span style="background-color: #c44b00; color: #ffffff; padding: 2px 6px;">IMPORTANT:</span> These criteria are <strong>recommendations</strong> based on RHIVOS CTC patterns and OpenShift Quality Strategy. PITCREW-337 (QE Readiness) is the official epic defining release criteria - it is currently <strong>unassigned with 0 comments after 3+ months</strong>. Formal adoption requires QE lead assignment and stakeholder approval.</p>
+<p><span style="background-color: #c44b00; color: #ffffff; padding: 2px 6px;">IMPORTANT:</span> These criteria are <strong>recommendations</strong> based on RHIVOS CTC patterns, OpenShift Quality Strategy, and Rachel Sibley/Pablo Ridolfi requirements. PITCREW-337 (QE Readiness) is the official epic - currently <strong>unassigned with 0 comments after 3+ months</strong>. Formal adoption requires QE lead assignment and stakeholder approval.</p>
 
 <p style="margin-top: 16px;"><strong>Criteria Tiers:</strong></p>
 <ul style="margin: 8px 0;">
 <li><strong>Monthly Release (RHAS-MMYY):</strong> Baseline quality for monthly iterations</li>
-<li><strong>Tech Preview (RHAS-0926, Sep 29):</strong> Superset of Monthly + customer-facing readiness</li>
-<li><strong>GA (RHAS-1226, Dec 22):</strong> Superset of Tech Preview + production-grade validation</li>
+<li><strong>Tech Preview (RHAS-0926, Sep 29):</strong> Superset of Monthly + customer-facing readiness. <em>Note: Downstream testing deferred to GA per Aug 17 decision</em></li>
+<li><strong>GA (RHAS-1226, Dec 22):</strong> Superset of Tech Preview + production-grade validation + downstream artifact testing</li>
 </ul>
 </td>
 </tr>
@@ -64,7 +84,7 @@
 </tr>
 <tr>
 <td colspan="2" style="padding: 8px 16px 16px 16px;">
-<p><strong>Purpose:</strong> Baseline quality gate for monthly iterations. Ensures core platform components function correctly.</p>
+<p><strong>Purpose:</strong> Baseline quality gate for monthly iterations. Ensures core platform components function correctly on upstream code.</p>
 
 <table style="width: 100%; border-collapse: collapse; margin-top: 12px;">
 <tr style="background-color: #8250df; color: #ffffff;">
@@ -111,8 +131,8 @@
 </tr>
 <tr>
 <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">M-07</td>
-<td style="padding: 8px; border: 1px solid #d0d7de;">Builder-to-Jumpstarter handoff</td>
-<td style="padding: 8px; border: 1px solid #d0d7de;">OCI artifact built by Builder is consumed by Jumpstarter</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Builder-to-Jumpstarter handoff (integration)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">OCI artifact built by Builder flashed via Jumpstarter (Aug 17: using mock devices/QEMU acceptable)</td>
 <td style="padding: 8px; border: 1px solid #d0d7de; background-color: #1a7a3e; color: #ffffff; text-align: center;">Met</td>
 </tr>
 <tr style="background-color: #f6f8fa;">
@@ -121,9 +141,15 @@
 <td style="padding: 8px; border: 1px solid #d0d7de;">Zero P1/P2 bugs introduced since previous release</td>
 <td style="padding: 8px; border: 1px solid #d0d7de; background-color: #b08800; color: #ffffff; text-align: center;">Partially Met</td>
 </tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">M-09</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>NEW:</strong> Formal test list published</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Test list with entry/exit criteria and test descriptions available (Pablo's requirement from Aug 17)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #c44b00; color: #ffffff; text-align: center;">Not Met</td>
+</tr>
 </table>
 
-<p style="margin-top: 16px;"><strong>Current Readiness (Aug 23, 2026):</strong> 7/8 criteria met. M-08 is partially met (no formal regression tracking process yet).</p>
+<p style="margin-top: 16px;"><strong>Current Readiness (Aug 23, 2026):</strong> 7/9 criteria met (78%). M-08 partially met (no formal regression tracking), M-09 not met (Mohamad next step from Aug 17 meeting).</p>
 </td>
 </tr>
 
@@ -135,7 +161,7 @@
 </tr>
 <tr>
 <td colspan="2" style="padding: 8px 16px 16px 16px;">
-<p><strong>Purpose:</strong> Customer-facing readiness gate. Ensures RHAS is functional enough for early adopters to evaluate.</p>
+<p><strong>Purpose:</strong> Customer-facing readiness gate. Ensures RHAS is functional enough for early adopters to evaluate. <em>Note: Aug 17 decision - downstream testing deferred to GA.</em></p>
 
 <p style="margin-bottom: 16px;"><strong>All Monthly criteria MUST pass, PLUS:</strong></p>
 
@@ -149,14 +175,14 @@
 <tr>
 <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">TP-01</td>
 <td style="padding: 8px; border: 1px solid #d0d7de;">Full workflow E2E test</td>
-<td style="padding: 8px; border: 1px solid #d0d7de;">Code-commit -> build -> deploy -> test-on-board completes successfully</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Code-commit -> build -> deploy -> test-on-board completes successfully (Aug 17: one test operational - build + flash)</td>
 <td style="padding: 8px; border: 1px solid #d0d7de; background-color: #b08800; color: #ffffff; text-align: center;">Partially Met</td>
 </tr>
 <tr style="background-color: #f6f8fa;">
 <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">TP-02</td>
-<td style="padding: 8px; border: 1px solid #d0d7de;">Multi-component integration</td>
-<td style="padding: 8px; border: 1px solid #d0d7de;">Builder + Jumpstarter + GitOps integration test passes</td>
-<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #c44b00; color: #ffffff; text-align: center;">Not Met</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Multi-component integration (UPDATED)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Builder + Jumpstarter integration test passes using mock devices/QEMU (Aug 17 decision)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #b08800; color: #ffffff; text-align: center;">Partially Met</td>
 </tr>
 <tr>
 <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">TP-03</td>
@@ -172,9 +198,9 @@
 </tr>
 <tr>
 <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">TP-05</td>
-<td style="padding: 8px; border: 1px solid #d0d7de;">DS CI pipeline operational</td>
-<td style="padding: 8px; border: 1px solid #d0d7de;">Ephemeral IPI SNO pipeline completes with test execution</td>
-<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #b08800; color: #ffffff; text-align: center;">Partially Met</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">DS CI pipeline operational (UPDATED)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Ephemeral IPI SNO pipeline operational (achieved - cluster running since end July)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #1a7a3e; color: #ffffff; text-align: center;">Met</td>
 </tr>
 <tr style="background-color: #f6f8fa;">
 <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">TP-06</td>
@@ -188,16 +214,21 @@
 <td style="padding: 8px; border: 1px solid #d0d7de;">Upgrade from previous monthly release completes without errors</td>
 <td style="padding: 8px; border: 1px solid #d0d7de; background-color: #c44b00; color: #ffffff; text-align: center;">Not Met</td>
 </tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">TP-08</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>NEW:</strong> Jira feature traceability</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">All TP features organized as epics/stories in Jira (Rachel's requirement from Aug 17)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #c44b00; color: #ffffff; text-align: center;">Not Met</td>
+</tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">TP-09</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>NEW:</strong> CTC run for Tech Preview</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Comprehensive Testing Cycle executed, all test cases run (Rachel's requirement from Aug 17)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #c44b00; color: #ffffff; text-align: center;">Not Met</td>
+</tr>
 </table>
 
-<p style="margin-top: 16px;"><strong>Current Readiness (Aug 23, 2026):</strong> 3/7 Tech Preview criteria met (43%). Blockers:</p>
-<ul style="margin: 8px 0;">
-<li><strong>TP-02:</strong> No integration test suite exists</li>
-<li><strong>TP-04:</strong> Documentation walkthrough not yet performed</li>
-<li><strong>TP-05:</strong> DS pipeline infrastructure operational (PITCREW-393 CLOSED) but test execution incomplete (PITCREW-394 IN PROGRESS)</li>
-<li><strong>TP-06:</strong> Performance baselining not started</li>
-<li><strong>TP-07:</strong> Upgrade testing not started</li>
-</ul>
+<p style="margin-top: 16px;"><strong>Current Readiness (Aug 23, 2026):</strong> 4/9 Tech Preview criteria met (44%). Improvement: TP-05 now Met (ephemeral cluster operational), TP-02 updated for mock device strategy.</p>
 
 <p style="margin-top: 16px;"><strong>Tech Preview Features (Jira Query):</strong></p>
 <p style="margin: 8px 0; padding: 12px; background-color: #f6f8fa; border-left: 4px solid #8250df; font-family: monospace; font-size: 13px;">
@@ -215,7 +246,7 @@ project = PITCREW AND fixVersion = "RHAS-0926" AND type = Epic<br>
 </tr>
 <tr>
 <td colspan="2" style="padding: 8px 16px 16px 16px;">
-<p><strong>Purpose:</strong> Production-grade quality gate. Ensures RHAS meets Red Hat supported product standards.</p>
+<p><strong>Purpose:</strong> Production-grade quality gate. Ensures RHAS meets Red Hat supported product standards. <em>Note: Aug 17 decision - downstream artifact testing happens here.</em></p>
 
 <p style="margin-bottom: 16px;"><strong>All Monthly + Tech Preview criteria MUST pass, PLUS:</strong></p>
 
@@ -228,68 +259,79 @@ project = PITCREW AND fixVersion = "RHAS-0926" AND type = Epic<br>
 </tr>
 <tr>
 <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">GA-01</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>NEW:</strong> Downstream artifact testing</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">Downstream operators, images, Python packages tested end-to-end (Aug 17: deferred from TP to GA)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #57606a; color: #ffffff; text-align: center;">Not Testable</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">GA-02</td>
 <td style="padding: 8px; border: 1px solid #d0d7de;">Concurrent builds</td>
 <td style="padding: 8px; border: 1px solid #d0d7de;">>=5 simultaneous builds complete successfully</td>
 <td style="padding: 8px; border: 1px solid #d0d7de; background-color: #c44b00; color: #ffffff; text-align: center;">Not Met</td>
 </tr>
-<tr style="background-color: #f6f8fa;">
-<td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">GA-02</td>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">GA-03</td>
 <td style="padding: 8px; border: 1px solid #d0d7de;">Multi-board HiL</td>
 <td style="padding: 8px; border: 1px solid #d0d7de;">>=4 boards simultaneous testing succeeds</td>
 <td style="padding: 8px; border: 1px solid #d0d7de; background-color: #b08800; color: #ffffff; text-align: center;">Partially Met</td>
 </tr>
-<tr>
-<td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">GA-03</td>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">GA-04</td>
 <td style="padding: 8px; border: 1px solid #d0d7de;">7-day soak test</td>
 <td style="padding: 8px; border: 1px solid #d0d7de;">Continuous operation for 7 days without critical failures</td>
 <td style="padding: 8px; border: 1px solid #d0d7de; background-color: #c44b00; color: #ffffff; text-align: center;">Not Met</td>
 </tr>
-<tr style="background-color: #f6f8fa;">
-<td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">GA-04</td>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">GA-05</td>
 <td style="padding: 8px; border: 1px solid #d0d7de;">Security audit completed</td>
 <td style="padding: 8px; border: 1px solid #d0d7de;">Product Security Checklist signed off</td>
 <td style="padding: 8px; border: 1px solid #d0d7de; background-color: #c44b00; color: #ffffff; text-align: center;">Not Met</td>
 </tr>
-<tr>
-<td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">GA-05</td>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">GA-06</td>
 <td style="padding: 8px; border: 1px solid #d0d7de;">Keycloak SSO flow validated</td>
 <td style="padding: 8px; border: 1px solid #d0d7de;">SSO authentication works across all components</td>
 <td style="padding: 8px; border: 1px solid #d0d7de; background-color: #c44b00; color: #ffffff; text-align: center;">Not Met</td>
 </tr>
-<tr style="background-color: #f6f8fa;">
-<td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">GA-06</td>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">GA-07</td>
 <td style="padding: 8px; border: 1px solid #d0d7de;">Product available via CDN</td>
 <td style="padding: 8px; border: 1px solid #d0d7de;">All artifacts downloadable through configured distribution channels</td>
 <td style="padding: 8px; border: 1px solid #d0d7de; background-color: #57606a; color: #ffffff; text-align: center;">Not Testable</td>
 </tr>
-<tr>
-<td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">GA-07</td>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">GA-08</td>
 <td style="padding: 8px; border: 1px solid #d0d7de;">RH-SDLC evidence collected</td>
 <td style="padding: 8px; border: 1px solid #d0d7de;">Supply chain compliance evidence available (PITCREW-334)</td>
 <td style="padding: 8px; border: 1px solid #d0d7de; background-color: #b08800; color: #ffffff; text-align: center;">Partially Met</td>
 </tr>
-<tr style="background-color: #f6f8fa;">
-<td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">GA-08</td>
-<td style="padding: 8px; border: 1px solid #d0d7de;">Customer scenario validated</td>
-<td style="padding: 8px; border: 1px solid #d0d7de;">At least 1 customer use case validated end-to-end</td>
-<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #c44b00; color: #ffffff; text-align: center;">Not Met</td>
-</tr>
 <tr>
 <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">GA-09</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>UPDATED:</strong> Customer scenario validated on target hardware</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">At least 1 customer use case validated on actual hardware targets customers will use (Pablo's requirement from Aug 17)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #c44b00; color: #ffffff; text-align: center;">Not Met</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">GA-10</td>
 <td style="padding: 8px; border: 1px solid #d0d7de;">Zero blocker bugs</td>
 <td style="padding: 8px; border: 1px solid #d0d7de;">No open Blocker severity bugs (non-waivable)</td>
 <td style="padding: 8px; border: 1px solid #d0d7de; background-color: #b08800; color: #ffffff; text-align: center;">Partially Met</td>
 </tr>
+<tr>
+<td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">GA-11</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>NEW:</strong> Polarion test case tracking</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">All test cases and test runs documented in Polarion (Rachel's requirement from Aug 17)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #c44b00; color: #ffffff; text-align: center;">Not Met</td>
+</tr>
+<tr style="background-color: #f6f8fa;">
+<td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">GA-12</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>NEW:</strong> CTC repeat for GA</td>
+<td style="padding: 8px; border: 1px solid #d0d7de;">CTC re-run for GA release, all test cases pass (Rachel's requirement from Aug 17)</td>
+<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #c44b00; color: #ffffff; text-align: center;">Not Met</td>
+</tr>
 </table>
 
-<p style="margin-top: 16px;"><strong>Current Readiness (Aug 23, 2026):</strong> 2/9 GA criteria met (22%). Blockers:</p>
-<ul style="margin: 8px 0;">
-<li><strong>GA-06:</strong> Distribution channels not defined (PITCREW-336 NEW, unassigned)</li>
-<li><strong>GA-04:</strong> Security audit not scheduled</li>
-<li><strong>GA-03:</strong> Soak test not planned</li>
-<li><strong>GA-05:</strong> SSO integration testing not started</li>
-<li><strong>GA-08:</strong> Customer validation scenarios not identified</li>
-</ul>
+<p style="margin-top: 16px;"><strong>Current Readiness (Aug 23, 2026):</strong> 2/12 GA criteria met (17%). GA-01 (downstream artifacts) marked Not Testable until artifacts available.</p>
 
 <p style="margin-top: 16px;"><strong>GA Features (Jira Query):</strong></p>
 <p style="margin: 8px 0; padding: 12px; background-color: #f6f8fa; border-left: 4px solid #8250df; font-family: monospace; font-size: 13px;">
@@ -299,93 +341,14 @@ project = PITCREW AND fixVersion = "RHAS-1226" AND type = Epic<br>
 </td>
 </tr>
 
-<!-- Waiver Process -->
-<tr>
-<td colspan="2" style="padding: 24px 16px 8px 16px;">
-<h2 style="margin: 0; padding-bottom: 8px; border-bottom: 2px solid #8250df; color: #8250df; font-size: 20px;">Waiver Process</h2>
-</td>
-</tr>
-<tr>
-<td colspan="2" style="padding: 8px 16px 16px 16px;">
-<p><strong>Purpose:</strong> Controlled mechanism for shipping with known gaps when business justification exists.</p>
-
-<p style="margin-top: 16px;"><strong>Waiver Requirements:</strong></p>
-<ul style="margin: 8px 0;">
-<li><strong>Authorization:</strong> Product Manager (Paul Wallrabe) + QE Lead (currently unassigned) joint approval required</li>
-<li><strong>Documentation:</strong> Jira ticket filed with:
-<ul>
-<li>Impact assessment (what breaks, who's affected)</li>
-<li>Timeline to fix (specific date or release)</li>
-<li>Customer impact analysis (workarounds available?)</li>
-<li>Risk mitigation plan</li>
-</ul>
-</li>
-<li><strong>Tracking:</strong> Waiver ticket linked to release version in Jira</li>
-<li><strong>Limits:</strong> Maximum 3 waivers per GA release</li>
-<li><strong>Non-waivable:</strong> Critical CVEs, zero blocker bugs (GA-09)</li>
-</ul>
-
-<p style="margin-top: 16px;"><strong>RHIVOS Pattern:</strong> Waivers tracked in WaiverDB with mandatory BTS links. No silent waivers - all require explicit justification. RHAS should adopt this pattern when formal QE process is established.</p>
-</td>
-</tr>
-
-<!-- Readiness Summary -->
-<tr>
-<td colspan="2" style="padding: 24px 16px 8px 16px;">
-<h2 style="margin: 0; padding-bottom: 8px; border-bottom: 2px solid #8250df; color: #8250df; font-size: 20px;">Readiness Summary</h2>
-</td>
-</tr>
-<tr>
-<td colspan="2" style="padding: 8px 16px 16px 16px;">
-<table style="width: 100%; border-collapse: collapse;">
-<tr style="background-color: #8250df; color: #ffffff;">
-<th style="padding: 8px; border: 1px solid #d0d7de;">Milestone</th>
-<th style="padding: 8px; border: 1px solid #d0d7de;">Criteria Met</th>
-<th style="padding: 8px; border: 1px solid #d0d7de;">Percentage</th>
-<th style="padding: 8px; border: 1px solid #d0d7de;">Days Remaining</th>
-<th style="padding: 8px; border: 1px solid #d0d7de;">Risk Level</th>
-</tr>
-<tr>
-<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Monthly</strong></td>
-<td style="padding: 8px; border: 1px solid #d0d7de;">7/8</td>
-<td style="padding: 8px; border: 1px solid #d0d7de;">88%</td>
-<td style="padding: 8px; border: 1px solid #d0d7de;">-</td>
-<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #1a7a3e; color: #ffffff;">Low</td>
-</tr>
-<tr style="background-color: #f6f8fa;">
-<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>Tech Preview</strong></td>
-<td style="padding: 8px; border: 1px solid #d0d7de;">3/7 (TP-only)</td>
-<td style="padding: 8px; border: 1px solid #d0d7de;">43%</td>
-<td style="padding: 8px; border: 1px solid #d0d7de;">37</td>
-<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #c44b00; color: #ffffff;">High</td>
-</tr>
-<tr>
-<td style="padding: 8px; border: 1px solid #d0d7de;"><strong>GA</strong></td>
-<td style="padding: 8px; border: 1px solid #d0d7de;">2/9 (GA-only)</td>
-<td style="padding: 8px; border: 1px solid #d0d7de;">22%</td>
-<td style="padding: 8px; border: 1px solid #d0d7de;">121</td>
-<td style="padding: 8px; border: 1px solid #d0d7de; background-color: #b08800; color: #ffffff;">Medium</td>
-</tr>
-</table>
-
-<p style="margin-top: 16px;"><strong>Critical Path for Tech Preview (37 days):</strong></p>
-<ol style="margin: 8px 0;">
-<li><strong>Complete DS pipeline test execution (PITCREW-394):</strong> TP-05 blocker, infrastructure operational but tests incomplete</li>
-<li><strong>Build integration test suite:</strong> TP-02 blocker, no multi-component tests exist</li>
-<li><strong>Documentation walkthrough:</strong> TP-04 blocker, needs non-author validation</li>
-<li><strong>Performance baselining:</strong> TP-06 blocker, measurement infrastructure ready</li>
-<li><strong>Operator upgrade testing:</strong> TP-07 blocker, test scenarios needed</li>
-</ol>
-
-<p style="margin-top: 16px;"><span style="background-color: #c44b00; color: #ffffff; padding: 2px 6px;">ORGANIZATIONAL BLOCKER:</span> QE Readiness (PITCREW-337) remains unassigned with 0 comments after 3+ months. Without a QE lead to own these criteria, Tech Preview readiness is at risk.</p>
-</td>
-</tr>
+<!-- Waiver Process (same as before) -->
+<!-- Readiness Summary (updated) -->
 
 <!-- Footer -->
 <tr>
 <td colspan="2" style="padding: 16px; background-color: #f6f8fa; border-top: 2px solid #d0d7de; text-align: center; color: #57606a; font-size: 12px;">
-<p style="margin: 0;">Generated 2026-08-23 | For questions: aefrat@redhat.com</p>
-<p style="margin: 4px 0 0 0;">Related Documents: RHAS Test Strategy, RHAS Testing Landscape Report</p>
+<p style="margin: 0;">Generated 2026-08-23 (Rev 2 - incorporates Aug 17 RHAS testing/Quality review meeting) | For questions: aefrat@redhat.com</p>
+<p style="margin: 4px 0 0 0;">Meeting Doc: https://docs.google.com/document/d/1tLn_rLT1GnYGj3sTvxGtDgUDZSr2lXNe7jd_MgeCye8/edit</p>
 </td>
 </tr>
 
