@@ -1,272 +1,143 @@
 {
-  "computed_at": "2026-07-19",
-  "history_count": 5,
+  "computed_at": "2026-07-21",
+  "history_count": 6,
   "window": 4,
   "modes": {
-    "daily": {
-      "sample_count": 2,
-      "date_range": "2026-06-29 to 2026-07-16",
+    "weekend": {
+      "sample_count": 1,
+      "date_range": "2026-07-12 to 2026-07-12",
       "ATC": {
-        "sample_count": 2,
+        "sample_count": 1,
         "metrics": {
           "in_progress": {
-            "current": 0,
-            "rolling_avg": 4.5,
-            "delta": {
-              "previous": 9,
-              "current": 0,
-              "change": -9,
-              "pct": -100.0
-            }
+            "current": 9,
+            "rolling_avg": 9.0,
+            "delta": null
           },
           "closed": {
-            "current": 0,
-            "rolling_avg": 0.5,
-            "delta": {
-              "previous": 1,
-              "current": 0,
-              "change": -1,
-              "pct": -100.0
-            }
+            "current": 1,
+            "rolling_avg": 1.0,
+            "delta": null
           },
           "new": {
-            "current": 0,
-            "rolling_avg": 0.5,
-            "delta": {
-              "previous": 1,
-              "current": 0,
-              "change": -1,
-              "pct": -100.0
-            }
+            "current": 1,
+            "rolling_avg": 1.0,
+            "delta": null
           },
           "blocked": {
             "current": 0,
             "rolling_avg": 0.0,
-            "delta": {
-              "previous": 0,
-              "current": 0,
-              "change": null,
-              "pct": null
-            }
+            "delta": null
           },
           "high_pri": {
             "current": 0,
             "rolling_avg": 0.0,
-            "delta": {
-              "previous": 0,
-              "current": 0,
-              "change": null,
-              "pct": null
-            }
+            "delta": null
           },
           "state_changes": {
-            "current": 0,
-            "rolling_avg": 1.0,
-            "delta": {
-              "previous": 2,
-              "current": 0,
-              "change": -2,
-              "pct": -100.0
-            }
+            "current": 4,
+            "rolling_avg": 4.0,
+            "delta": null
           },
           "mrs": {
-            "current": 7,
-            "rolling_avg": 4.0,
-            "delta": {
-              "previous": 1,
-              "current": 7,
-              "change": 6,
-              "pct": 600.0
-            }
+            "current": 9,
+            "rolling_avg": 9.0,
+            "delta": null
           }
         },
         "slack": {
           "channels_active": {
-            "current": 2,
-            "rolling_avg": 1.0,
-            "delta": {
-              "previous": 0,
-              "current": 2,
-              "change": null,
-              "pct": null
-            }
+            "current": 10,
+            "rolling_avg": 10.0,
+            "delta": null
           },
           "total_messages": {
-            "current": 21,
-            "rolling_avg": 10.5,
-            "delta": {
-              "previous": 0,
-              "current": 21,
-              "change": null,
-              "pct": null
-            }
+            "current": 55,
+            "rolling_avg": 55.0,
+            "delta": null
           },
           "notable_threads": {
-            "current": 2,
-            "rolling_avg": 1.0,
-            "delta": {
-              "previous": 0,
-              "current": 2,
-              "change": null,
-              "pct": null
-            }
+            "current": 4,
+            "rolling_avg": 4.0,
+            "delta": null
           }
         },
-        "per_member_closed": {},
-        "anomalies": [
-          {
-            "team": "ATC",
-            "metric": "in_progress",
-            "current": 0,
-            "rolling_avg": 4.5,
-            "direction": "below",
-            "deviation_pct": 100.0
-          },
-          {
-            "team": "ATC",
-            "metric": "mrs",
-            "current": 7,
-            "rolling_avg": 4.0,
-            "direction": "above",
-            "deviation_pct": 75.0
-          }
-        ],
+        "per_member_closed": {
+          "Eitan Raviv": 1
+        },
+        "anomalies": [],
         "notes": [
-          "ATC closed 0 tickets (avg: 0.5) \u2014 below typical velocity"
+          "Top contributor: Eitan Raviv (1 tickets)"
         ]
       },
       "PitCrew": {
-        "sample_count": 2,
+        "sample_count": 1,
         "metrics": {
           "in_progress": {
-            "current": 0,
-            "rolling_avg": 2.5,
-            "delta": {
-              "previous": 5,
-              "current": 0,
-              "change": -5,
-              "pct": -100.0
-            }
+            "current": 11,
+            "rolling_avg": 11.0,
+            "delta": null
           },
           "closed": {
-            "current": 0,
-            "rolling_avg": 1.5,
-            "delta": {
-              "previous": 3,
-              "current": 0,
-              "change": -3,
-              "pct": -100.0
-            }
+            "current": 9,
+            "rolling_avg": 9.0,
+            "delta": null
           },
           "new": {
-            "current": 0,
-            "rolling_avg": 0.0,
-            "delta": {
-              "previous": 0,
-              "current": 0,
-              "change": null,
-              "pct": null
-            }
+            "current": 9,
+            "rolling_avg": 9.0,
+            "delta": null
           },
           "blocked": {
             "current": 0,
             "rolling_avg": 0.0,
-            "delta": {
-              "previous": 0,
-              "current": 0,
-              "change": null,
-              "pct": null
-            }
+            "delta": null
           },
           "high_pri": {
             "current": 0,
             "rolling_avg": 0.0,
-            "delta": {
-              "previous": 0,
-              "current": 0,
-              "change": null,
-              "pct": null
-            }
+            "delta": null
           },
           "state_changes": {
-            "current": 0,
-            "rolling_avg": 2.0,
-            "delta": {
-              "previous": 4,
-              "current": 0,
-              "change": -4,
-              "pct": -100.0
-            }
+            "current": 14,
+            "rolling_avg": 14.0,
+            "delta": null
           },
           "prs": {
-            "current": 1,
-            "rolling_avg": 1.5,
-            "delta": {
-              "previous": 2,
-              "current": 1,
-              "change": -1,
-              "pct": -50.0
-            }
+            "current": 7,
+            "rolling_avg": 7.0,
+            "delta": null
           }
         },
         "slack": {
           "channels_active": {
-            "current": 2,
-            "rolling_avg": 2.0,
-            "delta": {
-              "previous": 2,
-              "current": 2,
-              "change": 0,
-              "pct": 0.0
-            }
+            "current": 6,
+            "rolling_avg": 6.0,
+            "delta": null
           },
           "total_messages": {
-            "current": 11,
-            "rolling_avg": 6.5,
-            "delta": {
-              "previous": 2,
-              "current": 11,
-              "change": 9,
-              "pct": 450.0
-            }
+            "current": 130,
+            "rolling_avg": 130.0,
+            "delta": null
           },
           "notable_threads": {
-            "current": 2,
-            "rolling_avg": 1.5,
-            "delta": {
-              "previous": 1,
-              "current": 2,
-              "change": 1,
-              "pct": 100.0
-            }
+            "current": 10,
+            "rolling_avg": 10.0,
+            "delta": null
           }
         },
-        "per_member_closed": {},
-        "anomalies": [
-          {
-            "team": "PitCrew",
-            "metric": "in_progress",
-            "current": 0,
-            "rolling_avg": 2.5,
-            "direction": "below",
-            "deviation_pct": 100.0
-          },
-          {
-            "team": "PitCrew",
-            "metric": "state_changes",
-            "current": 0,
-            "rolling_avg": 2.0,
-            "direction": "below",
-            "deviation_pct": 100.0
-          }
-        ],
+        "per_member_closed": {
+          "Benny Zlotnik": 2,
+          "Miguel Angel Ajo Pelayo": 6,
+          "Mohamad Abo Ras": 1
+        },
+        "anomalies": [],
         "notes": [
-          "PitCrew closed 0 tickets (avg: 1.5) \u2014 below typical velocity",
-          "Slack activity up 450.0% vs previous report"
+          "Top contributor: Miguel Angel Ajo Pelayo (6 tickets)"
         ]
       }
     }
   },
-  "has_anomalies": true,
-  "anomaly_count": 4
+  "has_anomalies": false,
+  "anomaly_count": 0
 }
