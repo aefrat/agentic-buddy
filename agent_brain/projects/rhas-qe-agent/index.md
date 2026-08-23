@@ -37,7 +37,7 @@ to the relevant store.
 
 ## Key Google Docs
 
-- RHAS EPICs Per Release vs Test Coverage Analysis - Comprehensive EPIC-by-EPIC test coverage mapping (Aug 23, 2026). 28 EPICs across 8 releases, critical gaps, component-level testing status, Aug 18 Quality Review findings.
+- RHAS EPICs Per Release vs Test Coverage Analysis - Comprehensive EPIC-by-EPIC test coverage mapping (Aug 23, 2026). 28 EPICs across 8 releases, critical gaps, operator/service-level testing status, Aug 18 Quality Review findings.
   - Google Doc: `1M2ON8WedyWO-UztdZYeXTl7nobLJ9SJWY86Ar5F_GJE`
   - PDF (Google Drive): `1xZqno57acGTd_LGu9HOHuVlNt6pTXko5` - https://drive.google.com/file/d/1xZqno57acGTd_LGu9HOHuVlNt6pTXko5/view
   - HTML/PDF (local): `rhas-epic-coverage.html` / `rhas-epic-coverage.pdf`
