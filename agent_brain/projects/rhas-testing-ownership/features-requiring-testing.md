@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-06-29
-access_count: 1
+last_accessed: 2026-08-23
+access_count: 3
 created: 2026-06-29
 ---
 
@@ -45,13 +45,15 @@ and 2026 Roadmap. Organized by testing domain.
 
 ## 2. Feature Epics by Release Target
 
-### RHAS-0626 (Jun 30) - Imminent
+**Note:** RHAS releases use RHAS-MMYY format (MM=month, YY=year). See `agent_brain/projects/rhas-qe-agent/reference/release-naming-convention.md`.
+
+### RHAS-0626 (June 2026) - Past Due
 | Epic | Feature | Testing Focus |
 |------|---------|---------------|
 | PITCREW-335 | Konflux Onboarding | Pipeline creation, artifact builds, SDLC gates |
 | PITCREW-298 | Android Virtual Target Deployment | Virtual target provisioning, Android image deployment |
 
-### RHAS-0726 (Jul 28)
+### RHAS-0726 (July 2026)
 | Epic | Feature | Testing Focus |
 |------|---------|---------------|
 | PITCREW-334 | RH-SDLC Compliance | Compliance validation, audit trail, evidence collection |
@@ -59,32 +61,32 @@ and 2026 Roadmap. Organized by testing domain.
 | PITCREW-330 | Lab Infrastructure | Lab provisioning, C2 recovery, board management at scale |
 | PITCREW-294 | Autonomous Platform Reactions | Self-healing triggers, reaction correctness, false-positive rate |
 
-### RHAS-0826 (Aug 25)
+### RHAS-0826 (August 2026)
 | Epic | Feature | Testing Focus |
 |------|---------|---------------|
 | PITCREW-299 | Virtual Target Orchestration | QEMU targets, multi-target scheduling, resource management |
 | PITCREW-295 | Seconds-per-Iteration | Build/deploy/test cycle time, performance benchmarks |
 
-### RHAS-0926 Tech Preview (Sep 29) - Critical Gate
+### RHAS-0926 (September 2026) - Tech Preview
 | Epic | Feature | Testing Focus |
 |------|---------|---------------|
 | PITCREW-329 | External Dependency Resilience | Failure injection, dependency isolation, recovery paths |
 | PITCREW-336 | Distribution | Product distribution channels, content delivery validation |
 
-### RHAS-1026 (Oct 27)
+### RHAS-1026 (October 2026)
 | Epic | Feature | Testing Focus |
 |------|---------|---------------|
 | PITCREW-337 | QE Readiness | Test plan completeness, coverage metrics, escape rate |
 | PITCREW-292 | Unified Developer Session | End-to-end developer workflow, UX validation |
 | PITCREW-338 | Product Documentation | Doc accuracy, procedure validation, tutorial completeness |
 
-### RHAS-1126 (Nov 24)
+### RHAS-1126 (November 2026)
 | Epic | Feature | Testing Focus |
 |------|---------|---------------|
 | PITCREW-300 | Virtual Interface Simulation | Simulated hardware interfaces, fidelity validation |
 | PITCREW-332 | ATC | ATC integration testing |
 
-### RHAS-1226 GA (Dec 22)
+### RHAS-1226 (December 2026) - GA
 | Epic | Feature | Testing Focus |
 |------|---------|---------------|
 | PITCREW-290 | Agentic Platform | AI agent reliability, prompt/response validation |

@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-07-21
-access_count: 2
+last_accessed: 2026-08-23
+access_count: 4
 created: 2026-06-30
 ---
 
@@ -15,6 +15,8 @@ Benny Zlotnik verbal input (PDR Staff Meeting).
 
 ## Executive Summary
 
+**Release naming:** RHAS uses RHAS-MMYY format (MM=month, YY=year). See `agent_brain/projects/rhas-qe-agent/reference/release-naming-convention.md`.
+
 RHAS testing is split into two tracks - **upstream** and **downstream** - with
 different maturity levels. Upstream testing is **operational and running per PR**
 (Mohamad Abo Ras). Downstream testing **has no working pipeline yet** - Evgeni
@@ -22,7 +24,7 @@ Vakhonin has been building the infrastructure since March 2026, and as of Jun 29
 the CI is failing due to infra misconfiguration. There is **no formal QE process**
 (PITCREW-337 is unassigned, no comments, no test plans). The gap between "tests
 exist in individual repos" and "structured QE that gates releases" is the
-primary risk for Tech Preview (Sep 2026) and GA (Dec 2026).
+primary risk for Tech Preview (RHAS-0926, September 2026) and GA (RHAS-1226, December 2026).
 
 ---
 
@@ -233,7 +235,7 @@ acknowledged as a risk.
 ## 5. QE Readiness
 
 **Epic:** PITCREW-337 (In Progress, Unassigned, 0 comments)
-**Target:** RHAS-1026 (Oct 27)
+**Target:** RHAS-1026 (October 2026)
 
 ### Current State (as of Jul 21)
 
@@ -318,12 +320,12 @@ CTC GATING (Operational, rough)
 
 ### Critical
 
-1. **No DS testing pipeline yet** - Tech Preview is Sep 29 (70 days). DS
+1. **No DS testing pipeline yet** - Tech Preview is RHAS-0926 (September 2026). DS
    pipeline has been in development since March with persistent infra blockers.
    DNS approach itself is now questioned (Jul 13) - OpenShift ELB architecture
    incompatible with proposed DNS fix.
 2. **QE Readiness epic is empty** - No plan, no owner, no test strategy. Target
-   is Oct 27 but depends on Distribution (also not started). Zero comments on
+   is RHAS-1026 (October 2026) but depends on Distribution (also not started). Zero comments on
    PITCREW-337 after 3+ months. This remains the single biggest blocker.
 3. **Benny's testing doc is minimal** - The Google Doc exists but is only a few
    paragraphs. Covers architecture (3 layers) but no specifics on test cases,

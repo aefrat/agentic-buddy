@@ -1,6 +1,6 @@
 ---
 last_accessed: 2026-08-23
-access_count: 2
+access_count: 3
 created: 2026-07-02
 ---
 
@@ -14,7 +14,8 @@ to the relevant store.
 ## Stores
 
 - `reference/` - Data source documentation, RHIVOS testing patterns,
-  OpenShift QE reference, agentic testing tools analysis. **Read-only.**
+  OpenShift QE reference, agentic testing tools analysis, RHAS release
+  naming convention (RHAS-MMYY format). **Read-only.**
   Read when generating deliverables or answering testing questions.
 - `active/` - Working drafts of test strategy, release criteria,
   research cache. **Overwritten each run.** Read when generating or

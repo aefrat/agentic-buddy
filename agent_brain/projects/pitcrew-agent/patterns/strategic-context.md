@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-06-29
-access_count: 2
+last_accessed: 2026-08-23
+access_count: 4
 created: 2026-06-08
 ---
 
@@ -44,12 +44,15 @@ Primary mission (Shawn Davis): ensure RHIVOS 2.0 success while maintaining Nissa
 
 ## Release Versioning
 
-Convention: `RHAS-MMYY` — monthly releases, last week of each month.
+**Convention:** `RHAS-MMYY` where MM = month (01-12), YY = year (last 2 digits).
+Monthly releases, last week of each month.
+
+**Reference:** See `agent_brain/projects/rhas-qe-agent/reference/release-naming-convention.md` for full convention details.
 
 Key milestones:
-- `RHAS-0426` — Developer Preview (done)
-- `RHAS-0926` — Tech Preview (Sep 29)
-- `RHAS-1226` — GA (Dec 22)
-- `1.0` — Dec 1
+- `RHAS-0426` — Developer Preview (April 2026, done)
+- `RHAS-0926` — Tech Preview (September 2026)
+- `RHAS-1226` — GA (December 2026)
+- `1.0` — Dec 1, 2026
 
 24 versions defined through December 2027.
