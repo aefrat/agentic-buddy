@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-08-17
-access_count: 58
+last_accessed: 2026-08-23
+access_count: 59
 created: 2026-06-01
 ---
 
@@ -25,6 +25,7 @@ Resolved observations are moved to the bottom.
 
 ## Rule candidates
 
+- **2026-08-23:** Verify product-specific claims before generalizing across products (RHIVOS, RHAS, RHEL). Explicit user correction - agent applied RHIVOS claim ("~235 test cases missing from formal specs") to RHAS analysis. Product names are not interchangeable; source must be checked to confirm which product a claim actually applies to. (seen: 1, explicit correction - pending fast-track evaluation)
 - **2026-06-11:** Use existing skills/tools for external services (Jira, Slack, Gmail, etc.) instead of raw API calls. User corrected 3x in one day: Jira curl, Slack MCP OAuth, Jira user search curl. (seen: 3) → **fast-tracked to CLAUDE.md Rule 18**
 - **2026-06-11:** Before querying external systems, check if the data is already available in loaded context (files, earlier tool results). Only fetch what's genuinely missing. User stopped a redundant Jira fetch when data was already in the weekly report + prior query. (seen: 1)
 
@@ -172,6 +173,10 @@ Resolved observations are moved to the bottom.
 - **2026-08-16:** "Terraform as cost inventory source" - terraform configs are a reliable source for workload inventory (instance types, ASG sizes, S3 buckets, CloudFront distributions) but not for actual cost. The $15k user estimate vs $19.8k actual (32% gap) shows that terraform shows resources but not usage patterns (EBS snapshots accumulating, S3 storage growth). Pattern: use IaC for "what exists", Cost Explorer for "what costs", CloudWatch for "how much is used". All three are needed for cost optimization. (seen: 1)
 
 - **2026-08-17:** "BlendedCost vs UnblendedCost metric selection" - AWS Cost Explorer defaults to BlendedCost in API queries, which averages pricing across all linked accounts in an AWS organization. For multi-account orgs with enterprise discounts (like Red Hat, ~28-37% below list), BlendedCost overstates per-account costs significantly ($26.3k vs $19.9k actual). Always specify `UnblendedCost` in the `Metrics` parameter for per-account analysis. The AWS Console shows UnblendedCost by default, creating a confusing gap when API results don't match the UI. Pattern: when querying cost APIs, explicitly specify the metric - never rely on defaults. Validate against the AWS Console before publishing. (seen: 1)
+
+- **2026-08-23:** "Google Docs formatting approach - HTML upload vs native API" - uploading HTML to Google Docs via replaceAllText creates boundary markers (`--gws_boundary_...`) in the document. Native API via batchUpdate with namedStyleType produces clean output but has severe design limitations: no custom fonts, no CSS styling (gradients, shadows), no flexible layouts (cards, grids). For professional deliverables requiring visual design, HTML + PDF conversion is superior. Google Docs is limited to simple text + basic tables + heading hierarchy. Applied: RHAS EPIC coverage analysis - multiple iterations to find the right approach. Updated google-docs-formatting-standard.md concept with the native API approach. (seen: 1)
+
+- **2026-08-23:** "RHAS release naming convention documentation gap" - RHAS release names follow RHAS-MMYY format (MM=month 01-12, YY=year last 2 digits), but this was undocumented in agent knowledge bases. Led to date misinterpretation: RHAS-1226 read as "Dec 22" instead of "December 2026". Created release-naming-convention.md reference doc, updated PitCrew and RHAS QE agent strategic context files. Pattern: when a product has a release naming convention, document it explicitly in agent knowledge bases - don't assume the format is self-explanatory. (seen: 1)
 
 ## Structure candidates (tools)
 
