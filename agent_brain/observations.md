@@ -1,6 +1,6 @@
 ---
 last_accessed: 2026-08-23
-access_count: 59
+access_count: 60
 created: 2026-06-01
 ---
 
@@ -24,8 +24,6 @@ Resolved observations are moved to the bottom.
 - **2026-07-30:** "Retro meeting processing" — multi-step procedure for processing retrospective meetings: (1) fetch Google Doc retro content, (2) fetch meeting transcript, (3) cross-reference doc items against transcript discussion, (4) extract action items with owners/deadlines, (5) create project file with structured sections (what went well, what didn't, discussion topics, action items), (6) create separate task file for user's action items + monitoring table for others, (7) register in CLAUDE.md. Applied to RHIVOS 2.0 retro. Generalizable to any meeting retro or post-meeting processing. (seen: 1)
 
 ## Rule candidates
-
-- **2026-08-23:** Verify product-specific claims before generalizing across products (RHIVOS, RHAS, RHEL). Explicit user correction - agent applied RHIVOS claim ("~235 test cases missing from formal specs") to RHAS analysis. Product names are not interchangeable; source must be checked to confirm which product a claim actually applies to. (seen: 1, explicit correction - pending fast-track evaluation)
 - **2026-06-11:** Use existing skills/tools for external services (Jira, Slack, Gmail, etc.) instead of raw API calls. User corrected 3x in one day: Jira curl, Slack MCP OAuth, Jira user search curl. (seen: 3) → **fast-tracked to CLAUDE.md Rule 18**
 - **2026-06-11:** Before querying external systems, check if the data is already available in loaded context (files, earlier tool results). Only fetch what's genuinely missing. User stopped a redundant Jira fetch when data was already in the weekly report + prior query. (seen: 1)
 
@@ -192,3 +190,4 @@ Resolved observations are moved to the bottom.
 
 - **2026-06-23:** Rule — "Never post to Slack channels from report agents." PitCrew full report skill included a `chat.postMessage` step that posted a summary to #team-pitcrew-automotive at ~2:47 AM Israel time. Root cause: skill procedure step 11b instructed posting. The step was modeled after a hypothetical "complete agent" pattern but was never authorized. Fixed: removed all Slack posting from skill, config table, report-modes reference, and checklist. Added explicit "never post to Slack" to skill limits. Fast-tracked to memory as `feedback_no-slack-posting.md`.
 - **2026-06-29:** Rule — "No AI-tell characters in output files." User explicitly flagged em-dashes as machine-generated tells in QC reports. Fixed: removed em-dashes from all 11 QC drafts, both HTML reports, and all 5 report skill files. Added CLAUDE.md Rule 21, writing style guidance to QC skill identity section, and feedback memory `feedback_no-ai-tell-characters.md`.
+- **2026-08-23:** Rule — "Verify product-specific claims before generalizing." Explicit user correction - agent applied RHIVOS claim ("~235 test cases missing from formal specs") to RHAS analysis. Product names are not interchangeable; source must be checked to confirm which product a claim actually applies to. Fixed: added CLAUDE.md Rule 22 during 2026-08-23 daily cycle. (seen: 1, fast-tracked)

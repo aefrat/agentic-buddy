@@ -40,3 +40,4 @@ Moved to `archive/2026-06/`: 2026-06-01, 2026-06-10, 2026-06-11, 2026-06-14, 202
 - 2026-08-06: active — Matt Goldman Principal SRE L4 gap analysis (dual Google Docs), Lightwell EM candidacy research and prep
 - 2026-08-16: active — AWS cloud cost analysis (3 Toolchain accounts, $26.3k/month), PTO catch-up (Aug 7-16 return)
 - 2026-08-17: active — AWS Agent Toolkit research, GP3 vs io2 analysis
+- 2026-08-23: active — RHAS EPIC coverage analysis (28 EPICs, 0 with test coverage), release naming convention correction, Google Docs API limitations
