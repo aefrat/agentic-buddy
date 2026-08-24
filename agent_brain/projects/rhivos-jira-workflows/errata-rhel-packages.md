@@ -12,6 +12,11 @@ for RHEL packages in RHIVOS releases.
 
 **Source:** https://redhat-internal.slack.com/archives/C04QNKX7RU4/p1787215739036139
 
+**Published to (Aug 24):**
+- Distribution FA wiki -> `atc_llm_wiki/distribution-fa/errata-advisories.md` (RHEL package gaps section)
+- RHIVOS Workflows wiki -> `rhivos-workflows-wiki/wiki/processes/errata-rhel-packages.md` (new process page)
+- Confluence -> "Claude code - wiki draft" (Automotive space, page 402130012): wiki index + full errata content
+
 ## Problem Statement
 
 The documented workflow assumes automation works uniformly for all VROOM tickets,
