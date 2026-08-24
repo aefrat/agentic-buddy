@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-08-24 | Errata (VROOM-47509) propagation: created process page in rhivos-workflows-wiki repo + published wiki index + errata workflow to Confluence draft page (402130012, v1->v2) | 2b28551e-61af-45c0-95e6-6becfabbfc51 |
 | 2026-08-23 | Manager reports (ATC weekend + PitCrew weekly): both teams, Multiplier signals, priority alignment | 48561a84-3cc6-4eee-8c06-cfbb8e003f03 |
 | 2026-08-23 | RHAS EPIC coverage analysis (28 EPICs across 8 releases, HTML + PDF + Google Doc outputs, release naming convention documentation, terminology correction, frontend-design skill) | 7df1fd30-a9d5-4517-adbc-89354f2996a0 |
 | 2026-08-20 | Claude Code login configuration check (Vertex AI auth status, config file locations) | (reflect-only) |
