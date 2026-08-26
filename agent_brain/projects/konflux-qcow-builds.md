@@ -7,8 +7,9 @@ created: 2026-08-26
 # How Konflux builds qcow images
 
 Research question: How does Konflux currently build qcow (disk/VM) images?
-Source: https://konflux-ci.dev/docs/ plus the konflux-ci/build-definitions repo
-and real-world consumers (osbuild/bootc-foundry, Fedora Copr).
+Sources: internal user docs (https://konflux.pages.redhat.com/docs/users/),
+public docs (https://konflux-ci.dev/docs/), the konflux-ci/build-definitions
+repo, and real-world consumers (osbuild/bootc-foundry, Fedora Copr).
 
 ## Short answer
 
@@ -48,6 +49,30 @@ So it is a two-stage flow: build OCI bootc image -> convert to disk image.
   registry via `buildah manifest push` / `skopeo copy` (disk image stored as an
   OCI artifact).
 - **Outputs:** `IMAGE_DIGEST`, `IMAGE_URL`, `IMAGE_REFERENCE`.
+
+## What the internal user docs say (konflux.pages.redhat.com/docs/users)
+
+Checked 2026-08-26. The **internal** user docs do **not** document the qcow/disk
+build mechanism either — same gap as the public docs:
+
+- The **Building** section lists only container-oriented pages and tasks. The
+  "Task documentation" page enumerates tasks from `konflux-ci/container-build-catalog/task`
+  (buildah, git-clone, prefetch-dependencies, ...) - no `build-vm-image`, bootc,
+  or bootc-image-builder task appears.
+- The only disk-image page is **"Releasing Disk Images to CDN"**
+  (`releasing/releasing-disk-images-to-cdn.html`), which covers *releasing*, not
+  building. It uses the **`push-disk-images-to-cdn`** release pipeline to publish
+  ISOs, qcows, and tarballs to CDN.
+  - Requires: an existing ReleasePlan + ReleasePlanAdmission; a Content Set +
+    Pulp repository for the disk files; an empty RPM Pulp repo (for visibility in
+    unified-downloads); Product + Product Versions in Content Gateway.
+  - The ReleasePlanAdmission maps the **source file inside a container image**
+    (e.g. `disk.qcow2`) -> destination Pulp repo + target version, with optional
+    Content Gateway (Developer Portal) metadata.
+- **Takeaway:** the internal docs confirm the disk image is produced/stored as
+  (or inside) a container/OCI artifact and then *released* via a dedicated
+  pipeline; the *build* step (bootc container -> `build-vm-image`/BIB) is assumed
+  and lives in the build-definitions catalog + consumer projects, not the docs.
 
 ## Notable gaps / caveats
 
