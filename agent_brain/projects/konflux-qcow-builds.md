@@ -104,6 +104,17 @@ Key insight: the customer-portal download page is just a UI over the CDN. Once a
 image is on CDN, RHIVOS only needs to tell the **teamnado** team to mirror it — no
 separate upload step. RHEL images on the download pages all ship via CDN.
 
+**Why there is no exception path (compliance drivers, from Juanje's investigation
+doc):**
+- **As of May 26, 2026, Chris Wright eliminated exceptions to RH-SDLC company-wide.**
+  Only images built via approved systems (Brew/Konflux) and delivered through
+  authorized channels (CDN / Unified Downloader) can reach customers. A VP exception
+  now requires VP sign-off and is reserved for rare cases — not a viable route here.
+- The Developer VM environment falls under **EU Cyber Resilience Act (CRA)** scope —
+  mandatory for the EU market. Konflux end-to-end is the cleanest fit for CRA + RH-SDLC.
+- **Scope is only these images**, not the full RHIVOS image set. GA "potentially
+  September 2026, not confirmed — no locked date, but must be resolved regardless."
+
 **Tickets.**
 - **VROOM-52268** (Build developer-vm image via Konflux/image-builder) — *In Progress,
   Blocker*, owner **Juanje Ojeda**. The active workstream. AC: rebuild the 2 images
@@ -138,11 +149,36 @@ Image Builder/Konflux pointing at the RHIVOS compose. The AIB manifest
 (`developer-vm.aib.yml`) must be converted to a Konflux-usable form (Containerfile +
 bootc builder config). Nothing AIB-special is needed.
 
-**Rejected dead-ends** (Charles Timko proposals; Petr Sabata rebutted):
-- Swap RHEL release package via a "magic RPM" — done as a 1.0 workaround only; not
-  user-friendly, can't be guaranteed, distributing it is problematic. Not feasible.
-- Containers self-subscribing — RHSM design forbids (containers inherit host subs).
-  Already explored.
+**Rejected dead-ends** (investigation doc + thread):
+- **Distribute from S3 directly** — violates RH-SDLC (not an authorized channel).
+- **Swap redhat-release via a "magic RPM"** — certification collision (Petr); done as a
+  1.0 workaround only; not user-friendly, can't be guaranteed, distribution problematic.
+- **Container with RHSM subscription** — RHSM design limit: containers inherit the host
+  subscription (Pavol Brilla). Already explored.
+- **VP exception** — Chris Wright eliminated exceptions (May 26, 2026); VP sign-off only
+  for rare cases. Not applicable.
+
+**Deeper option detail (from the investigation doc):**
+- *Konflux (Option A):* ~12 configuration artifacts in `konflux-release-data`
+  (Application, Components, ReleasePlan, RPA, ECP), all **templated from RHEL AI
+  examples**. Containerfile installs from RHIVOS compose repos + `redhat-release-
+  automotive(-core)`; BIB config YAML references the bootc container. Uses
+  `build-vm-image` task **v0.3** and the `push-disk-images-to-cdn` managed pipeline.
+  Bottleneck: **tenant onboarding** (RelEng approval, unknown lead time).
+- *Brew (Option B):* `brew osbuild-image <name> <ver> <distro> <target> <arch>
+  --image-type qcow2 --repo <compose-url>`, then manual staging (`pub push-staged` ->
+  cdn-stage/cdn-live). **SOA-certified** (ProdSec Security Operating Approval); Pungi
+  integration possible (auto builds per compose). Bottleneck: **Image Builder team must
+  define a RHIVOS "distro"**, plus a Brew target + whitelisted package name; RHIVOS has
+  never had images in Brew.
+- Both paths need the Content Delivery team to create the **Pulp CDN destination label +
+  Content Gateway product codes** (shared external dependency). Neither needs new
+  pipeline code. Both teams have **zero prior experience** with their respective path.
+
+**Long-term caveat — BIB deprecation:** bootc-image-builder was **archived upstream
+June 2026**. Still supported in the RHEL 10 lifecycle; the replacement is the
+`image-builder` CLI. Not a blocker now, but shapes the long-term plan (affects the
+Konflux `build-vm-image` path since it wraps BIB).
 
 **Juanje's Konflux implementation plan** (10 steps, ~1 sprint technical): source repo
 (Containerfile + .repo + rpms.in.yaml + lockfile + bootc-builder config + .tekton) ->
