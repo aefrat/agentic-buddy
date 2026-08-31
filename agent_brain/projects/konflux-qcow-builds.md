@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-08-26
-access_count: 1
+last_accessed: 2026-08-31
+access_count: 2
 created: 2026-08-26
 ---
 
@@ -88,6 +88,78 @@ build mechanism either — same gap as the public docs:
   - **Fedora Copr** - GitOps commit triggers multi-arch OCI build in Konflux,
     then BIB produces the disk images.
 - Known instability: upstream BIB Konflux pipeline outages tracked (KONFLUX-9346).
+
+## RHIVOS 2.0 Developer-VM rebuild (ProdSec blocker) — status as of 2026-08-31
+
+**The problem.** RHIVOS 2.0 introduces two customer-facing *Developer VM* (installer)
+qcow2 images — RHIVOS-2.0-Core and RHIVOS-2.0 (FuSa), each x86_64 + aarch64 — used
+to install RHIVOS from a non-RHIVOS VM. Today they are built by RHIVOS's own pipeline
+(automotive-image-builder / osbuild) and stored in **AWS S3**. **ProdSec blocks
+distribution** of images built outside approved tools (Brew/Konflux). Approval chain
+(per Kanitha Chim):
+- `S3 -> CDN -> customer portal` = **NOT approved** (built outside brew/konflux)
+- `Brew|Konflux -> CDN -> customer portal` = **approved** (prodsec-approved build tool)
+
+Key insight: the customer-portal download page is just a UI over the CDN. Once an
+image is on CDN, RHIVOS only needs to tell the **teamnado** team to mirror it — no
+separate upload step. RHEL images on the download pages all ship via CDN.
+
+**Tickets.**
+- **VROOM-52268** (Build developer-vm image via Konflux/image-builder) — *In Progress,
+  Blocker*, owner **Juanje Ojeda**. The active workstream. AC: rebuild the 2 images
+  (both arches) via Brew or Konflux, tested/smoke-tested. Blocks VROOM-47600
+  (access.stage.redhat.com publish image files).
+- **RHELDST-44190** (make qcow images available on product pages) — *Resolved*.
+  Distribution ticket; closed once it was clear S3-built images can't be distributed
+  and the fix is to rebuild. Leon Kang: "you have everything to decide; open a new
+  ticket if needed." GA target was beginning of September (tight).
+
+**Two viable build options** (converged in the RHELDST-44190 thread; Tomas Mlcoch
+framed them):
+
+1. **Brew + Image Builder (osbuild).** Build the qcow in Brew, then a **manual** push
+   to CDN (plus another team for the distribution hop). Lowest barrier / quickest to
+   set up for the timeline. Ref: Image Builder onboarding in Brew doc from Project
+   Stratosphere (AWS AMI). Recommended "for now" by **Joe Amato** and **Tomas Mlcoch**
+   as lowest-risk for GA timing.
+2. **Konflux (preferred long-term).** bootc container -> BIB converts to qcow2 ->
+   `push-disk-images-to-cdn` ships to CDN — **all automated**, no manual hop. More
+   onboarding/admin overhead but strategic direction. Precedent: **RHEL AI already
+   does exactly this** (bootc -> qcow2 -> CDN via Konflux); RHEL-for-EKS partially.
+   Juanje's investigation: admin part smaller than feared, ~1 sprint total.
+
+Leaning: **Konflux** (Kanitha "tentatively choosing konflux"; Juanje prefers it).
+Decision to be pitched with **Petr Sabata**. Difference that tips it: Brew doesn't
+connect to CDN publication (extra manual step + team), Konflux does it end-to-end.
+
+**Technical note.** RHIVOS images use automotive-image-builder (AIB, on osbuild) —
+but the Developer VM image is *not* for automotive hardware, so it can be built by
+Image Builder/Konflux pointing at the RHIVOS compose. The AIB manifest
+(`developer-vm.aib.yml`) must be converted to a Konflux-usable form (Containerfile +
+bootc builder config). Nothing AIB-special is needed.
+
+**Rejected dead-ends** (Charles Timko proposals; Petr Sabata rebutted):
+- Swap RHEL release package via a "magic RPM" — done as a 1.0 workaround only; not
+  user-friendly, can't be guaranteed, distributing it is problematic. Not feasible.
+- Containers self-subscribing — RHSM design forbids (containers inherit host subs).
+  Already explored.
+
+**Juanje's Konflux implementation plan** (10 steps, ~1 sprint technical): source repo
+(Containerfile + .repo + rpms.in.yaml + lockfile + bootc-builder config + .tekton) ->
+tenant namespace (MR, ~2 days approval) -> PaC config -> register app in KRD (2
+components: bootc + disk-image) -> custom Enterprise Contract Policy (RHIVOS 2.0 repo
+IDs not yet in the global approved list) -> Content Gateway product files -> request
+Pulp CDN destination (RHELDST ticket) -> ReleasePlanAdmissions -> validate on stage
+CDN -> flip to prod. External-dependency timelines (namespace, Pulp, stage CGW) are
+the only out-of-control risks.
+
+**Info Juanje still needs** (cc Kanitha Chim, Aman Vishwakarma): (1) Errata Engineering
+Product IDs for RHIVOS 2.0 Core and FuSa; (2) exact RHIVOS 2.0 compose repo IDs in
+rhsm-pulp; (3) whether RHIVOS-CORE/RHIVOS-FUSA products + a Pulp CDN destination
+already exist in Content Gateway; (4) cost-center code for the tenant namespace.
+
+**Options doc:** https://docs.google.com/document/d/10PXqrMHcfT6KvqPhybcEDrhG_IgL51pAKHGW3_CT8-A/edit
+**RHEL AI reference:** gitlab.com/redhat/rhel-ai/containers/bootc (bootc->qcow2->CDN via Konflux)
 
 ## Key sources
 
