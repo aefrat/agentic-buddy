@@ -15,8 +15,6 @@ Moved to `archive/2026-06/`: 2026-06-01, 2026-06-10, 2026-06-11, 2026-06-14, 202
 - ~~2026-06-24~~ (archived to `archive/2026-06/`)
 - ~~2026-06-25~~ (archived to `archive/2026-06/`)
 - ~~2026-06-28~~ (archived to `archive/2026-06/`)
-- 2026-06-29: active — QC report refinement (Juanje self-input, em-dash cleanup), Rule 21 (no AI-tell characters), daily/PitCrew reports
-- 2026-06-30: active — Codebase documentation generation (docs/CODEBASE.md), daily consolidation
 - 2026-07-01: active — Morning briefing, Hubert transition kickoff, AutoSD cert fix resolution, QC evaluations timeline
 - 2026-07-02: active — SBI feedback construction (Kanitha LP priority), RHAS QE Expert Lead Agent creation (3 skills, 4-store KB, HTML deliverables)
 - 2026-07-05: active — CY26Q2 QC self-evaluation career aspirations draft
@@ -42,3 +40,4 @@ Moved to `archive/2026-06/`: 2026-06-01, 2026-06-10, 2026-06-11, 2026-06-14, 202
 - 2026-08-17: active — AWS Agent Toolkit research, GP3 vs io2 analysis
 - 2026-08-23: active — RHAS EPIC coverage analysis (28 EPICs, 0 with test coverage), release naming convention correction, Google Docs API limitations
 - 2026-08-24: maintenance
+- 2026-08-31: maintenance
