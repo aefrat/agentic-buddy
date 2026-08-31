@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RHIVOS 2.0 Developer-VM Rebuild - Status &amp; Options</title>
+<style>
+  :root {
+    --bg: #f7f8fa;
+    --card: #ffffff;
+    --ink: #1c2530;
+    --muted: #5a6675;
+    --line: #e2e6ec;
+    --accent: #cc0000;
+    --accent-soft: #fbeaea;
+    --green: #1a7f4b;
+    --green-soft: #e7f4ec;
+    --amber: #a86400;
+    --amber-soft: #fbf1de;
+    --blue: #14568c;
+    --blue-soft: #e6eff6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+    font-size: 15px;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 32px 24px 64px; }
+  header.page {
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 18px;
+    margin-bottom: 28px;
+  }
+  header.page .kicker {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  header.page h1 { margin: 6px 0 4px; font-size: 27px; line-height: 1.2; }
+  header.page .meta { color: var(--muted); font-size: 13px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin: 0 0 22px;
+    box-shadow: 0 1px 2px rgba(20,30,45,0.04);
+  }
+  h2 { font-size: 19px; margin: 4px 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+  h3 { font-size: 15px; margin: 18px 0 6px; }
+  p { margin: 8px 0; }
+  ul { margin: 8px 0; padding-left: 22px; }
+  li { margin: 5px 0; }
+  a { color: var(--blue); }
+  .lead { font-size: 15.5px; color: var(--ink); }
+  code { background: #eef1f5; padding: 1px 6px; border-radius: 4px; font-size: 13px; font-family: "SFMono-Regular", Consolas, monospace; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 12px; border: 1px solid var(--line); vertical-align: top; }
+  th { background: #f0f3f7; font-weight: 700; }
+  tbody tr:nth-child(even) { background: #fafbfc; }
+  .pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+  .pill.red { background: var(--accent-soft); color: var(--accent); }
+  .pill.green { background: var(--green-soft); color: var(--green); }
+  .pill.amber { background: var(--amber-soft); color: var(--amber); }
+  .pill.blue { background: var(--blue-soft); color: var(--blue); }
+  .callout {
+    border-left: 4px solid var(--blue);
+    background: var(--blue-soft);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin: 14px 0;
+  }
+  .callout.rec { border-left-color: var(--green); background: var(--green-soft); }
+  .callout .label { font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 4px; }
+  .flow {
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 13px;
+    background: #1c2530;
+    color: #e8edf3;
+    padding: 14px 18px;
+    border-radius: 8px;
+    overflow-x: auto;
+    white-space: pre;
+    line-height: 1.5;
+  }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 720px) { .two-col { grid-template-columns: 1fr; } }
+  .opt {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .opt.pref { border-color: var(--green); box-shadow: 0 0 0 1px var(--green) inset; }
+  .opt h3 { margin-top: 0; }
+  .footer { color: var(--muted); font-size: 12px; text-align: center; margin-top: 30px; }
+  .src { font-size: 13px; color: var(--muted); }
+  .src a { word-break: break-all; }
+  .no { color: var(--accent); font-weight: 700; }
+  .yes { color: var(--green); font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="page">
+  <div class="kicker">RHIVOS 2.0 &middot; ProdSec Blocker &middot; Konflux qcow project</div>
+  <h1>Developer-VM Image Rebuild - Status &amp; Options</h1>
+  <div class="meta">Prepared 2026-08-31 &middot; Sources: VROOM-52268, RHELDST-44190, Slack #thread, Juanje Ojeda investigation doc</div>
+</header>
+
+<section class="card">
+  <h2>The problem</h2>
+  <p class="lead">RHIVOS 2.0 introduces two customer-facing <strong>Developer VM (installer)</strong> qcow2 images - <strong>RHIVOS-2.0-Core</strong> and <strong>RHIVOS-2.0 (FuSa)</strong>, each <strong>x86_64 + aarch64</strong> - used to install RHIVOS from a non-RHIVOS VM. Today they are built by RHIVOS's own pipeline (automotive-image-builder / osbuild) and stored on <strong>AWS S3</strong>.</p>
+  <p><strong>ProdSec blocks distribution</strong> of images built outside approved tools. The approval chain (per Kanitha Chim):</p>
+  <ul>
+    <li><code>S3 &rarr; CDN &rarr; customer portal</code> = <span class="no">NOT approved</span> (built outside brew/konflux)</li>
+    <li><code>Brew | Konflux &rarr; CDN &rarr; customer portal</code> = <span class="yes">approved</span> (prodsec-approved build tool)</li>
+  </ul>
+  <p>Key insight: the customer-portal download page is just a UI over the CDN. Once an image is on CDN, RHIVOS only informs the <strong>teamnado</strong> team to mirror it - there is no separate upload hop. All RHEL images on the download pages ship via CDN.</p>
+
+  <div class="callout">
+    <span class="label">Why there is no exception path</span>
+    <ul>
+      <li><strong>As of May 26, 2026, Chris Wright eliminated all exceptions to RH-SDLC, company-wide.</strong> Only images built via approved systems (Brew/Konflux) and delivered through authorized channels (CDN / Unified Downloader) can reach customers. A VP exception now needs VP sign-off and is reserved for rare cases - not a realistic route here.</li>
+      <li>The Developer VM environment falls under the <strong>EU Cyber Resilience Act (CRA)</strong>, mandatory for the EU market. An integrated approved toolchain is the cleanest CRA + RH-SDLC fit.</li>
+      <li><strong>Scope is only these images</strong>, not the full RHIVOS image set. GA is potentially September 2026 (not confirmed) - no locked date, but it must be resolved regardless.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="card">
+  <h2>Ticket status</h2>
+  <table>
+    <thead><tr><th>Ticket</th><th>What</th><th>State</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>VROOM-52268</strong></td>
+        <td>Build developer-vm image via Konflux/image-builder</td>
+        <td><span class="pill amber">In Progress</span> <span class="pill red">Blocker</span><br>Owner: Juanje Ojeda. The active workstream. Blocks VROOM-47600 (publish to access.stage).</td>
+      </tr>
+      <tr>
+        <td><strong>RHELDST-44190</strong></td>
+        <td>Make qcow images available on product pages</td>
+        <td><span class="pill green">Resolved</span><br>Distribution ticket. Closed once it was clear S3-built images cannot ship and the fix is to rebuild. Leon Kang: "you have everything to decide; open a new ticket if needed."</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>Everything now hinges on the <strong>build</strong> ticket (VROOM-52268). The distribution ticket was closed with a hand-off, not formally re-linked as "blocked by."</p>
+</section>
+
+<section class="card">
+  <h2>The two viable options</h2>
+  <p>Both are ProdSec-approved. The difference is CDN publication and onboarding cost.</p>
+
+  <div class="two-col">
+    <div class="opt pref">
+      <h3>Option A - Konflux <span class="pill green">Preferred</span></h3>
+      <p>Build everything in Konflux, end to end:</p>
+      <div class="flow">Phase 1: build bootc container
+         from RHIVOS compose repos
+   |  (auto via build-nudges-ref)
+   v
+Phase 2: bootc -&gt; QCOW2
+         (build-vm-image, priv VM)
+   |  (auto via Integration Service)
+   v
+Phase 3: publish to CDN
+         (push-disk-images-to-cdn)</div>
+      <p><strong>Why preferred:</strong> single approved toolchain from build through distribution; CDN publication is integrated (automatic via ReleasePlanAdmission); RHEL AI already does exactly this (bootc &rarr; qcow2 &rarr; CDN), proven and documented; no intermediate storage or manual staging; cleanest for EU CRA + RH-SDLC; lowest long-term maintenance.</p>
+      <p><strong>What is needed:</strong> Containerfile installing from RHIVOS compose repos + <code>redhat-release-automotive(-core)</code>; BIB config YAML; ~12 config artifacts in <code>konflux-release-data</code> (Application, Components, ReleasePlan, RPA, ECP), all templated from RHEL AI; Pulp CDN label + Content Gateway codes; tenant onboarding. Uses <code>build-vm-image</code> v0.3 + <code>push-disk-images-to-cdn</code>. <strong>No new pipeline code.</strong></p>
+    </div>
+
+    <div class="opt">
+      <h3>Option B - Brew / Image Builder</h3>
+      <p>Build the qcow via Image Builder in Brew, then manually stage and push to CDN.</p>
+      <div class="flow">brew osbuild-image &lt;name&gt; &lt;ver&gt;
+     &lt;distro&gt; &lt;target&gt; &lt;arch&gt;
+     --image-type qcow2
+     --repo &lt;compose-url&gt;
+   |
+   v
+Manual staging
+   pub push-staged
+   -&gt; cdn-stage / cdn-live</div>
+      <p><strong>Pros:</strong> Joe Amato recommends it as the lowest barrier for a tight timeline; SOA-certified (ProdSec Security Operating Approval); Pungi integration possible (auto builds per compose).</p>
+      <p><strong>Cons:</strong> Image Builder team must define a RHIVOS "distro" (potential bottleneck); CDN publication is a separate manual step; needs a Brew target + whitelisted package name; RHIVOS has never had images in Brew; two disconnected systems to maintain vs one integrated flow.</p>
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>Side-by-side comparison</h2>
+  <table>
+    <thead><tr><th>Aspect</th><th>Konflux (A)</th><th>Brew (B)</th></tr></thead>
+    <tbody>
+      <tr><td>Build system</td><td>Konflux (approved)</td><td>Brew (approved)</td></tr>
+      <tr><td>CDN publication</td><td class="yes">Integrated (automatic)</td><td class="no">Manual (pub push-staged)</td></tr>
+      <tr><td>Existing example</td><td>RHEL AI (production)</td><td>RHEL Stratosphere images</td></tr>
+      <tr><td>New pipeline code</td><td>None</td><td>None</td></tr>
+      <tr><td>Configuration effort</td><td>~12 YAMLs (templated)</td><td>distro definition + target + staging</td></tr>
+      <tr><td>External dependencies</td><td>Pulp label, CGW codes, tenant</td><td>distro from IB team, Brew target</td></tr>
+      <tr><td>Potential bottleneck</td><td>Tenant onboarding lead time</td><td>Image Builder team availability</td></tr>
+      <tr><td>Long-term maintenance</td><td class="yes">Self-contained</td><td>Two systems</td></tr>
+      <tr><td>Team experience</td><td>Zero (learn RHEL AI pattern)</td><td>Zero (never used Brew for images)</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="card">
+  <h2>Ruled-out dead-ends</h2>
+  <table>
+    <thead><tr><th>Option</th><th>Why it does not work</th></tr></thead>
+    <tbody>
+      <tr><td>Distribute from S3 directly</td><td>Violates RH-SDLC - not an authorized channel</td></tr>
+      <tr><td>RPM to swap redhat-release on RHEL</td><td>Certification collision (Petr); 1.0 workaround only, not user-friendly, distribution problematic</td></tr>
+      <tr><td>Container with RHSM subscription</td><td>RHSM design limit - containers inherit host subscription (Pavol); already explored</td></tr>
+      <tr><td>VP exception</td><td>Chris Wright eliminated exceptions; VP sign-off for rare cases only</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="card">
+  <h2>Potential blockers</h2>
+  <ul>
+    <li><strong>Tenant onboarding (Konflux):</strong> a new RHIVOS tenant needs RelEng approval - unknown lead time; this is the key open question.</li>
+    <li><strong>Pulp destination / CGW codes (both paths):</strong> Content Delivery must create the Pulp CDN repository label and Content Gateway product entry.</li>
+    <li><strong>BIB deprecation (long-term):</strong> bootc-image-builder was archived upstream June 2026. Still supported in the RHEL 10 lifecycle; the replacement is the <code>image-builder</code> CLI. Not a blocker now, but it touches the Konflux <code>build-vm-image</code> path (which wraps BIB).</li>
+  </ul>
+  <p>No hard technical blockers - both paths are feasible with existing tooling.</p>
+</section>
+
+<section class="card">
+  <h2>Recommendation and decision point</h2>
+  <div class="callout rec">
+    <span class="label">Recommendation</span>
+    The investigation doc weakens Option B's main selling point. The "Brew for the timeline" argument rested on an early-September GA - but no date is locked. Remove the deadline pressure and Konflux wins on every axis except tenant-onboarding lead time: one approved toolchain, integrated CDN, CRA/SDLC-clean, RHEL-AI-proven, ~12 templated YAMLs.
+  </div>
+  <p>The decision effectively collapses to <strong>one question: what is the Konflux tenant-onboarding lead time?</strong> If it is tolerable, Konflux is the clear choice. That is exactly Juanje's next step - ask RelEng.</p>
+  <h3>Immediate next steps (from the investigation doc)</h3>
+  <ul>
+    <li>Contact RHEL AI's Konflux owner for tips on entitlement handling and base image choice (not a gate - pattern is documented).</li>
+    <li>Request Konflux tenant onboarding - ask RelEng about timeline and process.</li>
+    <li>Request Pulp CDN destination + CGW product codes from Content Delivery.</li>
+    <li>Decide Konflux vs Brew based on tenant onboarding timeline vs Image Builder team availability.</li>
+    <li>Implement: Containerfile + BIB YAML, configure konflux-release-data, test on stage CDN.</li>
+  </ul>
+  <h3>Info Juanje still needs (cc Kanitha Chim, Aman Vishwakarma)</h3>
+  <ul>
+    <li>Errata Engineering Product IDs for RHIVOS 2.0 Core and FuSa.</li>
+    <li>Exact RHIVOS 2.0 compose repo IDs in rhsm-pulp.</li>
+    <li>Whether RHIVOS-CORE / RHIVOS-FUSA products + a Pulp CDN destination already exist in Content Gateway.</li>
+    <li>Cost-center code for the tenant namespace.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>Sources</h2>
+  <p class="src">
+    VROOM-52268: <a href="https://redhat.atlassian.net/browse/VROOM-52268">redhat.atlassian.net/browse/VROOM-52268</a><br>
+    RHELDST-44190: <a href="https://redhat.atlassian.net/browse/RHELDST-44190">redhat.atlassian.net/browse/RHELDST-44190</a><br>
+    Investigation doc: <a href="https://docs.google.com/document/d/10PXqrMHcfT6KvqPhybcEDrhG_IgL51pAKHGW3_CT8-A/edit">Developer VM Image - Build &amp; Distribution Investigation</a> (Juanje Ojeda)<br>
+    RHEL AI reference: gitlab.com/redhat/rhel-ai/containers/bootc (bootc &rarr; qcow2 &rarr; CDN via Konflux)
+  </p>
+</section>
+
+<div class="footer">RHIVOS 2.0 Developer-VM Rebuild &middot; Generated for local review &middot; 2026-08-31</div>
+
+</div>
+</body>
+</html>
