@@ -57,11 +57,12 @@ Factual updates to Right now (changed dates, flipped statuses) are allowed mid-s
 
 ### Right now
 
-- **RHAS EPIC coverage delivered (Aug 23).** 28 EPICs across 8 releases analyzed. Key finding: 0 EPICs with EPIC-level test coverage. HTML + PDF + Google Doc outputs ready. Agent knowledge bases updated with correct release naming convention (RHAS-MMYY format).
-- **Overdue administrative actions.** Workday manager evaluations 45+ days past deadline (Jul 10). CY27 Capex deadline passed (Aug 14) - check team submission status. Stuart Corcoran (Lightwell EM) needs response to Aug 14 email. PDR Talent Calibration outcome (Jul 23) still unknown.
-- **Active retention/onboarding work.** Kanitha mentor finalization overdue (~27 days since due date ~Jul 28). Hubert Stefanski KT plan still pending (day 55 of transition). Roderick Kieley PITCREW-294 timeline discussion needed (returned from PTO Aug 4, day 20 back).
-- **Release blocker agent bug unfixed.** Cross-release ticket leakage (Slack tickets appear in all releases). 3-part fix proposed Aug 5, not yet implemented. Demo to Dana/team not scheduled.
-- **Upcoming: NetBird VPN install by Aug 31.** Also: GitLab SSH key renewal, Confluence Bot token expires Sep 9.
+- **RHIVOS developer-VM rebuild report delivered (Aug 31).** HTML status report on the RHIVOS 2.0 developer-VM rebuild: ProdSec blocker (images built outside Brew need security approval), VROOM-52268 / RHELDST-44190. Integrates Juanje's Konflux qcow-build investigation (RH-SDLC/CRA drivers, BIB deprecation).
+- **AWS cost reduction findings ready.** 3 Toolchain accounts, $19.9k/month actual (UnblendedCost), 20 recommendations, $5.5-14.8k/month savings potential. Coordinate with Eitan on response to Eliska's 20% directive. August data still needed to confirm the snapshot-cleanup impact.
+- **Overdue administrative actions.** Workday manager evaluations ~53 days past deadline (Jul 10). CY27 Capex deadline passed (Aug 14) - check team submission status. PDR Talent Calibration outcome (Jul 23) still unknown.
+- **Active retention/onboarding work.** Kanitha mentor finalization overdue (~35 days since due date ~Jul 28). Hubert Stefanski KT plan still pending (day 63 of transition). Roderick Kieley PITCREW-294 timeline discussion needed (day 28 back from PTO). Lightwell EM candidacy screening underway (Stuart Corcoran, Aug 14).
+- **Release blocker agent bug unfixed.** Cross-release ticket leakage (Slack tickets appear in all releases). 3-part fix proposed Aug 5, not yet implemented (~4 weeks). Demo to Dana/team not scheduled - RHIVOS 2.0 retro AI-summary action item was due end of Aug.
+- **Upcoming: Confluence Bot token expires Sep 9.** Also: GitLab SSH key renewal (NetBird VPN Aug 31 deadline passed - confirm install).
 
 ### Files
 

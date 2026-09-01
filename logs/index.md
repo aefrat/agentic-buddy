@@ -7,6 +7,7 @@ Archived logs: `logs/archive/YYYY-MM/` (compacted during monthly maintenance).
 
 Moved to `archive/2026-05/`: 2026-05-25, 2026-05-31
 Moved to `archive/2026-06/`: 2026-06-01, 2026-06-10, 2026-06-11, 2026-06-14, 2026-06-16, 2026-06-18, 2026-06-21
+Moved to `archive/2026-07/`: 2026-07-01 (log rotation)
 
 ## Active
 
@@ -15,7 +16,7 @@ Moved to `archive/2026-06/`: 2026-06-01, 2026-06-10, 2026-06-11, 2026-06-14, 202
 - ~~2026-06-24~~ (archived to `archive/2026-06/`)
 - ~~2026-06-25~~ (archived to `archive/2026-06/`)
 - ~~2026-06-28~~ (archived to `archive/2026-06/`)
-- 2026-07-01: active — Morning briefing, Hubert transition kickoff, AutoSD cert fix resolution, QC evaluations timeline
+- ~~2026-07-01~~ (archived to `archive/2026-07/`)
 - 2026-07-02: active — SBI feedback construction (Kanitha LP priority), RHAS QE Expert Lead Agent creation (3 skills, 4-store KB, HTML deliverables)
 - 2026-07-05: active — CY26Q2 QC self-evaluation career aspirations draft
 - 2026-07-12: active — Container vulnerability remediation progress (VHCL-009 closed), ATC Slack activity synthesis, stakeholder Slack activity summary, **weekly W28 review**
@@ -41,3 +42,4 @@ Moved to `archive/2026-06/`: 2026-06-01, 2026-06-10, 2026-06-11, 2026-06-14, 202
 - 2026-08-23: active — RHAS EPIC coverage analysis (28 EPICs, 0 with test coverage), release naming convention correction, Google Docs API limitations
 - 2026-08-24: maintenance
 - 2026-08-31: maintenance
+- 2026-09-01: maintenance — **Weekly W36 review** (Aug 6 - Sep 1, W33-W36 combined), log rotation, Hebbian calibration, methodology synthesis deferred (captures lapsed after Aug 16)
