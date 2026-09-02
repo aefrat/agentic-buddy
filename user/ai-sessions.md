@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-09-01 | Status-update review: Slack mentions (last day) + emails; developer-VM Brew-build breakthrough (Joe/Tomas Kopecek), ReportPortal sunset, admin/comp/CMDB items | 43dbd7dc-0165-4d72-8ea7-e21763357a72 |
 | 2026-08-26 | Konflux qcow/disk image build research: two-stage flow (buildah bootc container -> build-vm-image Tekton task running bootc-image-builder), project file created | 56612f9a-49fc-4ae0-9f92-3b50ea48852b |
 | 2026-08-24 | Errata (VROOM-47509) propagation: created process page in rhivos-workflows-wiki repo + published wiki index + errata workflow to Confluence draft page (402130012, v1->v2) | 2b28551e-61af-45c0-95e6-6becfabbfc51 |
 | 2026-08-23 | Manager reports (ATC weekend + PitCrew weekly): both teams, Multiplier signals, priority alignment | 48561a84-3cc6-4eee-8c06-cfbb8e003f03 |
