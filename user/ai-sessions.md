@@ -8,6 +8,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-09-02 | Developer-VM rebuild (VROOM-52268) Brew pivot: Konflux ruled out (bootc-only/immutable vs mutable requirement), researched `brew osbuild-image` qcow build + CDN publish path, verified bootc-immutability claim against bootc/BIB/image-mode docs, updated konflux-qcow-builds.md + Right now bullet | 2a6a8eca-bbea-4dbb-bc28-8c7a415f9972 |
 | 2026-09-02 | Release blocker agent: VROOM ticket hyperlink feature (embed browse URLs in Program + per-release G-Docs) - added idempotent `_linkify_vroom()` in render_doc.py, tests, committed 4988486 + pushed, ran via CI, verified live doc 12/12 linked | 26f52820-1612-4d46-8080-721b353a5bb0 |
 | 2026-09-01 | Status-update review: Slack mentions (last day) + emails; developer-VM Brew-build breakthrough (Joe/Tomas Kopecek), ReportPortal sunset, admin/comp/CMDB items | 43dbd7dc-0165-4d72-8ea7-e21763357a72 |
 | 2026-08-26 | Konflux qcow/disk image build research: two-stage flow (buildah bootc container -> build-vm-image Tekton task running bootc-image-builder), project file created | 56612f9a-49fc-4ae0-9f92-3b50ea48852b |
