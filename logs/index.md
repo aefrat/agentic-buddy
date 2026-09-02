@@ -43,3 +43,4 @@ Moved to `archive/2026-07/`: 2026-07-01 (log rotation)
 - 2026-08-24: maintenance
 - 2026-08-31: maintenance
 - 2026-09-01: maintenance — **Weekly W36 review** (Aug 6 - Sep 1, W33-W36 combined), log rotation, Hebbian calibration, methodology synthesis deferred (captures lapsed after Aug 16)
+- 2026-09-02: maintenance
