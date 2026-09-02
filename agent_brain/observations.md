@@ -1,6 +1,6 @@
 ---
 last_accessed: 2026-09-02
-access_count: 63
+access_count: 64
 created: 2026-06-01
 ---
 
@@ -186,6 +186,8 @@ Resolved observations are moved to the bottom.
 ## Reference candidates
 
 - **2026-06-15:** Rover MCP server (`https://github.com/redhat-community-ai-tools/rover-mcp`) — queries Red Hat internal groups API via client certificate auth. Currently only has `rover_group` tool (no people/profile lookups). Requires `sa-cert.crt` + `privkey.pem` (not present on user's machine). Not viable without certificate provisioning from Red Hat IAM team. Could be extended with a `rover_people` tool for username resolution. (seen: 1)
+
+- **2026-09-02:** Google Doc **comments** are read via the Drive API, not the Docs API - `gws docs` has no `comments` subcommand. Use `gws drive comments list --params '{"fileId":"<id>","fields":"comments(author/displayName,content,quotedFileContent/value,resolved,createdTime,replies(author/displayName,content,createdTime))"}'`. `quotedFileContent.value` gives the anchored text a comment is attached to; `replies` gives the thread. Saved as memory `reference_gdoc-comments-drive-api.md`. (seen: 1)
 
 - **2026-06-29:** "Mode-dependent Drive upload collision" - daily cron run uploaded daily report HTML to the full report Google Doc and HTML Drive files because (1) step 11d ran unconditionally across all modes, and (2) the upload source path used `${MODE}` instead of hardcoded `full`. The permanent full report links showed a 13KB daily instead of 46KB full report. Root cause is dual: missing mode gate + variable filename in upload path. Fixed: step 11d gated to weekly/full only, upload paths hardcoded to `pitcrew-full-report-*`. Pattern: when a skill has permanent external artifacts (Drive links, Slack canvas), any cron-triggered mode that doesn't produce that artifact type must explicitly skip the upload step. (seen: 1)
 
