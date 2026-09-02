@@ -61,5 +61,6 @@ Status: acknowledged, not yet implemented. Plan is to revise and republish the d
 
 ## Files
 
+- [Core/FuSa split plan](core-fusa-split-plan.md) - Implementation plan for the Core vs non-Core (FuSa) release split (fix #1 + #2). Chosen structure: sub-sections per release doc.
 - [Design](design.md) - Agent architecture, data model, output format
 - [Requirements](requirements.md) - Requirements extracted from retro meeting, Slack, Jira analysis
