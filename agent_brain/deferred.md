@@ -36,3 +36,7 @@ Sources: `daily`, `weekly`, `monthly`, `user`.
 - **reminder** (2026-08-16, daily): **RHIVOS test cases gap.** Priyanka Verma flagged ~235 test cases missing from formal specs. Mandatory for QE release epics.
 - **reminder** (2026-08-16, daily): **Install NetBird VPN by Aug 31.** Also: renew GitLab SSH key (expiring), Confluence Bot API token expires Sep 9.
 - **reminder** (2026-08-16, daily): **ReportPortal v26.0.3 upgrade scheduling** - Roni/Daniel need input.
+- **reminder** (2026-09-02, daily): **ReportPortal hosted service being sunset (Brent McDowall, Aug 31).** Operational until Dec 18, 2026; migrate to customer-managed self-hosted this autumn. Assign a migration owner. Community meeting + handoff Sep 9, 15:00-16:00 GMT+3 (invite in inbox); handoff channel #temp-dno-services-handover. Self-deploy docs: gitlab.cee.redhat.com/ccit/vanilla-deployment-documentation.
+- **reminder** (2026-09-02, daily): **RHIVOS developer-VM: Brew build path opened (Sep 1).** Joe confirmed qcow builds in Brew today; engage Tomas Kopecek on build requirements. Decide Brew vs Konflux (time-driven; Konflux ~1 sprint per Juanje). VROOM-52268 / RHELDST-44190.
+- **reminder** (2026-09-02, daily): **Polarion -> Atlassian production migration window Sep 4-18** (Linqing Lu). Awareness for any Polarion-dependent work.
+- **info** (2026-09-02, daily): **Workday "Compensation Review Has Been Manually Advanced" (Sep 1)** - ties to the overdue manager/comp evaluations. Also: outstanding CMDB certification task against a CI (ServiceNow reminder, Aug 31).

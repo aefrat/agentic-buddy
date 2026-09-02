@@ -57,3 +57,5 @@ Example:
 2026-08-16|autonomous|reporting|aws-cost-html-gdoc-report-20-recommendations|high
 2026-08-16|autonomous|communication|pto-catchup-slack-mentions-scan-10days|high
 2026-08-16|assisted|communication|pto-catchup-gmail-action-item-prioritization|high
+2026-09-02|assisted|communication|personal-status-update-review-slack-mentions-email|high
+2026-09-02|autonomous|process-design|observation-to-skill-maturation-review-activity-inbox|high
