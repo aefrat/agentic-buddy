@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-08-31
-access_count: 2
+last_accessed: 2026-09-02
+access_count: 3
 created: 2026-08-26
 ---
 
@@ -89,7 +89,154 @@ build mechanism either — same gap as the public docs:
     then BIB produces the disk images.
 - Known instability: upstream BIB Konflux pipeline outages tracked (KONFLUX-9346).
 
-## RHIVOS 2.0 Developer-VM rebuild (ProdSec blocker) — status as of 2026-08-31
+## DIRECTION CHANGE (2026-09-01): Konflux ruled out — path is Brew
+
+**Juanje's new plan (VROOM-52268 latest comment + Slack thread, Sep 1):** Konflux
+is **eliminated for this image on a hard technical constraint**, not a timeline
+preference. Reason: **Konflux can only build `bootc` images — even when converted
+to VM/qcow2, internally it remains an immutable image. The Developer VM image must
+be mutable.** So Konflux cannot build it. This settles the Brew-vs-Konflux debate
+that had dominated the thread (it was previously leaning Konflux for long-term
+automation).
+
+**New path: Brew/Koji + Image Builder (osbuild / osbuild-composer)** via the Koji
+integration. Docs Juanje linked:
+- Upstream: https://osbuild.org/docs/hosted/image-builder-koji/#building-images-via-koji-integration
+- Internal RH: https://osbuild.pages.redhat.com/internal-guides/image-builder-service/koji-integration.html#internal-brew-integration
+
+**Supporting Slack context (mpdm group DM, Sep 1):**
+- **Joe Amato** confirmed "we are able to build qcow images today in Brew" and
+  pulled in **Tomas Kopecek** for the build details/questions.
+- Earlier in the thread Joe had flagged that there is **no existing path** he's
+  aware of for building these images in Konflux and pushing to CDN — the risk is
+  in the unknowns.
+- **cfreitas (Christine)**: RHIVOS "will eventually need to convert to Konflux" —
+  Konflux remains the org's long-term target, but the mutable-image constraint
+  means it does not apply to *this* image as currently designed. Do what's right
+  for the release now.
+- **Pavol Brilla correction:** the artifact is the **RHIVOS tooling / developer-VM**
+  ("developer-vm is RHIVOS, but not production one") — not "install RHIVOS using a
+  non-RHIVOS VM."
+
+**Open items on the Brew path (as of Sep 1):**
+- Awaiting **Tomas Kopecek's** guidance on the Brew/Koji + Image Builder specifics.
+- **CDN publish step is manual** under Brew (Brew builds; someone pushes to CDN).
+  Who publishes: ideally RHIVOS Toolchain distribution owner, but expertise is
+  still building — consult **Leon Kang (DST releng)**.
+- **Cost center** confirmed: **669** (Avihai, Aug 31). Full label likely
+  `EMEA.R&D RHIVOS.669`.
+- **Engineering Product IDs** (Aman, Aug 31): RHIVOS 2.0 Core = **1030**, FuSa =
+  **931**. Gathered for the Konflux RPA path; still relevant for errata/CDN.
+- **Repo IDs** provided by Aman (see ticket): `rhivos-2.0-core-for-<arch>-*` and
+  `rhivos-2.0-for-<arch>-*` (rpms/debug/source/files). Candidate CDN destinations:
+  `/content/dist/rhivos2/2.0-core/<arch>/files`, `/content/dist/rhivos2/2.0/<arch>/files`
+  (unconfirmed whether they map to QCOW).
+- **Content Gateway product codes**: still unknown (Kanitha, Eitan checking).
+
+**Note:** the Konflux implementation plan and option analysis below is now historical
+for this image (retained for reference and for the eventual Konflux migration of
+mutable-image-compatible artifacts). The active path is Brew.
+
+## Brew build + CDN path — how it works (researched 2026-09-02)
+
+Synthesized from the two docs Juanje linked (osbuild.org Koji integration; internal
+osbuild.pages.redhat.com Brew integration), the koji-osbuild CLI source, and the ATC
+Distribution FA wiki (cdn-publication, knowledge-transfer).
+
+### Part 1 — Build the qcow in Brew
+
+**Tool:** `brew osbuild-image` (Brew is Red Hat's Koji; the **koji-osbuild** plugin
+adds this subcommand).
+
+**Architecture:** three plugins — **hub** (new XMLRPC endpoint that creates
+`osbuildImage` tasks), **builder** (handles the task, talks to osbuild-composer's Koji
+API), **CLI** (submits the task) — plus **osbuild-composer** running as a separate Brew
+tenant with dedicated workers. Composer builds the image and uploads the artifact back
+into Brew. Pungi can also submit `osbuildImage` tasks (auto per-compose builds) later.
+
+**Command signature** (positional order confirmed from CLI source):
+```
+brew osbuild-image [options] <name> <version> <distro> <target> <arch> [<arch> ...]
+```
+- `--image-type` is an **optional flag** (default `guest-image`) — set `--image-type qcow2`.
+- `--repo <url>` (repeatable) — point at the RHIVOS 2.0 compose repos in rhsm-pulp.
+- Other flags: `--release`, `--customizations <json>`, `--upload-options <json>`
+  (cloud targets only — not needed for a plain qcow), ostree flags, `--wait/--nowait`.
+
+**Internal RH reference example** (from the internal guide):
+```
+brew osbuild-image \
+  --upload-options upload-options.json \
+  --image-type azure-rhui \
+  --repo '<repo-url>' \
+  rhel-azure 8.8 rhel-88 guest-rhel-8.8.0-image x86_64 aarch64
+```
+
+**Sketch for RHIVOS Developer VM** (exact distro/target/name TBD from Image Builder team):
+```
+brew osbuild-image \
+  --image-type qcow2 \
+  --repo <rhivos-2.0-core compose repo url> \
+  <name> 2.0 <rhivos-distro> <brew-target> x86_64 aarch64
+```
+
+**Prework required before that command can run** (this is where the real effort/unknowns
+are — RHIVOS has never had images in Brew):
+- **Image Builder team must define a RHIVOS "distro"** in osbuild-composer (the `<distro>`
+  positional) + a **Brew build target** + a **whitelisted image/package name**. This is
+  the main ask to **Tomas Kopecek** (Joe pulled him in for exactly this).
+- Use `redhat-release-automotive(-core)` instead of RHEL's `redhat-release` for SWID
+  (Pavol Brilla), sourcing RPMs from the RHIVOS compose (not automotive-image-builder —
+  the Developer VM needs no automotive HW support).
+- **Why Brew works where Konflux doesn't:** osbuild/Image Builder produces a normal
+  **mutable** disk image; Konflux only produces bootc/immutable.
+
+Output: a **qcow2 uploaded to Brew** as a build artifact.
+
+### Part 2 — Publish to CDN → customer portal
+
+The approved chain (Distribution FA wiki): **Brew build → RADAS sign → Errata advisory →
+rhsm-pulp repo → Pub CLI `push-staged` → CDN live (Akamai) → teamnado mirrors to customer
+portal / unified downloads.**
+
+Concrete CDN steps (same mechanism RHIVOS uses for RPMs today):
+1. **Prereqs:** rhsm-pulp repo exists for the version; Product IDs generated (x86_64 +
+   aarch64); product listing created; advisory in **PUSH_READY**; Pub CLI access +
+   `~/certs/$USER.crt|.key`.
+2. **Stage:** `rd-stage-productids --productids-from <url> --release <url> --staging-dir <dir>`
+   (run on `rcm-dev-01...redhat.com`).
+3. **Push:** `pub push-staged --target cdn-stage --nowait <staging-dir>`, verify, then
+   `--target cdn-live --nowait <staging-dir>`.
+4. Advisory moves **PUSH_READY → IN_PUSH → SHIPPED_LIVE**; then tell **teamnado** to mirror
+   to the customer portal (the portal is just a UI over CDN).
+- Image files land in the `.../files` CDN sub-repos — Aman's candidates:
+  `/content/dist/rhivos2/2.0-core/<arch>/files` and `/content/dist/rhivos2/2.0/<arch>/files`
+  (unconfirmed they map to QCOW). Per the earlier investigation, disk files also need a
+  Content Set + Pulp repo, plus an empty RPM Pulp repo for unified-downloads visibility.
+- **Pub CLI access is restricted:** Kanitha Chim, Ozan Unsal, `auto-toolchain-service-distribution`.
+  So the manual CDN push is done by Kanitha/Ozan.
+
+**Important precedent — Paul's RHIVOS 1.0 developer-images process (VROOM-40519):** for 1.0,
+images could **not** be released via CDN, so a workaround was used — request a **Pulp image
+repo** (`private.console.redhat.com/api/pulp-content/rhivos[-stage]/`), **upload images to
+Pulp** (contact @dkliban, `#wg-team-auto-toolchain-pulp`), then file a **CPCORE ticket** to
+surface them at access.redhat.com/downloads (issues → `#forum-teamnado`). VROOM-52268 exists
+precisely to move **off** this workaround onto the approved brew→cdn→portal path — but the
+"request a Pulp image repo" and "teamnado/CPCORE to show in downloads" pieces likely still
+apply in some form.
+
+### Open questions to confirm with the experts
+
+1. **Errata vs direct Pulp upload:** does a qcow go through the **Errata advisory** lifecycle
+   (like RPMs, per cdn-publication.md) or a **direct Pulp image-repo upload** (like Paul's 1.0
+   route)? "brew→cdn" phrasing implies errata/CDN, but images historically bypassed errata.
+   → ask **Tomas Kopecek / Leon Kang (DST) / Kanitha**.
+2. Who defines the RHIVOS **distro + Brew target + allowed image name** in osbuild-composer?
+   → **Tomas Kopecek** (Image Builder team).
+3. Exact `--repo` URLs and `<distro>`/`<target>` strings for RHIVOS 2.0 Core/FuSa.
+4. Which CDN `files` repos exist already vs need creating (RHELDST ticket).
+
+## RHIVOS 2.0 Developer-VM rebuild (ProdSec blocker) — Konflux investigation (historical, as of 2026-08-31)
 
 **The problem.** RHIVOS 2.0 introduces two customer-facing *Developer VM* (installer)
 qcow2 images — RHIVOS-2.0-Core and RHIVOS-2.0 (FuSa), each x86_64 + aarch64 — used
