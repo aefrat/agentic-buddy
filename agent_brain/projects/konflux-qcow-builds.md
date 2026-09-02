@@ -257,6 +257,56 @@ apply in some form.
 3. Exact `--repo` URLs and `<distro>`/`<target>` strings for RHIVOS 2.0 Core/FuSa.
 4. Which CDN `files` repos exist already vs need creating (RHELDST ticket).
 
+## Update 2026-09-02: Brew build mechanics (Lubomir Sedlar) — dev-vm build channel
+
+New SME pulled in on the RHIVOS dev-vm build channel while **Tomas Kopecek is OOO
+until Mon Sep 7** (both of Joe's usual SMEs on PTO). Joe brought in **Lubomir Sedlar
+(`lsedlar`)** — pungi/compose/Image Builder expertise. Concrete guidance from the
+thread (advances the Brew path; still a one-off build so Prod&Sec can approve
+publishing the dev-vm at the Customer Portal):
+
+**How RHEL builds it:** RHEL QCow2 images are built in **Image Builder via Brew**.
+
+**Two build routes surfaced:**
+1. **Adjust the existing ODCS compose job to also build the image.** RHIVOS already
+   builds its composes in **ODCS** (not OSCI), and **ODCS already has the permissions
+   to run image builds** — "it's how RHEL works." Juanje: "We already have the job for
+   building the compose there. Maybe it'd be easier for us to adjust it to build the
+   image." (You build composes in ODCS; Brew is only used to pull RHEL packages.)
+2. **Run `brew osbuild-image` directly.** Needs the **`koji-osbuild-cli`** package
+   (available on Fedora) and **`image` permissions** in Brew (which "not many people
+   have"). lsedlar: for a **one-off**, running `brew osbuild-image` directly is likely
+   **faster** than going through ODCS (ODCS = overkill for a one-off).
+
+**Brew setup still required (the real prework):**
+- A **Brew package name for the image** must be set up by an **admin first**, and the
+  image name must be **allowed in the `target`** — mirrors how RHEL's pungi config
+  names the Brew package. Ref: RHEL QCow2 pungi config `images.conf`
+  (gitlab.com/redhat/centos-stream/release-engineering/pungi-centos → `rhel/images.conf`
+  L5-16); the `name` there is the Brew package name.
+- **Likely a new Brew image *tag*.** RHIVOS currently has Brew tags for **packages
+  only**, not images. Juanje: target looks like `guest-rhel-<RELEASE_VERSION_Z>-image`,
+  so "we should get/set a new tag for the image, right?" lsedlar: that's the cleanest
+  setup but **not sure it's strictly required — BLD release engineers would know**.
+- **Who sets up the package + target/tag in Brew:** lsedlar defers to **Joe**
+  ("Joe surely knows who can set up the package and target/tag in Brew").
+- **Repos:** in a compose, BaseOS/AppStream resolve to that compose's URLs, but you
+  can also pass explicit `https://` repo URLs to `--repo`.
+
+**Open question raised by lsedlar (image content):** does the dev-vm just need the
+same qcow2 RHEL makes but with **RHIVOS package versions**, or does it need changes to
+installed packages? (Pavol's earlier answer partially covers this: use
+`redhat-release-automotive(-core)` for SWID and the RHIVOS compose as the RPM source;
+extra pre-installed RPMs were for convenience and would force doc changes if dropped.)
+
+**Net effect on the plan:** the `brew osbuild-image` command shape (documented above)
+is confirmed by lsedlar; the blocking prework is now sharply defined — (a) admin
+creates the Brew image package name + allows it in the target, (b) possibly a new Brew
+image tag (confirm with BLD releng), (c) decide ODCS-job vs direct-`brew osbuild-image`
+(direct is faster for this one-off). Waiting on **Tomas Kopecek (back Sep 7)** and
+**Joe** to identify who provisions the Brew package/target/tag. lsedlar is the interim
+SME.
+
 ## RHIVOS 2.0 Developer-VM rebuild (ProdSec blocker) — Konflux investigation (historical, as of 2026-08-31)
 
 **The problem.** RHIVOS 2.0 introduces two customer-facing *Developer VM* (installer)
