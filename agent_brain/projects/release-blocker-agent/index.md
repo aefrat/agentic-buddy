@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-08-05
-access_count: 6
+last_accessed: 2026-09-02
+access_count: 7
 created: 2026-08-02
 ---
 
@@ -47,6 +47,17 @@ GitLab CI at `gitlab.cee.redhat.com/aefrat/rhivos-release-status`:
 - **GCP APIs enabled:** Vertex AI, Google Docs, Google Drive
 
 Per-release doc IDs and combined_doc_id stored in `release-config.yaml` for CI upload without `gws` CLI.
+
+## Requested fixes - Whitney Chadwick review (Sep 2, 2026)
+
+Feedback from Whitney Chadwick (wchadwic) via Slack thread (RR channel C04RHEEGY30, Sep 2) + comments on the Program Summary doc. All comments were on `RHIVOS Program Release Status`; the three per-release docs had none. Two concrete fixes, both rooted in the same theme - the agent does not model the Core vs non-Core (FuSa) release split correctly:
+
+1. **Core vs non-Core (FuSa) release separation.** The agent must treat `X.Y.Z-core` and `X.Y.Z` as distinct releases, with separate info filtering, related tickets, and stats for each. Applies to `rhivos-2.0.z-core` vs `rhivos-2.0.z`, and `rhivos-2.1-core` vs `rhivos-2.1`. The `X.Y.Z` (non-core) track is the FuSa release. Avi's ACK: "going forward a split between release X.Y.Z-core and X.Y.Z (AKA FuSa) releases and separate info filtering and related tickets and stats." (This overlaps with wchadwic's Slack note to "be sure the agent is looking at rhivos -core and non core fixed versions.")
+2. **Release-status ("released") logic is wrong for FuSa.** The Program doc labeled `rhivos-2.0` as "released"; wchadwic: "rhivos-2.0 has not been released. This is the FuSa submission release." The agent is inferring 2.0's released status from `2.0-core` and applying it to the non-core version. Released status must be determined per core/non-core track, not shared.
+
+Not a fix, resolved in thread: wchadwic asked "how does this differ from our defect dashboard?" Avi's answer - the agent's differentiator is the 2 extra data sources (Slack RR channel + RR meeting notes) that catch blockers moving too fast or not yet tracked in Jira; Jira source-of-truth is already covered by the defect dashboard.
+
+Status: acknowledged, not yet implemented. Plan is to revise and republish the docs.
 
 ## Files
 
