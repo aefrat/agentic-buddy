@@ -99,6 +99,27 @@ be mutable.** So Konflux cannot build it. This settles the Brew-vs-Konflux debat
 that had dominated the thread (it was previously leaning Konflux for long-term
 automation).
 
+**Verified (2026-09-02): Juanje's mutability claim is correct.** Checked against the
+bootc filesystem docs, bootc-image-builder (BIB) docs, and RHEL image-mode docs:
+- A bootc system is **immutable by default** — with composefs, `/usr` and `/` are
+  read-only ("part of the same immutable image"); only `/etc` and `/var` are writable.
+  `dnf install` does **not** persist across reboots; persistent change = rebuild the
+  container image + `bootc upgrade`.
+- **BIB only converts bootc containers → disk images (image mode/ostree).** It cannot
+  emit a traditional package-mode (mutable, dnf-persistent) system. The bootc→qcow
+  conversion packages the container; it does not change its immutable nature.
+- There **is** a writability knob — `transient = true` (transient root) makes the whole
+  rootfs writable at runtime, and state overlays give persistent overlays on specific
+  dirs — **but transient-root writes are lost on reboot, and image updates override any
+  local changes.** Neither gives a normal, persistently-mutable `dnf install` Developer VM.
+- A persistently-mutable package-managed VM = **"package mode"**, produced by plain
+  **osbuild/Image Builder blueprints** (the Brew path), not by BIB.
+- **Extra nail:** Konflux's *only* disk-image path is `build-vm-image` (wraps BIB) and
+  it **requires a bootc container input**. Konflux has no package-mode image path at all.
+- The only way to keep Konflux would be to **redesign the Developer VM as a bootc/
+  image-mode system** — which changes the developer UX (rebuild-image instead of
+  `dnf install`); not viable for a developer VM. → Brew is the correct tool.
+
 **New path: Brew/Koji + Image Builder (osbuild / osbuild-composer)** via the Koji
 integration. Docs Juanje linked:
 - Upstream: https://osbuild.org/docs/hosted/image-builder-koji/#building-images-via-koji-integration
