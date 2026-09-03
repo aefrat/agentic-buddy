@@ -12,7 +12,11 @@ Rollout steps 1-6 **done and verified locally**. Code changes landed in `rhivos-
 
 Verification: `ruff` clean; 7/7 pytest pass (added `test_core_and_fusa_render_as_separate_sections` and `test_fusa_2_0_is_not_labelled_released`). Dry runs confirm the split - 2.0 Core = 7 active blockers (rhivos-2.0-core, banner "Released"), FuSa = 27 (rhivos-2.0, banner "FuSa submission (not released)"); single h1/footer per doc; combined dashboard shows 6 rows (3 releases x 2 tracks) with correct per-track status.
 
-**Pending (step 7, needs user go-ahead - outward-facing):** commit to `main`; republish the 3 release docs + combined to Google Docs; ping Whitney on VROOM-49388.
+**Target dates - Jira is the single source of truth (user decision, Sep 3).** Dates were hand-maintained per-release in config; the split duplicated one date onto both tracks, and the values were stale. Fixed: `query_jira.resolve_target_date(fix_versions)` reads each track's target live from the Jira **fixVersion `releaseDate`** (VROOM project versions, `_get('/project/VROOM/versions')`, lru_cached). No config fallback for display - when a fixVersion has no `releaseDate` set, the doc states **"Not set in Jira"** (render `_target_display`). Current Jira dates: 2.0-core 2026-06-30, 2.0 (FuSa) 2026-10-30, 2.0.z-core 2026-12-15, 2.1-core 2027-06-29; **rhivos-2.0.z and rhivos-2.1 (FuSa versions) have no releaseDate in Jira** -> shown as "Not set in Jira" until someone sets them in Jira. Config `target_date` fields now vestigial (only the standalone render-doc CLI still reads them).
+
+**Review copies published (Sep 3, temporary, `[REVIEW]`-prefixed, live docs untouched):** 2.0 `12Yho5KRuNjyNfIyaENmfO5VyTF0pAj6BqjqofI8wtIU`, 2.0.z `1LyUFY3bWkDcEqpl3DhcTdTMOXR9QTRY_PLpj28rquSQ`, 2.1 `1uOH-TighkRGbETgj561Tk75Z2ioG2HniNZ5tdqv_flc`, combined `1ZADuceLTn0jwpjsMI-8QxS5crm6Belc1mOaSuqcHZy4`. Delete after review.
+
+**Pending (step 7, needs user go-ahead - outward-facing):** commit to `main`; republish the 3 release docs + combined to the live doc IDs (with `--llm` for per-track outlooks); ping Whitney on VROOM-49388; delete the `[REVIEW]` copies.
 
 # Implementation plan - Core vs non-Core (FuSa) split
 
