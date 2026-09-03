@@ -72,6 +72,14 @@ verified live: all 9 columns FIXED_WIDTH, sum 715, no mid-word header breaks.
 Gotcha for future work: the gws command is `gws docs documents get/batchUpdate`
 (service `docs`, resource `documents`), NOT `gws documents get`.
 
+## Part 4 - Release H2 headers: add "Sum-up Below - Click here for details" [SHIPPED]
+
+**Shipped Sep 3 (commit `d59b0ac`).** Each release section header (H2) in the
+combined dashboard now displays: `{Release} Sum-up Below - Click here for
+details` (where "Click here for details" links to the per-release doc). When no
+doc_id, shows just `{Release} Sum-up Below`. ruff clean, 12/12 pytest. Committed
++ pushed; combined doc republished, headers verified live.
+
 
 
 Requested Sep 3: the Program doc's main summary table breaks header words
