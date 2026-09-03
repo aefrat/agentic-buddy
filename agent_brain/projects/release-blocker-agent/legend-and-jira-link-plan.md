@@ -9,6 +9,26 @@ created: 2026-09-03
 Two enhancements to the RHIVOS Program Release Status Google Doc
 (`build_combined_dashboard_html` in `tools/render_doc.py`), requested Sep 3.
 
+## Status (Sep 3)
+
+- **Part 1 (status legend): SHIPPED.** `_build_status_legend_html()` +
+  `_STATUS_MEANING` added; wired under the summary table in the Program dashboard
+  only. Visible table (Google Docs strips tooltips), two statuses: Released
+  (green) / Active (blue). Driven by `_STATUS_BANNER` so it can't drift. ruff
+  clean, 9/9 pytest (added `test_combined_dashboard_has_status_legend`). Committed
+  `9e54307` + pushed; Program doc republished and legend verified live.
+- **Part 2 (Jira link on Needs Attention): NOT STARTED.** Design below stands;
+  with `submission` dropped it is unaffected.
+
+### Cleanup noticed (not fixed)
+
+`kb/active/<release>/<track>/latest.json` change-tracking state is tracked in git
+but `.gitignore` only ignores `kb/active/*.json` (top-level), not the per-track
+subdirs the Core/FuSa split introduced. So those state files show as dirty and
+get swept into commits on every run. Fix would be `kb/active/**/*.json` in
+.gitignore + `git rm --cached`, but it has CI implications (CI needs prior state
+to compute diffs), so raise with user before changing.
+
 ## 1. Status legend (not a hover tooltip)
 
 **Constraint (must surface to user):** the doc is produced by uploading HTML to
