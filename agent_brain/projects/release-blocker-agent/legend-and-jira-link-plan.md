@@ -17,8 +17,16 @@ Two enhancements to the RHIVOS Program Release Status Google Doc
   (green) / Active (blue). Driven by `_STATUS_BANNER` so it can't drift. ruff
   clean, 9/9 pytest (added `test_combined_dashboard_has_status_legend`). Committed
   `9e54307` + pushed; Program doc republished and legend verified live.
-- **Part 2 (Jira link on Needs Attention): NOT STARTED.** Design below stands;
-  with `submission` dropped it is unaffected.
+- **Part 2 (Jira link on Needs Attention): SHIPPED.** `_needs_attention_jira_url(stats)`
+  builds a Jira issue-navigator URL (`/issues/?jql=key in (...)`, url-encoded)
+  from the actual triage keys (urgent + monitor + active), so the linked set
+  always matches the count; zero renders a plain number. Wired into
+  `_combined_track_rows` (Program dashboard). Also refined the `_bare_vroom` test
+  helper to treat keys inside a tag's attributes (the JQL href) as linked. ruff
+  clean, 10/10 pytest (added `test_needs_attention_cell_links_to_jira`). Committed
+  `2b7c946` (code-only, 2 files) + pushed; Program doc republished, links verified
+  live with real triage keys. Scope: Program dashboard only (per the request);
+  per-release header cells not linked - available as a later consistency add.
 
 ### Cleanup noticed (not fixed)
 
