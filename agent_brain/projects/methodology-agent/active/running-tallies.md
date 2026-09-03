@@ -59,3 +59,8 @@ Example:
 2026-08-16|assisted|communication|pto-catchup-gmail-action-item-prioritization|high
 2026-09-02|assisted|communication|personal-status-update-review-slack-mentions-email|high
 2026-09-02|autonomous|process-design|observation-to-skill-maturation-review-activity-inbox|high
+2026-09-03|assisted|tool-building|release-blocker-core-fusa-split-per-track|high
+2026-09-03|assisted|tool-building|jira-single-source-target-dates-explicit-gap|high
+2026-09-03|assisted|tool-building|remove-self-coined-submission-status-two-status-model|high
+2026-09-03|assisted|tool-building|status-legend-table-shared-dict|high
+2026-09-03|assisted|reporting|republish-4-live-docs-vroom-49388-followup|high

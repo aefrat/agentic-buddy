@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-07-22
-access_count: 0
+last_accessed: 2026-09-03
+access_count: 1
 created: 2026-07-22
 ---
 
@@ -39,3 +39,13 @@ data (ticket counts, API output).
 - Data source hierarchy for assessments (2026-06-29): QC draft reports (narrative
   synthesis) > collected-data files (raw stats) > raw API output for evaluation
   quality.
+- Source authority over mapping tables (2026-08-02): use the authoritative Jira
+  custom field (`customfield_10606` AssignedTeam) directly instead of a
+  locally-maintained component-to-team YAML that drifts and needs manual upkeep.
+- Live source over duplicated config, with explicit gaps (2026-09-03): drive a
+  displayed value from the authoritative external system (Jira fixVersion
+  `releaseDate`) rather than a hand-copied config field that drifts (the
+  release-blocker Core/FuSa split had one stale date duplicated onto both
+  tracks). When the source is empty, render the gap explicitly ("Not set in
+  Jira") — never fall back silently to a plausible-but-stale value. A visible gap
+  prompts a fix; a silent fallback hides one.

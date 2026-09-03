@@ -343,3 +343,28 @@ Format per day:
 
 **Agent runs classified:**
 - daily-consolidation: autonomous (cron-triggered maintenance cycle)
+
+---
+
+### 2026-09-03
+
+**Tasks classified:** 5
+| Task | Category | Domain | Confidence | Evidence |
+|------|----------|--------|------------|----------|
+| Core/FuSa split - per-track sections, filtering, stats, chart, per-track released status (RHIVOS 2.0: Core 7 vs FuSa 27 blockers) | assisted | tool-building | high | logs/2026-09-03.md#Context |
+| Jira as single-source target dates (live fixVersion releaseDate, explicit "Not set in Jira") | assisted | tool-building | high | logs/2026-09-03.md#Decisions |
+| Removed self-coined "submission" status - two-status model (Released, Active) | assisted | tool-building | high | logs/2026-09-03.md#Decisions |
+| Status legend table (visible, driven by shared _STATUS_BANNER dict) | assisted | tool-building | high | logs/2026-09-03.md#Decisions |
+| Republished 4 live Google Docs + VROOM-49388 review follow-up | assisted | reporting | high | logs/2026-09-03.md#Context |
+
+**Anti-patterns detected:** 2
+- Self-coined "submission" status: AI reified Whitney's descriptive sentence ("This is the FuSa submission release") into a named status category and applied it to one track - unsourced content, corrected wrong->right when the user questioned its provenance (not normal iteration). (evidence: logs/2026-09-03.md#Lessons)
+- .gitignore gap surfaced by broad staging: per-track state files (kb/active/<release>/<track>/latest.json) were swept into the legend commit because .gitignore matched only top-level kb/active/*.json and git add -A staged the new subdirs. (evidence: logs/2026-09-03.md#Lessons)
+
+**Positive patterns detected:** 3
+- Platform-capability check before honoring a UI request: user asked for a "legend tooltip"; AI recognized Google Docs strips HTML title and has no hover, and delivered the supported equivalent - a visible legend table driven by the same dict as the status cells so labels/colors cannot drift. (evidence: logs/2026-09-03.md#Decisions)
+- Single-source-of-truth with explicit gaps: AI drove target dates from Jira live and rendered "Not set in Jira" rather than a stale config fallback, surfacing the data gap instead of hiding it. (evidence: logs/2026-09-03.md#Decisions)
+- Confirmation gate on outward-facing actions: AI published temporary [REVIEW] doc copies for approval and only republished the 4 live docs + pinged Whitney after explicit "continue". (evidence: logs/2026-09-03.md#Decisions)
+
+**Agent runs classified:**
+- daily-consolidation: autonomous (hook-triggered maintenance cycle; log rotation, concept association, Hebbian evaluation) (evidence: logs/2026-09-03.md#Decisions)
