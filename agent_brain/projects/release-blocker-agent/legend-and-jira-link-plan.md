@@ -37,7 +37,20 @@ get swept into commits on every run. Fix would be `kb/active/**/*.json` in
 .gitignore + `git rm --cached`, but it has CI implications (CI needs prior state
 to compute diffs), so raise with user before changing.
 
-## Part 3 - Widen main summary-table columns (no mid-word breaks) [PLANNED]
+## Part 3 - Widen main summary-table columns (no mid-word breaks) [SHIPPED]
+
+**Shipped Sep 3.** Decision: keep full header text; scope = main summary table
+only. Added a `<colgroup>` with per-column percentages (Release 14 / Track 8 /
+Status 11 / Target 15 / RC 7 / Blockers 11 / Needs Attention 13 / On Track 10 /
+Slack (7d) 11) and `width` on each `<th>`, plus `table-layout: fixed`.
+`white-space: nowrap` on the single-word headers guarantees "Release" etc. never
+split mid-word (the strongest guarantee - independent of whether Docs fully
+honors colgroup %); two-word headers keep full text and wrap between words. ruff
+clean, 11/11 pytest (added `test_summary_table_has_column_widths_and_nowrap_headers`).
+Committed `5db4757` (code-only) + pushed; Program doc republished, colgroup +
+nowrap verified in output.
+
+
 
 Requested Sep 3: the Program doc's main summary table breaks header words
 mid-word (e.g. "Release" -> "Releas" / "e") because the first column is too
