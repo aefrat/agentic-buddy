@@ -37,18 +37,40 @@ get swept into commits on every run. Fix would be `kb/active/**/*.json` in
 .gitignore + `git rm --cached`, but it has CI implications (CI needs prior state
 to compute diffs), so raise with user before changing.
 
-## Part 3 - Widen main summary-table columns (no mid-word breaks) [SHIPPED]
+## Part 3 - Widen main summary-table columns (no mid-word breaks) [SHIPPED - via Docs API]
 
-**Shipped Sep 3.** Decision: keep full header text; scope = main summary table
-only. Added a `<colgroup>` with per-column percentages (Release 14 / Track 8 /
-Status 11 / Target 15 / RC 7 / Blockers 11 / Needs Attention 13 / On Track 10 /
-Slack (7d) 11) and `width` on each `<th>`, plus `table-layout: fixed`.
-`white-space: nowrap` on the single-word headers guarantees "Release" etc. never
-split mid-word (the strongest guarantee - independent of whether Docs fully
-honors colgroup %); two-word headers keep full text and wrap between words. ruff
-clean, 11/11 pytest (added `test_summary_table_has_column_widths_and_nowrap_headers`).
-Committed `5db4757` (code-only) + pushed; Program doc republished, colgroup +
-nowrap verified in output.
+**First attempt (HTML CSS) FAILED.** Commit `5db4757` added a `<colgroup>` with
+per-column percentages + `white-space: nowrap` on the `<th>`s + `table-layout:
+fixed`. It was correct HTML, but the **Google Docs HTML importer ignores all
+table CSS** - colgroup/`<col>` widths, per-`<th>` width, `table-layout:fixed`,
+and `white-space:nowrap` do NOT survive import. Docs auto-sized the 9 columns to
+their short *data* content, so wider headers (Track/Status/RC/Blockers) still
+broke mid-word. Diagnosed live via `gws docs documents get`.
+
+**Real fix shipped Sep 3 (commit `d0de20f`).** Key realization: the program
+page is **already wide** (pageSize width 780pt, L/R margins 15pt -> ~750pt
+usable) - the problem was purely uneven auto-column-sizing, so NO orientation
+change was needed. The reliable lever is the **Google Docs API**:
+
+- `_SUMMARY_COLUMNS` now carries a **point width** per column (single source;
+  also feeds the HTML colgroup as a harmless fallback). Widths (pt): Release 105,
+  Track 55, Status 80, Target 100, RC 45, Blockers 75, Needs Attention 105,
+  On Track 70, Slack (7d) 80. Sum 715 <= 750 usable, so no overflow.
+- `_set_summary_table_column_widths(doc_id)`: fetches the doc (`gws docs
+  documents get`), locates the summary table by **column count == 9** (its start
+  index shifts every run - was 974, then 823 after a shorter outlook), and
+  `batchUpdate`s `updateTableColumnProperties` with `widthType:FIXED_WIDTH` per
+  column. Wired into `agent.py` right after a successful combined upload (gws
+  only). Prints "Summary table column widths applied".
+- Because each HTML re-upload wipes native widths, the width step runs after
+  **every** combined upload - not a one-off.
+
+ruff clean, 12/12 pytest (added `test_summary_columns_carry_fixed_point_widths`).
+Committed `d0de20f` (code-only) + pushed; pipeline rerun (`--all --llm`),
+verified live: all 9 columns FIXED_WIDTH, sum 715, no mid-word header breaks.
+
+Gotcha for future work: the gws command is `gws docs documents get/batchUpdate`
+(service `docs`, resource `documents`), NOT `gws documents get`.
 
 
 
