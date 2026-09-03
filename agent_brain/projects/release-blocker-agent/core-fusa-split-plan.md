@@ -6,6 +6,19 @@ created: 2026-09-02
 
 # Implementation plan - Core vs non-Core (FuSa) split
 
+## Status vocabulary correction (Sep 3, later)
+
+The split originally introduced a third status, `submission`, for the FuSa 2.0
+track (banner "FuSa submission (not released)"). This was coined from Whitney
+Chadwick's descriptive phrase about rhivos-2.0, not from an authoritative RHIVOS
+release-lifecycle taxonomy - so it was dropped (Avi's call). Statuses are now two
+values only: **released** and **active**. Fix #2 (FuSa 2.0 not labelled released)
+is satisfied by simply not being `released`, so a FuSa track still in progress
+reads "Active". Changes: `_STATUS_BANNER` (removed submission), executive-brief
+branch removed, config `rhivos-2.0` fusa `status: active`, tests updated. ruff
+clean, 8/8 pytest. Committed `bcb9166` + pushed; all 4 live docs republished;
+follow-up note posted to VROOM-49388.
+
 ## Implementation status (Sep 3)
 
 Rollout steps 1-6 **done and verified locally**. Code changes landed in `rhivos-release-status` (uncommitted working tree): config restructured into `tracks: {core, fusa}` per release; `track` threaded through `query_jira` (`--track` option, per-track `run`/`run_all_statuses`); `agent.py` split into shared-per-release (Slack scan on union of active keys, meeting fetch on union of all-status keys, untracked lookup on union) + per-track `run_track` (per-track chart, `compute_stats` with previous state at `kb/active/<release>/<track>/latest.json`, `synthesize` with per-track config); `render_doc` reworked (per-track status banner, `build_track_section_html`, `build_release_doc_html`, combined dashboard one row/block per track, new `run(release_label, tracks, release_slug, ...)`); `synthesize._build_program_prompt` reads flattened per-track results. `compute_stats.py` needed **no change** (it already partitions on `release`/`fix_versions` from `jira_data`).
