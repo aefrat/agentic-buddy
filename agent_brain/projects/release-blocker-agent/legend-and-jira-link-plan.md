@@ -37,6 +37,63 @@ get swept into commits on every run. Fix would be `kb/active/**/*.json` in
 .gitignore + `git rm --cached`, but it has CI implications (CI needs prior state
 to compute diffs), so raise with user before changing.
 
+## Part 3 - Widen main summary-table columns (no mid-word breaks) [PLANNED]
+
+Requested Sep 3: the Program doc's main summary table breaks header words
+mid-word (e.g. "Release" -> "Releas" / "e") because the first column is too
+narrow. Make columns wide enough that words don't split.
+
+### Diagnosis
+
+The table is `width: 100%` with **no per-column widths** and no `white-space`
+control (`_TH_STYLE`/`_TD_STYLE` have none). The body `max-width: 1000px` does
+**not** transfer to Google Docs - Docs lays the table out on its own page
+geometry (portrait US Letter, 1" margins ~ 6.5" usable). The HTML->Docs
+converter then auto-distributes 9 columns, starves short-content columns, and
+breaks header words mid-word. Total table width is capped by the page, so the
+fix is about **allocating the fixed width per column + stopping intra-word
+breaks**, not making the table arbitrarily wider.
+
+### Fix (primary)
+
+1. Add a `<colgroup>` with tuned **percentage** widths (percentages are the most
+   reliably honored width lever on Google Docs import; they scale to the table
+   width Docs sets to page width). Proposed allocation (sum 100):
+   Release 14, Track 8, Status 11, Target 15 (holds "Not set in Jira"),
+   RC 7, Blockers 11, Needs Attention 13, On Track 10, Slack (7d) 11.
+2. Add `white-space: nowrap` to the single-word headers (Release, Status,
+   Target, RC, Blockers) so they never split mid-word. Leave the genuinely
+   two-word headers (Needs Attention, On Track, Slack (7d)) wrapping **between
+   words** - their colgroup width gives room for a clean two-line header.
+3. Keep number columns centered (optional: `text-align:center` on RC/Blockers/
+   Needs Attention/On Track/Slack) for a tidier look.
+
+### Optional levers (only if still tight after primary)
+
+- Slightly reduce table font-size (e.g. 0.9em) to fit more per column.
+- Shorten the longest headers ("Needs Attention" -> "Needs Att.",
+  "Slack (7d)" -> "Slack"). This is a rename, so confirm before doing it.
+- Landscape orientation would give ~9" but is **not** controllable via HTML
+  upload - would need a manual Docs page-setup step; out of scope.
+
+### Scope
+
+Main Program summary table only (per the request). The per-release triage tables
+(8 columns) likely wrap too and could get the same treatment as a follow-up -
+not included unless requested.
+
+### Verification
+
+`--dry-run` + republish, then eyeball the live Program doc header row: "Release"
+on one line, no mid-word breaks in any header, columns visually balanced.
+ruff + pytest (add/adjust a test asserting the colgroup/nowrap is emitted).
+
+### Decisions to confirm before fixing
+
+1. Keep full header text (recommended - let two-word headers wrap between words),
+   or shorten the longest ones to buy width?
+2. Main summary table only (default), or also the per-release triage tables?
+
 ## 1. Status legend (not a hover tooltip)
 
 **Constraint (must surface to user):** the doc is produced by uploading HTML to
