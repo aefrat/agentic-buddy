@@ -1,8 +1,18 @@
 ---
-last_accessed: 2026-09-02
-access_count: 1
+last_accessed: 2026-09-03
+access_count: 2
 created: 2026-09-02
 ---
+
+# Implementation plan - Core vs non-Core (FuSa) split
+
+## Implementation status (Sep 3)
+
+Rollout steps 1-6 **done and verified locally**. Code changes landed in `rhivos-release-status` (uncommitted working tree): config restructured into `tracks: {core, fusa}` per release; `track` threaded through `query_jira` (`--track` option, per-track `run`/`run_all_statuses`); `agent.py` split into shared-per-release (Slack scan on union of active keys, meeting fetch on union of all-status keys, untracked lookup on union) + per-track `run_track` (per-track chart, `compute_stats` with previous state at `kb/active/<release>/<track>/latest.json`, `synthesize` with per-track config); `render_doc` reworked (per-track status banner, `build_track_section_html`, `build_release_doc_html`, combined dashboard one row/block per track, new `run(release_label, tracks, release_slug, ...)`); `synthesize._build_program_prompt` reads flattened per-track results. `compute_stats.py` needed **no change** (it already partitions on `release`/`fix_versions` from `jira_data`).
+
+Verification: `ruff` clean; 7/7 pytest pass (added `test_core_and_fusa_render_as_separate_sections` and `test_fusa_2_0_is_not_labelled_released`). Dry runs confirm the split - 2.0 Core = 7 active blockers (rhivos-2.0-core, banner "Released"), FuSa = 27 (rhivos-2.0, banner "FuSa submission (not released)"); single h1/footer per doc; combined dashboard shows 6 rows (3 releases x 2 tracks) with correct per-track status.
+
+**Pending (step 7, needs user go-ahead - outward-facing):** commit to `main`; republish the 3 release docs + combined to Google Docs; ping Whitney on VROOM-49388.
 
 # Implementation plan - Core vs non-Core (FuSa) split
 
