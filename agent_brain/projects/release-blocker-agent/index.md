@@ -10,7 +10,7 @@ RHIVOS 2.0 Retro action item: "AI briefs to get a clear state of the release blo
 
 **Repo:** https://gitlab.cee.redhat.com/aefrat/rhivos-release-status
 **Container:** quay.io/aefrat/rhivos-release-status:latest
-**Status:** Phase 3 complete + CI operational on shared runners (Aug 3). **Data correctness bug fixed (Aug 5):** cross-release ticket leakage (Slack tickets appearing in all release reports) resolved via 3-part fix: release-scoped filtering in `synthesize.py`, `untracked_lookup` passthrough in `agent.py`, exact match in `compute_stats.py`. Pushed + pipeline #16855143 triggered. Demo to Dana/team not yet scheduled.
+**Status:** Phase 3 complete + CI operational on shared runners (Aug 3). **Data correctness bug fixed (Aug 5):** cross-release ticket leakage (Slack tickets appearing in all release reports) resolved via 3-part fix: release-scoped filtering in `synthesize.py`, `untracked_lookup` passthrough in `agent.py`, exact match in `compute_stats.py`. Pushed + pipeline #16855143 triggered. **OpenAI migration complete (Sep 6):** Migrated from Vertex AI Gemini to OpenAI gpt-4o-mini. Added `openai>=1.0` to dependencies, updated CI to use `OPENAI_API_KEY`, added `pull_policy: always` to run-daily job to force fresh image pulls. Verified in pipeline #17493828. Demo to Dana/team not yet scheduled.
 **Google Docs:** [Drive folder](https://drive.google.com/drive/folders/1OwzygOZihGEPr18tJFrWS0iQY_fGGySC) | [Program Summary](https://docs.google.com/document/d/1kj6C8JIMyIQmz8WclgWPhHq54d7tvAuQV1zgtLAw5Ps/edit)
 
 ## Features (Phase 1 + Phase 2)
