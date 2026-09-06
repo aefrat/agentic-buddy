@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-09-03
-access_count: 65
+last_accessed: 2026-09-06
+access_count: 66
 created: 2026-06-01
 ---
 
@@ -186,6 +186,8 @@ Resolved observations are moved to the bottom.
 - **2026-09-03:** "Google Docs HTML importer ignores table CSS" - the HTML → Google Docs converter silently strips all table-level CSS (`<colgroup>`/`<col>` widths, per-`<th>` width styles, `table-layout:fixed`, `white-space:nowrap`), auto-sizing columns to their short data content regardless of HTML markup. Correct HTML table formatting (commit `5db4757`) produced mid-word header breaks (Track, Status, RC, Blockers) when converted. The only reliable formatting lever is the **Google Docs API** post-upload: `updateTableColumnProperties` with `FIXED_WIDTH` in points. Page geometry and usable width are preserved from HTML; only column-level sizing must be applied via API. Pattern: when building HTML reports for Google Docs conversion, table formatting requires a two-step flow: (1) HTML upload, (2) Docs API batchUpdate with column widths. The table's start index shifts every run, so it must be located dynamically by column count from a fresh `documents.get`. Extends the family of Docs HTML-importer limitations (anchor links, dateElement smart chips, container table pattern). Applied to rhivos-release-status Program summary table (commit `d0de20f`). (seen: 1)
 
 - **2026-09-02:** "Verify a load-bearing technical claim against authoritative docs before scoping around it" - when a colleague's constraint claim determines an entire build/architecture path (Juanje: "Konflux can only build bootc/immutable images, so it can't build the mutable Developer VM"), confirm it against primary docs rather than take it on faith. The check confirmed the claim AND surfaced the precise mechanism (composefs read-only `/usr` and `/`; bootc-image-builder emits image-mode only; transient-root gives runtime-only writes; package mode requires plain osbuild blueprints), which is more actionable than the bare claim - it tells you which alternatives were implicitly considered and why they don't help. Cheap insurance when the claim gates the plan. Related to but distinct from Rule 22 (product-specific claim leakage) and Rule 23 (source terminology). Applied to VROOM-52268 developer-VM Brew pivot. (seen: 1)
+
+- **2026-09-06:** "Kubernetes IfNotPresent pull policy caches images locally" - when using `:latest` tags with Kubernetes, the IfNotPresent image pull policy uses a cached local image if one exists with that tag, even if a newer image was pushed to the registry with the same tag. The container runs with the old cached image without error - no indication that a newer image exists. During OpenAI migration, GitLab CI pipeline rebuilt and pushed a new `:latest` image with openai package installed, but the run-daily job used a cached old image without it. Solutions: (a) use `pull_policy: always` to force registry checks on every pull, (b) use SHA-based or version-based immutable tags instead of `:latest`, or (c) manually delete cached images from nodes. In CI/CD contexts where images change frequently under the same tag, `pull_policy: always` is the right choice despite the registry check overhead. Pattern generalizes to container image lifecycle anti-patterns: mutable tags (:latest, :stable) require forced pulls; immutable tags (SHA, semver) enable efficient caching. Applied: rhivos-release-status .gitlab-ci.yml run-daily job. (seen: 1)
 
 ## Structure candidates (tools)
 
