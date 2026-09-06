@@ -1,6 +1,6 @@
 ---
-last_accessed: 2026-09-02
-access_count: 7
+last_accessed: 2026-09-06
+access_count: 8
 created: 2026-08-02
 ---
 
@@ -26,13 +26,13 @@ RHIVOS 2.0 Retro action item: "AI briefs to get a clear state of the release blo
 - **Release readiness meeting notes** - Google Doc `1MjoxfCEsDWiLFy99wHsS4EWOnVzvlg91NqJcMIHBDbI` auto-loaded from config. Parser handles dateElement smart chips. 7-day window. Content filtered against known Jira blocker set (cross-reference, not keyword heuristics).
 - **Executive brief** - 3-line max summary incorporating all 3 data sources (Jira, Slack, meeting notes). Adapts to released/active/all-clear/has-urgent context.
 - **Data sources footer** - lists all information sources with links + RHIVOS workflows reference
-- **LLM-powered release outlook** - Gemini 2.5 Flash via Vertex AI (ADC) generates 3-5 sentence release health summary per release. Dual-mode: API key or Vertex AI. Thinking disabled (`thinking_budget=0`) for simple synthesis.
+- **LLM-powered release outlook** - 3-5 sentence release health summary per release. Supports 4 backends via `--llm-backend`: OpenAI (gpt-4o-mini, now default in CI), Gemini, Claude, Vertex AI Claude. CI uses OpenAI API key (Sep 6 migration).
 - **Combined program dashboard** - 4th Google Doc aggregating all releases: program-level LLM outlook, summary table, per-release condensed sections with pie charts
-- **GCP project:** `rhivos-release-blockers-agent` (ID `530839756563`) with Vertex AI API enabled
+- **GCP project:** `rhivos-release-blockers-agent` (ID `530839756563`) with Google Docs/Drive API enabled (Vertex AI no longer used for LLM as of Sep 6)
 
 ## Container operation
 
-Tested with podman from quay.io. Required env vars: `JIRA_API_TOKEN`, `JIRA_USER_EMAIL`, `SLACK_XOXC_TOKEN`, `SLACK_XOXD_COOKIE`. For LLM: `VERTEX_PROJECT_ID` + ADC credentials mounted with `:z` flag (SELinux). Meeting notes require Workspace API scopes (not available via default ADC) - pipeline continues gracefully without them.
+Tested with podman from quay.io. Required env vars: `JIRA_API_TOKEN`, `JIRA_USER_EMAIL`, `SLACK_XOXC_TOKEN`, `SLACK_XOXD_COOKIE`. For LLM: `OPENAI_API_KEY` (or `GOOGLE_API_KEY`/`VERTEX_PROJECT_ID`/`ANTHROPIC_API_KEY` for other backends). Meeting notes require Workspace API scopes (not available via default ADC) - pipeline continues gracefully without them.
 
 ## CI/CD Pipeline
 
@@ -41,10 +41,10 @@ GitLab CI at `gitlab.cee.redhat.com/aefrat/rhivos-release-status`:
 - **build:** buildah to quay.io on main when Containerfile/tools/agent change
 - **run-daily:** weekdays 07:00 UTC (09:00 CEST), also manual trigger via web UI
 - **GCP SA:** `rhivos-dashboard-agent@rhivos-release-blockers-agent.iam.gserviceaccount.com` (Vertex AI User role, Drive folder writer, meeting notes doc viewer)
-- **9 CI/CD variables:** JIRA_API_TOKEN, JIRA_USER_EMAIL, SLACK_XOXC_TOKEN, SLACK_XOXD_COOKIE, VERTEX_PROJECT_ID, ANTHROPIC_VERTEX_PROJECT_ID, QUAY_USER, QUAY_TOKEN, GOOGLE_SA_KEY_PATH (file-type)
+- **9 CI/CD variables:** JIRA_API_TOKEN, JIRA_USER_EMAIL, SLACK_XOXC_TOKEN, SLACK_XOXD_COOKIE, OPENAI_API_KEY, QUAY_USER, QUAY_TOKEN, GOOGLE_SA_KEY_PATH (file-type), DOCKER_AUTH_CONFIG
 - **DOCKER_AUTH_CONFIG** CI variable for quay.io image pull auth
 - **Runner:** Shared Kubernetes runners (`itup-alm-x86` tag) - no laptop dependency. Local Podman runner also available as fallback.
-- **GCP APIs enabled:** Vertex AI, Google Docs, Google Drive
+- **GCP APIs enabled:** Google Docs, Google Drive
 
 Per-release doc IDs and combined_doc_id stored in `release-config.yaml` for CI upload without `gws` CLI.
 
