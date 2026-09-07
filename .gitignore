@@ -9,3 +9,4 @@ Thumbs.db
 
 # Hook runtime state
 .cursor/hooks/.state/
+journalctl.log
