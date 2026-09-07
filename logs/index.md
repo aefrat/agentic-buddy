@@ -19,8 +19,6 @@ Moved to `archive/2026-07/`: 2026-07-01 (log rotation)
 - ~~2026-07-01~~ (archived to `archive/2026-07/`)
 - ~~2026-07-02~~ (archived to `archive/2026-07/`)
 - ~~2026-07-05~~ (archived to `archive/2026-07/`)
-- 2026-07-12: active — Container vulnerability remediation progress (VHCL-009 closed), ATC Slack activity synthesis, stakeholder Slack activity summary, **weekly W28 review**
-- 2026-07-13: active — Talent development (Roderick SPSE L5 path), retention management (Kanitha internal mobility + Toolchain Architect role creation)
 - 2026-07-14: active — QC self-evaluation review, scope-refresh draft, Petr 1:1 (single LP, RoG migration, tagging bottleneck), RoG architecture proposal
 - 2026-07-15: maintenance
 - 2026-07-16: active — ATC Slack scan, nightly compose failures (RHIVOS 2.0-z and 2.1), gating pipeline breakage
@@ -45,3 +43,4 @@ Moved to `archive/2026-07/`: 2026-07-01 (log rotation)
 - 2026-09-01: maintenance — **Weekly W36 review** (Aug 6 - Sep 1, W33-W36 combined), log rotation, Hebbian calibration, methodology synthesis deferred (captures lapsed after Aug 16)
 - 2026-09-02: active — Personal status-update review (Slack mentions + email), RHIVOS developer-VM blocker breakthrough (qcow builds in Brew, Brew-vs-Konflux decision pending), ReportPortal hosted-service sunset (Dec 18), new skill `review-activity-inbox`
 - 2026-09-03: active — Release-blocker dashboard finish: Jira single-source target dates (explicit "Not set in Jira"), dropped self-coined "submission" status (two-status model), status legend table shipped; 4 live docs republished
+- 2026-09-07: maintenance
