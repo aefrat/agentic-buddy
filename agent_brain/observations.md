@@ -90,6 +90,8 @@ Resolved observations are moved to the bottom.
 
 ## Structure candidates
 
+- **2026-09-09:** `/triage` is registered as a command but references the missing `agent_brain/skills/triage-inbox.md`; the implementation exists only in `.packs/personal/triage-inbox.md`. Decide whether the pack skill should be installed by default or the command should be pack-scoped. (seen: 1)
+
 - **2026-06-14:** Skill format migration — user has skills in two locations: old format (`agent_brain/skills/*.md`) and new agentskills.io format (`.claude/skills/<name>/SKILL.md`). User explicitly stated all new skills should use agentskills.io format. GitLab collection uses `.agents/skills/`. Consider migrating remaining old-format skills to `.claude/skills/` during a maintenance cycle and archiving the old files. (seen: 1)
   - 2026-06-18: Second new skill (`process-1on1s`) built in agentskills.io format. Pattern is now established — all new skills go to `.claude/skills/`. (seen: 2)
   - 2026-06-23 (daily): Deferred — migration requires moving 8+ skills, updating all CLAUDE.md references, and adapting format. Permission constraints also blocked `.claude/skills/` writes from autonomous mode. Needs a dedicated interactive session. New skill `person-slack-lookup` created in `agent_brain/skills/` as fallback.
