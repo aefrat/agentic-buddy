@@ -10,6 +10,7 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 | Date | Description | Session ID |
 |------|-------------|------------|
+| 2026-09-09 | RHAS architecture and onboarding guide: Jumpstarter, automotive-dev-operator, installation, infrastructure, repositories, features, and testing | 01a084d2-3a89-7ab2-9cb1-7f7ff1d7b934 |
 | 2026-09-09 | Verified Codex compatibility: AGENTS.md entry point, shared Agentic Buddy memory, hook limitations, Python/JSON smoke checks, and live codex exec test | 01a08474-0e80-7bb0-8871-8cb9b9efdc9d |
 
 ### agentic-buddy
