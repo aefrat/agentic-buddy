@@ -4,6 +4,14 @@ Resume a Claude Code session with: `claude --resume <session-id>`
 
 ## Claude Code sessions
 
+## Codex sessions
+
+### agentic-buddy
+
+| Date | Description | Session ID |
+|------|-------------|------------|
+| 2026-09-09 | Verified Codex compatibility: AGENTS.md entry point, shared Agentic Buddy memory, hook limitations, Python/JSON smoke checks, and live codex exec test | 01a08474-0e80-7bb0-8871-8cb9b9efdc9d |
+
 ### agentic-buddy
 
 | Date | Description | Session ID |
